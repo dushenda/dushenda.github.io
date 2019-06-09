@@ -70,6 +70,8 @@
     			
             
     			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">‘Link’</a>
+    			
             
     			
     			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">About Me</a>
@@ -283,6 +285,8 @@ MathJax.Hub.Queue(function() {
       
     
       
+      
+      
     
       
       
@@ -294,13 +298,15 @@ MathJax.Hub.Queue(function() {
     
     
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">All Article</a></li>
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">All Article</a></li>
       
         
       
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">‘Link’</a></li>
+      
         
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">About Me</a></li>
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">About Me</a></li>
       
         
     </ul>
@@ -371,6 +377,22 @@ MathJax.Hub.Queue(function() {
     	</section>
     
 
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://www.usc.edu.cn/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>University of South China</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.ustc.edu.cn/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>University of Science&amp;Technology of China</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
     
 
     
