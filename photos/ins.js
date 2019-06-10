@@ -117,7 +117,7 @@
         var liTmpl = "";
         for (var i = 0, len = data.link.length; i < len; i++) {
           var minSrc = 'https://github.com/dushenda/photos/tree/master/mini_photos/' + data.link[i];
-          var src = 'https://github.com/dushenda/photos/tree/master/normal_photos/' + data.link[i];
+          var src = 'https://github.com/dushenda/photos/tree/master/photos/' + data.link[i];
           var type = data.type[i];
           var target = src + (type === 'video' ? '.mp4' : '.jpg');
           src += '';
