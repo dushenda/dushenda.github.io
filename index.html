@@ -166,35 +166,44 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-编译链接浅析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-正则表达式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/14/编译链接浅析/">编译链接浅析</a>
+      <a class="article-title" href="/2019/06/27/正则表达式/">立体角</a>
     </h1>
   
 
         
-        <a href="/2019/06/14/编译链接浅析/" class="archive-article-date">
-  	<time datetime="2019-06-13T16:43:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-14</time>
+        <a href="/2019/06/27/正则表达式/" class="archive-article-date">
+  	<time datetime="2019-06-27T07:46:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span>* a,<span class="keyword">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="keyword">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="keyword">int</span>* a;</span><br><span class="line">    <span class="keyword">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"k+j="</span>&lt;&lt;sum(a,b)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"k="</span>&lt;&lt;k&lt;&lt;<span class="string">"\t"</span>&lt;&lt;<span class="string">"j="</span>&lt;&lt;j&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol>
+<li><p><code>.</code>匹配所有字符</p>
+</li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’\,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p>
+</li>
+<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p>
+</li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p>
+</li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p>
         
-          <a class="article-more-a" href="/2019/06/14/编译链接浅析/#more">more >></a>
+          <a class="article-more-a" href="/2019/06/27/正则表达式/#more">more >></a>
         
       
 
       
-    </div>
+    </li></ol></div>
     <div class="article-info article-info-index">
       
       
@@ -203,11 +212,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机技术</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">正则表达式</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MATLAB</a>
         		</li>
       		
 		</ul>
@@ -217,7 +230,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/14/编译链接浅析/">Read More >></a>
+          <a class="article-more-a" href="/2019/06/27/正则表达式/">Read More >></a>
         </p>
       
 
@@ -299,6 +312,87 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/06/14/立体角/">Read More >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-编译链接浅析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/14/编译链接浅析/">编译链接浅析</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/14/编译链接浅析/" class="archive-article-date">
+  	<time datetime="2019-06-13T16:43:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span>* a,<span class="keyword">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="keyword">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="keyword">int</span>* a;</span><br><span class="line">    <span class="keyword">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"k+j="</span>&lt;&lt;sum(a,b)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"k="</span>&lt;&lt;k&lt;&lt;<span class="string">"\t"</span>&lt;&lt;<span class="string">"j="</span>&lt;&lt;j&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2019/06/14/编译链接浅析/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/14/编译链接浅析/">Read More >></a>
         </p>
       
 
@@ -449,7 +543,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机技术</a>
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -457,7 +551,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">MATLAB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">光学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机技术</a>
               </li>
             
             <div class="clearfix"></div>
