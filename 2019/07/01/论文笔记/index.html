@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/07/01/论文笔记/高光谱地表反射率.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/01/论文笔记/每日的通道反射率.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/01/论文笔记/流程.bmp">
-<meta property="og:updated_time" content="2019-07-01T03:14:48.705Z">
+<meta property="og:updated_time" content="2019-07-01T03:17:20.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="定标流程">
 <meta name="twitter:description" content="辐射定标的意义卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。 辐射定标辐射校正遥感辐射定标方法因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限于载荷的使用寿命。那么要延长载荷的工作年限，就需">
@@ -227,7 +227,8 @@
 <p>具体过程如下图所示：<br><img src="/2019/07/01/论文笔记/反射率基法.png" title="反射率基法"></p>
 <p> 从上图可以看到，通过地表反射率、大气参数和气象观测（主要做辅助功能）可以输入辐射传输模型，然后再加上太阳传感器几何测量（得到一些角度值）就可以计算出卫星上面的遥感平台的表观辐亮度，通过与卫星影像（<code>.hdf</code>等带有大量信息的格式文件）做比较就可以得到定标系数。</p>
 <p>对于第$i$波段光的表观反射率（卫星的表观反射率，但是我觉得好像没什么用，因为只需要测卫星的表观辐亮度就够了吧）有</p>
-<p>$$<br>\rho^<em>_i(\theta_v,\theta_s,\phi_v,\phi_s)=\frac{\pi d^2L_i(\theta_v,\theta_s,\phi_v,\phi_s)}{E_{0i\cos\theta}}<br>$$<br>参数定义如下：<br>$\rho^</em>_i(\theta_v,\theta_s,\phi_v,\phi_s)$是对于第$i$波段光的地表反射率</p>
+<p>$$<br>\rho^*_i(\theta_v,\theta_s,\phi_v,\phi_s)=\frac{\pi d^2L_i(\theta_v,\theta_s,\phi_v,\phi_s)}{E_{0i\cos\theta}}<br>$$</p>
+<p>参数定义如下：<br>$\rho^*_i(\theta_v,\theta_s,\phi_v,\phi_s)$是对于第i波段光的地表反射率</p>
 <p>$\theta_s$是太阳的天顶角</p>
 <p>$\phi_s$是太阳的方位角</p>
 <p>$\theta_v$是观测天顶角</p>
@@ -685,11 +686,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">定标</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机技术</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机技术</a>
+                <a href="javascript:void(0)" class="js-tag color3">定标</a>
               </li>
             
             <div class="clearfix"></div>
