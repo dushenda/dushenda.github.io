@@ -190,9 +190,9 @@
 <p> 以下答案都是作者作答，不代表正确答案，望周知。</p>
 </blockquote>
 <hr>
-<ol>
-<li><h5 id="如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？"><a href="#如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？" class="headerlink" title="如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？"></a>如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？</h5></li>
-</ol>
+<ul>
+<li><h5 id="1-如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？"><a href="#1-如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？" class="headerlink" title="1.如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？"></a>1.如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？</h5></li>
+</ul>
 <img src="/2019/07/02/现代操作系统-进程与线程1到15/1.png" title="状态切换">
 <p>答：<strong>从逻辑上来说，就绪态和运行态是类似的</strong>，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现就绪态向阻塞态的转变；从阻塞态到运行态是得到了有效的输入和CPU计算资源才能完成的转化，但是得到有效的输入肯定会位于得到资源的前面，因为没有有效的输入都不能进行计算，而当出现有效输入的时候，就已经是就绪态了，即使有效输入和CPU资源获取的间隔很小，但是始终存在，所以肯定会经过就绪态。</p>
         
@@ -390,11 +390,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">正则表达式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">正则表达式</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -721,15 +721,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">技术</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MATLAB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -750,6 +742,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">定标</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">MATLAB</a>
               </li>
             
             <div class="clearfix"></div>
