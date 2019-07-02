@@ -17,7 +17,11 @@
 <meta property="og:description" content="以下答案都是作者作答，不代表正确答案，望周知。    1.如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？   答：从逻辑上来说，就绪态和运行态是类似的，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/07/02/现代操作系统-进程与线程1到15/1.png">
-<meta property="og:updated_time" content="2019-07-02T08:11:22.763Z">
+<meta property="og:image" content="http://yoursite.com/2019/07/02/现代操作系统-进程与线程1到15/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/02/现代操作系统-进程与线程1到15/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/07/02/现代操作系统-进程与线程1到15/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/07/02/现代操作系统-进程与线程1到15/5.jpg">
+<meta property="og:updated_time" content="2019-07-02T08:17:40.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="现代操作系统-进程与线程1到15">
 <meta name="twitter:description" content="以下答案都是作者作答，不代表正确答案，望周知。    1.如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？   答：从逻辑上来说，就绪态和运行态是类似的，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现">
@@ -268,7 +272,7 @@
 <ul>
 <li><h5 id="7-如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I-O等待占50-。"><a href="#7-如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I-O等待占50-。" class="headerlink" title="7.如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I/O等待占50%。"></a>7.如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I/O等待占50%。</h5></li>
 </ul>
-<p>答：<br>{ % assert_img 2.png 顺序执行 % }</p>
+<p>答：<br><img src="/2019/07/02/现代操作系统-进程与线程1到15/2.png" title="顺序执行"></p>
 <p>如图所示，如果顺序执行，那么每个进程在输入需要10min，在输出需要10min，所以进行一个就需要40min的时间，共需要80min。</p>
 <p>如果是并行执行，那么每个进程得到的CPU的利用率为$\frac{1-p^2}{2}=0.375$，每个进程本来在CPU利用率为1的时候需要20min，现在在CPU利用率为0.375的情况下需要时间为$\frac{20\min}{0.375}\approx53.3\min$，由于是并行执行，取其最大的即可，即$\max{T_1,T_2,…T_n}$，在这里两个进程的时间一样，所以运行的时间为53.3min。</p>
 <ul>
@@ -282,7 +286,7 @@
 <ul>
 <li><h5 id="10-为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？"><a href="#10-为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？" class="headerlink" title="10.为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？"></a>10.为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？</h5></li>
 </ul>
-<p>{ % assert_img 3.jpg 单线程和多线程 % }</p>
+<img src="/2019/07/02/现代操作系统-进程与线程1到15/3.jpg" title="单线程和多线程">
 <p>答：要牢记进程和线程在很多方面是类似的，线程可以理解为轻量级进程。但是最重要的区别是<strong>进程共享存储空间</strong>，共享存储空间说明他们操作的文件是一样的，所以将文件存于高速缓存是可以的。但是进程不同，操作的文件是不一样的，如果将其文件存于同一个缓存中，很可能前一个进程的文件就会被后一个进程的文件所覆盖。</p>
 <hr>
 <ul>
@@ -292,7 +296,7 @@
 <ul>
 <li><h5 id="12-下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？"><a href="#12-下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？" class="headerlink" title="12.下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？"></a>12.下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？</h5></li>
 </ul>
-<p>{ % assert_img 4.jpg Web多线程 % }</p>
+<img src="/2019/07/02/现代操作系统-进程与线程1到15/4.jpg" title="Web多线程">
 <p>答：当工作线程从磁盘读取Web页时，它就会被阻塞。如果使用用户级线程，该动作将阻塞整个进程，而破坏多线程的价值。这就是使用内核线程的原因：某些线程的阻塞不会影响到其他线程。</p>
 <ul>
 <li><h5 id="13-在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。"><a href="#13-在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。" class="headerlink" title="13.在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。"></a>13.在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。</h5></li>
@@ -323,7 +327,7 @@
 <ul>
 <li><h5 id="14-既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。"><a href="#14-既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。" class="headerlink" title="14.既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。"></a>14.既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。</h5></li>
 </ul>
-<p>{ % assert_img 5.jpg 线程表 % }</p>
+<img src="/2019/07/02/现代操作系统-进程与线程1到15/5.jpg" title="线程表">
 <p>答：当一个线程停止时，它在寄存器中有值。它们必须被保存，就像进程停止时，必须保存寄存器。多线程和多进程没有什么不同，所以每个线程需要自己的寄存器保存区。</p>
 <ul>
 <li><h5 id="15-在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread-yield自愿放弃CPU？"><a href="#15-在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread-yield自愿放弃CPU？" class="headerlink" title="15.在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread_yield自愿放弃CPU？"></a>15.在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread_yield自愿放弃CPU？</h5></li>
@@ -577,7 +581,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">MATLAB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,14 +610,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">定标</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MATLAB</a>
               </li>
             
             <div class="clearfix"></div>
