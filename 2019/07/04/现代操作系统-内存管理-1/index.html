@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>现代操作系统-内存管理-1 | Nostagia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。使用位图存储器就需要合适的选取刻度值，">
-<meta name="keywords" content="Personal、Blog、Tech、Photo、Life">
+  <meta name="description" content="空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。">
+<meta name="keywords" content="技术,操作系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="现代操作系统-内存管理-1">
 <meta property="og:url" content="http://yoursite.com/2019/07/04/现代操作系统-内存管理-1/index.html">
 <meta property="og:site_name" content="Nostagia">
-<meta property="og:description" content="空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。使用位图存储器就需要合适的选取刻度值，">
+<meta property="og:description" content="空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/07/04/现代操作系统-内存管理-1/内存存储管理1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/07/04/现代操作系统-内存管理-1/操作系统内存交换技术.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/04/现代操作系统-内存管理-1/操作系统内存紧缩.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/04/现代操作系统-内存管理-1/操作系统内存紧缩2.png">
-<meta property="og:updated_time" content="2019-07-04T02:59:49.658Z">
+<meta property="og:updated_time" content="2019-07-04T03:02:54.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="现代操作系统-内存管理-1">
-<meta name="twitter:description" content="空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。使用位图存储器就需要合适的选取刻度值，">
+<meta name="twitter:description" content="空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。">
 <meta name="twitter:image" content="http://yoursite.com/2019/07/04/现代操作系统-内存管理-1/内存存储管理1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Nostagia" type="application/atom+xml">
@@ -192,6 +192,7 @@
       
         <h2 id="空闲内存的管理"><a href="#空闲内存的管理" class="headerlink" title="空闲内存的管理"></a>空闲内存的管理</h2><p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
 <img src="/2019/07/04/现代操作系统-内存管理-1/内存存储管理1.jpg" title="内存存储管理">
+<a id="more"></a>
 <ul>
 <li><p>使用位图的存储器管理</p>
 <p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。<br>使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p>
@@ -260,6 +261,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -480,27 +496,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">技术</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">光学</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">定标</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">技术</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,7 +508,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">光学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编译原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">定标</a>
               </li>
             
             <div class="clearfix"></div>
