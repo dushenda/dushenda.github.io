@@ -6,19 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 技术 | Nostagia</title>
+  <title>Windows运行参数分析 | Nostagia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Personal Blog">
-<meta name="keywords" content="Personal、Blog、Tech、Photo、Life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Nostagia">
-<meta property="og:url" content="http://yoursite.com/tags/技术/index.html">
+  <meta name="description" content="这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两">
+<meta name="keywords" content="技术,操作系统,计算机基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows运行参数分析">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Windows运行参数分析/index.html">
 <meta property="og:site_name" content="Nostagia">
-<meta property="og:description" content="Personal Blog">
+<meta property="og:description" content="这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/task_mana.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/wpr_start.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/wpr_save.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/wpr_save_finish.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/wpa_open.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/wpa_file_in1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/wpa_file_in_cpu_mem.png">
+<meta property="og:updated_time" content="2019-07-16T13:22:43.317Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nostagia">
-<meta name="twitter:description" content="Personal Blog">
+<meta name="twitter:title" content="Windows运行参数分析">
+<meta name="twitter:description" content="这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/16/Windows运行参数分析/task_mana.png">
   
     <link rel="alternative" href="/atom.xml" title="Nostagia" type="application/atom+xml">
   
@@ -164,36 +173,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Windows运行参数分析" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Windows运行参数分析
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/16/Windows运行参数分析/" class="archive-article-date">
+
+        
+        <a href="/2019/07/16/Windows运行参数分析/" class="archive-article-date">
   	<time datetime="2019-07-16T13:01:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/16/Windows运行参数分析/">Windows运行参数分析</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
+<p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
+<img src="/2019/07/16/Windows运行参数分析/task_mana.png" title="任务管理器">
+<a id="more"></a>
+<blockquote>
+<p>Windows Hardware Lab Kit (Windows HLK) 是一个测试框架，用于测试 Windows 10 以及从 Windows Server 2016 开始的所有 Windows Server 版本的硬件设备。 你的产品必须通过使用 Windows HLK 进行的某些测试，才有资格加入 <a href="https://docs.microsoft.com/en-us/windows-hardware/design/compatibility/" target="_blank" rel="noopener">Windows 硬件兼容性计划</a>。</p>
+<p>Windows 性能工具包位于 <a href="https://aka.ms/adk" target="_blank" rel="noopener">Windows 评估和部署工具包</a>中，其中包含各种性能监控工具，这些工具可生成有关 Windows 操作系统和应用程序的详细性能概况。 本文档同时讨论了 Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA)。</p>
+<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740" target="_blank" rel="noopener">Windows 评估和部署工具包 (Windows ADK)</a>，Windows 性能记录器 (WPR) 是一种性能录制工具为基础上事件跟踪 Windows (ETW)。 它记录系统事件，然后可以通过使用 Windows Performance Analyzer (WPA) 进行分析。</p>
+<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740" target="_blank" rel="noopener">Windows 评估和部署工具包 (Windows ADK)</a>，Windows Performance Analyzer (WPA) 是一种工具，创建的事件跟踪 Windows (ETW) 事件所记录的 Windows 性能的关系图和数据表记录器 (WPR)、 Xperf 或评估运行评估平台中。 WPA 可以打开任何事件跟踪日志 (ETL) 文件进行分析。</p>
+</blockquote>
+<h2 id="Windows-Performance-Record"><a href="#Windows-Performance-Record" class="headerlink" title="Windows Performance Record"></a>Windows Performance Record</h2><ol>
+<li><p>在程序中搜索到 Windows Performance Record 并且打开，</p>
+<img src="/2019/07/16/Windows运行参数分析/wpr_start.png" title="WPR开始界面">
+</li>
+<li><p>从当前时刻开始记录，记录完成后保存文件</p>
+<img src="/2019/07/16/Windows运行参数分析/wpr_save.png" title="WPR保存界面">
+<img src="/2019/07/16/Windows运行参数分析/wpr_save_finish.png" title="WPR保存界面">
+</li>
+<li><p>记下文件保存位置</p>
+</li>
+</ol>
+<h2 id="Windows-Performance-Analysis"><a href="#Windows-Performance-Analysis" class="headerlink" title="Windows Performance Analysis"></a>Windows Performance Analysis</h2><ol>
+<li><p>在程序中找到 Windows Performance Analysis 并且打开</p>
+<img src="/2019/07/16/Windows运行参数分析/wpa_open.png" title="WPA打开界面">
+</li>
+<li><p>File-&gt;Open，打开前面保存的文件</p>
+<img src="/2019/07/16/Windows运行参数分析/wpa_file_in1.png" title="WPA文件载入">
 
-        <div class="article-info info-on-right">
-          
+<img src="/2019/07/16/Windows运行参数分析/wpa_file_in_cpu_mem.png" title="WPA文件载入">
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -213,287 +251,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/16/Windows运行参数分析/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/04/现代操作系统-内存管理-1/" class="archive-article-date">
-  	<time datetime="2019-07-04T02:53:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-04</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/04/现代操作系统-内存管理-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">现代操作系统-内存管理-1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/04/现代操作系统-内存管理-1/">现代操作系统-内存管理-1</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/02/现代操作系统-进程与线程1到15/" class="archive-article-date">
-  	<time datetime="2019-07-02T07:42:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/02/现代操作系统-进程与线程1到15/">现代操作系统-进程与线程1到15</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/01/论文笔记/" class="archive-article-date">
-  	<time datetime="2019-07-01T02:56:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/01/论文笔记/">定标流程</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">光学</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">定标</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/27/正则表达式/" class="archive-article-date">
-  	<time datetime="2019-06-27T07:46:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/27/正则表达式/">正则表达式（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">正则表达式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MATLAB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/14/立体角/" class="archive-article-date">
-  	<time datetime="2019-06-13T16:43:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/14/立体角/">立体角</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">光学</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/14/编译链接浅析/" class="archive-article-date">
-  	<time datetime="2019-06-13T16:43:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/14/编译链接浅析/">编译链接浅析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">编译原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -523,9 +380,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
