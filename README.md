@@ -1,2 +1,2 @@
 # Blogs
-Hexo Blogs, Theme Next
+Hexo Blogs, Theme Next,
