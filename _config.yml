@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: ABC
-subtitle: Like You
-description: ''
-keywords:
+title: dushenda
+subtitle: 李德胜大大粉丝
+description: '雄关漫道真如铁，而今迈步从头越'
+keywords: 代码、科研、计算机系统
 author: dushenda
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
