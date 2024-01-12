@@ -37,7 +37,7 @@
               "state": {
                 "file": "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
                 "mode": "source",
-                "source": false
+                "source": true
               }
             }
           }
