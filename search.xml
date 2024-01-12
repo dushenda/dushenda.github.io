@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Test</title>
-    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>三种大气质量和一个公式的计算方法</title>
     <url>/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h1 id="三种大气质量和一个公式的计算方法">三种大气质量和一个公式的计算方法</h1>
@@ -83,6 +73,16 @@ m=\frac{1}{cos \frac{\pi \theta_0}{180^\circ}+0.15\times(93.885-\theta_0)^{-1.25
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal2</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal2(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.50572</span>;b=<span class="number">6.07995</span>;c=<span class="number">1.6364</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal3</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.6556</span>;b=<span class="number">6.379</span>;c=<span class="number">1.757</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Test</title>
+    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件 <img src="Pasted%20image%2020240113005115.png" /></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
   </entry>
   <entry>
     <title>最大间隙问题</title>
