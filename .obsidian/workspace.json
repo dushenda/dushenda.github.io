@@ -174,9 +174,12 @@
   },
   "active": "d65374f4a0f35cba",
   "lastOpenFiles": [
+    "scaffolds/post.md",
+    "scaffolds/draft.md",
+    "scaffolds/page.md",
+    "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/Pasted image 20240113011447.png",
     "source/_posts/内核转储文件/Pasted image 20240113005115.png",
-    "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件",
     "source/_posts/CsvHelper 使用手册.md",
     "source/_posts/几种算法误差报告/几种算法误差报告.md",
