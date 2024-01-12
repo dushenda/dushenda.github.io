@@ -252,6 +252,7 @@
 <p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
 <h2 id="分析崩溃">分析崩溃</h2>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+<p><img src="Pasted%20image%2020240113011447.png" /> 发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
 
       
     </div>
