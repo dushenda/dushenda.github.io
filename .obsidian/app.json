@@ -2,5 +2,6 @@
   "useMarkdownLinks": true,
   "newFileLocation": "current",
   "attachmentFolderPath": "./",
-  "strictLineBreaks": true
+  "strictLineBreaks": true,
+  "alwaysUpdateLinks": true
 }
