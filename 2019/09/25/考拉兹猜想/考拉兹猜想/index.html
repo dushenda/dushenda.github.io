@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="考拉兹猜想 考拉兹猜想定义 考拉兹函数定义如下 \[ f(x)&#x3D;\left\{ \begin{array}{**lr**} 3n+1&amp;x为奇数且x\neq1\\ n&#x2F;2&amp;x为偶数\\ 1&amp;x&#x3D;1 \end{array} \right. \] 通过对 \(x\) 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。 当然，下界是很容易求出来的，如果输入 \(n\)">
+    <meta name="description" content="考拉兹猜想考拉兹猜想定义考拉兹函数定义如下 $$f(x)&#x3D;\left{\begin{array}{lr}3n+1&amp;x为奇数且x\neq1\n&#x2F;2&amp;x为偶数\1&amp;x&#x3D;1\end{array}\right.$$通过对 $x$ 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。 当然，下界是很容易求出来的，如果输入 $n$ ，下降最快的也">
 <meta property="og:type" content="article">
 <meta property="og:title" content="考拉兹猜想">
 <meta property="og:url" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="考拉兹猜想 考拉兹猜想定义 考拉兹函数定义如下 \[ f(x)&#x3D;\left\{ \begin{array}{**lr**} 3n+1&amp;x为奇数且x\neq1\\ n&#x2F;2&amp;x为偶数\\ 1&amp;x&#x3D;1 \end{array} \right. \] 通过对 \(x\) 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。 当然，下界是很容易求出来的，如果输入 \(n\)">
+<meta property="og:description" content="考拉兹猜想考拉兹猜想定义考拉兹函数定义如下 $$f(x)&#x3D;\left{\begin{array}{lr}3n+1&amp;x为奇数且x\neq1\n&#x2F;2&amp;x为偶数\1&amp;x&#x3D;1\end{array}\right.$$通过对 $x$ 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。 当然，下界是很容易求出来的，如果输入 $n$ ，下降最快的也">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp">
 <meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp">
@@ -47,7 +47,7 @@
 <meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp">
 <meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp">
 <meta property="article:published_time" content="2019-09-25T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-12T18:01:10.502Z">
+<meta property="article:modified_time" content="2024-01-12T18:02:58.212Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="代码、科研、计算机系统">
 <meta name="twitter:card" content="summary">
@@ -162,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3"><span class="nav-number">1.</span> <span class="nav-text">考拉兹猜想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">考拉兹猜想定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86-n_0-%E7%9A%84%E6%AD%A5%E9%95%BF%E4%B8%8E-n-%E5%80%BC%E5%8F%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">部分 \(n_0\) 的步长与 \(n\) 值变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n_0-%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%AC%A1%E6%95%B0%E5%88%86%E5%B8%83%E6%9B%B2%E7%BA%BF"><span class="nav-number">1.3.</span> <span class="nav-text">\(n_0\) 与计算次数分布曲线</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3"><span class="nav-number">1.</span> <span class="nav-text">考拉兹猜想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">考拉兹猜想定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86-n-0-%E7%9A%84%E6%AD%A5%E9%95%BF%E4%B8%8E-n-%E5%80%BC%E5%8F%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">部分 $n_0$ 的步长与 $n$ 值变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n-0-%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%AC%A1%E6%95%B0%E5%88%86%E5%B8%83%E6%9B%B2%E7%BA%BF"><span class="nav-number">1.3.</span> <span class="nav-text">$n_0$ 与计算次数分布曲线</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -265,41 +265,49 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">\[
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-\]</span> 通过对 <span class="math inline">\(x\)</span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline">\(n\)</span> ，下降最快的也就是每次下降 <span class="math inline">\(\frac{1}{2}\)</span>，这个下降速度对于的计算时间是 <span class="math inline">\(\log n\)</span> 。对于上界，用 <span class="math inline">\(MATLAB​\)</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline">\(n_0\)</span> 的步长与 <span class="math inline">\(n\)</span> 值变化</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp" class="">
+    <div class="post-body" itemprop="articleBody"><h1 id="考拉兹猜想"><a href="#考拉兹猜想" class="headerlink" title="考拉兹猜想"></a>考拉兹猜想</h1><h2 id="考拉兹猜想定义"><a href="#考拉兹猜想定义" class="headerlink" title="考拉兹猜想定义"></a>考拉兹猜想定义</h2><p>考拉兹函数定义如下</p>
+<p>$$<br>f(x)&#x3D;\left{<br>\begin{array}{<strong>lr</strong>}<br>3n+1&amp;x为奇数且x\neq1\<br>n&#x2F;2&amp;x为偶数\<br>1&amp;x&#x3D;1<br>\end{array}<br>\right.<br>$$<br>通过对 $x$ 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
+<p>当然，下界是很容易求出来的，如果输入 $n$ ，下降最快的也就是每次下降  $\frac{1}{2}$，这个下降速度对于的计算时间是 $\log n$ 。对于上界，用 $MATLAB​$ 带入一些数值计算。得到的结果如下：</p>
+<h2 id="部分-n-0-的步长与-n-值变化"><a href="#部分-n-0-的步长与-n-值变化" class="headerlink" title="部分 $n_0$ 的步长与 $n$ 值变化"></a>部分 $n_0$ 的步长与 $n$ 值变化</h2><img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp" class="">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp" class="" title="7~10">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/11~14.bmp" class="" title="11~14">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/15~18.bmp" class="" title="15~18">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/19~22.bmp" class="" title="19~22">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/23~26.bmp" class="" title="23~26">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/27~30.bmp" class="" title="27~30">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/31~34.bmp" class="" title="31~34">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/35~38.bmp" class="" title="35~38">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/39~42.bmp" class="" title="39~42">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/43~46.bmp" class="" title="43~46">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/47~50.bmp" class="" title="47~50">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/51~54.bmp" class="" title="51~54">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/55~58.bmp" class="" title="55~58">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/242~245.bmp" class="" title="242~245">
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline">\(n_0\)</span> 与计算次数分布曲线</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp" class="" title="次数与初值">
+
+<h2 id="n-0-与计算次数分布曲线"><a href="#n-0-与计算次数分布曲线" class="headerlink" title="$n_0$ 与计算次数分布曲线"></a>$n_0$ 与计算次数分布曲线</h2><img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp" class="" title="次数与初值">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=400.bmp" class="">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=1000.bmp" class="" title="n0&#x3D;1000">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp" class="" title="n0&#x3D;5000">
+
 <img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp" class="" title="n0&#x3D;10000">
+
 
     </div>
 
