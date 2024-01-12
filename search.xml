@@ -87,7 +87,13 @@ m=\frac{1}{cos \frac{\pi \theta_0}{180^\circ}+0.15\times(93.885-\theta_0)^{-1.25
 <p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
 <p>所以修改有两种方法</p>
 <p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code> &gt; %e：进程名称 &gt; &gt; %s：崩溃时收到的信号 &gt; &gt; %p：进程ID &gt; &gt; %t：时间戳</p>
+<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<blockquote>
+<p>%e：进程名称</p>
+<p>%s：崩溃时收到的信号</p>
+<p>%p：进程ID</p>
+<p>%t：时间戳</p>
+</blockquote>
 <h3 id="注意关闭apport服务">注意关闭apport服务</h3>
 <p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
 <h2 id="centos">CentOS</h2>
