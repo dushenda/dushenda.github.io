@@ -86,6 +86,8 @@ m=\frac{1}{cos \frac{\pi \theta_0}{180^\circ}+0.15\times(93.885-\theta_0)^{-1.25
 <h2 id="centos">CentOS</h2>
 <h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
 <p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>linux</tag>

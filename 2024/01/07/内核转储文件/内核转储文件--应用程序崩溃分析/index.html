@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dushenda.github.io/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/Pasted%20image%2020240113005115.png">
 <meta property="article:published_time" content="2024-01-07T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-12T17:09:41.917Z">
+<meta property="article:modified_time" content="2024-01-12T17:15:04.209Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="kernel">
@@ -144,7 +144,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bcoredump%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80"><span class="nav-number">1.1.</span> <span class="nav-text">查看coredump是否打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E5%85%B3%E9%97%ADapport%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">注意关闭apport服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos"><span class="nav-number">2.</span> <span class="nav-text">CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91etcsecuritylimits.conf%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">编辑&#x2F;etc&#x2F;security&#x2F;limits.conf文件</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bcoredump%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80"><span class="nav-number">1.1.</span> <span class="nav-text">查看coredump是否打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E5%85%B3%E9%97%ADapport%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">注意关闭apport服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos"><span class="nav-number">2.</span> <span class="nav-text">CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91etcsecuritylimits.conf%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">编辑&#x2F;etc&#x2F;security&#x2F;limits.conf文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%B4%A9%E6%BA%83"><span class="nav-number">3.</span> <span class="nav-text">分析崩溃</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -256,6 +256,8 @@
 <h2 id="centos">CentOS</h2>
 <h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
 <p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
 
     </div>
 
