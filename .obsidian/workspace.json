@@ -13,13 +13,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/内核转储文件--应用程序崩溃分析.md",
+                "file": "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c74ec9630c0ae2cf",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "source/_posts/内核转储文件/Pasted image 20240113005115.png"
+              }
+            }
+          },
+          {
+            "id": "d65374f4a0f35cba",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -85,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/内核转储文件--应用程序崩溃分析.md",
+                "file": "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/内核转储文件--应用程序崩溃分析.md",
+                "file": "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/内核转储文件--应用程序崩溃分析.md"
+                "file": "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md"
               }
             }
           }
@@ -149,10 +172,12 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "d60e1049d32c4b40",
+  "active": "aa0934016fbc06d3",
   "lastOpenFiles": [
+    "source/_posts/内核转储文件/Pasted image 20240113005115.png",
+    "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
+    "source/_posts/内核转储文件",
     "source/_posts/CsvHelper 使用手册.md",
-    "source/_posts/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/几种算法误差报告/几种算法误差报告.md",
     "source/_posts/考拉兹猜想/考拉兹猜想.md",
     "source/_posts/几种算法误差报告/未命名.md",
