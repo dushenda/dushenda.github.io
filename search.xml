@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>[object Object]</title>
-    <url>/2024/01/13/%E6%9C%AA%E5%91%BD%E5%90%8D/</url>
-    <content><![CDATA[
+    <title>资源收集</title>
+    <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
+<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
+<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
+<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
+<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
+<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
+<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
+<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
+<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
+<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
+<p>yeolar: http://www.yeolar.com/</p>
+<pre><code>   http://www.yeolar.com/note/2012/03/29/virtual-memory/
+           </code></pre>
+<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
+<pre><code>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767
+
+ http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html
+ </code></pre>
+<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
+<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
+<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
+<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
+<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
+<p>Flannel: http://dockone.io/article/618</p>
+<p>SDN: https://www.opennetworking.org/</p>
+<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
+<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
+<pre><code>    http://blog.csdn.net/dog250/article/details/45788279
+    </code></pre>
+<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
+<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
+<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
+<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
+<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
 ]]></content>
+      <tags>
+        <tag>资源</tag>
+      </tags>
   </entry>
   <entry>
     <title>三种大气质量和一个公式的计算方法</title>
