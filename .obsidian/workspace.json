@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
+                "file": "source/_posts/资源收集.md",
                 "mode": "source",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
+                "file": "source/_posts/资源收集.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
+                "file": "source/_posts/资源收集.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/内核转储文件/内核转储文件--内核崩溃.md"
+                "file": "source/_posts/资源收集.md"
               }
             }
           }
@@ -151,6 +151,7 @@
   },
   "active": "c424887cc6cacb24",
   "lastOpenFiles": [
+    "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
     "source/_posts/资源收集.md",
     "source/_posts/Obsidian+github+hexo博客流配置.md",
     "source/_posts/自动提交生成博客/自动提交生成博客-20240113 2.png",
@@ -158,7 +159,6 @@
     "source/_posts/自动提交生成博客/自动提交生成博客-20240113 1.png",
     "source/_posts/自动提交生成博客",
     "source/_posts/自动提交生成博客/自动提交生成博客-20240113.png",
-    "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃",
     "source/_posts/内核转储文件/Pasted image 20240113022132.png",
     "source/_posts/内核转储文件/Pasted image 20240113021939.png",
