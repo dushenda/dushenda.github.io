@@ -1,3 +1,9 @@
+---
+title: Obsidian+github+hexo博客流配置
+date: 2024-01-14
+tags:
+  - 工作流
+---
 ## hexo配置
 ### node.js配置
 ### hexo主题配置
