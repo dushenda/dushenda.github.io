@@ -2,8 +2,10 @@
 <search>
   <entry>
     <title></title>
-    <url>/2024/01/13/Obsidian+github+hexo%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</url>
+    <url>/2024/01/13/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
 <h2 id="obsidian配置">Obsidian配置</h2>
 <p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
 <p><img src="Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113.png" /></p>
