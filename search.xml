@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>/2024/01/13/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="自动提交生成博客/自动提交生成博客_20240113.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。 <img src="自动提交生成博客/自动提交生成博客_20240113_1.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了 <img src="自动提交生成博客/自动提交生成博客_20240113_2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
     <title>资源收集</title>
     <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
     <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
@@ -57,6 +38,25 @@
       <tags>
         <tag>资源</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/01/13/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="自动提交生成博客/自动提交生成博客_20240113.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。 <img src="自动提交生成博客/自动提交生成博客_20240113_1.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了 <img src="自动提交生成博客/自动提交生成博客_20240113_2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>三种大气质量和一个公式的计算方法</title>
