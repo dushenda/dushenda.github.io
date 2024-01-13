@@ -40,8 +40,8 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/01/13/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <title>Obsidian+github+hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian+github+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
 <h3 id="node.js配置">node.js配置</h3>
 <h3 id="hexo主题配置">hexo主题配置</h3>
@@ -57,6 +57,9 @@
 <h2 id="dependabot配置">dependabot配置</h2>
 </blockquote>
 ]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
   </entry>
   <entry>
     <title>三种大气质量和一个公式的计算方法</title>
