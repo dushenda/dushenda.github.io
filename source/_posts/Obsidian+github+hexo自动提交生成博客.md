@@ -4,5 +4,14 @@
 
 ![](Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113.png)
 
+在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。
+![](Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113%201.png)
 
+配置Git设置地址等，这样就可以调用后台的git自动推送了
+![](Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113%202.png)
+
+> 需要注意的是：git需要首先被安装，并且配置到环境变量
+> 
 ## github配置
+### workflows配置
+## dependabot配置
