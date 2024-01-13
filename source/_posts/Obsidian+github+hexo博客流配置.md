@@ -1,4 +1,6 @@
 ## hexo配置
+### node.js配置
+### hexo主题配置
 ## Obsidian配置
 下载`Obsidian Git`插件，需要打开第三方插件按钮，下载插件。
 
