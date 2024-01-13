@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/未命名.md",
+                "file": "source/_posts/资源收集.md",
                 "mode": "source",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/未命名.md",
+                "file": "source/_posts/资源收集.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/未命名.md",
+                "file": "source/_posts/资源收集.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/未命名.md"
+                "file": "source/_posts/资源收集.md"
               }
             }
           }
@@ -152,7 +152,7 @@
   "active": "d60e1049d32c4b40",
   "lastOpenFiles": [
     "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
-    "source/_posts/未命名.md",
+    "source/_posts/资源收集.md",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃",
     "source/_posts/内核转储文件/Pasted image 20240113022132.png",
