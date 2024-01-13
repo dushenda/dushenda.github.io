@@ -7,7 +7,14 @@
 <h2 id="obsidian配置">Obsidian配置</h2>
 <p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
 <p><img src="Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。 <img src="Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113%201.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了 <img src="Obsidian+github+hexo自动提交生成博客/Obsidian+github+hexo自动提交生成博客-20240113%202.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
 <h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
 ]]></content>
   </entry>
   <entry>
