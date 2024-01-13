@@ -264,6 +264,7 @@
 <h3 id="判断服务正常开启">判断服务正常开启</h3>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
 <h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
 <h2 id="分析调试">分析调试</h2>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
 

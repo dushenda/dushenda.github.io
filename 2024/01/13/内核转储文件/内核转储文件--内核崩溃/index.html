@@ -27,7 +27,7 @@
 <meta property="og:description" content="Ubuntu 安装crash工具 1apt-get install linux-crashdump 检查kdump配置 12345678910111213kdump-config showDUMP_MODE:              kdumpUSE_KDUMP:              1KDUMP_COREDIR:          &#x2F;var&#x2F;crashcrashkernel addr:">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-13T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-13T15:29:29.317Z">
+<meta property="article:modified_time" content="2024-01-13T15:31:44.688Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="kernel">
 <meta property="article:tag" content="linux">
@@ -268,6 +268,7 @@
 <h3 id="判断服务正常开启">判断服务正常开启</h3>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
 <h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
 <h2 id="分析调试">分析调试</h2>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
 
