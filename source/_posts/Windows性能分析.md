@@ -12,7 +12,7 @@ tags:
 
 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。
 
-![](Windows运行参数分析/task_mana.png)
+![](taskmana.png)
 
 <!--more-->
 
@@ -42,5 +42,5 @@ tags:
 
 2. File->Open，打开前面保存的文件
    ![](Windows运行参数分析/wpa_file_in1.png)
-   ![](Windows运行参数分析/wpa_file_in_cpu.png)
-   ![](Windows运行参数分析/wpa_file_in_cpu_mem.png)
+   ![](wpafileincpu.png)
+   ![](wpafileincpumem.png)
