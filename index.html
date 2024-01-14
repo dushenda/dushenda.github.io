@@ -153,12 +153,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -190,6 +190,361 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/01/14/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/14/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/" class="post-title-link" itemprop="url">bcc初体验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-14T00:00:00+00:00">2024-01-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="安装">安装</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用">使用</h2>
+<p>funccount stackcount</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/" class="post-title-link" itemprop="url">正则表达式(一)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-14T00:00:00+00:00">2024-01-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="正则表达式一">正则表达式(一)</h1>
+<h2 id="元字符">元字符</h2>
+<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol type="1">
+<li><p><code>.</code>匹配所有字符</p></li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如',$,&gt;,+'等都是保持字符本意<code>\-</code>除外</p></li>
+<li><p><code>[^c1c2]c3c4</code>不匹配'c1,c2',即不带有c1,c2的c3c4字符串</p></li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w&#123;N&#125;</code>匹配N个连续字符</p></li>
+</ol>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
+<ol start="6" type="1">
+<li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W&#123;N&#125;</code>和<code>\w&#123;N&#125;</code>含义一致。</li>
+<li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
+<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
+<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
+<li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
+<li><code>\oN</code> 和<code>\o&#123;N&#125;</code>匹配八进制数N</li>
+<li><code>\xN</code>匹配<code>\x&#123;N&#125;</code>匹配十六进制数N</li>
+</ol>
+<h2 id="表达式">表达式</h2>
+<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
+<h2 id="转义字符">转义字符</h2>
+<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">转义字符</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>\a</code></td>
+<td style="text-align: center;">警告</td>
+<td style="text-align: center;"><code>char(7)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\b</code></td>
+<td style="text-align: center;">退格</td>
+<td style="text-align: center;"><code>char(8)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\f</code></td>
+<td style="text-align: center;">换页符</td>
+<td style="text-align: center;"><code>char(12)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\n</code></td>
+<td style="text-align: center;">换行符</td>
+<td style="text-align: center;"><code>char(10)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\r</code></td>
+<td style="text-align: center;">回车</td>
+<td style="text-align: center;"><code>char(13)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\t</code></td>
+<td style="text-align: center;">水平制表符</td>
+<td style="text-align: center;"><code>char(9)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\v</code></td>
+<td style="text-align: center;">垂直制表符</td>
+<td style="text-align: center;"><code>char(11)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\char</code></td>
+<td style="text-align: center;">任意特殊字符</td>
+<td style="text-align: center;">-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="限定符">限定符</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">限定符</th>
+<th style="text-align: center;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr *</td>
+<td style="text-align: center;">多次expr：0~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr ?</td>
+<td style="text-align: center;">一次expr：0~1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr +</td>
+<td style="text-align: center;">一次到多次expr：1~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr{m,n}</td>
+<td style="text-align: center;">m到n次expr：m~n</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr{m,}</td>
+<td style="text-align: center;">大于等于m次expr：m~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr{m}</td>
+<td style="text-align: center;">m次expr：=m</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr?</code>代表至多匹配1次</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr+</code>匹配一次或者连续多次</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr&#123;m,n&#125;</code>匹配m~n次，<code>&#123;0,1&#125;</code>=<code>'?'</code></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr&#123;m,&#125;</code>匹配≥m次，<code>&#123;0,&#125;</code>=<code>'*'</code>;<code>&#123;1,&#125;</code>=<code>'+'</code></p></li>
+<li><p><code>expr&#123;n&#125;</code>匹配n次，<code>n</code>=<code>&#123;n,n&#125;</code></p></li>
+</ul>
+<h2 id="模式">模式</h2>
+<p>表达式+限定词=模式</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 33%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">表达式+限定词</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr q</td>
+<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr q？</td>
+<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
+<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr q+</td>
+<td style="text-align: center;">主动表达式：最大程度的匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>&#123;&#125;</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
+<p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
+<h2 id="操作符的优先级">操作符的优先级</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">操作符</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">转义符</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">(), (?:), (?=), []</td>
+<td style="text-align: center;">圆括号和方括号</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
+<td style="text-align: center;">限定符</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">^, $, </td>
+<td style="text-align: center;">位置和顺序</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">|</td>
+<td style="text-align: center;">“或”操作</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1099,246 +1454,6 @@ t=\Delta day=(year_{now}-2060)\times365.2425
 <h2 id="参考文献">参考文献</h2>
 <p>[1] Roberto Grena Five new algorithms for the computation of sun position from 2010 to 2110 Solar Energy</p>
 <p>https://www.sciencedirect.com/science/article/pii/S0038092X12000400</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">三种大气质量和一个公式的计算方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-10-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-04T00:00:00+00:00">2019-10-04</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="三种大气质量和一个公式的计算方法">三种大气质量和一个公式的计算方法</h1>
-<h2 id="简介">简介</h2>
-<p>​ 整理的文献为 <em>Revised optical air mass tables and approximation formula</em> 。</p>
-<p>​ 文章一开始介绍了一个由 Karsten 在1965年发表的并且广泛被世界所采用的关于大气质量的近似公式，并且讨论了一些由于各个学科对于不同的物理量符号和术语的不同使得读者经常由此而困惑。</p>
-<p>​ 其后介绍了一个计算大气光学质量的近似公式，然后说明了在公式中存在的一种不定情况，之后又对这个近似公式用非线性最小二乘法进行修正得到了一组新的系数。后面又根据索引文献[1]文中也多次提到这篇文献，很多都是从这篇文献里面来的。</p>
-<p>​ 还有从一篇《基于遥感与地面监测数据的城市气溶胶定量反演研究》，作者是王耀庭，南京师范大学博士论文。</p>
-<h2 id="一个通用的计算公式">一个通用的计算公式</h2>
-<p><span class="math display">\[
-m(\gamma)=\frac{m_{abs}(\gamma)}{m_{abs}(90^{\circ})}
-\]</span></p>
-<p><span class="math display">\[
-m_{abs}(\gamma)=\rho_{0}\int^{\infty}_{0} \frac{\rho}{\rho_{0}}([1-[1+2\delta_{0}(1-\frac{\rho}{\rho_{0}})]]\times
-    [\frac{\cos \gamma}{1+\frac{h}{R}}]^{2})^{-\frac{1}{2}}dh
-\]</span> <span class="math inline">\(h\)</span>是相对于海平面的平均高度；</p>
-<p><span class="math inline">\(\rho=\rho(h)\)</span>，是在高度<span class="math inline">\(h\)</span>处的大气质量；</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/Table1.png" class="" title="表格1">
-<p>​ 根据以上的式子 (1),(2) 和已知的参数表1。要计算这个定积分，那就还需要知道 <span class="math inline">\(ρ\)</span>, 也就是 <span class="math inline">\(ρ(h)\)</span> 在高度 h 处的大气密度，但是我在文献中找不到，这是个问题，不知道是不是需要再去别的地方找这个 <span class="math inline">\(ρ\)</span>，看完了这篇文章之后，知道了这个 <span class="math inline">\(ρ\)</span> 还是没有找到，但是文章已经给出了计算得到的结果的表格。</p>
-<h2 id="近似计算公式和不同的系数">近似计算公式和不同的系数</h2>
-<p><span class="math display">\[
-f(\gamma)=[\sin \gamma+a(\gamma+b)^{-c}]^{-1}
-\]</span> <span class="math inline">\(\gamma\)</span>是高度角，单位是<span class="math inline">\(^\circ\)</span>;<span class="math inline">\(f(\gamma)\)</span>是用近似公式计算的<span class="math inline">\(m(\gamma)\)</span>;<span class="math inline">\(a,b,c\)</span>是式子的常数，<span class="math inline">\(a=0.1500，b=3.885^{\circ}，c=1.253;\)</span></p>
-<p>​ a,b,c这三个常数决定于最小二乘法的相对误差，也就是用前面的计算公式计算数据之后，用最小二乘法进行拟合，使用(3)的形式来计算三个常数。</p>
-<p>​ 文献后面又介绍了两个不同的参数组合，一个是根据非线性最小二乘法计算的 <span class="math inline">\(a=0.50572,b=6.07995°,\)</span> <span class="math inline">\(c=1.6364\)</span>；一个是根据 <span class="math inline">\(Bemporad\)</span> 的经典大气质量表确定的，<span class="math inline">\(a=0.6556,b=6.379°,c=1.757[1]\)</span>，其中文献的表中的 <span class="math inline">\(r(γ)\)</span> 是根据公式(4)计算的相对误差，用来衡量计算大气质量的相对误差。 <span class="math display">\[
-r(\gamma)=\frac{f(\gamma)-m(\gamma)}{m(\gamma)}
-\]</span></p>
-<h2 id="积分问题和解决">积分问题和解决</h2>
-<p>​ 对于公式(2)，积分会在 <span class="math inline">\(γ=0\)</span> 和 <span class="math inline">\(h\)</span> 接近于0的地方不定，在这种情况下，这个积分可以通过执行一个特殊的程序来进行计算，在参考文献[1]中有写这个程序。但是在计算的时候有个错误会混入，在地平线上的值 36.2648 会比实际的小 5% 左右。</p>
-<p>​ 举例而言，在 Link 和 Neuzil[3] 文章的表中所给出的地平线上的在1962年美国的标准大气的大气质量是38.16，这跟 1959 年 Karsen 用的 ARDC 模型十分接近。Snider 和 Goldman[4] 给出的关于 1962 年的模型的38.10也是高度相似。Treve[5] 使用1959年的 ARDC 模型，得到了在地平线上的相对大气质量分别是 $0.55μm $ 的38.11和在 <span class="math inline">\(0.70μm\)</span> 的38.08。</p>
-<p>​ 还有就是采用一种新的标准来却确定式子 (2) 中的参数会优于旧的模型，也就是最新的国际标准化组织的大气模型 (ISO Standrad Atmophere) 代替 ARDC 模型大气(由国际民航组织 ICAO 提出的)，这个仅有的变化也就是名义地球半径变为 <span class="math inline">\(R=6.356766×10^6m\)</span>。</p>
-<h2 id="一个计算公式">一个计算公式</h2>
-<p><span class="math display">\[
-m=\frac{1}{cos \frac{\pi \theta_0}{180^\circ}+0.15\times(93.885-\theta_0)^{-1.253}}
-\]</span></p>
-<p>​ 其中m是需要计算的大气质量，<span class="math inline">\(\theta_0\)</span> 是天顶角。</p>
-<h2 id="我要做的工作">我要做的工作</h2>
-<p>​ 在这篇文章里面，我要做的就是编写一个程序，根据文献中的大气质量近似公式(3)，并且用不同的参数组带入，将表格中自变量太阳高度角γ作为自变量带入近似公式计算，再与表格中所给的大气质量数进行作差比较，即验证这个算法是否真的符合实际，如果误差较小，则可以用到我们的项目中去。</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E8%A1%A8%E6%A0%BC2.png" class="" title="表格2">
-<p>​ 上面的这张表格也就说明了在文章计算的数据中天顶角 <span class="math inline">\(γ\)</span> 的取值变化，也就是计算的时候自变量所采用的值。过计算得到了一些结果。</p>
-<h2 id="结果">结果</h2>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E8%BF%90%E7%94%A8%E5%85%B6%E4%BB%96%E5%85%AC%E5%BC%8F%E8%AE%A1%E7%AE%97%E7%9A%84%E5%92%8C%E6%A0%87%E5%87%86%E5%A4%A7%E6%B0%94%E8%B4%A8%E9%87%8F.bmp" class="">
-<p>​ 图1 标准大气质量和用其他公式计算的大气质量</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9A%84%E5%A4%A7%E6%B0%94%E8%B4%A8%E9%87%8F.bmp" class="">
-<p>​ 图2 四种计算方法与标准大气质量</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E6%8B%9F%E5%90%88%E7%B3%BB%E6%95%B0%E8%AE%A1%E7%AE%97%E7%9A%84%E7%9B%B8%E5%AF%B9%E5%A4%A7%E6%B0%94%E8%B4%A8%E9%87%8F.bmp" class="">
-<p>​ 图3 三种拟合系数计算的大气质量</p>
-
-<p>​ 图4 误差曲线</p>
-<h2 id="分析">分析</h2>
-<p>​ 从上面的图中可以看到，用三种不同的系数计算的相对大气质量以及三组拟合系数的误差曲线，从图中可以看到，三者在天顶角大于 30° 之后都是差不多的经度，主要就是在30°之前的差异。而且可以看到在起始点的时候，第一组和第三组都有很大的误差，特别是第三组，误差都接近于4%，回想文章中提到的积分会在 <span class="math inline">\(γ=0\)</span> 和 h 接近于 0 的地方不定，需要查阅参考文献[1]来寻找解决方法。但是我看到这个计算的第二组拟合系数表现的很好，不知道是否可以用第二组数据来计算，或者是这三组数据都是在不同的情况下表现的经度水平会不一样。但是有个问题，我们没有找到拟合系数1的这条曲线，在下面会进行说明，实际上<u>它是和其他公式计算的这条曲线重合了</u>。</p>
-<p>​ 对比三种方法和一个计算公式，发现计算公式的误差在几个计算方法折中的位置，在角度 &gt;10° 之后，这个计算值的偏差与第二组拟合系数计算的误差一样，都是非常小的。</p>
-<p>​ 可以看看在高度角大于10°时候的表现。</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E9%AB%98%E5%BA%A6%E8%A7%92%E5%A4%A7%E4%BA%8E10%C2%B0%E7%9A%84%E5%A4%A7%E6%B0%94%E8%B4%A8%E9%87%8F%E8%AF%AF%E5%B7%AE.bmp" class="">
-<p>​ 图 5 在高度角大于10°时候计算大气质量的误差</p>
-<p>​ 这里没有找到拟合系数1这条曲线，是因为他的变化与公式计算的是一模一样的，两条线是重合的。</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E6%89%BE%E6%8B%9F%E5%90%88%E7%B3%BB%E6%95%B01%E8%BF%99%E6%9D%A1%E7%BA%BF.bmp" class="">
-<p>​ 图 6 拟合系数1和公式计算的天顶角大于10°的误差曲线</p>
-<p>​ 这说明，其实拟合系数1也就是将天顶角计算的公式做了稍微的变化，就得到了太阳高度角的，<u>本质上，这两个公式是一模一样的</u>，只是取得系数不同罢了。</p>
-<h2 id="新给的数据的计算">新给的数据的计算</h2>
-<p>​ 在之后使用已经写好的这几种计算方法来计算新的数据值，数据可以在 ‘1.xlsx’ 表格中找到。</p>
-<img src="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/8%E6%9C%886%E5%8F%B7%E5%88%B08%E5%8F%B7%E8%AE%A1%E7%AE%97%E7%9A%84%E5%A4%A7%E6%B0%94%E8%B4%A8%E9%87%8F%E5%80%BC.bmp" class="">
-<p>​ 图 7 根据所给的数据计算的三天的大气质量数值</p>
-<p>​ 可以看到，其实一天内的天顶角并不是全是 0~90° 的，这几天维持在 40° 以下，这时候，查阅标准数据也是差不多在这样的数据范围。</p>
-<h2 id="参考文献">参考文献</h2>
-<p>[1] Kasten,"A New Table and Approximation Formula for the Relative Optical Air Mass",Arch.Meteorol.Geophys.Bioklimatol.Ser.B 14,206-223(1965). [2] R.A Miner,K.S.W.Chamption,and H.L.Pond,The ARDC Model Atmosphere,1959,Air Force Surveys in Geophysics 11(AFCRL,1959) [3] F.Link and L.Neuzil,Table of Light Trajectories in the Terrestrial Atmosphere(Hermann,Paris,1969) [4] D.E Snier and A. Goldman,Refractive Effects in Remote Sensing of Atmosphere with Infrared Transmission Spectroscopy,(Ballistic Research Labratories,June 1975) [5] Y. M. Treve, New Values of the Optical Air Mass and the Refraction and Comparison with Previous Tables," in Proceed-ings, Second Tropospheric Refraction Effects Technical ReviewMeeting, Technical Documentary Rep. ESD-TDR 64-103, May1964 (National Technical Information Service Order AD-442626), pp.5-391. [6] International Organization for Standardization,Standard Atmosphere,International Standard ISO253(1972) [7] S.L.Valley,Handbook of Geophysics and Space Physics (AFCRL,1965), pp.23. [8] W.H.Jefferys,M.J.Fitzpatrick,B.E.McArthur,andJ.E. McCartney, GaussFit:A System for Least Squares and RobustEstimation (U. Texas at Austin, 1989). [9] A.T.Young,Observational Technique and Data Reduction," inle to Methods of Experimental Physics(Vol. 12, Astrophysics; Partrmly A:Optical and Infrared),N,Carleton,Ed.(Academic, New York, 1974),p.150.</p>
-<h2 id="代码">代码</h2>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 主函数</span></span><br><span class="line">clear;clc;</span><br><span class="line"><span class="comment">%x的步长选取</span></span><br><span class="line">x1=<span class="number">0</span>:<span class="number">0.1</span>:<span class="number">20</span>;</span><br><span class="line">x2=<span class="number">20.2</span>:<span class="number">0.2</span>:<span class="number">30</span>;</span><br><span class="line">x3=<span class="number">30.5</span>:<span class="number">0.5</span>:<span class="number">55</span>;</span><br><span class="line">x4=<span class="number">56</span>:<span class="number">1</span>:<span class="number">90</span>;</span><br><span class="line">x=[x1,x2,x3,x4];</span><br><span class="line"><span class="comment">%定义Latxe字符</span></span><br><span class="line"><span class="built_in">gamma</span>=texlabel(<span class="string">&#x27;gamma&#x27;</span>);flambda=texlabel(<span class="string">&#x27;f(lambda)&#x27;</span>);</span><br><span class="line">txt = texlabel(<span class="string">&#x27;f(lambda)=[sin gamma+a(gamma+b)^&#123;-c&#125;]^&#123;-1&#125;&#x27;</span>);</span><br><span class="line"><span class="comment">%输入标准数据，画标准数据图像</span></span><br><span class="line">data=xlsread(<span class="string">&#x27;datain.xlsx&#x27;</span>);</span><br><span class="line">datax=data(:,<span class="number">1</span>);px=datax;</span><br><span class="line">datay=data(:,<span class="number">2</span>);py=datay;</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"><span class="built_in">plot</span>(datax,datay);grid on;box off;</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(&#123;<span class="string">&#x27;标准的相对大气质量&#x27;</span>;flambda&#125;);</span><br><span class="line"><span class="comment">% print(&#x27;Standard&#x27;,&#x27;-deps&#x27;);</span></span><br><span class="line"><span class="comment">%调用三个计算函数</span></span><br><span class="line">airMass1=massCal1(x);</span><br><span class="line">airMass2=massCal2(x);</span><br><span class="line">airMass3=massCal3(x);</span><br><span class="line">airMass4=massCal4(x);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">plot</span>(datax,airMass4);</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(&#123;<span class="string">&#x27;其他公式计算的相对大气质量&#x27;</span>;flambda&#125;);</span><br><span class="line">suptitle(<span class="string">&#x27;相对大气质量与高度角的关系&#x27;</span>);grid on;box off</span><br><span class="line"></span><br><span class="line"><span class="built_in">figure</span>(<span class="number">2</span>);</span><br><span class="line">set(<span class="built_in">figure</span>(<span class="number">2</span>),<span class="string">&#x27;PaperSize&#x27;</span>,[<span class="number">42</span>,<span class="number">60</span>]);</span><br><span class="line">suptitle([<span class="string">&#x27;\fontsize&#123;14&#125;&#x27;</span>,txt]);</span><br><span class="line">subplot(<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,airMass1);grid on;box off;</span><br><span class="line">text(<span class="number">60</span>,<span class="number">30</span>,<span class="string">&#x27;a=0.1500,b=3.885,c=1.253&#x27;</span>);</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(&#123;<span class="string">&#x27;计算的相对大气质量&#x27;</span>;flambda&#125;);</span><br><span class="line">subplot(<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,airMass2);grid on;box off;</span><br><span class="line">text(<span class="number">60</span>,<span class="number">30</span>,<span class="string">&#x27;a=0.50572,b=6.07995,c=1.6364&#x27;</span>);</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(&#123;<span class="string">&#x27;计算的相对大气质量&#x27;</span>;flambda&#125;);</span><br><span class="line">subplot(<span class="number">3</span>,<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,airMass3);grid on;box off;</span><br><span class="line">text(<span class="number">60</span>,<span class="number">30</span>,<span class="string">&#x27;a=0.6556,b=6.379,c=1.757&#x27;</span>);</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(&#123;<span class="string">&#x27;计算的相对大气质量&#x27;</span>;flambda&#125;);</span><br><span class="line">set(gcf, <span class="string">&#x27;position&#x27;</span>, [<span class="number">1920</span>/<span class="number">4</span> <span class="number">1080</span>/<span class="number">4</span> <span class="number">1920</span>/<span class="number">2</span> <span class="number">1080</span>/<span class="number">1.5</span>]);</span><br><span class="line"><span class="comment">% print(&#x27;Calculate&#x27;,&#x27;-deps&#x27;);</span></span><br><span class="line"><span class="comment">%画三个函数的误差曲线</span></span><br><span class="line">datay=datay&#x27;;</span><br><span class="line">delta1 = (airMass1-datay)./datay*<span class="number">100</span>;</span><br><span class="line">delta2 = (airMass2-datay)./datay*<span class="number">100</span>;</span><br><span class="line">delta3 = (airMass3-datay)./datay*<span class="number">100</span>;</span><br><span class="line">delta4 = (airMass4-datay)./datay*<span class="number">100</span>;</span><br><span class="line"><span class="built_in">figure</span>(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,delta1);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,delta2,<span class="string">&#x27;--&#x27;</span>);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,delta3,<span class="string">&#x27;:&#x27;</span>);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,delta4);grid on;box off;</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(<span class="string">&#x27;三种大气质量的误差(%)&#x27;</span>);</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;第1组拟合系数&#x27;</span>,<span class="string">&#x27;第2组拟合系数&#x27;</span>,<span class="string">&#x27;第3组拟合系数&#x27;</span>,<span class="string">&#x27;其他公式计算&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;几种计算方法的误差&#x27;</span>);</span><br><span class="line"><span class="comment">% print(&#x27;Error&#x27;,&#x27;-deps&#x27;);</span></span><br><span class="line"><span class="built_in">figure</span>(<span class="number">4</span>)</span><br><span class="line"><span class="built_in">plot</span>(datax,datay);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,airMass1);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,airMass2);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,airMass3);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,airMass4);grid on;box off;</span><br><span class="line">xlabel([<span class="string">&#x27;高度角&#x27;</span>,<span class="built_in">gamma</span>]);ylabel(<span class="string">&#x27;相对大气质量&#x27;</span>);</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;实际的&#x27;</span>,<span class="string">&#x27;方法1&#x27;</span>,<span class="string">&#x27;方法2&#x27;</span>,<span class="string">&#x27;方法三&#x27;</span>,<span class="string">&#x27;其他方法&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;几种方法和实际的相对大气质量&#x27;</span>);</span><br><span class="line"></span><br><span class="line">[~,Date,~] = xlsread(<span class="string">&#x27;1.xlsx&#x27;</span>,<span class="string">&#x27;A2:A105&#x27;</span>);</span><br><span class="line">Date = datetime(Date,<span class="string">&#x27;InputFormat&#x27;</span>,<span class="string">&#x27;dd/MM/yyyy&#x27;</span>);</span><br><span class="line">Date.Format = <span class="string">&#x27;yyyy-MM-dd&#x27;</span>;</span><br><span class="line">Time = days(xlsread(<span class="string">&#x27;1.xlsx&#x27;</span>,<span class="string">&#x27;B2:B105&#x27;</span>));</span><br><span class="line">Time.Format = <span class="string">&#x27;hh:mm:ss&#x27;</span>;</span><br><span class="line">datetime = Date+Time;</span><br><span class="line">datetime.Format = <span class="string">&#x27;yyyy-MM-dd hh:mm:ss&#x27;</span>;</span><br><span class="line">xxx=xlsread(<span class="string">&#x27;1.xlsx&#x27;</span>,<span class="string">&#x27;C2:C105&#x27;</span>);</span><br><span class="line">xx=<span class="number">90</span>-xxx;</span><br><span class="line">airMassx1=massCal1(xx);</span><br><span class="line">airMassx2=massCal2(xx);</span><br><span class="line">airMassx3=massCal3(xx);</span><br><span class="line">airMassx4=massCal4(xx);</span><br><span class="line">output=[airMassx1,airMassx2,airMassx3,airMassx4];</span><br><span class="line">xlswrite(<span class="string">&#x27;output.xlsx&#x27;</span>,output);</span><br><span class="line"></span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line">datetime = datenum(datetime);</span><br><span class="line"><span class="built_in">plot</span>(datetime,airMassx1);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(datetime,airMassx2);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(datetime,airMassx3);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(datetime,airMassx4);grid on;box off;<span class="built_in">hold</span> on</span><br><span class="line">dateFormat = <span class="string">&#x27;yy-mm-dd HH:MM:SS&#x27;</span>;</span><br><span class="line">datetick(<span class="string">&#x27;x&#x27;</span>,dateFormat)</span><br><span class="line"><span class="comment">%plot(px,py);grid on;box off;</span></span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;计算方法1&#x27;</span>,<span class="string">&#x27;计算方法2&#x27;</span>,<span class="string">&#x27;计算方法3&#x27;</span>,<span class="string">&#x27;其他方法计算的&#x27;</span>);</span><br><span class="line">xlabel(<span class="string">&#x27;时间&#x27;</span>);ylabel(<span class="string">&#x27;大气质量&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;新给的数据的高度角计算的值&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p = (x&gt;<span class="number">10</span>);</span><br><span class="line">x = x(p);</span><br><span class="line">delta1 = delta1(p);</span><br><span class="line">delta2 = delta2(p);</span><br><span class="line">delta3 = delta3(p);</span><br><span class="line">delta4 = delta4(p);</span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line"><span class="built_in">plot</span>(x,delta1);<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,delta2);<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,delta3);<span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,delta4);grid on;box off;</span><br><span class="line">xlabel(<span class="string">&#x27;高度角&#x27;</span>);ylabel(<span class="string">&#x27;大气质量计算偏差&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;高度角 &gt;10° 时大气质量计算偏差&#x27;</span>);</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;拟合系数1&#x27;</span>,<span class="string">&#x27;拟合系数2&#x27;</span>,<span class="string">&#x27;拟合系数3&#x27;</span>,<span class="string">&#x27;公式计算&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,delta1);box off;grid on</span><br><span class="line">xlabel(<span class="string">&#x27;高度角&#x27;</span>);ylabel(<span class="string">&#x27;大气质量计算偏差&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;拟合系数1计算&#x27;</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,delta4);box off;grid on</span><br><span class="line">xlabel(<span class="string">&#x27;高度角&#x27;</span>);ylabel(<span class="string">&#x27;大气质量计算偏差&#x27;</span>);</span><br><span class="line">title(<span class="string">&#x27;公式计算&#x27;</span>);</span><br><span class="line">suptitle(<span class="string">&#x27;高度角 &gt;10° 时大气质量计算偏差&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 计算方法1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal1</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal1(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.1500</span>;b=<span class="number">3.885</span>;c=<span class="number">1.253</span>;</span><br><span class="line"><span class="comment">% gamma=gamma*pi/180;%b=b*pi/180;</span></span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 计算方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal2</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal2(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.50572</span>;b=<span class="number">6.07995</span>;c=<span class="number">1.6364</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 计算方法3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal3</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.6556</span>;b=<span class="number">6.379</span>;c=<span class="number">1.757</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/" class="post-title-link" itemprop="url">考拉兹猜想</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-09-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-25T00:00:00+00:00">2019-09-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">\[
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-\]</span> 通过对 <span class="math inline">\(x\)</span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline">\(n\)</span> ，下降最快的也就是每次下降 <span class="math inline">\(\frac{1}{2}\)</span>，这个下降速度对于的计算时间是 <span class="math inline">\(\log n\)</span> 。对于上界，用 <span class="math inline">\(MATLAB​\)</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline">\(n_0\)</span> 的步长与 <span class="math inline">\(n\)</span> 值变化</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp" class="">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp" class="" title="7~10">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/11~14.bmp" class="" title="11~14">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/15~18.bmp" class="" title="15~18">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/19~22.bmp" class="" title="19~22">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/23~26.bmp" class="" title="23~26">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/27~30.bmp" class="" title="27~30">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/31~34.bmp" class="" title="31~34">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/35~38.bmp" class="" title="35~38">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/39~42.bmp" class="" title="39~42">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/43~46.bmp" class="" title="43~46">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/47~50.bmp" class="" title="47~50">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/51~54.bmp" class="" title="51~54">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/55~58.bmp" class="" title="55~58">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/242~245.bmp" class="" title="242~245">
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline">\(n_0\)</span> 与计算次数分布曲线</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp" class="" title="次数与初值">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=400.bmp" class="">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=1000.bmp" class="" title="n0&#x3D;1000">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp" class="" title="n0&#x3D;5000">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp" class="" title="n0&#x3D;10000">
 
       
     </div>
