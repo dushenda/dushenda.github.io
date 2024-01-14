@@ -26,19 +26,19 @@
 <meta property="og:site_name" content="dushenda">
 <meta property="og:description" content="论文笔记-场地自动化定标方法研究及应用 辐射定标的意义 卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。 辐射定标 辐射校正 遥感辐射定标方法 因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F2.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E5%8F%8D%E5%B0%84%E7%8E%87%E5%9F%BA%E6%B3%95.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E9%AB%98%E5%85%89%E8%B0%B1%E5%9C%B0%E8%A1%A8%E5%8F%8D%E5%B0%84%E7%8E%87.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%AF%8F%E6%97%A5%E7%9A%84%E9%80%9A%E9%81%93%E5%8F%8D%E5%B0%84%E7%8E%87.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%B5%81%E7%A8%8B.bmp">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F2.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E5%8F%8D%E5%B0%84%E7%8E%87%E5%9F%BA%E6%B3%95.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E9%AB%98%E5%85%89%E8%B0%B1%E5%9C%B0%E8%A1%A8%E5%8F%8D%E5%B0%84%E7%8E%87.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%AF%8F%E6%97%A5%E7%9A%84%E9%80%9A%E9%81%93%E5%8F%8D%E5%B0%84%E7%8E%87.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%B5%81%E7%A8%8B.bmp">
 <meta property="article:published_time" content="2024-01-14T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-14T11:39:03.141Z">
+<meta property="article:modified_time" content="2024-01-14T11:40:36.340Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="光学">
 <meta property="article:tag" content="遥感">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/">
@@ -169,7 +169,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -270,7 +270,7 @@
 <li>灯+漫反射板</li>
 </ol>
 <figure>
-<img src="论文笔记/星上定标几种方式1.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
+<img src="星上定标几种方式1.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
 </figure>
 <p>定标灯在卫星的内部，可以通过由地面的指令频繁进行定标。但是由于灯的光谱和强度与太阳的光谱差别较大，无法真实反映整个系统的变化（那有没有实现复制太阳光谱的生产灯的技术呢？），所以光谱匹配校正增加了定标的不确定性，并且灯也是仪器，也会有一定的衰变，所以精度也会下降。</p>
 <ol start="3" type="1">
@@ -278,7 +278,7 @@
 <li>太阳+衰减板+漫反射板</li>
 </ol>
 <figure>
-<img src="论文笔记/星上定标几种方式2.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
+<img src="星上定标几种方式2.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
 </figure>
 <p>借助太阳的话，就能实现光源的匹配，也就是光源的误差完全被消除了，但是由于需要得到太阳光，所以漫反射板就会暴露在卫星外部。漫反射板材料会在强紫外环境下分解，并且太空中的杂质也容易粘到漫反射板上。衰减板的作用是衰减紫外辐射，减缓漫反射板的分解。</p>
 <p>所以，卫星内定标和卫星外定标都有各自的优缺点，卫星内定标主要问题是光源不匹配造成的误差，卫星外定标的主要问题是漫反射板分解造成的误差。</p>
@@ -296,7 +296,7 @@
 <h4 id="概览">概览</h4>
 <p>首先定标需要得到的结果是计算出辐亮度，把这个辐亮度输入辐射传输模型里面，得到一个本来应该是卫星的辐亮度，叫做表观辐亮度，这个表观辐亮度与卫星上的遥感器的辐亮度比较，就可以得到定标系数，这就完成了定标。</p>
 <p>人工定标可以得到实时的地表反射率，所以根据定标流程图，直接计算代入辐射传输模型就可以了。</p>
-<p>具体过程如下图所示： <img src="论文笔记/反射率基法.png" alt="反射率基法" /> 从上图可以看到，通过地表反射率、大气参数和气象观测（主要做辅助功能）可以输入辐射传输模型，然后再加上太阳传感器几何测量（得到一些角度值）就可以计算出卫星上面的遥感平台的表观辐亮度，通过与卫星影像（<code>.hdf</code>等带有大量信息的格式文件）做比较就可以得到定标系数。</p>
+<p>具体过程如下图所示： <img src="反射率基法.png" alt="反射率基法" /> 从上图可以看到，通过地表反射率、大气参数和气象观测（主要做辅助功能）可以输入辐射传输模型，然后再加上太阳传感器几何测量（得到一些角度值）就可以计算出卫星上面的遥感平台的表观辐亮度，通过与卫星影像（<code>.hdf</code>等带有大量信息的格式文件）做比较就可以得到定标系数。</p>
 <p>对于第<span class="math inline">\(i\)</span>波段光的表观反射率（卫星的表观反射率，但是我觉得好像没什么用，因为只需要测卫星的表观辐亮度就够了吧）有 <span class="math display">\[
 \rho^*_i(\theta_v,\theta_s,\phi_v,\phi_s)=\frac{\pi d^2L_i(\theta_v,\theta_s,\phi_v,\phi_s)}{E_{0i\cos\theta}}
 \]</span> <span class="math inline">\(\rho^*_i(\theta_v,\theta_s,\phi_v,\phi_s)\)</span>是对于第<span class="math inline">\(i\)</span>波段光的地表反射率 <span class="math inline">\(\theta_s\)</span>是太阳的天顶角 <span class="math inline">\(\phi_s\)</span>是太阳的方位角 <span class="math inline">\(\theta_v\)</span>是观测天顶角 <span class="math inline">\(\phi_v\)</span>是观测方位角 <span class="math inline">\(L_i(\theta_v,\theta_s,\phi_v,\phi_s)\)</span>是表观辐亮度 <span class="math inline">\(E_{0i}\)</span>是日地平均距离处大气层顶的太阳辐照度 <span class="math inline">\(d​\)</span>是日地平均距离与实际距离的比值</p>
@@ -384,7 +384,7 @@ W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
 <p><span class="math inline">\(\sigma_i\)</span>是<span class="math inline">\(\rho_i\)</span>的标准偏差（这个应该是通道反射率，即由 ATR 测量的八个通道的反射率）</p>
 <p><span class="math inline">\(k​\)</span>是平移的大小</p>
 <p><span class="math inline">\(W\)</span>是用来确定<span class="math inline">\(k\)</span>的，<span class="math inline">\(W\)</span>的取值最小处就是<span class="math inline">\(k\)</span>的取值处</p>
-<p><img src="论文笔记/高光谱地表反射率.png" /></p>
+<p><img src="高光谱地表反射率.png" /></p>
 <p>从上图看出，红线就是SVC测量的值，这个值隔一段时间测量一次即可，八个黑点就是ATR在当前时刻测量的值，通过前面的，通过公式（6）的计算得到平移距离<span class="math inline">\(k\)</span>之后，将红线平移就可以得到蓝线（即目标曲线）。</p>
 <p>这个时候完成的工作就是得到了实时高光谱反射率。是地面的反射率，但是还有一个问题，就是现在得到的地面反射率，是入射角为卫星过顶时刻的太阳天顶角，出射方向是测量时刻的仪器对应的观测角度，现在需要的是得到卫星过顶时刻的出射角，所以还需要进行一次BRDF校正，这次是对出射方向做的BRDF校正，(这个公式怎么写？？)</p>
 <p><span class="math display">\[
@@ -398,7 +398,7 @@ W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
 <p><span class="math inline">\(\rho(\lambda)\)</span>是得到的高光谱曲线</p>
 <p><span class="math inline">\(R(\lambda)​\)</span>是对应<span class="math inline">\(i​\)</span>通道的光谱响应函数</p>
 <p>这样也就得到了对应卫星的<span class="math inline">\(i\)</span>通道的经过BRDF校正之后的地表反射率，当然，这时候的时刻就是卫星过顶时刻的表观反射率。</p>
-<p><img src="论文笔记/每日的通道反射率.png" /></p>
+<p><img src="每日的通道反射率.png" /></p>
 <p>即完成了流程图中的<code>Surface Reflectance measurement</code>参数就得到了。</p>
 <h4 id="大气参数">大气参数</h4>
 <table>
@@ -444,7 +444,7 @@ W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
 <h4 id="定标">定标</h4>
 <p>得到表观反射率TOA（Top Of Atmosphere）之后，得到表观反射率和表观辐亮度，与卫星的实测的反射率和辐亮度做比较就可以得到定标系数。</p>
 <h3 id="小结">小结</h3>
-<p><img src="论文笔记/流程.bmp" /></p>
+<p><img src="流程.bmp" /></p>
 <p>其中比较重要的操作是在<code>数据处理2</code>中的三步 1. BRDF入射角校正 2. 光谱扩展 3. BRDF出射校正</p>
 <p>下面就来看一下这些处理。</p>
 <h3 id="计算中的一些处理">计算中的一些处理</h3>
