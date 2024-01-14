@@ -1,3 +1,11 @@
+---
+title: Windows性能分析
+date: 2024-01-14
+tags:
+	- OS
+	- 操作系统
+	- Windows
+---
 # Windows运行参数分析
 
 这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。
