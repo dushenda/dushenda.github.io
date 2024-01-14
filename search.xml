@@ -111,7 +111,7 @@
   </entry>
   <entry>
     <title>现代操作系统-进程与线程16~30</title>
-    <url>/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
+    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
     <content><![CDATA[<blockquote>
 <p>以下答案均不代表正确答案，仅代表作者观点</p>
 </blockquote>
@@ -120,7 +120,6 @@
 <p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
 <li></li>
 </ul>
-<h5 id="section"></h5>
 ]]></content>
       <tags>
         <tag>OS</tag>
