@@ -287,12 +287,12 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
   </entry>
   <entry>
     <title>立体角</title>
-    <url>/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/</url>
+    <url>/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/</url>
     <content><![CDATA[<h1 id="立体角">立体角</h1>
 <p>在谈立体角之前，我们先来复习一下球坐标及其面积分。</p>
 <h2 id="球面坐标系及积分">球面坐标系及积分</h2>
 <h3 id="球坐标系">球坐标系</h3>
-<img src="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere1.png" class="" title="sphere1">
+<img src="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere1.png" class="" title="sphere1">
 <p>如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用<span class="math inline">\((\rho,\phi,\theta)\)</span>来描述，与笛卡尔坐标系之间的转化如下</p>
 <p><span class="math display">\[
 x=\rho\sin\phi\cos\theta\\
@@ -301,17 +301,17 @@ z=\cos\phi
 \]</span></p>
 <p>上式就是球坐标和笛卡尔坐标之间的转化，这个转化很容从图上看出来。</p>
 <h3 id="球面积分">球面积分</h3>
-<img src="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere3.png" class="" title="sphere2">
+<img src="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere3.png" class="" title="sphere2">
 <p>从上图可以看出，面积的微元，长为<span class="math inline">\(\rho d\phi\)</span>，因为这个方向上的长度为<span class="math inline">\(\rho\phi\)</span>，所以微元为<span class="math inline">\(\rho d\phi\)</span>；宽为<span class="math inline">\(\rho\sin\phi d\theta\)</span>，这是因为首先要投影到<span class="math inline">\(xy\)</span>平面，在这个平面上的长度为<span class="math inline">\(\rho \sin\phi\)</span>，从图上可以看出，这个长度也就是宽，所以微元的宽为<span class="math inline">\(\rho \sin\phi d\phi\)</span>。所以球面积分的微元面积<span class="math inline">\(\rho^2 \sin\phi d\phi d\theta​\)</span>。</p>
 <ul>
 <li>来看几个例子
 <ol type="1">
 <li><p>球的表面积计算</p>
-<img src="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere4.png" class="" title="shpere4">
+<img src="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere4.png" class="" title="shpere4">
 <p>表面积的求法，就是对于微元而言，<span class="math inline">\(\phi\)</span>的取值为<span class="math inline">\(0\)</span>到<span class="math inline">\(2\pi\)</span>，<span class="math inline">\(\theta\)</span>的取值也是<span class="math inline">\(0\)</span>到<span class="math inline">\(2\pi\)</span>。<span class="math inline">\(\rho\)</span>就是球的半径。 所以微元<span class="math inline">\(dS=\rho^2\sin\phi d\phi d\theta\)</span>。表面积的求法如下： <span class="math display">\[
 S=\int_0^{2\pi}d\theta\int_0^{2\pi}\rho^2\sin\phi d\phi
 \]</span> <span class="math inline">\(\rightarrow 2\pi\rho^2(-\cos\theta)|^{2\pi}_0=4\pi\rho^2​\)</span>，这就是很熟悉的圆表面积计算公式了。<span class="math inline">\(S_圆=4\pi r^2​\)</span>，这个公式应该在高中时候就经常使用了。</p></li>
-<li><p>球帽表面积的计算 <img src="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/1.png" class="" title="shpere5"></p></li>
+<li><p>球帽表面积的计算 <img src="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/1.png" class="" title="shpere5"></p></li>
 </ol>
 蓝色部分就叫做球帽，计算这一部分的表面积。首先面积分的微元跟之前的一样，为<span class="math inline">\(dS=\rho^2\sin\theta\phi d\phi d\theta\)</span>，不过这个图上的角度标的不太一样，那么改变一下，把<span class="math inline">\(xy\)</span>平面的角度设为<span class="math inline">\(\phi\)</span>，把与<span class="math inline">\(z\)</span>轴之间的夹角设为<span class="math inline">\(\alpha\)</span>。很容易从图上看出，<span class="math inline">\(\phi\in[0,2\phi],\alpha\in[0,\theta]\)</span>，这边要注意这个<span class="math inline">\(\alpha\)</span>，它的取值是从<span class="math inline">\(z\)</span>轴为<span class="math inline">\(0\)</span>，到<span class="math inline">\(xy\)</span>平面为<span class="math inline">\(\frac{\pi}{2}\)</span>。所以其表面积为</li>
 </ul>
@@ -322,7 +322,7 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
 <p>球面坐标复习到这儿，下面就进入正题了。 ## 立体角</p>
 <h3 id="角度">角度</h3>
 <p>在介绍立体角之前，也先做个铺垫，讲一下角度。</p>
-<img src="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/angle1.png" class="">
+<img src="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/angle1.png" class="">
 <p>如上图所示，平面角，简称角度定义为圆的弧长与半径之间的比值，单位为弧度(<span class="math inline">\(rad\)</span>)。 <span class="math display">\[
 \theta=\frac{l}{r}
 \]</span></p>
@@ -332,7 +332,7 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
 \Omega=\frac{S}{r^2}
 \]</span></p>
 <p>反映的是从该点出发，向球面区域张成的视野大小，是平面角的三维扩展。</p>
-<img src="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/angle2.jpg" class="">
+<img src="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/angle2.jpg" class="">
 <p>接上面计算的表面积的例子。</p>
 <ol type="1">
 <li>球的立体角 球的表面积为<span class="math inline">\(S=4\pi r^2​\)</span>，球的半径为<span class="math inline">\(r​\)</span>，立体角为<span class="math inline">\(\Omega=\frac{S}{r^2}=4\pi​\)</span>，这也是最大的立体角。</li>
@@ -363,28 +363,10 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
 <h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
 <p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr class="header">
-<th>输</th>
-<th>出</th>
-<th>的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>文</td>
-<td>本</td>
-<td>文件：由ASCII码组成的文件，可以由文本编辑器直接打开</td>
-</tr>
-<tr class="even">
-<td>二</td>
-<td>进</td>
-<td>制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
+<blockquote>
+<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
+</blockquote>
 <h3 id="链接器链接生成eof">链接器链接生成eof</h3>
 <p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
 <p>按照前面的步骤（预编译<span class="math inline">\(\rightarrow\)</span>C++编译<span class="math inline">\(\rightarrow​\)</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>

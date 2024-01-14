@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/%E6%96%87%E4%BB%B6%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B.png">
 <meta property="article:published_time" content="2024-01-14T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-14T11:30:01.367Z">
+<meta property="article:modified_time" content="2024-01-14T11:32:42.762Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="编译">
 <meta property="article:tag" content="C">
@@ -262,28 +262,10 @@
 <h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
 <p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr class="header">
-<th>输</th>
-<th>出</th>
-<th>的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>文</td>
-<td>本</td>
-<td>文件：由ASCII码组成的文件，可以由文本编辑器直接打开</td>
-</tr>
-<tr class="even">
-<td>二</td>
-<td>进</td>
-<td>制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
+<blockquote>
+<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
+</blockquote>
 <h3 id="链接器链接生成eof">链接器链接生成eof</h3>
 <p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
 <p>按照前面的步骤（预编译<span class="math inline">\(\rightarrow\)</span>C++编译<span class="math inline">\(\rightarrow​\)</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
@@ -315,8 +297,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/01/14/%E7%AB%8B%E4%BD%93%E8%A7%92/" rel="next" title="立体角">
-                  立体角 <i class="fa fa-angle-right"></i>
+                <a href="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/" rel="next" title="现代操作系统-进程与线程1~15">
+                  现代操作系统-进程与线程1~15 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
