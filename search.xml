@@ -422,7 +422,7 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
       </tags>
   </entry>
   <entry>
-    <title>Obsidian+github+hexo博客流配置</title>
+    <title>Obsidian和github和hexo博客流配置</title>
     <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
 <h3 id="node.js配置">node.js配置</h3>
