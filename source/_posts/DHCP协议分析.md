@@ -8,6 +8,7 @@ tags:
 ## 协议流程
 ## 仿真
 ### 组网
+
 ![](Pastedimage20231215004144.png)
 
 ### 路由设置
@@ -34,4 +35,5 @@ tags:
 ![](Pastedimage20231215010535.png)
 
 ![](Pastedimage20231215010615.png)
+
 ### dhcp offer
