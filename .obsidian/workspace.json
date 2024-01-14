@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/about/index.md",
                 "mode": "source",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/about/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/about/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/resume/index.md"
+                "file": "source/about/index.md"
               }
             }
           }
@@ -151,6 +151,7 @@
   },
   "active": "c3ea703337e0cab9",
   "lastOpenFiles": [
+    "source/resume/index.md",
     "source/about/index.md",
     "source/_posts/SSD学习（一）.md",
     "source/_posts/Windows性能分析.md",
@@ -159,7 +160,6 @@
     "source/_posts/bcc初体验.md",
     "source/_posts/资源收集.md",
     "source/_posts/正则表达式(一).md",
-    "source/resume/index.md",
     "source/images/safari-pinned-tab.svg",
     "source/images/favicon-32x32.png",
     "source/images/favicon-16x16.png",
