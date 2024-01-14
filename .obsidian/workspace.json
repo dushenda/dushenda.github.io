@@ -4,18 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "90ceaf4c4e213e5a",
+        "id": "e9958522af2b975e",
         "type": "tabs",
         "children": [
           {
-            "id": "00e9f111084f9059",
+            "id": "32d361126c7ca614",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/DHCP协议分析.md",
-                "mode": "preview",
-                "source": true
+                "file": "source/resume/index.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/DHCP协议分析.md",
+                "file": "source/resume/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/DHCP协议分析.md",
+                "file": "source/resume/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/DHCP协议分析.md"
+                "file": "source/resume/index.md"
               }
             }
           }
@@ -149,13 +149,18 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "00e9f111084f9059",
+  "active": "32d361126c7ca614",
   "lastOpenFiles": [
+    "source/images/safari-pinned-tab.svg",
+    "source/images/favicon-32x32.png",
+    "source/images/favicon-16x16.png",
+    "source/images/apple-touch-icon.png",
+    "source/about/index.md",
+    "source/_posts/DHCP协议分析.md",
     "source/_posts/DHCP协议分析/Pastedimage20231215004416.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215005008.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215010535.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215010615.png",
-    "source/_posts/DHCP协议分析.md",
     "source/_posts/bcc初体验.md",
     "source/_posts/DHCP协议分析/Pastedimage20231215004144.png",
     "source/_posts/DHCP协议分析",
@@ -172,10 +177,7 @@
     "source/_posts/CsvHelper 使用手册.md",
     "source/_posts/Windows性能分析.md",
     "source/_posts/Windows性能分析/任务管理.png",
-    "source/_posts/Windows性能分析/wpafileincpumem.png",
-    "source/_posts/Windows性能分析/wpafileincpu.png",
     "source/_posts/考拉兹猜想/考拉兹猜想.md",
-    "source/_posts/现代操作系统-内存管理1/操作系统内存紧缩.png",
     "source/_posts/现代操作系统-内存管理1",
     "source/_posts/现代操作系统-进程与线程16~30",
     "source/_posts/现代操作系统-进程与线程1~15",
@@ -194,7 +196,6 @@
     "source/_posts/几种算法误差报告/未命名.md",
     "source/_posts/三种大气光学质量的计算方法/三种大气光学质量的计算方法.md",
     "source/_posts/最大间隙问题/最大间隙问题.md",
-    "conflict-files-obsidian-git.md",
-    "Excalidraw/Drawing 2024-01-07 23.42.22.excalidraw.md"
+    "conflict-files-obsidian-git.md"
   ]
 }
