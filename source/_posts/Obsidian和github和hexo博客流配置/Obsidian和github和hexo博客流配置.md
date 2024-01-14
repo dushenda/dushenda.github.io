@@ -1,5 +1,5 @@
 ---
-title: Obsidian+github+hexo博客流配置
+title: Obsidian和github和hexo博客流配置
 date: 2024-01-14
 tags: 
  - 工作流
