@@ -199,7 +199,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -217,7 +217,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/" class="post-title-link" itemprop="url">考拉兹猜想</a>
+          <a href="/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">论文笔记-场地自动化定标方法研究及应用</a>
         </h2>
 
         <div class="post-meta-container">
@@ -228,7 +228,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-09-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-25T00:00:00+00:00">2019-09-25</time>
+      <time title="创建时间：2019-03-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-01T00:00:00+00:00">2019-03-01</time>
     </span>
 
   
@@ -241,42 +241,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">\[
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-\]</span> 通过对 <span class="math inline">\(x\)</span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline">\(n\)</span> ，下降最快的也就是每次下降 <span class="math inline">\(\frac{1}{2}\)</span>，这个下降速度对于的计算时间是 <span class="math inline">\(\log n\)</span> 。对于上界，用 <span class="math inline">\(MATLAB​\)</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline">\(n_0\)</span> 的步长与 <span class="math inline">\(n\)</span> 值变化</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp" class="">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp" class="" title="7~10">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/11~14.bmp" class="" title="11~14">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/15~18.bmp" class="" title="15~18">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/19~22.bmp" class="" title="19~22">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/23~26.bmp" class="" title="23~26">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/27~30.bmp" class="" title="27~30">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/31~34.bmp" class="" title="31~34">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/35~38.bmp" class="" title="35~38">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/39~42.bmp" class="" title="39~42">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/43~46.bmp" class="" title="43~46">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/47~50.bmp" class="" title="47~50">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/51~54.bmp" class="" title="51~54">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/55~58.bmp" class="" title="55~58">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/242~245.bmp" class="" title="242~245">
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline">\(n_0\)</span> 与计算次数分布曲线</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp" class="" title="次数与初值">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=400.bmp" class="">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=1000.bmp" class="" title="n0&#x3D;1000">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp" class="" title="n0&#x3D;5000">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp" class="" title="n0&#x3D;10000">
-
+          <h1 id="论文笔记-场地自动化定标方法研究及应用">论文笔记-场地自动化定标方法研究及应用</h1>
+<h2 id="辐射定标的意义">辐射定标的意义</h2>
+<p>卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。</p>
+<h3 id="辐射定标">辐射定标</h3>
+<h3 id="辐射校正">辐射校正</h3>
+<h2 id="遥感辐射定标方法">遥感辐射定标方法</h2>
+<p>因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限于载荷的使用寿命。那么要延长载荷的工作年限，就需要实时测出其老化程度，对于传感器的灵敏度做出评估，改变具体参数使得其能够继续工作。比如之前对于输入为 10 就能输出 10 ，现在只能输出 5，就乘以系数 2 就可以完成跟之前一样的功能。这样器件就还可以接着使用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
