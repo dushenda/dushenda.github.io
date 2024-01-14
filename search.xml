@@ -129,7 +129,7 @@
   </entry>
   <entry>
     <title>现代操作系统-进程与线程1~15</title>
-    <url>/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/</url>
+    <url>/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/</url>
     <content><![CDATA[<h1 id="现代操作系统-进程与线程115">现代操作系统-进程与线程1~15</h1>
 <blockquote>
 <p>以下答案都是作者作答，不代表正确答案，望周知。</p>
@@ -138,7 +138,7 @@
 <ol type="1">
 <li><h5 id="如图对于每一个进程都有四种状态照理应该有6种切换方式但是为什么只有四种为什么另外两种不行">如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp" class="" title="img">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp" class="" title="img">
 <p>答：<strong>从逻辑上来说，就绪态和运行态是类似的</strong>，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现就绪态向阻塞态的转变；从阻塞态到运行态是得到了有效的输入和CPU计算资源才能完成的转化，但是得到有效的输入肯定会位于得到资源的前面，因为没有有效的输入都不能进行计算，而当出现有效输入的时候，就已经是就绪态了，即使有效输入和CPU资源获取的间隔很小，但是始终存在，所以肯定会经过就绪态。</p>
 <span id="more"></span>
 <ol start="2" type="1">
@@ -215,7 +215,7 @@
 <li><h5 id="如果多个作业能够并行运行会比他们顺序执行完成的快假设有两个作业同时开始执行每个需要20min的cpu时间如果顺序执行那么完成最后一个作业需要多长时间如果并行执行又需要多长时间假设io等待占50">如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I/O等待占50%。</h5></li>
 </ol>
 <p>答：</p>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/2.bmp" class="" title="img">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/2.bmp" class="" title="img">
 <p>如图所示，如果顺序执行，那么每个进程在输入需要10min，在输出需要10min，所以进行一个就需要40min的时间，共需要80min。</p>
 <p>如果是并行执行，那么每个进程得到的CPU的利用率为<span class="math inline">\(\frac{1-p^2}{2}=0.375\)</span>，每个进程本来在CPU利用率为1的时候需要20min，现在在CPU利用率为0.375的情况下需要时间为<span class="math inline">\(\frac{20\min}{0.375}\approx53.3\min\)</span>，由于是并行执行，取其最大的即可，即<span class="math inline">\(\max\{T_1,T_2,...T_n\}\)</span>，在这里两个进程的时间一样，所以运行的时间为53.3min。</p>
 <ol start="8" type="1">
@@ -231,7 +231,7 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 <ol start="10" type="1">
 <li><h5 id="为什么下图的模型不适合用于内存中使用高速缓存的文件服务器每个进程可以有自己的高速缓存吗">为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/3.jpg" class="">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/3.jpg" class="">
 <p>答：要牢记进程和线程在很多方面是类似的，线程可以理解为轻量级进程。但是最重要的区别是<strong>进程共享存储空间</strong>，共享存储空间说明他们操作的文件是一样的，所以将文件存于高速缓存是可以的。但是进程不同，操作的文件是不一样的，如果将其文件存于同一个缓存中，很可能前一个进程的文件就会被后一个进程的文件所覆盖。</p>
 <hr />
 <ol start="11" type="1">
@@ -241,7 +241,7 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 <ol start="12" type="1">
 <li><h5 id="下图给了一个多线程web服务器如果读取文件只能使用阻塞的read系统调用那么web服务器应该使用用户级线程还是内核级线程">下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/4.jpg" class="">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/4.jpg" class="">
 <p>答：当工作线程从磁盘读取Web页时，它就会被阻塞。如果使用用户级线程，该动作将阻塞整个进程，而破坏多线程的价值。这就是使用内核线程的原因：某些线程的阻塞不会影响到其他线程。</p>
 <ol start="13" type="1">
 <li><h5 id="在本章中我们介绍了多线程web服务器说明它比单线程服务器和有限状态机服务器更好的原因存在单线程服务器更好一些的情形吗请举例">在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。</h5></li>
@@ -272,7 +272,7 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 <ol start="14" type="1">
 <li><h5 id="既然计算机中只有一套寄存器为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出">既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/5.jpg" class="">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/5.jpg" class="">
 <p>答：当一个线程停止时，它在寄存器中有值。它们必须被保存，就像进程停止时，必须保存寄存器。多线程和多进程没有什么不同，所以每个线程需要自己的寄存器保存区。</p>
 <ol start="15" type="1">
 <li><h5 id="在没有时钟中断的系统中一个线程放弃cpu后可能再也不会获得cpu资源那么为什么线程还要通过调用thread_yield自愿放弃cpu">在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread_yield自愿放弃CPU？</h5></li>
@@ -446,41 +446,6 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
       </tags>
   </entry>
   <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>kernel</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>三种大气质量和一个公式的计算方法</title>
     <url>/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h1 id="三种大气质量和一个公式的计算方法">三种大气质量和一个公式的计算方法</h1>
@@ -553,6 +518,41 @@ m=\frac{1}{cos \frac{\pi \theta_0}{180^\circ}+0.15\times(93.885-\theta_0)^{-1.25
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal2</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal2(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.50572</span>;b=<span class="number">6.07995</span>;c=<span class="number">1.6364</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal3</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.6556</span>;b=<span class="number">6.379</span>;c=<span class="number">1.757</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>kernel</tag>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title>内核转储文件--应用程序崩溃分析</title>

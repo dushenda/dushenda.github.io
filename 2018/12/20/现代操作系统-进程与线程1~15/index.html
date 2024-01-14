@@ -22,29 +22,29 @@
     <meta name="description" content="现代操作系统-进程与线程1~15  以下答案都是作者作答，不代表正确答案，望周知。    如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？   答：从逻辑上来说，就绪态和运行态是类似的，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源">
 <meta property="og:type" content="article">
 <meta property="og:title" content="现代操作系统-进程与线程1~15">
-<meta property="og:url" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/index.html">
+<meta property="og:url" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/index.html">
 <meta property="og:site_name" content="dushenda">
 <meta property="og:description" content="现代操作系统-进程与线程1~15  以下答案都是作者作答，不代表正确答案，望周知。    如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？   答：从逻辑上来说，就绪态和运行态是类似的，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/2.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/3.jpg">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/4.jpg">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/5.jpg">
-<meta property="article:published_time" content="2024-01-14T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-14T11:35:57.939Z">
+<meta property="og:image" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp">
+<meta property="og:image" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/2.bmp">
+<meta property="og:image" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/3.jpg">
+<meta property="og:image" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/4.jpg">
+<meta property="og:image" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/5.jpg">
+<meta property="article:published_time" content="2018-12-20T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-14T11:36:59.569Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp">
+<meta name="twitter:image" content="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/">
+<link rel="canonical" href="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/","path":"2024/01/14/现代操作系统-进程与线程1~15/","title":"现代操作系统-进程与线程1~15"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/","path":"2018/12/20/现代操作系统-进程与线程1~15/","title":"现代操作系统-进程与线程1~15"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>现代操作系统-进程与线程1~15 | dushenda</title>
@@ -210,7 +210,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -239,7 +239,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-14T00:00:00+00:00">2024-01-14</time>
+      <time title="创建时间：2018-12-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-20T00:00:00+00:00">2018-12-20</time>
     </span>
 
   
@@ -259,7 +259,7 @@
 <ol type="1">
 <li><h5 id="如图对于每一个进程都有四种状态照理应该有6种切换方式但是为什么只有四种为什么另外两种不行">如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp" class="" title="img">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/1.bmp" class="" title="img">
 <p>答：<strong>从逻辑上来说，就绪态和运行态是类似的</strong>，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现就绪态向阻塞态的转变；从阻塞态到运行态是得到了有效的输入和CPU计算资源才能完成的转化，但是得到有效的输入肯定会位于得到资源的前面，因为没有有效的输入都不能进行计算，而当出现有效输入的时候，就已经是就绪态了，即使有效输入和CPU资源获取的间隔很小，但是始终存在，所以肯定会经过就绪态。</p>
 <span id="more"></span>
 <ol start="2" type="1">
@@ -336,7 +336,7 @@
 <li><h5 id="如果多个作业能够并行运行会比他们顺序执行完成的快假设有两个作业同时开始执行每个需要20min的cpu时间如果顺序执行那么完成最后一个作业需要多长时间如果并行执行又需要多长时间假设io等待占50">如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I/O等待占50%。</h5></li>
 </ol>
 <p>答：</p>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/2.bmp" class="" title="img">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/2.bmp" class="" title="img">
 <p>如图所示，如果顺序执行，那么每个进程在输入需要10min，在输出需要10min，所以进行一个就需要40min的时间，共需要80min。</p>
 <p>如果是并行执行，那么每个进程得到的CPU的利用率为<span class="math inline">\(\frac{1-p^2}{2}=0.375\)</span>，每个进程本来在CPU利用率为1的时候需要20min，现在在CPU利用率为0.375的情况下需要时间为<span class="math inline">\(\frac{20\min}{0.375}\approx53.3\min\)</span>，由于是并行执行，取其最大的即可，即<span class="math inline">\(\max\{T_1,T_2,...T_n\}\)</span>，在这里两个进程的时间一样，所以运行的时间为53.3min。</p>
 <ol start="8" type="1">
@@ -352,7 +352,7 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 <ol start="10" type="1">
 <li><h5 id="为什么下图的模型不适合用于内存中使用高速缓存的文件服务器每个进程可以有自己的高速缓存吗">为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/3.jpg" class="">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/3.jpg" class="">
 <p>答：要牢记进程和线程在很多方面是类似的，线程可以理解为轻量级进程。但是最重要的区别是<strong>进程共享存储空间</strong>，共享存储空间说明他们操作的文件是一样的，所以将文件存于高速缓存是可以的。但是进程不同，操作的文件是不一样的，如果将其文件存于同一个缓存中，很可能前一个进程的文件就会被后一个进程的文件所覆盖。</p>
 <hr />
 <ol start="11" type="1">
@@ -362,7 +362,7 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 <ol start="12" type="1">
 <li><h5 id="下图给了一个多线程web服务器如果读取文件只能使用阻塞的read系统调用那么web服务器应该使用用户级线程还是内核级线程">下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/4.jpg" class="">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/4.jpg" class="">
 <p>答：当工作线程从磁盘读取Web页时，它就会被阻塞。如果使用用户级线程，该动作将阻塞整个进程，而破坏多线程的价值。这就是使用内核线程的原因：某些线程的阻塞不会影响到其他线程。</p>
 <ol start="13" type="1">
 <li><h5 id="在本章中我们介绍了多线程web服务器说明它比单线程服务器和有限状态机服务器更好的原因存在单线程服务器更好一些的情形吗请举例">在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。</h5></li>
@@ -393,7 +393,7 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 <ol start="14" type="1">
 <li><h5 id="既然计算机中只有一套寄存器为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出">既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。</h5></li>
 </ol>
-<img src="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/5.jpg" class="">
+<img src="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/5.jpg" class="">
 <p>答：当一个线程停止时，它在寄存器中有值。它们必须被保存，就像进程停止时，必须保存寄存器。多线程和多进程没有什么不同，所以每个线程需要自己的寄存器保存区。</p>
 <ol start="15" type="1">
 <li><h5 id="在没有时钟中断的系统中一个线程放弃cpu后可能再也不会获得cpu资源那么为什么线程还要通过调用thread_yield自愿放弃cpu">在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread_yield自愿放弃CPU？</h5></li>
@@ -417,13 +417,13 @@ CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/01/14/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/" rel="prev" title="编译链接浅析">
-                  <i class="fa fa-angle-left"></i> 编译链接浅析
+                <a href="/2018/09/04/CsvHelper%20%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" rel="prev" title="CsvHelper 使用手册">
+                  <i class="fa fa-angle-left"></i> CsvHelper 使用手册
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/01/14/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/" rel="next" title="现代操作系统-内存管理1">
-                  现代操作系统-内存管理1 <i class="fa fa-angle-right"></i>
+                <a href="/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/" rel="next" title="现代操作系统-进程与线程16~30">
+                  现代操作系统-进程与线程16~30 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
