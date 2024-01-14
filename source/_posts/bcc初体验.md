@@ -15,4 +15,5 @@ sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftra
 
 ## 使用
 funccount
+
 stackcount
