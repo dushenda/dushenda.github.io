@@ -13,9 +13,9 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
+                "file": "source/_posts/bcc初体验.md",
                 "mode": "source",
-                "source": false
+                "source": true
               }
             }
           }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
+                "file": "source/_posts/bcc初体验.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
+                "file": "source/_posts/bcc初体验.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md"
+                "file": "source/_posts/bcc初体验.md"
               }
             }
           }
@@ -151,8 +151,10 @@
   },
   "active": "00e9f111084f9059",
   "lastOpenFiles": [
-    "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置/img3.png",
+    "source/_posts/正则表达式(一).md",
     "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
+    "source/_posts/bcc初体验.md",
+    "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置/img3.png",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用.md",
     "source/_posts/编译链接浅析.md",
     "source/_posts/立体角.md",
@@ -174,7 +176,6 @@
     "source/_posts/现代操作系统-进程与线程16~30",
     "source/_posts/现代操作系统-进程与线程1~15/5.jpg",
     "source/_posts/现代操作系统-进程与线程1~15/4.jpg",
-    "source/_posts/现代操作系统-进程与线程1~15/3.jpg",
     "source/_posts/现代操作系统-进程与线程1~15",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/绘图1.vsdx",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/论文笔记-场地自动化定标方法研究及应用.pdf",
