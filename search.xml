@@ -6,7 +6,15 @@
     <content><![CDATA[<h2 id="协议流程">协议流程</h2>
 <h2 id="仿真">仿真</h2>
 <h3 id="组网">组网</h3>
-<p><img src="Pastedimage20231215004144.png" /> ### 路由设置 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure> <img src="Pastedimage20231215004416.png" /> ## 抓包 <img src="Pastedimage20231215005008.png" /> ### dhcp discover <img src="Pastedimage20231215010535.png" /> <img src="Pastedimage20231215010615.png" /> ### dhcp offer</p>
+<p><img src="Pastedimage20231215004144.png" /></p>
+<h3 id="路由设置">路由设置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20231215004416.png" /></p>
+<h2 id="抓包">抓包</h2>
+<p><img src="Pastedimage20231215005008.png" /></p>
+<h3 id="dhcp-discover">dhcp discover</h3>
+<p><img src="Pastedimage20231215010535.png" /></p>
+<p><img src="Pastedimage20231215010615.png" /> ### dhcp offer</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
