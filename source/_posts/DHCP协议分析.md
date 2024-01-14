@@ -9,6 +9,7 @@ tags:
 ## 仿真
 ### 组网
 ![](Pastedimage20231215004144.png)
+
 ### 路由设置
 ```console
 <Huawei>sys
@@ -24,9 +25,13 @@ tags:
 [AR1-GigabitEthernet0/0/0]dhcp select global
 ```
 ![](Pastedimage20231215004416.png)
+
+
 ## 抓包
 ![](Pastedimage20231215005008.png)
+
 ### dhcp discover
 ![](Pastedimage20231215010535.png)
+
 ![](Pastedimage20231215010615.png)
 ### dhcp offer

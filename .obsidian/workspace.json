@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "e9958522af2b975e",
+        "id": "4d0fdddfd4e70c43",
         "type": "tabs",
         "children": [
           {
-            "id": "32d361126c7ca614",
+            "id": "c3ea703337e0cab9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/_posts/DHCP协议分析.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/_posts/DHCP协议分析.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/_posts/DHCP协议分析.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/resume/index.md"
+                "file": "source/_posts/DHCP协议分析.md"
               }
             }
           }
@@ -149,8 +149,9 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "32d361126c7ca614",
+  "active": "c3ea703337e0cab9",
   "lastOpenFiles": [
+    "source/resume/index.md",
     "source/images/safari-pinned-tab.svg",
     "source/images/favicon-32x32.png",
     "source/images/favicon-16x16.png",
@@ -176,7 +177,6 @@
     "source/_posts/现代操作系统-进程与线程1~15.md",
     "source/_posts/CsvHelper 使用手册.md",
     "source/_posts/Windows性能分析.md",
-    "source/_posts/Windows性能分析/任务管理.png",
     "source/_posts/考拉兹猜想/考拉兹猜想.md",
     "source/_posts/现代操作系统-内存管理1",
     "source/_posts/现代操作系统-进程与线程16~30",
