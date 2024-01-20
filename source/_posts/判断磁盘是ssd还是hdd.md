@@ -59,4 +59,4 @@ Number FriendlyName                  SerialNumber    MediaType CanPool Operation
 
 ### GUI
 在任务管理器下查看
-![](判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121%201.png)
+![](判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121_1.png)
