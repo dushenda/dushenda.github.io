@@ -82,6 +82,20 @@
       </tags>
   </entry>
   <entry>
+    <title>判断磁盘是ssd还是hdd</title>
+    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
+    <content><![CDATA[<h2 id="linux">Linux</h2>
+<h3 id="通过文件系统">通过文件系统</h3>
+<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd 位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
+<h3 id="通过">通过</h3>
+<h2 id="windows">Windows</h2>
+]]></content>
+      <tags>
+        <tag>存储</tag>
+        <tag>磁盘</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>正则表达式(一)</title>
     <url>/2020/03/17/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/</url>
     <content><![CDATA[<h1 id="正则表达式一">正则表达式(一)</h1>
