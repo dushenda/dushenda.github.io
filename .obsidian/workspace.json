@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/_posts/判断磁盘是ssd还是hdd.md",
                 "mode": "source",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/_posts/判断磁盘是ssd还是hdd.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/resume/index.md",
+                "file": "source/_posts/判断磁盘是ssd还是hdd.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/resume/index.md"
+                "file": "source/_posts/判断磁盘是ssd还是hdd.md"
               }
             }
           }
@@ -152,7 +152,7 @@
   "active": "c3ea703337e0cab9",
   "lastOpenFiles": [
     "source/about/index.md",
-    "source/resume/index.md",
+    "source/_posts/判断磁盘是ssd还是hdd.md",
     "source/_posts/SSD学习（一）.md",
     "source/_posts/Windows性能分析.md",
     "source/_posts/DHCP协议分析.md",
