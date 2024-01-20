@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "source/_posts/判断磁盘是ssd还是hdd.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": true
               }
             }
@@ -151,6 +151,8 @@
   },
   "active": "c3ea703337e0cab9",
   "lastOpenFiles": [
+    "source/_posts/判断磁盘是ssd还是hdd",
+    "source/_posts/判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121.png",
     "source/about/index.md",
     "source/_posts/判断磁盘是ssd还是hdd.md",
     "source/_posts/SSD学习（一）.md",
@@ -171,7 +173,6 @@
     "source/_posts/DHCP协议分析/Pastedimage20231215004144.png",
     "source/_posts/DHCP协议分析",
     "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
-    "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置/img3.png",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用.md",
     "source/_posts/编译链接浅析.md",
     "source/_posts/立体角.md",
@@ -195,7 +196,6 @@
     "scaffolds/page.md",
     "source/_posts/几种算法误差报告/几种算法误差报告.md",
     "source/_posts/几种算法误差报告/未命名.md",
-    "source/_posts/三种大气光学质量的计算方法/三种大气光学质量的计算方法.md",
-    "source/_posts/最大间隙问题/最大间隙问题.md"
+    "source/_posts/三种大气光学质量的计算方法/三种大气光学质量的计算方法.md"
   ]
 }
