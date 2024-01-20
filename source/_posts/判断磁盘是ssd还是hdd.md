@@ -55,3 +55,4 @@ Number FriendlyName                  SerialNumber    MediaType CanPool Operation
 0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB
 ```
 
+### GUI
