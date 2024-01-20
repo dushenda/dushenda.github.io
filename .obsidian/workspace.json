@@ -4,18 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "4d0fdddfd4e70c43",
+        "id": "9a3f29284b34edd6",
         "type": "tabs",
         "children": [
           {
-            "id": "c3ea703337e0cab9",
+            "id": "f4edc28ee694962e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "source/_posts/判断磁盘是ssd还是hdd.md",
                 "mode": "source",
-                "source": true
+                "source": false
               }
             }
           }
@@ -149,12 +149,13 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "c3ea703337e0cab9",
+  "active": "f4edc28ee694962e",
   "lastOpenFiles": [
+    "source/_posts/判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121 1.png",
+    "source/_posts/判断磁盘是ssd还是hdd.md",
     "source/_posts/判断磁盘是ssd还是hdd",
     "source/_posts/判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121.png",
     "source/about/index.md",
-    "source/_posts/判断磁盘是ssd还是hdd.md",
     "source/_posts/SSD学习（一）.md",
     "source/_posts/Windows性能分析.md",
     "source/_posts/DHCP协议分析.md",
@@ -170,7 +171,6 @@
     "source/_posts/DHCP协议分析/Pastedimage20231215005008.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215010535.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215010615.png",
-    "source/_posts/DHCP协议分析/Pastedimage20231215004144.png",
     "source/_posts/DHCP协议分析",
     "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用.md",
@@ -188,7 +188,6 @@
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/BRDF函数解析.pdf",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用",
     "source/_posts/立体角",
-    "source/_posts/编译链接浅析",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
     "scaffolds/post.md",
