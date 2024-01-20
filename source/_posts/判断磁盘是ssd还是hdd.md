@@ -47,7 +47,6 @@ LU is thin provisioned, LBPRZ=0
 ```
 
 ## Windows
-
 ### powershell
 ```console
 (base) PS C:\Users\dushenda> Get-PhysicalDisk
