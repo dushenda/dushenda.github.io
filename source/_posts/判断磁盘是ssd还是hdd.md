@@ -45,3 +45,13 @@ LU is thin provisioned, LBPRZ=0
 ```
 ## Windows
 
+### powershell
+```console
+(base) PS C:\Users\dushenda> Get-PhysicalDisk
+
+Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size
+------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----
+1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB
+0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB
+```
+
