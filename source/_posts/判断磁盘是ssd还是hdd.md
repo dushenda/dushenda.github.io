@@ -26,7 +26,22 @@ sdc 1 Msft
 ```
 `lsblk`可选行信息如下等，通过`lsblk --help`查看
 ![](判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121.png)
-### fdisk
-
+### smartctl
+该工具需要自行安装Ubuntu和CentOS安装包名称均为`smartmontools`。
+```console
+[root@dushenda home]# smartctl -a /dev/sdc  
+smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  
+Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  
+  
+=== START OF INFORMATION SECTION ===  
+Vendor: Msft  
+Product: Virtual Disk  
+Revision: 1.0  
+Compliance: SPC-3  
+User Capacity: 1,099,511,627,776 bytes [1.09 TB]  
+Logical block size: 512 bytes  
+Physical block size: 4096 bytes  
+LU is thin provisioned, LBPRZ=0
+```
 ## Windows
 
