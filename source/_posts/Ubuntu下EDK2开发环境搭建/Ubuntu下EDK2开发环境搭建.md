@@ -65,7 +65,9 @@ CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPk
 编译基本工具完成
 ![](Ubuntu下EDK2开发环境搭建_20240122_7.png)
 ### 编译目标文件
-设置环境变量
+设置环境变量，`path/to/edk/BaseTools`需要换成当前的`BaseTools`所在路径。
 ```console
-
+export EDK_TOOLS_PATH=`path/to/edk/BaseTools`
+./edksetup.sh BaseTools
 ```
+![](Ubuntu下EDK2开发环境搭建_20240122_8.png)
