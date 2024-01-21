@@ -11,8 +11,12 @@
             "id": "25e15fe2160ab9a0",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md"
+              }
             }
           }
         ]
@@ -143,16 +151,19 @@
   },
   "active": "25e15fe2160ab9a0",
   "lastOpenFiles": [
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_1.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
+    "source/_posts/Ubuntu下EDK2开发环境搭建",
+    "source/_posts/Windows性能分析.md",
+    "source/_posts/bcc初体验.md",
     "source/_posts/判断磁盘是ssd还是hdd.md",
     "source/_posts/判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121_1.png",
     "source/_posts/判断磁盘是ssd还是hdd",
     "source/_posts/判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121.png",
     "source/about/index.md",
     "source/_posts/SSD学习（一）.md",
-    "source/_posts/Windows性能分析.md",
     "source/_posts/DHCP协议分析.md",
     "source/_posts/CsvHelper 使用手册.md",
-    "source/_posts/bcc初体验.md",
     "source/_posts/资源收集.md",
     "source/_posts/正则表达式(一).md",
     "source/images/safari-pinned-tab.svg",
@@ -162,7 +173,6 @@
     "source/_posts/DHCP协议分析/Pastedimage20231215004416.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215005008.png",
     "source/_posts/DHCP协议分析/Pastedimage20231215010535.png",
-    "source/_posts/DHCP协议分析/Pastedimage20231215010615.png",
     "source/_posts/DHCP协议分析",
     "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用.md",
@@ -179,14 +189,12 @@
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/论文笔记-场地自动化定标方法研究及应用.pdf",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/BRDF函数解析.pdf",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用",
-    "source/_posts/立体角",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
     "scaffolds/post.md",
     "scaffolds/draft.md",
     "scaffolds/page.md",
     "source/_posts/几种算法误差报告/几种算法误差报告.md",
-    "source/_posts/几种算法误差报告/未命名.md",
-    "source/_posts/三种大气光学质量的计算方法/三种大气光学质量的计算方法.md"
+    "source/_posts/几种算法误差报告/未命名.md"
   ]
 }

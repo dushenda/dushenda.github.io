@@ -1,10 +1,9 @@
 ---
-title: bcc初体验
-date: 2024-01-14
-tags: 
-	- bpf
-	- OS
-	- trace
+title:
+  "{ title }": 
+date:
+  "{ date }": 
+tags:
 ---
 ## 安装
 ### Ubuntu
