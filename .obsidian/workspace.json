@@ -151,6 +151,7 @@
   },
   "active": "25e15fe2160ab9a0",
   "lastOpenFiles": [
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_9.png",
     "source/_posts/最大间隙问题/最大间隙问题.md",
     "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
     "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
@@ -195,7 +196,6 @@
     "scaffolds/post.md",
     "scaffolds/draft.md",
     "scaffolds/page.md",
-    "source/_posts/几种算法误差报告/几种算法误差报告.md",
-    "source/_posts/几种算法误差报告/未命名.md"
+    "source/_posts/几种算法误差报告/几种算法误差报告.md"
   ]
 }

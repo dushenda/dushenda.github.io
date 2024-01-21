@@ -86,3 +86,8 @@ source edksetup.sh
 -> # source edksetup.sh BaseTools
 ```
 ![](Ubuntu下EDK2开发环境搭建_20240122_8.png)
+在`edk`目录下使用`build`命令编译
+```console
+build
+```
+![](Ubuntu下EDK2开发环境搭建_20240122_9.png)
