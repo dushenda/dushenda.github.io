@@ -19,16 +19,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="最大间隙问题题目对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。 input.txt						output.txt 5								   0.8 1.1  1.3  2.5  0.7  2.1 其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5 可以">
+    <meta name="description" content="最大间隙问题 题目 对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。 input.txt output.txt 5 0.8 1.1 1.3 2.5 0.7 2.1 其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5 可以看到，这几个相邻数字之间的差距最大">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最大间隙问题">
 <meta property="og:url" content="https://dushenda.github.io/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="最大间隙问题题目对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。 input.txt						output.txt 5								   0.8 1.1  1.3  2.5  0.7  2.1 其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5 可以">
+<meta property="og:description" content="最大间隙问题 题目 对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。 input.txt output.txt 5 0.8 1.1 1.3 2.5 0.7 2.1 其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5 可以看到，这几个相邻数字之间的差距最大">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dushenda.github.io/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E5%88%86%E6%AE%B5.png">
 <meta property="article:published_time" content="2019-11-24T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-21T17:04:26.371Z">
+<meta property="article:modified_time" content="2024-01-21T17:07:15.999Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -246,27 +246,39 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="最大间隙问题"><a href="#最大间隙问题" class="headerlink" title="最大间隙问题"></a>最大间隙问题</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code>						<code>output.txt</code></p>
-<p>5								   0.8</p>
-<p>1.1  1.3  2.5  0.7  2.1</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
 <p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3&#x3D;0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><h3 id="办法一"><a href="#办法一" class="headerlink" title="办法一"></a>办法一</h3><p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
 <p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下<br>$$<br>O(n\log n)+O(n)+O(n)&#x3D;O(n\log n) \<br>O(n\log n) &gt; O(n)<br>$$<br>​									<!--排序算法+做差+搜索--><br>这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>复杂度计算如下 <span class="math display">\[
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+\]</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
 <p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二"><a href="#办法二" class="headerlink" title="办法二"></a>办法二</h3><ol>
-<li>设输入的是n个数，分别为 $a_1,a_2,…,a_n​$ ，设在这些数中最大的数为$a_{max}​$，最小的是$a_{min}​$；</li>
-<li>在$a_{max}$与$a_{min}$之间均匀插入$n-2$个等分点，将其分为$n-1$段，如下图；<img src="/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E5%88%86%E6%AE%B5.png" class=""></li>
-<li>把需要剩下的$n-2$个数按照大小放入这$n-1​$个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值$low[i]$和$high[i]$，再使用后一段的$low[i+1]$减去前一段的$high[i]$，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline">\(a_1,a_2,...,a_n​\)</span> ，设在这些数中最大的数为<span class="math inline">\(a_{max}​\)</span>，最小的是<span class="math inline">\(a_{min}​\)</span>；</li>
+<li>在<span class="math inline">\(a_{max}\)</span>与<span class="math inline">\(a_{min}\)</span>之间均匀插入<span class="math inline">\(n-2\)</span>个等分点，将其分为<span class="math inline">\(n-1\)</span>段，如下图； <img src="/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E5%88%86%E6%AE%B5.png" class=""></li>
+<li>把需要剩下的<span class="math inline">\(n-2\)</span>个数按照大小放入这<span class="math inline">\(n-1​\)</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline">\(low[i]\)</span>和<span class="math inline">\(high[i]\)</span>，再使用后一段的<span class="math inline">\(low[i+1]\)</span>减去前一段的<span class="math inline">\(high[i]\)</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
 </ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为$O(n)​$，等分点只需要得到单位长度即可，单位长度为<br>$$<br>l&#x3D;\frac{max-mix}{n-1}<br>$$<br>每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可<br>$$<br>seg[i]&#x3D;\frac{x[i]-minx}{l}+1<br>$$<br>数组$seg[i]$是一个纽带氏作用，它的索引与$x[i]$的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是$O(n)$，最后需要做差，使用$low[i+1]-high[i]$得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要$O(n)$。</p>
-<p>根据前面的分析，每个过程的复杂度均为$O(n)$，那么有限个$O(n)$的累加复杂度还是$O(n)$，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline">\(O(n)​\)</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">\[
+l=\frac{max-mix}{n-1}
+\]</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">\[
+seg[i]=\frac{x[i]-minx}{l}+1
+\]</span> 数组<span class="math inline">\(seg[i]\)</span>是一个纽带氏作用，它的索引与<span class="math inline">\(x[i]\)</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline">\(O(n)\)</span>，最后需要做差，使用<span class="math inline">\(low[i+1]-high[i]\)</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline">\(O(n)\)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline">\(O(n)\)</span>，那么有限个<span class="math inline">\(O(n)\)</span>的累加复杂度还是<span class="math inline">\(O(n)\)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-
 
     </div>
 
