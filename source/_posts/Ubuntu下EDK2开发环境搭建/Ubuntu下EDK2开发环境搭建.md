@@ -45,7 +45,7 @@ git submodule update --init
 ## 编译工具链安装
 
 ```console
-apt-get install build-essential uuid-dev iasl git gcc nasm python3
+-> # apt-get install build-essential uuid-dev iasl git gcc nasm python3
 
 -> # python3 --version
 Python 3.10.12
@@ -93,6 +93,6 @@ source edksetup.sh
 ![](Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_8.png)
 在`edk`目录下使用`build`命令编译
 ```console
-build
+-> # build
 ```
 ![](Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_9.png)
