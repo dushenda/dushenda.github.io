@@ -43,5 +43,29 @@ git submodule update --init
 ```console
 apt-get install build-essential uuid-dev iasl git gcc nasm python3
 
+-> # python3 --version
+Python 3.10.12
+-> # ln -s /usr/bin/python3.10 /usr/bin/python
 ```
 
+## 编译
+### 基本工具
+看一下当前的目录结构，使用`make -C BaseTools`编译基本工具
+```console
+-> # ls
+ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg
+ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg
+ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg
+BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg
+Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg
+CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg
+
+-> # make -C BaseTools
+```
+编译基本工具完成
+![](Ubuntu下EDK2开发环境搭建_20240122_7.png)
+### 编译目标文件
+设置环境变量
+```console
+
+```
