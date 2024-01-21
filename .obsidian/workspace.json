@@ -15,7 +15,7 @@
               "state": {
                 "file": "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
                 "mode": "source",
-                "source": true
+                "source": false
               }
             }
           }
@@ -149,24 +149,25 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "aa0934016fbc06d3",
+  "active": "25e15fe2160ab9a0",
   "lastOpenFiles": [
-    "source/_posts/Ubuntu下EDK2开发环境搭建/未命名",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_1.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建",
     "source/_posts/几种算法误差报告/几种算法误差报告.md",
     "source/_posts/考拉兹猜想/考拉兹猜想.md",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_9.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_9.png",
     "source/_posts/最大间隙问题/最大间隙问题.md",
     "source/_posts/Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置.md",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_8.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_8.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_7.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_7.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_6.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_5.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_4.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_3.png",
-    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_2.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_8.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_8.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_7.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_7.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_6.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_5.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_4.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_3.png",
+    "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建_20240122_2.png",
     "source/_posts/Ubuntu下EDK2开发环境搭建",
     "source/_posts/Windows性能分析.md",
     "source/_posts/bcc初体验.md",
@@ -191,7 +192,6 @@
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/绘图1.vsdx",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/论文笔记-场地自动化定标方法研究及应用.pdf",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/BRDF函数解析.pdf",
-    "source/_posts/论文笔记-场地自动化定标方法研究及应用",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
     "scaffolds/post.md",
