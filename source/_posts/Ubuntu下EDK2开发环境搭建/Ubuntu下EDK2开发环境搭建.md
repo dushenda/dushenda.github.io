@@ -1,10 +1,10 @@
 ---
-title: EDK2开发环境搭建
+title: Ubuntu下EDK2开发环境搭建
 date: 2024-01-22
 tags:
-- EDK2
-- UEFI
-- 环境搭建
+  - EDK2
+  - UEFI
+  - 环境搭建
 ---
 ## 背景介绍
 编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下
