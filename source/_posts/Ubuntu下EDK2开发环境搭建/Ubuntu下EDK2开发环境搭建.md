@@ -26,6 +26,22 @@ tags:
    ![](Ubuntu下EDK2开发环境搭建_20240122_4.png)
 4. 修改主仓库的submodule路径
    ![](Ubuntu下EDK2开发环境搭建_20240122_5.png)
-   
 
+## 下载
+下载edk2代码仓
+```console
+git clone git@gitee.com:edk2_back/edk2.git
+```
+下载子模块到对应路径，可以看到地址都替换了gitee路径
+```console
+git submodule update --init
+```
+![](Ubuntu下EDK2开发环境搭建_20240122_6.png)
+
+## 编译工具链安装
+
+```console
+apt-get install build-essential uuid-dev iasl git gcc nasm python3
+
+```
 
