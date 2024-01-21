@@ -742,7 +742,7 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
 <p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下 <img src="Ubuntu下EDK2开发环境搭建_20240122_1.png" /></p>
 <p>特点 - apt-get源可以访问 - github不能访问 - gitee可以访问</p>
 <h2 id="远程仓库迁移">远程仓库迁移</h2>
-<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下 1. 建立组织，用来合并仓库环境 <img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /> 2.</p>
+<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下 1. 建立组织，用来合并仓库环境 <img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /> 2. 迁移主仓库 <img src="Ubuntu下EDK2开发环境搭建_20240122_3.png" /> 3. 导入submodule，因为edk2后续编译还需要一些子模块，找到如下仓库的路径，按照2导入到组织 <img src="Ubuntu下EDK2开发环境搭建_20240122_4.png" /> 4. 修改主仓库的submodule路径 <img src="Ubuntu下EDK2开发环境搭建_20240122_5.png" /></p>
 ]]></content>
       <tags>
         <tag>EDK2</tag>
@@ -895,46 +895,6 @@ m=\frac{1}{cos \frac{\pi \theta_0}{180^\circ}+0.15\times(93.885-\theta_0)^{-1.25
       </tags>
   </entry>
   <entry>
-    <title>考拉兹猜想</title>
-    <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
-    <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">\[
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-\]</span> 通过对 <span class="math inline">\(x\)</span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline">\(n\)</span> ，下降最快的也就是每次下降 <span class="math inline">\(\frac{1}{2}\)</span>，这个下降速度对于的计算时间是 <span class="math inline">\(\log n\)</span> 。对于上界，用 <span class="math inline">\(MATLAB​\)</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline">\(n_0\)</span> 的步长与 <span class="math inline">\(n\)</span> 值变化</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp" class="">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp" class="" title="7~10">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/11~14.bmp" class="" title="11~14">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/15~18.bmp" class="" title="15~18">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/19~22.bmp" class="" title="19~22">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/23~26.bmp" class="" title="23~26">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/27~30.bmp" class="" title="27~30">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/31~34.bmp" class="" title="31~34">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/35~38.bmp" class="" title="35~38">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/39~42.bmp" class="" title="39~42">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/43~46.bmp" class="" title="43~46">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/47~50.bmp" class="" title="47~50">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/51~54.bmp" class="" title="51~54">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/55~58.bmp" class="" title="55~58">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/242~245.bmp" class="" title="242~245">
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline">\(n_0\)</span> 与计算次数分布曲线</h2>
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp" class="" title="次数与初值">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=400.bmp" class="">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=1000.bmp" class="" title="n0&#x3D;1000">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp" class="" title="n0&#x3D;5000">
-<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp" class="" title="n0&#x3D;10000">
-]]></content>
-  </entry>
-  <entry>
     <title>最大间隙问题</title>
     <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
@@ -974,6 +934,46 @@ seg[i]=\frac{x[i]-minx}{l}+1
       <tags>
         <tag>算法</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>考拉兹猜想</title>
+    <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
+    <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
+<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
+<p>考拉兹函数定义如下</p>
+<p><span class="math display">\[
+f(x)=\left\{
+\begin{array}{**lr**}
+3n+1&amp;x为奇数且x\neq1\\
+n/2&amp;x为偶数\\
+1&amp;x=1
+\end{array}
+\right.
+\]</span> 通过对 <span class="math inline">\(x\)</span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
+<p>当然，下界是很容易求出来的，如果输入 <span class="math inline">\(n\)</span> ，下降最快的也就是每次下降 <span class="math inline">\(\frac{1}{2}\)</span>，这个下降速度对于的计算时间是 <span class="math inline">\(\log n\)</span> 。对于上界，用 <span class="math inline">\(MATLAB​\)</span> 带入一些数值计算。得到的结果如下：</p>
+<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline">\(n_0\)</span> 的步长与 <span class="math inline">\(n\)</span> 值变化</h2>
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp" class="">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp" class="" title="7~10">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/11~14.bmp" class="" title="11~14">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/15~18.bmp" class="" title="15~18">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/19~22.bmp" class="" title="19~22">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/23~26.bmp" class="" title="23~26">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/27~30.bmp" class="" title="27~30">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/31~34.bmp" class="" title="31~34">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/35~38.bmp" class="" title="35~38">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/39~42.bmp" class="" title="39~42">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/43~46.bmp" class="" title="43~46">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/47~50.bmp" class="" title="47~50">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/51~54.bmp" class="" title="51~54">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/55~58.bmp" class="" title="55~58">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/242~245.bmp" class="" title="242~245">
+<h2 id="n_0-与计算次数分布曲线"><span class="math inline">\(n_0\)</span> 与计算次数分布曲线</h2>
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp" class="" title="次数与初值">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=400.bmp" class="">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=1000.bmp" class="" title="n0&#x3D;1000">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp" class="" title="n0&#x3D;5000">
+<img src="/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp" class="" title="n0&#x3D;10000">
+]]></content>
   </entry>
   <entry>
     <title>论文笔记-场地自动化定标方法研究及应用</title>
