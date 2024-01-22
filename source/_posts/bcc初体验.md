@@ -1,9 +1,9 @@
 ---
-title:
-  "{ title }": 
-date:
-  "{ date }": 
+title: bcc初体验
+date: 2024-01-22
 tags:
+- bpf
+- 操作系统
 ---
 ## 安装
 ### Ubuntu
