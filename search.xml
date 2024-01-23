@@ -782,8 +782,14 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
     <title>qemu调试linux（一）</title>
     <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="编译内核">编译内核</h2>
-<p>下载内核源码：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
-<p>镜像：</p>
+<h3 id="下载">下载</h3>
+<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
+<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
+<h3 id="编译">编译</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
+<h2 id="制作initramfs">制作initramfs</h2>
+<h3 id="使用busybox">使用busybox</h3>
 ]]></content>
       <tags>
         <tag>linux</tag>

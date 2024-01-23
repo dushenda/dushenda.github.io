@@ -242,8 +242,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="编译内核">编译内核</h2>
-<p>下载内核源码：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
-<p>镜像：</p>
+<h3 id="下载">下载</h3>
+<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
+<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
+<h3 id="编译">编译</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
+<h2 id="制作initramfs">制作initramfs</h2>
+<h3 id="使用busybox">使用busybox</h3>
 
       
     </div>
