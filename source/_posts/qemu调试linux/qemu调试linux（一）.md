@@ -18,7 +18,7 @@ kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/
 root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig
 root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`
 ```
-![](qemu调试linux（一）_20240124_1.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_1.png)
 编译完成得到
 ![](qemu调试linux（一）_20240124_2.png)
 
@@ -30,19 +30,19 @@ root@dushenda:/home/dsd/Code/busybox-1.36.1# make menuconfig
 root@dushenda:/home/dsd/Code/busybox-1.36.1# make -j`nproc`
 root@dushenda:/home/dsd/Code/busybox-1.36.1# make install
 ```
-![](qemu调试linux（一）_20240124_3.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_3.png)
 编译完成得到
-![](qemu调试linux（一）_20240124_4.png)
-![](qemu调试linux（一）_20240124_5.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_4.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_5.png)
 制作initramfs.img，首先构造如下的目录结构
-![](qemu调试linux（一）_20240124_6.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_6.png)
 init文件内容如下：
-![](qemu调试linux（一）_20240124_10.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_10.png)
 ```consoel
 root@dushenda:/home/dsd/Code/initramfs_dir# find . -print0 | cpio -ov --null --format=newc | gzip -9 > ../initramfs.img
 ```
 最后生成文件
-![](qemu调试linux（一）_20240124_7.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_7.png)
 qemu运行新内核
 ```console
 root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \  
@@ -53,7 +53,7 @@ root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \
 											-append "earlyprintk=serial,ttyS0 console=ttyS0"
 ```
 运行结果如下
-![](qemu调试linux（一）_20240124_9.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_9.png)
 ![](qemu调试linux（一）_20240124_8.png)
 
 ## 注意
