@@ -38,4 +38,17 @@ break start_kernel
 continue  
 step
 ```
-在
+在`root/.gdbinit`文件增加`add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit`
+![](qemu调试linux（二）_20240319_2.png)
+运行指令，任选一条
+```console
+gdb vmlinux
+gdb-multiarch vmlinux --tui
+```
+![](qemu调试linux（二）_20240319_3.png)
+## vscode调试
+wsl权限问题，目录往外多一些
+```
+chown 755 <usr> *
+```
+生成编译信息
