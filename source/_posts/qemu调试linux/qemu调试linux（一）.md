@@ -20,7 +20,7 @@ root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`
 ```
 ![](qemu调试linux（一）/qemu调试linux（一）_20240124_1.png)
 编译完成得到
-![](qemu调试linux（一）_20240124_2.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_2.png)
 
 ## 制作initramfs
 ### 使用busybox
@@ -54,7 +54,7 @@ root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \
 ```
 运行结果如下
 ![](qemu调试linux（一）/qemu调试linux（一）_20240124_9.png)
-![](qemu调试linux（一）_20240124_8.png)
+![](qemu调试linux（一）/qemu调试linux（一）_20240124_8.png)
 
 ## 注意
 `init`需要设置为可执行权限

@@ -15,7 +15,7 @@
               "state": {
                 "file": "source/_posts/qemu调试linux/qemu调试linux（二）.md",
                 "mode": "source",
-                "source": false
+                "source": true
               }
             }
           }
@@ -151,13 +151,13 @@
   },
   "active": "7207df59c235d30c",
   "lastOpenFiles": [
-    "source/_posts/qemu调试linux/qemu调试linux（二）/qemu调试linux（二）_20240319_1.png",
+    "source/_posts/qemu调试linux/qemu调试linux（一）.md",
     "source/_posts/qemu调试linux/qemu调试linux（二）.md",
+    "source/_posts/qemu调试linux/qemu调试linux（二）/qemu调试linux（二）_20240319_1.png",
     "source/_posts/qemu调试linux/qemu调试linux（二）",
     "source/_posts/qemu调试linux/qemu调试linux（二）/qemu调试linux（二）_20240319_4.png",
     "source/_posts/qemu调试linux/qemu调试linux（二）/qemu调试linux（二）_20240319_3.png",
     "source/_posts/qemu调试linux/qemu调试linux（二）/qemu调试linux（二）_20240319_2.png",
-    "source/_posts/qemu调试linux/qemu调试linux（一）.md",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_1.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_10.png",

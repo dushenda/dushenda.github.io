@@ -1,6 +1,14 @@
+---
+title: qemu调试linux（二）
+date: 2024-03-19
+tags:
+- linux
+- qemu
+---
 ## GDB调试
+
 当前文件夹目录
-![](qemu调试linux（二）_20240319_1.png)
+![](qemu调试linux（二）/qemu调试linux（二）_20240319_1.png)
 Makefile文件
 ```Makefile
 cpvmlinux:  
@@ -39,14 +47,15 @@ continue
 step
 ```
 在`root/.gdbinit`文件增加`add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit`
-![](qemu调试linux（二）_20240319_2.png)
+![](qemu调试linux（二）/qemu调试linux（二）_20240319_2.png)
 运行指令，任选一条
 ```console
 gdb vmlinux
 gdb-multiarch vmlinux --tui
 ```
-![](qemu调试linux（二）_20240319_3.png)
+![](qemu调试linux（二）/qemu调试linux（二）_20240319_3.png)
 ## vscode调试
+
 wsl权限问题，目录往外多一些
 ```
 chown 755 <usr> *
@@ -107,4 +116,4 @@ chown 755 <usr> *
 }
 ```
 开始调试
-![](qemu调试linux（二）_20240319_4.png)
+![](qemu调试linux（二）/qemu调试linux（二）_20240319_4.png)
