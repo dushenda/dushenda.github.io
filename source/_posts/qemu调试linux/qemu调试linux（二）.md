@@ -51,4 +51,60 @@ wsl权限问题，目录往外多一些
 ```
 chown 755 <usr> *
 ```
-生成编译信息
+生成编译指令信息，此时linux源码根目录下增加文件`compile_commands.json`
+```console
+./scripts/clang-tools/gen_compile_commands.py
+```
+配置`.vscode/lanuch.json`
+```json
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "qemu-kernel-gdb",
+            "type": "cppdbg",
+            "request": "launch",
+            "miDebuggerServerAddress": "127.0.0.1:9000",
+            "program": "${workspaceRoot}/vmlinux",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+    ]
+}
+```
+配置`.vscode/c_cpp_properties.json`
+```json
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compileCommands": "${workspaceFolder}/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
+```
+开始调试
+![](qemu调试linux（二）_20240319_4.png)
