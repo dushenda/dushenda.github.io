@@ -54,6 +54,7 @@ gdb vmlinux
 gdb-multiarch vmlinux --tui
 ```
 ![](qemu调试linux（二）/qemu调试linux（二）_20240319_3.png)
+
 ## vscode调试
 
 wsl权限问题，目录往外多一些
