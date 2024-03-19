@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/qemu调试linux/qemu调试linux（一）.md",
+                "file": "source/_posts/qemu调试linux/qemu调试linux（二）.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/qemu调试linux/qemu调试linux（一）.md",
+                "file": "source/_posts/qemu调试linux/qemu调试linux（二）.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/qemu调试linux/qemu调试linux（一）.md",
+                "file": "source/_posts/qemu调试linux/qemu调试linux（二）.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/qemu调试linux/qemu调试linux（一）.md"
+                "file": "source/_posts/qemu调试linux/qemu调试linux（二）.md"
               }
             }
           }
@@ -151,8 +151,10 @@
   },
   "active": "25e15fe2160ab9a0",
   "lastOpenFiles": [
-    "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_1.png",
+    "source/_posts/qemu调试linux/qemu调试linux（二）_20240319_1.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）.md",
+    "source/_posts/qemu调试linux/qemu调试linux（二）.md",
+    "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_1.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_10.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_9.png",
@@ -163,7 +165,6 @@
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_5.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_4.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_3.png",
-    "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_2.png",
     "source/_posts/bcc初体验.md",
     "source/_posts/qemu调试linux",
     "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
@@ -195,7 +196,6 @@
     "source/_posts/论文笔记-场地自动化定标方法研究及应用/绘图1.vsdx",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
-    "scaffolds/post.md",
-    "scaffolds/draft.md"
+    "scaffolds/post.md"
   ]
 }
