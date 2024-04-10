@@ -71,7 +71,8 @@ ausearch -i -k dushnda_watch
 ```console
 auditctl -W /home/test_audit -p rwxa -k dushnda_watch
 ```
-> 其中，auditctl -d的删除和a'u'd
+
+> 其中，`auditctl -d`的删除和`auditctl -a`的添加对应，`auditctl -W`的删除和`auditctl -w`的添加对应，`auditctl -D`删除所有规则。
 
 ## 参考链接
 
