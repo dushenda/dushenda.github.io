@@ -2,12 +2,11 @@
 title: audit审计工具使用
 date: 2024-04-11
 tags: 
-	- RHEL系列
-	- 审计
-	- 监控
-	- audit
+ - RHEL系列
+ - 审计
+ - 监控
+ - audit
 ---
-
 ## audit用途
 监控文件、命令、网络等，生成监控报告。
 
@@ -61,11 +60,14 @@ auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch
 ```console
 ausearch -i -k dushnda_watch
 ```
-![](audit审计工具使用_20240411_3.png)
+![](audit审计工具使用/audit审计工具使用_20240411_3.png)
 
 这里的每个type是一个一次的一条记录，具体的含义查看参考链接`[1]`，这里主要关注对文件的操作，这段日志含义是使用vim打开了文件（syscall），当前文件权限是644。
-![](audit审计工具使用_20240411_1.png)
+
+![](audit审计工具使用/audit审计工具使用_20240411_1.png)
+
 ## 参考链接
+
 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system
 
 [2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html

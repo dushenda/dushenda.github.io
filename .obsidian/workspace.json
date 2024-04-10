@@ -4,18 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "93c6dff77a23fef3",
+        "id": "040a1de371ed26a6",
         "type": "tabs",
         "children": [
           {
-            "id": "721c275a2f4a79c8",
+            "id": "1d2eceec81826484",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "source/_posts/audit审计工具使用.md",
                 "mode": "source",
-                "source": false
+                "source": true
               }
             }
           }
@@ -149,13 +149,16 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "aa0934016fbc06d3",
+  "active": "1d2eceec81826484",
   "lastOpenFiles": [
-    "source/_posts/未命名",
-    "source/_posts/audit审计工具使用_20240411_2.png",
+    "source/_posts/现代操作系统-内存管理1.md",
+    "source/_posts/正则表达式(一).md",
+    "source/_posts/资源收集.md",
     "source/_posts/audit审计工具使用.md",
-    "source/_posts/audit审计工具使用_20240411_3.png",
-    "source/_posts/audit审计工具使用_20240411_1.png",
+    "source/_posts/audit审计工具使用/audit审计工具使用_20240411_1.png",
+    "source/_posts/audit审计工具使用",
+    "source/_posts/audit审计工具使用_20240411_2.png",
+    "source/_posts/audit审计工具使用/audit审计工具使用_20240411_3.png",
     "source/_posts/立体角.md",
     "source/_posts/qemu调试linux/qemu调试linux（二）.md",
     "source/_posts/qemu调试linux/qemu调试linux（一）.md",
@@ -184,17 +187,13 @@
     "source/_posts/SSD学习（一）.md",
     "source/_posts/DHCP协议分析.md",
     "source/_posts/CsvHelper 使用手册.md",
-    "source/_posts/资源收集.md",
-    "source/_posts/正则表达式(一).md",
     "source/_posts/DHCP协议分析",
     "source/_posts/论文笔记-场地自动化定标方法研究及应用.md",
     "source/_posts/编译链接浅析.md",
     "source/_posts/现代操作系统-进程与线程16~30.md",
-    "source/_posts/现代操作系统-内存管理1.md",
     "source/_posts/现代操作系统-进程与线程1~15.md",
     "source/_posts/现代操作系统-内存管理1",
     "source/_posts/现代操作系统-进程与线程16~30",
-    "source/_posts/现代操作系统-进程与线程1~15",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
     "source/_posts/内核转储文件/内核转储文件--内核崩溃.md"
   ]
