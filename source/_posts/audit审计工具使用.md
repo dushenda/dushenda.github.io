@@ -60,6 +60,7 @@ auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch
 ```console
 ausearch -i -k dushnda_watch
 ```
+
 ![](audit审计工具使用/audit审计工具使用_20240411_3.png)
 
 这里的每个type是一个一次的一条记录，具体的含义查看参考链接`[1]`，这里主要关注对文件的操作，这段日志含义是使用vim打开了文件（syscall），当前文件权限是644。
