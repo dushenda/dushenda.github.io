@@ -151,6 +151,7 @@
   },
   "active": "721c275a2f4a79c8",
   "lastOpenFiles": [
+    "source/_posts/audit审计工具使用_20240411_1.png",
     "source/_posts/立体角.md",
     "source/_posts/audit审计工具使用.md",
     "source/_posts/qemu调试linux/qemu调试linux（二）.md",
@@ -195,7 +196,6 @@
     "source/_posts/现代操作系统-进程与线程16~30",
     "source/_posts/现代操作系统-进程与线程1~15",
     "source/_posts/内核转储文件/内核转储文件--应用程序崩溃分析.md",
-    "source/_posts/内核转储文件/内核转储文件--内核崩溃.md",
-    "scaffolds/post.md"
+    "source/_posts/内核转储文件/内核转储文件--内核崩溃.md"
   ]
 }

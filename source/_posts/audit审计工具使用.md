@@ -57,10 +57,8 @@ auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch
 [root@172 ~]# auditctl -l
 -w /home/test_audit -p rwxa -k dushnda_watch
 ```
-之后做一些权限改变，增改文件操作，查看日志和报告
-```console
-au
-```
+之后做一些权限改变，增改文件操，查看日志，查看报告`areport`
+![](audit审计工具使用_20240411_1.png)
 ## 参考链接
 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system
 
