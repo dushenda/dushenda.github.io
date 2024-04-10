@@ -18,8 +18,19 @@
                 "source": true
               }
             }
+          },
+          {
+            "id": "715f4646670a0469",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.11"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -149,7 +160,7 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "7207df59c235d30c",
+  "active": "715f4646670a0469",
   "lastOpenFiles": [
     "source/_posts/qemu调试linux/qemu调试linux（一）.md",
     "source/_posts/qemu调试linux/qemu调试linux（二）.md",
