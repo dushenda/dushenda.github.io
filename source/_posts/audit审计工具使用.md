@@ -30,7 +30,7 @@ systemctl enable auditd
 
 可以使用 `# auditctl -e 0` 命令临时禁用 `auditd`，并使用 `# auditctl -e 1` 重新启用它。
 
-可以使用 `service auditd _<action>_` 命令对 `auditd` 执行其他操作，其中 _<action>_ 可以是以下之一：
+可以使用 `service auditd _<action>_` 命令对 `auditd` 执行其他操作，其中 `_<action>_`可以是以下之一：
 
 `stop` ：停止 `auditd`。
 
@@ -48,10 +48,19 @@ systemctl enable auditd
 
 ## 配置规则
 
-举例说明
-
-
-
+举例说明，监控`/home/test_audit/`文件夹（文件）的变更选项为rwxa（**r**=read, **w**=write, **x**=execute, **a**=attribute），设置关键字`dushnda_watch`
+```console
+auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch
+```
+配置完后查询规则
+```console
+[root@172 ~]# auditctl -l
+-w /home/test_audit -p rwxa -k dushnda_watch
+```
+之后做一些权限改变，增改文件操作，查看日志和报告
+```console
+au
+```
 ## 参考链接
 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system
 
