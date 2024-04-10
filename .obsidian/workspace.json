@@ -149,12 +149,14 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "721c275a2f4a79c8",
+  "active": "aa0934016fbc06d3",
   "lastOpenFiles": [
+    "source/_posts/未命名",
     "source/_posts/audit审计工具使用_20240411_2.png",
+    "source/_posts/audit审计工具使用.md",
+    "source/_posts/audit审计工具使用_20240411_3.png",
     "source/_posts/audit审计工具使用_20240411_1.png",
     "source/_posts/立体角.md",
-    "source/_posts/audit审计工具使用.md",
     "source/_posts/qemu调试linux/qemu调试linux（二）.md",
     "source/_posts/qemu调试linux/qemu调试linux（一）.md",
     "source/_posts/qemu调试linux/qemu调试linux（二）/qemu调试linux（二）_20240319_1.png",
@@ -166,8 +168,6 @@
     "source/_posts/qemu调试linux/qemu调试linux（一）",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_10.png",
     "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_9.png",
-    "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_8.png",
-    "source/_posts/qemu调试linux/qemu调试linux（一）/qemu调试linux（一）_20240124_7.png",
     "source/_posts/bcc初体验.md",
     "source/_posts/qemu调试linux",
     "source/_posts/Ubuntu下EDK2开发环境搭建/Ubuntu下EDK2开发环境搭建.md",
