@@ -67,6 +67,12 @@ ausearch -i -k dushnda_watch
 
 ![](audit审计工具使用/audit审计工具使用_20240411_1.png)
 
+删除路径监控
+```console
+auditctl -W /home/test_audit -p rwxa -k dushnda_watch
+```
+> 其中，auditctl -d的删除和a'u'd
+
 ## 参考链接
 
 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system
