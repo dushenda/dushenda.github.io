@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="audit用途 监控文件、命令、网络等，生成监控报告。 ## 参考链接 [1] https:&#x2F;&#x2F;access.redhat.com&#x2F;documentation&#x2F;zh-cn&#x2F;red_hat_enterprise_linux&#x2F;8&#x2F;html&#x2F;security_hardening&#x2F;auditing-the-system_security-hardening#linux-audit_auditing-the">
+    <meta name="description" content="audit用途 监控文件、命令、网络等，生成监控报告。 ## 安装启动audit 安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start 将 auditd 配置为在引导时启动： 1systemctl enable au">
 <meta property="og:type" content="article">
 <meta property="og:title" content="audit审计工具使用">
 <meta property="og:url" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="audit用途 监控文件、命令、网络等，生成监控报告。 ## 参考链接 [1] https:&#x2F;&#x2F;access.redhat.com&#x2F;documentation&#x2F;zh-cn&#x2F;red_hat_enterprise_linux&#x2F;8&#x2F;html&#x2F;security_hardening&#x2F;auditing-the-system_security-hardening#linux-audit_auditing-the">
+<meta property="og:description" content="audit用途 监控文件、命令、网络等，生成监控报告。 ## 安装启动audit 安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start 将 auditd 配置为在引导时启动： 1systemctl enable au">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-11T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-10T19:23:35.083Z">
+<meta property="article:modified_time" content="2024-04-10T19:28:29.564Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="RHEL系列">
 <meta property="article:tag" content="审计">
@@ -144,7 +144,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#audit%E7%94%A8%E9%80%94"><span class="nav-number">1.</span> <span class="nav-text">audit用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">2.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#audit%E7%94%A8%E9%80%94"><span class="nav-number">1.</span> <span class="nav-text">audit用途</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -248,9 +248,19 @@
     
     
     <div class="post-body" itemprop="articleBody"><h2 id="audit用途">audit用途</h2>
-<p>监控文件、命令、网络等，生成监控报告。 ##</p>
-<h2 id="参考链接">参考链接</h2>
-<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
+<p>监控文件、命令、网络等，生成监控报告。 ## 安装启动audit 安装audit工具 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
+<p>将 <code>auditd</code> 配置为在引导时启动：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
+<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <em><action></em> 可以是以下之一：</p>
+<p><code>stop</code> ：停止 <code>auditd</code>。</p>
+<p><code>restart</code>：重新启动 <code>auditd</code>。</p>
+<p><code>reload</code> 或 <code>force-reload</code>：重新加载 <code>/etc/audit/auditd.conf</code> 文件中 <code>auditd</code> 的配置。</p>
+<p><code>rotate</code>：轮转 <code>/var/log/audit/</code> 目录中的日志文件。</p>
+<p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
+<p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
+<p><code>status</code>：显示 <code>auditd</code> 的运行状态。 ## 参考链接 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
 
     </div>
 

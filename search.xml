@@ -69,9 +69,19 @@
     <title>audit审计工具使用</title>
     <url>/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="audit用途">audit用途</h2>
-<p>监控文件、命令、网络等，生成监控报告。 ##</p>
-<h2 id="参考链接">参考链接</h2>
-<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
+<p>监控文件、命令、网络等，生成监控报告。 ## 安装启动audit 安装audit工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
+<p>将 <code>auditd</code> 配置为在引导时启动：</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
+<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <em><action></em> 可以是以下之一：</p>
+<p><code>stop</code> ：停止 <code>auditd</code>。</p>
+<p><code>restart</code>：重新启动 <code>auditd</code>。</p>
+<p><code>reload</code> 或 <code>force-reload</code>：重新加载 <code>/etc/audit/auditd.conf</code> 文件中 <code>auditd</code> 的配置。</p>
+<p><code>rotate</code>：轮转 <code>/var/log/audit/</code> 目录中的日志文件。</p>
+<p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
+<p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
+<p><code>status</code>：显示 <code>auditd</code> 的运行状态。 ## 参考链接 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
 ]]></content>
       <tags>
         <tag>RHEL系列</tag>
@@ -93,6 +103,29 @@
       <tags>
         <tag>操作系统</tag>
         <tag>bpf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>判断磁盘是ssd还是hdd</title>
+    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
+    <content><![CDATA[<h2 id="linux">Linux</h2>
+<h3 id="通过文件系统">通过文件系统</h3>
+<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
+<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
+<h3 id="lsblk">lsblk</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
+<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd_20240121.png" class=""></p>
+<h3 id="smartctl">smartctl</h3>
+<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
+<h2 id="windows">Windows</h2>
+<h3 id="powershell">powershell</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
+<h3 id="gui">GUI</h3>
+<p>在任务管理器下查看 <img src="/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd_20240121_1.png" class=""></p>
+]]></content>
+      <tags>
+        <tag>存储</tag>
+        <tag>磁盘</tag>
       </tags>
   </entry>
   <entry>
@@ -316,29 +349,6 @@
       <tags>
         <tag>正则</tag>
         <tag>脚本</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>判断磁盘是ssd还是hdd</title>
-    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
-    <content><![CDATA[<h2 id="linux">Linux</h2>
-<h3 id="通过文件系统">通过文件系统</h3>
-<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
-<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
-<h3 id="lsblk">lsblk</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
-<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd_20240121.png" class=""></p>
-<h3 id="smartctl">smartctl</h3>
-<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
-<h2 id="windows">Windows</h2>
-<h3 id="powershell">powershell</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
-<h3 id="gui">GUI</h3>
-<p>在任务管理器下查看 <img src="/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd_20240121_1.png" class=""></p>
-]]></content>
-      <tags>
-        <tag>存储</tag>
-        <tag>磁盘</tag>
       </tags>
   </entry>
   <entry>
