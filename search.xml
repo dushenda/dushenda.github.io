@@ -69,7 +69,9 @@
     <title>audit审计工具使用</title>
     <url>/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="audit用途">audit用途</h2>
-<p>监控文件、命令、网络等，生成监控报告。 ## 安装启动audit 安装audit工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
+<p>监控文件、命令、网络等，生成监控报告。</p>
+<h2 id="安装启动audit">安装启动audit</h2>
+<p>安装audit工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
 <p>将 <code>auditd</code> 配置为在引导时启动：</p>
 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
@@ -81,7 +83,12 @@
 <p><code>rotate</code>：轮转 <code>/var/log/audit/</code> 目录中的日志文件。</p>
 <p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
 <p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
-<p><code>status</code>：显示 <code>auditd</code> 的运行状态。 ## 参考链接 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
+<p><code>status</code>：显示 <code>auditd</code> 的运行状态。</p>
+<h2 id="配置规则">配置规则</h2>
+<p>举例说明</p>
+<h2 id="参考链接">参考链接</h2>
+<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
+<p>[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</p>
 ]]></content>
       <tags>
         <tag>RHEL系列</tag>
