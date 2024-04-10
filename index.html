@@ -249,7 +249,7 @@
 <p>将 <code>auditd</code> 配置为在引导时启动：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
 <p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
-<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <em><action></em> 可以是以下之一：</p>
+<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <code>_&lt;action&gt;_</code>可以是以下之一：</p>
 <p><code>stop</code> ：停止 <code>auditd</code>。</p>
 <p><code>restart</code>：重新启动 <code>auditd</code>。</p>
 <p><code>reload</code> 或 <code>force-reload</code>：重新加载 <code>/etc/audit/auditd.conf</code> 文件中 <code>auditd</code> 的配置。</p>
@@ -258,9 +258,7 @@
 <p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
 <p><code>status</code>：显示 <code>auditd</code> 的运行状态。</p>
 <h2 id="配置规则">配置规则</h2>
-<p>举例说明</p>
-<h2 id="参考链接">参考链接</h2>
-<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
+<p>举例说明，监控<code>/home/test_audit/</code>文件夹（文件）的变更选项为rwxa（<strong>r</strong>=read, <strong>w</strong>=write, <strong>x</strong>=execute, <strong>a</strong>=attribute），设置关键字<code>dushnda_watch</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 配置完后查询规则 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@172 ~]# auditctl -l</span><br><span class="line">-w /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 之后做一些权限改变，增改文件操作，查看日志和报告 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au</span><br></pre></td></tr></table></figure> ## 参考链接 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
 <p>[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</p>
 
       
