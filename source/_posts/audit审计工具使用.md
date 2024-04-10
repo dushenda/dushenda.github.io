@@ -10,6 +10,7 @@ tags:
 
 ## audit用途
 监控文件、命令、网络等，生成监控报告。
+
 ## 安装启动audit
 安装audit工具
 ```console
@@ -44,5 +45,14 @@ systemctl enable auditd
 `condrestart` 或 `try-restart`：只有当 `auditd` 运行时才重新启动它。
 
 `status`：显示 `auditd` 的运行状态。
+
+## 配置规则
+
+举例说明
+
+
+
 ## 参考链接
 [1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system
+
+[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html
