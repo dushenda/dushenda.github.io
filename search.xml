@@ -780,30 +780,6 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
       </tags>
   </entry>
   <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>工作流</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ubuntu下EDK2开发环境搭建</title>
     <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
@@ -840,6 +816,30 @@ S=\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta
         <tag>EDK2</tag>
         <tag>UEFI</tag>
         <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
       </tags>
   </entry>
   <entry>
