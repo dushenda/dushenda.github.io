@@ -19,29 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Windows运行参数分析这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Win">
+    <meta name="description" content="Windows运行参数分析 这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Wi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows性能分析">
 <meta property="og:url" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="Windows运行参数分析这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Win">
+<meta property="og:description" content="Windows运行参数分析 这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Wi">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png">
-<meta property="og:image" content="https://dushenda.github.io/wpr_start.png">
-<meta property="og:image" content="https://dushenda.github.io/wpr_save.png">
-<meta property="og:image" content="https://dushenda.github.io/wpr_save_finish.png">
-<meta property="og:image" content="https://dushenda.github.io/wpa_open.png">
-<meta property="og:image" content="https://dushenda.github.io/wpa_file_in1.png">
-<meta property="og:image" content="https://dushenda.github.io/wpafileincpu.png">
-<meta property="og:image" content="https://dushenda.github.io/wpafileincpumem.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpr_start.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpr_save.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpr_save_finish.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpa_open.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpa_file_in1.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpafileincpu.png">
+<meta property="og:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/wpafileincpumem.png">
 <meta property="article:published_time" content="2020-10-20T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-08T20:09:54.414Z">
+<meta property="article:modified_time" content="2025-12-08T20:12:56.393Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="操作系统">
 <meta property="article:tag" content="Windows">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">
@@ -178,7 +178,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows%E8%BF%90%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">Windows运行参数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-Performance-Record"><span class="nav-number">1.1.</span> <span class="nav-text">Windows Performance Record</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-Performance-Analysis"><span class="nav-number">1.2.</span> <span class="nav-text">Windows Performance Analysis</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#windows%E8%BF%90%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">Windows运行参数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#windows-performance-record"><span class="nav-number">1.1.</span> <span class="nav-text">Windows Performance Record</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows-performance-analysis"><span class="nav-number">1.2.</span> <span class="nav-text">Windows Performance Analysis</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +193,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -281,30 +281,27 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Windows运行参数分析"><a href="#Windows运行参数分析" class="headerlink" title="Windows运行参数分析"></a>Windows运行参数分析</h1><p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="windows运行参数分析">Windows运行参数分析</h1>
+<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
 <p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
-<p><img src="/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png"></p>
+<p><img src="任务管理.png" /></p>
 <span id="more"></span>
-
 <blockquote>
 <p>Windows Hardware Lab Kit (Windows HLK) 是一个测试框架，用于测试 Windows 10 以及从 Windows Server 2016 开始的所有 Windows Server 版本的硬件设备。 你的产品必须通过使用 Windows HLK 进行的某些测试，才有资格加入 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/design/compatibility/">Windows 硬件兼容性计划</a>。</p>
 <p>Windows 性能工具包位于 <a target="_blank" rel="noopener" href="https://aka.ms/adk">Windows 评估和部署工具包</a>中，其中包含各种性能监控工具，这些工具可生成有关 Windows 操作系统和应用程序的详细性能概况。 本文档同时讨论了 Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA)。</p>
 <p>包含在<a target="_blank" rel="noopener" href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows 性能记录器 (WPR) 是一种性能录制工具为基础上事件跟踪 Windows (ETW)。 它记录系统事件，然后可以通过使用 Windows Performance Analyzer (WPA) 进行分析。</p>
 <p>包含在<a target="_blank" rel="noopener" href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows Performance Analyzer (WPA) 是一种工具，创建的事件跟踪 Windows (ETW) 事件所记录的 Windows 性能的关系图和数据表记录器 (WPR)、 Xperf 或评估运行评估平台中。 WPA 可以打开任何事件跟踪日志 (ETL) 文件进行分析。</p>
 </blockquote>
-<h2 id="Windows-Performance-Record"><a href="#Windows-Performance-Record" class="headerlink" title="Windows Performance Record"></a>Windows Performance Record</h2><ol>
-<li><p>在程序中搜索到 Windows Performance Record 并且打开，<br><img src="/wpr_start.png"></p>
-</li>
-<li><p>从当前时刻开始记录，记录完成后保存文件<br><img src="/wpr_save.png"><br><img src="/wpr_save_finish.png"></p>
-</li>
-<li><p>记下文件保存位置</p>
-</li>
+<h2 id="windows-performance-record">Windows Performance Record</h2>
+<ol type="1">
+<li><p>在程序中搜索到 Windows Performance Record 并且打开， <img src="wpr_start.png" /></p></li>
+<li><p>从当前时刻开始记录，记录完成后保存文件 <img src="wpr_save.png" /> <img src="wpr_save_finish.png" /></p></li>
+<li><p>记下文件保存位置</p></li>
 </ol>
-<h2 id="Windows-Performance-Analysis"><a href="#Windows-Performance-Analysis" class="headerlink" title="Windows Performance Analysis"></a>Windows Performance Analysis</h2><ol>
-<li><p>在程序中找到 Windows Performance Analysis 并且打开<br><img src="/wpa_open.png"></p>
-</li>
-<li><p>File-&gt;Open，打开前面保存的文件<br><img src="/wpa_file_in1.png"><br><img src="/wpafileincpu.png"><br><img src="/wpafileincpumem.png"></p>
-</li>
+<h2 id="windows-performance-analysis">Windows Performance Analysis</h2>
+<ol type="1">
+<li><p>在程序中找到 Windows Performance Analysis 并且打开 <img src="wpa_open.png" /></p></li>
+<li><p>File-&gt;Open，打开前面保存的文件 <img src="wpa_file_in1.png" /> <img src="wpafileincpu.png" /> <img src="wpafileincpumem.png" /></p></li>
 </ol>
 
     </div>
