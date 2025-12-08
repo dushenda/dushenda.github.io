@@ -11,20 +11,6 @@ Purpose: a single-page, production-ready cheatsheet for Linux/SRE triage.
 Optimized for fast on-call use: concise flags, copy-paste recipes, brief notes,
 and clear risk callouts.
 
-Quick Navigation
-- [Binaries & ELF](#binaries--elf)
-- [Text & Data Utilities](#text--data-utilities)
-- [Networking](#networking)
-- [Kernel & Tracing](#kernel--tracing)
-- [Disk & Filesystems](#disk--filesystems)
-- [Processes & Scheduling](#processes--scheduling)
-- [CPU](#cpu)
-- [Memory](#memory)
-- [Logs & Systemd](#logs--systemd)
-- [Security & Audit](#security--audit)
-- [Containers & Namespaces](#containers--namespaces)
-- [Incident Playbooks](#incident-playbooks)
-
 Tip: Use your editor/browser search to jump to any command by its number, e.g., "## 41. lsof".
 
 ## Binaries & ELF
