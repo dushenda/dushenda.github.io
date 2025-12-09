@@ -11,7 +11,7 @@ tags:
 ## Obsidian配置
 下载`Obsidian Git`插件，需要打开第三方插件按钮，下载插件。
 
-![](img1.png)
+![](Obsidian和github和hexo博客流配置/Obsidian和github和hexo博客流配置/img1.png)
 
 在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。
 
