@@ -8,8 +8,8 @@ tags:
 # wireshark
 ## 远程抓包
 在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时开源
-![](./Linux-网络抓包/img1.png)
-![image.png](./Linux-网络抓包/image.png)
+![](Linux-网络抓包/img1.png)
+![image.png](Linux-网络抓包/image.png)
 ## ssh+tcpdump+wireshark解析
 直接抓包解析
 ```shell
