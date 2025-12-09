@@ -154,8 +154,8 @@ Attaching 1 probe...
     secondary_startup_64_no_verify+381
 ]: 8
 ```
-
-![](bpftrace3/image1.png)
+对比结果如下
+![diff](bpftrace3/image1.png)
 
 # 其他说明
 
