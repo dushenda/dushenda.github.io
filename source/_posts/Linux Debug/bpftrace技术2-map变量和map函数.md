@@ -54,7 +54,9 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 
 ## count()- 统计系统调用次数
 统计每个进程调用的系统调用次数
+
 `bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'`
+
 输出
 ```shell
 @count[bash]: 15
@@ -67,7 +69,9 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 
 ## sum(int n)- 计算读取的总字节数
 累计所有进程通过 read 系统调用成功读取的字节数
+
 `bpftrace -e 'tracepoint:syscalls:sys_exit_read /args->ret > 0/ { @bytes = sum(args->ret); }'`
+
 输出
 ```shell
 @bytes: 1048576
@@ -78,7 +82,9 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 
 ## avg(int n)- 计算平均读取大小
 计算每次 `read`系统调用成功读取的平均字节数。
+
 `bpftrace -e 'tracepoint:syscalls:sys_exit_read /args->ret > 0/ { @avg_size = avg(args->ret); }'`
+
 输出
 ```shell
 @avg_size: 512
@@ -89,7 +95,9 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 
 ## stats(int n)- 获取完整的统计摘要
 对 `read`系统调用的返回值进行全面的统计。
+
 `bpftrace -e 'tracepoint:syscalls:sys_exit_read /args->ret > 0/ { @s = stats(args->ret); }'`
+
 输出
 ```shell
 @s: count 100, average 4096, total 409600, min 1, max 8192
@@ -100,7 +108,9 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 
 ## hist(int n)- 分析读取字节数的对数分布
 显示 `read`系统调用返回值的分布，区间按2的幂次方划分。
+
 `bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = hist(args->ret); }'`
+
 输出
 ```shell
 @bytes:
@@ -115,7 +125,9 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 
 ## lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布
 使用线性直方图统计 `read`返回值，范围从0到2000，步长为200。
+
 `bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = lhist(args->ret, 0, 2000, 200); }'`
+
 输出
 ```shell
 @bytes:
