@@ -34,7 +34,7 @@ static int compat_do_ipt_get_ctl(struct sock *sk, int cmd, void __user *user, in
 ```
 
 ## 调用命令，pid，入参
-
+建立`test.bpf`文件
 ```c
 #include <net/sock.h>
 
