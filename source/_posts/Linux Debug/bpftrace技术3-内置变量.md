@@ -154,7 +154,9 @@ Attaching 1 probe...
     secondary_startup_64_no_verify+381
 ]: 8
 ```
-![](bpftrace3/image-1.png)
+
+![](bpftrace3/image1.png)
+
 # 其他说明
 
 - argX与 args的区别：arg0, arg1...用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args->字段名来访问其成员。
