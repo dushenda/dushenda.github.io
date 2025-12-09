@@ -24,8 +24,8 @@ ssh -J <jumpsever ip> <ip> 'tcpdump -ni any -s0 -U -w - udp port 53' | wireshark
 ssh <ip> 'tcpdump -ni any -s0 -U -w- udp port 53' > /tmp/packets.pcap
 ```
 
-## tcpdump
-### 常用抓包指令
+# tcpdump
+## 常用抓包指令
 过滤tcp flags，比如抓syn报文，看是否能握手成功
 ```shell
 tcpdump -ni any 'tcp[tcpflags] == tcp-syn'
@@ -71,7 +71,7 @@ tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080
 tcpdump -i any -c 10000 -w http_requests.pcap dst port 80
 ```
 
-### 常用选项
+## 常用选项
 
 | 参数                    | 说明                                                           | 示例                   |
 | --------------------- | ------------------------------------------------------------ | -------------------- |
@@ -82,6 +82,7 @@ tcpdump -i any -c 10000 -w http_requests.pcap dst port 80
 | **`-w <文件名>`**​       | 将抓取的原始数据包写入指定文件。                                             | `-w my_capture.pcap` |
 | **`-c <数量>`**​        | 抓取指定数量的数据包后自动退出。                                             | `-c 10000`           |
 | **`-s <长度>`**​        | 设置每个数据包的抓取长度（快照长度byte），`-s 0`表示抓取完整数据包。**(在长期抓只需要分析报文头很实用)** | `-s 0`               |
+## 其他选项
 ### Capture Commands
 
 |Command|Example usage|Explanation|
@@ -186,6 +187,6 @@ tcpdump -i any -c 10000 -w http_requests.pcap dst port 80
 | `tcpdump -AtuvX icmp`                                                                   | Capture ICMP traffic and print ICMP packets in hex and ASCII and the following features:  <br>With:  <br>• headers  <br>• data  <br>• undecoded NFS handles  <br>Without:  <br>• link level headers  <br>• timestamps. |
 | `tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'` | Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.                                                                |
 
-## 参考/搬运
+# 参考/搬运
 - [https://debugging.works/blog/network-debugging/](https://debugging.works/blog/network-debugging/)
 - https://www.stationx.net/tcpdump-cheat-sheet/
