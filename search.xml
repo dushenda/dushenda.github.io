@@ -446,21 +446,6 @@
       </tags>
   </entry>
   <entry>
-    <title>bcc初体验</title>
-    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="安装">安装</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用">使用</h2>
-<p>funccount</p>
-<p>stackcount</p>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>bpf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>audit审计工具使用</title>
     <url>/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="audit用途">audit用途</h2>
@@ -520,6 +505,21 @@
       <tags>
         <tag>存储</tag>
         <tag>磁盘</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bcc初体验</title>
+    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="安装">安装</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用">使用</h2>
+<p>funccount</p>
+<p>stackcount</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>bpf</tag>
       </tags>
   </entry>
   <entry>
@@ -1099,6 +1099,273 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>论文笔记-场地自动化定标方法研究及应用</title>
+    <url>/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="论文笔记-场地自动化定标方法研究及应用">论文笔记-场地自动化定标方法研究及应用</h1>
+<h2 id="辐射定标的意义">辐射定标的意义</h2>
+<p>卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。</p>
+<h3 id="辐射定标">辐射定标</h3>
+<h3 id="辐射校正">辐射校正</h3>
+<h2 id="遥感辐射定标方法">遥感辐射定标方法</h2>
+<p>因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限于载荷的使用寿命。那么要延长载荷的工作年限，就需要实时测出其老化程度，对于传感器的灵敏度做出评估，改变具体参数使得其能够继续工作。比如之前对于输入为 10 就能输出 10 ，现在只能输出 5，就乘以系数 2 就可以完成跟之前一样的功能。这样器件就还可以接着使用。</p>
+<span id="more"></span>
+<h3 id="发射前定标准备活动">发射前定标（准备活动）</h3>
+<p>相当于发射前，在地面上对各个参数进行测定，比如输入 10 输出 10 ，那这个系数就是 1，在发射前就需要记录下来。也就是相当于确定了一个基准，来为后面的调整参数做准备。</p>
+<h3 id="运行时定标">运行时定标</h3>
+<h4 id="星上定标">星上定标</h4>
+<p>卫星运行过程中器件老化，改变参数的过程。星上定标的方法有：</p>
+<ol type="1">
+<li>灯+积分球</li>
+<li>灯+漫反射板</li>
+</ol>
+<figure>
+<img src="星上定标几种方式1.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
+</figure>
+<p>定标灯在卫星的内部，可以通过由地面的指令频繁进行定标。但是由于灯的光谱和强度与太阳的光谱差别较大，无法真实反映整个系统的变化（那有没有实现复制太阳光谱的生产灯的技术呢？），所以光谱匹配校正增加了定标的不确定性，并且灯也是仪器，也会有一定的衰变，所以精度也会下降。</p>
+<ol start="3" type="1">
+<li>太阳+漫反射板</li>
+<li>太阳+衰减板+漫反射板</li>
+</ol>
+<figure>
+<img src="星上定标几种方式2.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
+</figure>
+<p>借助太阳的话，就能实现光源的匹配，也就是光源的误差完全被消除了，但是由于需要得到太阳光，所以漫反射板就会暴露在卫星外部。漫反射板材料会在强紫外环境下分解，并且太空中的杂质也容易粘到漫反射板上。衰减板的作用是衰减紫外辐射，减缓漫反射板的分解。</p>
+<p>所以，卫星内定标和卫星外定标都有各自的优缺点，卫星内定标主要问题是光源不匹配造成的误差，卫星外定标的主要问题是漫反射板分解造成的误差。</p>
+<h4 id="替代定标场地定标">替代定标（场地定标）</h4>
+<p>选取可知可测的地物目标作为辐射源（本身的辐射还是对太阳的反射？我的理解是太阳的反射）代替实验室和星上定标器来标定在轨器件的观测数据。因为需要计算的是卫星的表观辐亮度（也就是卫星本来应该测量出的辐亮度值）和卫星的实测辐亮度进行比较。 表观辐亮度需要通过大气传输模型得到，大气传输模型的一个重要的参数就是地表反射率，这也就是为什么我需要测量地表反射率的原因。</p>
+<p>主要有三种定标方法：</p>
+<ul>
+<li><p>反射率基法 在卫星过场地的时候（过顶），测量场地的地表反射率和一些大气参数，通过<code>辐射传输模型</code>计算卫星入瞳处的辐射亮度；卫星上面的仪器也会记录一个遥感图像，通过遥感图像可以卫星测量的入瞳处的辐亮度，二者之间的差距就是需要校正的值，也就是定标系数的确定。</p>
+<p>当然在场地的选取方面有要求，需要场地的朗伯特性好（朗伯特性是漫反射好换的评价，也是场地或者材料各向同性属性的评价标准），通过朗伯系数等参数可以计算出地表反射率（猜测应该是朗伯系数越小计算的误差越小，并且有较好的的公式）。</p>
+<p>所以地表反射率和大气参数是场地定标需要得到的非常重要的参数。</p></li>
+<li><p>辐照度基法 是反射率基法的改进流程与反射率基法基本相同，主要区别是增加了漫-总比的测量。</p></li>
+<li><p>辐亮度基法 这个是做一个飞行器，在航空范围内，搭载一台精确定标的辐射计仪器，在卫星过顶的时候保持与卫星对场地的同步几何角度（姿态角等），然后对大气层的影响，将两者标准化到统一的环境下，主要是航空器与卫星的高度不同，而且二者之间有大气，所以需要进行一定的校正，校正完成之后，二者的值应该还是不同的（因为卫星上的仪器的老化），所以这样就可以对卫星上的仪器进行标定系数。 理论上辐亮度基法应该比较准，因为它与卫星之间的距离较小，受到的大气的干扰少，底层大气会由于人类的活动受到较大的干扰。但是由于需要有精密的飞行器和辐射计，并且其要在卫星过顶时与卫星保持一致的几何角度，所以耗资比较大，并且由于航空器需要到达的高度为3km~20km，这个飞行高度有也是客机的飞行高度，所以还需要申请空域。</p></li>
+</ul>
+<h2 id="人工定标">人工定标</h2>
+<h4 id="概览">概览</h4>
+<p>首先定标需要得到的结果是计算出辐亮度，把这个辐亮度输入辐射传输模型里面，得到一个本来应该是卫星的辐亮度，叫做表观辐亮度，这个表观辐亮度与卫星上的遥感器的辐亮度比较，就可以得到定标系数，这就完成了定标。</p>
+<p>人工定标可以得到实时的地表反射率，所以根据定标流程图，直接计算代入辐射传输模型就可以了。</p>
+<p>具体过程如下图所示： <img src="反射率基法.png" alt="反射率基法" /> 从上图可以看到，通过地表反射率、大气参数和气象观测（主要做辅助功能）可以输入辐射传输模型，然后再加上太阳传感器几何测量（得到一些角度值）就可以计算出卫星上面的遥感平台的表观辐亮度，通过与卫星影像（<code>.hdf</code>等带有大量信息的格式文件）做比较就可以得到定标系数。</p>
+<p>对于第<span class="math inline"><em>i</em></span>波段光的表观反射率（卫星的表观反射率，但是我觉得好像没什么用，因为只需要测卫星的表观辐亮度就够了吧）有 <span class="math display">$$
+\rho^*_i(\theta_v,\theta_s,\phi_v,\phi_s)=\frac{\pi d^2L_i(\theta_v,\theta_s,\phi_v,\phi_s)}{E_{0i\cos\theta}}
+$$</span> <span class="math inline"><em>ρ</em><sub><em>i</em></sub><sup>*</sup>(<em>θ</em><sub><em>v</em></sub>,<em>θ</em><sub><em>s</em></sub>,<em>ϕ</em><sub><em>v</em></sub>,<em>ϕ</em><sub><em>s</em></sub>)</span>是对于第<span class="math inline"><em>i</em></span>波段光的地表反射率 <span class="math inline"><em>θ</em><sub><em>s</em></sub></span>是太阳的天顶角 <span class="math inline"><em>ϕ</em><sub><em>s</em></sub></span>是太阳的方位角 <span class="math inline"><em>θ</em><sub><em>v</em></sub></span>是观测天顶角 <span class="math inline"><em>ϕ</em><sub><em>v</em></sub></span>是观测方位角 <span class="math inline"><em>L</em><sub><em>i</em></sub>(<em>θ</em><sub><em>v</em></sub>,<em>θ</em><sub><em>s</em></sub>,<em>ϕ</em><sub><em>v</em></sub>,<em>ϕ</em><sub><em>s</em></sub>)</span>是表观辐亮度 <span class="math inline"><em>E</em><sub>0<em>i</em></sub></span>是日地平均距离处大气层顶的太阳辐照度 <span class="math inline"><em>d</em>​</span>是日地平均距离与实际距离的比值</p>
+<p>表观反射率公式如公式（1）所示，各个参数计算如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">参数</th>
+<th style="text-align: center;">计算方法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>θ</em><sub><em>s</em></sub></span>是太阳的天顶角</td>
+<td style="text-align: center;">之前论文的公式</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>ϕ</em><sub><em>s</em></sub></span>是太阳的方位角</td>
+<td style="text-align: center;">之前论文的公式</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>θ</em><sub><em>v</em></sub></span>是观测天顶角</td>
+<td style="text-align: center;">测量</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>ϕ</em><sub><em>v</em></sub></span>是观测方位角</td>
+<td style="text-align: center;">测量</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>L</em><sub><em>i</em></sub>(<em>θ</em><sub><em>v</em></sub>,<em>θ</em><sub><em>s</em></sub>,<em>ϕ</em><sub><em>v</em></sub>,<em>ϕ</em><sub><em>s</em></sub>)</span>是表观辐亮度</td>
+<td style="text-align: center;">由地表反射率经过辐射传输模型计算</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>E</em><sub>0<em>i</em></sub></span>是日地平均距离处大气层顶的太阳辐照度</td>
+<td style="text-align: center;">？</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>d</em></span>是日地平均距离与实际距离的比值</td>
+<td style="text-align: center;">之前论文的公式</td>
+</tr>
+</tbody>
+</table>
+<h4 id="辐射传输模型">辐射传输模型</h4>
+<p>输入参数</p>
+<h2 id="自动化定标">自动化定标</h2>
+<p>自动化定标也就是不需要人参加，仪器实时计算数据，因为是计算机系统，所以计算出的是离散值，即不断计算特定时刻点的数据。 根据前面的说明，我们要得到的数据是地表反射率和大气参数。由于人工定标可以得到实时的地表反射率，但是仪器不行（为什么？？？）。</p>
+<h4 id="使用的仪器">使用的仪器</h4>
+<h5 id="asc">ASC</h5>
+<p>全天空成像仪（All Sky Cloud，ASC）。用来测量云量数据，判断天气情况是否适合自动化定标。</p>
+<h5 id="atr">ATR</h5>
+<p>通道式自动化场地辐射计（Automated Test-site Radiometer，ATR）。用来测量地表反射率，输出为<span class="math inline"><em>V</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>，即<span class="math inline"><em>i</em></span>波段的输出电压值。</p>
+<h5 id="him">HIM</h5>
+<p>超光谱辐照度仪（Hyperspectral Irradiance Meter，HIM）。用来测量漫总比<span class="math inline"><em>α</em></span>，与6S模型输出计算的直射照度一起可以计算出总照度。</p>
+<h5 id="psr">PSR</h5>
+<p>高精度太阳辐射计（Precision Solar Radiometer，PSR）。用来测量气溶胶的光学厚度。</p>
+<h5 id="svc">SVC</h5>
+<p>是一台可以精确测量高光谱地表反射率的仪器，主要是用来将ATR从多光谱扩展为高光谱的。</p>
+<h4 id="地表反射率">地表反射率</h4>
+<p>通过计算地表反射率。公式如下：</p>
+<p><span class="math display">$$
+\rho_{ATR-i}=\frac{\pi C_{ATR-i}V_{ATR-i}}{E_{总照度}}
+$$</span> <span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>是地表反射率 <span class="math inline"><em>C</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>是ATR在<span class="math inline"><em>i</em></span>波段的辐射亮度定标系数，这是个仪器标定值，可以直接得到 <span class="math inline"><em>V</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>是ATR在<span class="math inline"><em>i</em></span>波段的输出电压值，这是仪器输出值 <span class="math inline"><em>E</em><sub><em>总</em><em>照</em><em>度</em></sub></span>由HIM仪器得到漫总比，再经过6S模型输出直射照度，由直射照度除以直总比得到总照度 <span class="math display">$$
+E_{总照度}=\frac{E_{直射照度}}{1-\alpha}
+$$</span> <span class="math inline"><em>α</em></span>为漫总比，由HIM得到。</p>
+<p>但是由于仪器是通道式的（8通道），所以只能获得在八个波长对应的地表反射率<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>，但是卫星测量的却是高光谱（也就是一段波长内的辐亮度<span class="math inline"><em>L</em><sub><em>r</em><em>e</em><em>a</em><em>l</em> − <em>s</em><em>e</em><em>g</em><em>m</em><em>e</em><em>n</em><em>t</em></sub></span>），所以我需要把通道式的<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>扩展到和卫星同波段的<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>s</em><em>e</em><em>g</em><em>m</em><em>e</em><em>n</em><em>t</em></sub>​</span>代入传输模型。</p>
+<p>获取高光谱地表反射率的过程如下图所示。</p>
+<p>其中SVC只需要定期测量，因为模型是建立在SVC的变化在短时间内很小的前提下。所以在测量一次SVC进行ATR多光谱扩展之后，之后按照SVC测量出的高光谱曲线来生成ATR的扩展即可。即从<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>这条参考线上下平移到多光谱ATR仪器的八个点处，保持尽可能小的误差，这个上下平移的距离为<span class="math inline"><em>k</em></span>。</p>
+<p>前面已经计算出了在某一时刻八个通道的地表反射率<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − 1</sub>​</span>到<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − 8</sub>​</span>。当然平移也就是同时对高光谱的地表防反射率乘以一个系数，造成曲线的上下移动。即：</p>
+<p><span class="math display"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>i</em></sub> = <em>η</em><sub><em>i</em></sub><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span></p>
+<p>在确定平移因子之前，首先通过敦煌校正场的 <code>BRDF</code>模型要对光的入射方向做一次校正，这个入射方向的校正的是因为卫星过顶时得到的数据和仪器测量的数据的时间不一定完全一致，这就导致了入射角的微小差异，所以需要将仪器测量点时刻的入射角方向校正到卫星测量时刻的入射角。校正公式： <span class="math display">$$
+\rho(\lambda,\theta_2,0^\circ,0^\circ)=\frac{R(\lambda,\theta_2,0^\circ,0^\circ)}{R(\lambda,\theta_1,0^\circ,0^\circ)}\cdot\rho(\lambda,\theta_1,0^\circ,0^\circ)
+$$</span></p>
+<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>卫星过顶时刻的参考反射率</p>
+<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>仪器测量时刻的参考反射率</p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>是BRDF模型计算的反射率</p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>是BRDF模型计算的反射率</p>
+<p>采用<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em><sub><em>i</em></sub></sub></span>与参考曲线<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>的偏差的加权平均和来确定高光谱地表反射率的平移距离。平移引子<span class="math inline"><em>k</em></span>由下式计算 <span class="math display">$$
+W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
+$$</span></p>
+<p><span class="math inline"><em>i</em></span>是波段</p>
+<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应<span class="math inline"><em>i</em></span>波段的反射率，这个是由ATR测量得到的八个值</p>
+<p><span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em> − <em>i</em></sub></span>是参考反射率<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>在波段<span class="math inline"><em>i</em>​</span>处的取值</p>
+<p><span class="math inline"><em>σ</em><sub><em>i</em></sub></span>是<span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>的标准偏差（这个应该是通道反射率，即由 ATR 测量的八个通道的反射率）</p>
+<p><span class="math inline"><em>k</em>​</span>是平移的大小</p>
+<p><span class="math inline"><em>W</em></span>是用来确定<span class="math inline"><em>k</em></span>的，<span class="math inline"><em>W</em></span>的取值最小处就是<span class="math inline"><em>k</em></span>的取值处</p>
+<p><img src="高光谱地表反射率.png" /></p>
+<p>从上图看出，红线就是SVC测量的值，这个值隔一段时间测量一次即可，八个黑点就是ATR在当前时刻测量的值，通过前面的，通过公式（6）的计算得到平移距离<span class="math inline"><em>k</em></span>之后，将红线平移就可以得到蓝线（即目标曲线）。</p>
+<p>这个时候完成的工作就是得到了实时高光谱反射率。是地面的反射率，但是还有一个问题，就是现在得到的地面反射率，是入射角为卫星过顶时刻的太阳天顶角，出射方向是测量时刻的仪器对应的观测角度，现在需要的是得到卫星过顶时刻的出射角，所以还需要进行一次BRDF校正，这次是对出射方向做的BRDF校正，(这个公式怎么写？？)</p>
+<p><span class="math display">$$
+\rho(\lambda,\theta_2,0^\circ,0^\circ)=\frac{R(\lambda,\theta_2,0^\circ,0^\circ)}{R(\lambda,\theta_1,0^\circ,0^\circ)}\cdot\rho(\lambda,\theta_1,0^\circ,0^\circ)
+$$</span></p>
+<p>现在这个<span class="math inline"><em>ρ</em></span>是ATR每个测量时刻得到的高光谱通道反射率，接下来进行出射校正</p>
+<p><span class="math display">$$
+\rho_i=\frac{\int_{\lambda_{1}}^{\lambda_{2}}\rho(\lambda)R_i(\lambda)d\lambda}{\int_{\lambda_{1}}^{\lambda_{2}}R_i(\lambda)d\lambda}
+$$</span></p>
+<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应卫星<span class="math inline"><em>i</em></span>通道的BRDF出射校正的反射率</p>
+<p><span class="math inline"><em>ρ</em>(<em>λ</em>)</span>是得到的高光谱曲线</p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>)​</span>是对应<span class="math inline"><em>i</em>​</span>通道的光谱响应函数</p>
+<p>这样也就得到了对应卫星的<span class="math inline"><em>i</em></span>通道的经过BRDF校正之后的地表反射率，当然，这时候的时刻就是卫星过顶时刻的表观反射率。</p>
+<p><img src="每日的通道反射率.png" /></p>
+<p>即完成了流程图中的<code>Surface Reflectance measurement</code>参数就得到了。</p>
+<h4 id="大气参数">大气参数</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">参数</th>
+<th style="text-align: center;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">臭氧</td>
+<td style="text-align: center;">下载</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">气溶胶光学厚度AOD</td>
+<td style="text-align: center;">PSR反演</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">水汽</td>
+<td style="text-align: center;">下载或者计算</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">太阳天顶角</td>
+<td style="text-align: center;">直接获取</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">太阳方位角</td>
+<td style="text-align: center;">直接获取</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">仪器观测天顶角</td>
+<td style="text-align: center;">直接获取</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">仪器观测方位角</td>
+<td style="text-align: center;">直接获取</td>
+</tr>
+</tbody>
+</table>
+<h4 id="计算表观反射率和表观辐亮度">计算表观反射率和表观辐亮度</h4>
+<p>输入大气传输模型6S，得到表观反射率（即卫星上本来应该是的反射率）和表观辐亮度。</p>
+<h4 id="定标">定标</h4>
+<p>得到表观反射率TOA（Top Of Atmosphere）之后，得到表观反射率和表观辐亮度，与卫星的实测的反射率和辐亮度做比较就可以得到定标系数。</p>
+<h3 id="小结">小结</h3>
+<p><img src="流程.bmp" /></p>
+<p>其中比较重要的操作是在<code>数据处理2</code>中的三步 1. BRDF入射角校正 2. 光谱扩展 3. BRDF出射校正</p>
+<p>下面就来看一下这些处理。</p>
+<h3 id="计算中的一些处理">计算中的一些处理</h3>
+<h4 id="brdf校正">*BRDF校正</h4>
+<p>BRDF模型如下：</p>
+<p><span class="math display"><em>R</em>(<em>λ</em>,<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>) = <em>f</em><sub><em>i</em><em>s</em><em>o</em></sub>(<em>λ</em>) + <em>f</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>λ</em>)<em>K</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>) + <em>f</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>λ</em>)<em>K</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)</span></p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)</span>是二向反射比</p>
+<p><span class="math inline"><em>K</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)​</span>是体散射核</p>
+<p><span class="math inline"><em>K</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)​</span>是几何光学散射核</p>
+<p><span class="math inline"><em>K</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>), <em>K</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)​</span>均只与观测几何条件有关</p>
+<p><span class="math inline"><em>f</em><sub><em>i</em><em>s</em><em>o</em></sub>, <em>f</em><sub><em>v</em><em>o</em><em>l</em></sub>, <em>f</em><sub><em>g</em><em>e</em><em>o</em></sub></span>均是系数，分别叫做波长<span class="math inline"><em>λ</em></span>处的各向同性散射系数、体散射系数和几何光学散射系数。</p>
+<p><span class="math inline"><em>θ</em><sub><em>s</em></sub>​</span>是太阳天顶角</p>
+<p><span class="math inline"><em>θ</em><sub><em>v</em></sub>​</span>是观测天顶角</p>
+<p><span class="math inline"><em>ϕ</em></span>相对方位角</p>
+<h5 id="brdf入射校正">BRDF入射校正</h5>
+<p><span class="math display">$$
+\rho(\lambda,\theta_2,0^\circ,0^\circ)=\frac{R(\lambda,\theta_2,0^\circ,0^\circ)}{R(\lambda,\theta_1,0^\circ,0^\circ)}\cdot\rho(\lambda,\theta_1,0^\circ,0^\circ)
+$$</span></p>
+<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>卫星过顶时刻的参考反射率</p>
+<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)</span>仪器测量时刻的参考反射率</p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>是BRDF模型计算的反射率，在卫星测量的太阳天顶角<span class="math inline"><em>θ</em><sub>2</sub>​</span>，观测角<span class="math inline">0<sup>∘</sup>​</span></p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)</span>是BRDF模型计算的反射率，在仪器测量的太阳天顶角<span class="math inline"><em>θ</em><sub>1</sub></span>，观测角<span class="math inline">0<sup>∘</sup></span></p>
+<h5 id="brdf出射校正">BRDF出射校正</h5>
+<p>$$</p>
+<p>_i= $$</p>
+<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应卫星<span class="math inline"><em>i</em></span>通道的BRDF出射校正的反射率</p>
+<p><span class="math inline"><em>ρ</em>(<em>λ</em>)</span>是得到的高光谱曲线</p>
+<p><span class="math inline"><em>R</em>(<em>λ</em>)​</span>是对应<span class="math inline"><em>i</em>​</span>通道的光谱响应函数</p>
+<h4 id="光谱扩展">光谱扩展</h4>
+<p><span class="math display">$$
+W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
+$$</span></p>
+<p><span class="math inline"><em>i</em></span>是波段</p>
+<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应<span class="math inline"><em>i</em></span>波段的反射率，这个是由ATR测量得到的八个值</p>
+<p><span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em> − <em>i</em></sub></span>是参考反射率<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>在波段<span class="math inline"><em>i</em></span>处的取值</p>
+<p><span class="math inline"><em>σ</em><sub><em>i</em></sub></span>是<span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>的标准偏差（这个应该是通道反射率，即由 ATR 测量的八个通道的反射率）</p>
+<p><span class="math inline"><em>k</em></span>是平移的大小</p>
+<p><span class="math inline"><em>W</em></span>是用来确定<span class="math inline"><em>k</em></span>的，<span class="math inline"><em>W</em></span>的取值最小处就是<span class="math inline"><em>k</em></span>的取值处</p>
+<p>即求函数<span class="math inline"><em>W</em>(<em>k</em>)​</span>取极小值时<span class="math inline"><em>k</em>​</span>的大小。</p>
+<h4 id="s传输模型">*6S传输模型</h4>
+<p>6S的源码是用FORTRAN来写的，想要对6S有所了解，还是要有一定的FORTRAN基础。由于作者是法国人，有很多变量缩写也是以法文为缩写的，不要望文生义。</p>
+<p><strong>第一节 6S简介</strong></p>
+<p>所谓6S是SECOND SIMULATION OF THE SATELLITE SIGNAL IN THE SOLAR SPECTRUM的简写，直译的意思就是<strong>“太阳光谱的卫星信号二次模拟”</strong>。其前身为法国里尔科技大学大气光学实验室开发的5S（SIMULATION OF THE SATELLITE SIGNAL IN THESOLAR SPECTRUM）大气辐射传输模型。在遥感观测的太阳-目标-传感器这种模式中，无论是使用卫星或是飞机，获取数据的过程中都不可避免的受到大气的影响。<strong>6S就是为了模拟这种地气系统中的太阳辐射，计算卫星入瞳处的辐射能量</strong>。通过这种模拟，我们就可以知道大气对太阳辐射的影响大小，由此来进行大气校正。</p>
+<p><strong>注：我的理解，6S是遥感用于对地气系统进行模拟的正演用的软件，而不是用于“大气校正”的软件，只不过正演结果往往被用于大气校正。当然也不仅仅是输出“表观辐亮度”这个正演结果，还有正演过程中所得到的有关大气一系列量。</strong></p>
+<p>6S假定晴空无云的条件下，并考虑了水汽、CO2、O3和O2等的吸收、分子和气溶胶的散射以及非均一地面和双向反射率的问题。相比与5S，6S可以模拟机载观测、设置目标高程、解释BRDF作用和临近效应，增加了新的吸收气体的计算（CO、N2O、CH4），对于瑞利和气溶胶散射的计算由于使用了逐级散射(successive order of scattering)方法，精度有了显著提升，并且光谱积分的步长从5nm改进到2.5nm。6S所能处理的光谱区间为0.25微米至4微米，低于0.25或高于4的都无法运算。缺点是对球形大气和limb (临边)观测不能处理。</p>
+<p>目前国内大部分使用的都是1997年发布的标量版本，版本号一般为6SV4，在2005年Vermote等人又发布了一个矢量版本，版本号一般为6sV-1.0。相对于标量版本，矢量又做了很多改进，最明显的就是可以对于偏振进行处理。在本文中，主要介绍标量版本的使用，如果有时间，后续会再介绍矢量版本。</p>
+<p>最后在后面说下，很多人都以为6S是一个软件，直接将图像输入，设置一些参数之后就可以获得大气校正过的影像了。其实这是一个完全错误的想法，原始的6S只是一个是使用Fortran写出来的一堆代码而已，而且也不能读取影像。可能大家使用的时候都是使用别人生成的EXE程序，在DOS界面里对各种参数进行输入。</p>
+<p><strong>第二节 6S使用</strong></p>
+<p>6S需要9个输入参数，对于这些参数都是必须仔细了解的，使用起来才能保证不会出错。学习都是一个由浅及深的过程，要努力做到知其然更知其所以然，通过对6S的学习能做到对辐射传输的公式以及推导有一个完善的了解，那么才是真正掌握了6S的使用。对于各参数下面将会一一介绍。</p>
+<ol type="1">
+<li><p>第一步需要输入的为几何参数igeom，其中有8情况，当选择igeom=0时，需要手动输入太阳高度角、方位角，卫星高度角、方位角以及影像获取月份与日期。剩下的7种为内置的一些卫星参数，如AVHRR、TM、GOES等，大部分都是需要输入日期，行列号等。</p></li>
+<li><p>第二步为大气模式idatm的选择，6S里内置了0-6共其中大气模式，依次为无大气吸收，热带，中纬度夏季，中纬度冬季，亚寒带夏季，亚寒带冬季以及美国标准62大气模式，或者选择自定义大气廓线，选择7的话，需要输入海拔，压强，温度，水汽浓度，臭氧浓度。选择8需要输入水汽与臭氧浓度，大气廓线使用美国62。</p></li>
+<li><p>第三步为选择气溶胶模式iaer，内置了7中标准气溶胶模式，为0-无气溶胶模式，1-大陆型，2-海洋型，3-城市型，5-沙漠背景的shettle模型，6-生物燃烧模型，7-平流层模型。或者自定义自己的气溶胶模式，当iaer=4时，需要输入各组分的百分比：粉状尘，水溶性物质，海洋性物质，煤烟。8为最多四种模型联合运算的一个正态分布模型。9为改进型的一种伽马分布模型。10为Junge谱幂分布模型。11为选择太阳光度计的测量值进行计算，12为读取已经设定好的参数进行计算。一般情况下如果不想做气溶胶的模式研究，就直接用刚开始介绍的7个标准模式。</p></li>
+<li><p>第四步为气溶胶浓度，关于这个由两种输入方式，气溶胶光学厚度taer55或者可见度v。可见度v的单位为千米，如选择光学厚度taer55，可见度v的值就为0，taer55为550纳米处的气溶胶光学厚度。在气溶胶模式iaer中如果选择无气溶胶，可见度v的值就要为-1。其中气溶胶光学厚度与可见度有一个公式可以转换，为了快速计算，也可以使用4.8除光学厚度得到可见度，但这只是一个约值。</p></li>
+<li><p>第五步为目标海拔高度xps的计算，如果xps&gt;=0，那么表示目标在水平面上。xps&lt;0表明你知道地面的高程，所以输入具体的值，不过前面加个负号。</p></li>
+<li><p>第六步为传感器Xpp高度的输入，xpp=-1000 表明传感器为星载传感器，xpp=0 表明传感器在地面上。-100</p></li>
+<li><p>第七步为光谱条件iwave的输入，其中6S内置了很多传感器的光谱条件，如MODIS，TM，AVHRR，SPOT，NOAA等。也可以使用自定义的光谱条件。其中光谱响应函数的计算是以2.5微米为间隔。</p></li>
+</ol>
+<p>iinf=(wlinf-.25)/0.0025+1.5 为起始光谱值</p>
+<p>isup=(wlsup-.25)/0.0025+1.5 为结束光谱值</p>
+<p>由于6S所支持的光谱区间为0.25-4，代入上式iinf=(0.25-.25)/0.0025+1.5 =1.5=1，isup=(4-.25)/0.0025+1.5=1501.5=1501。所以6S所能处理的所有光谱曲线就位1-1501条。以TM数据蓝光波段为例，其光谱范围为0.430-0.560，代入上式可以得到iinf=(0.430-.25)/0.0025+1.5=73，isup=(0.56-.25)/0.0025+1.5=125，在TM的光谱响应曲线的就可以看做前72个数值为0，后1376个也为0值。</p>
+<p>在6S之中，计算各种参数的时候，尤其是在计算光谱响应的起始与结束值时，定义的为整型，但计算结果可能会为一个小数，这就要考虑截断了，FORTRAN中并没有使用四舍五入的情况，而是直接取整。</p>
+<p>对于6S没有内置的一些光谱响应也就可以自己按照这个规则来写一个Fortran文件。</p>
+<p>第八步为地表特性的选择，这是一个比较复杂的选项，可以选择地面作为朗伯体或者各向异性来构建BRDF。下图为6S中给出的选择路径。</p>
+<p>inhomo选择0代表地表是考虑地面为朗伯体，选择1代表地表各向异性。如果inhomo=0进入第二步的选择，再次选择0表明没有方向效应的影响，然后输入roe（表面反射比）。选择1表明有方向效应的影响，然后选择内置的一些BRDF模型来进行计算。如果inhomo=1，那么接着输入igrou1（roc）（目标的反射）、igrou2（roe）（周围环境反射）、radius r（表面半径）。</p>
+<p>最后一步为选择rapp大气校正模型，如果rapp&lt;-1那么就不进行大气改正，这就为遥感之中的正演，即为通过地表反射率来求得表观反射率。如果rapp&gt;0 程序将重新赋值表观反射率，使用输入的这个辐射亮度值进行表观反射率的转换。当-1</p>
+<p>上面的介绍，其实还是很抽象的，想要了解6S，就必须自己动手去做。</p>
+]]></content>
+      <tags>
+        <tag>光学</tag>
+        <tag>遥感</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>资源收集</title>
     <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
     <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
@@ -1143,10 +1410,10 @@ $$</span></p>
     <content><![CDATA[<h1 id="wireshark">wireshark</h1>
 <h2 id="远程抓包">远程抓包</h2>
 <p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时开源 <img src="./Linux-网络抓包/img1.png" /> <img src="./Linux-网络抓包/image.png" alt="image.png" /> ## ssh+tcpdump+wireshark解析 直接抓包解析 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 跳板机执行 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 直接抓包并保存 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure></p>
-<h2 id="tcpdump">tcpdump</h2>
-<h3 id="常用抓包指令">常用抓包指令</h3>
+<h1 id="tcpdump">tcpdump</h1>
+<h2 id="常用抓包指令">常用抓包指令</h2>
 <p>过滤tcp flags，比如抓syn报文，看是否能握手成功 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br></pre></td></tr></table></figure> 查看tcp状态，如下为发送了sync，如果一直未回复，则可以在<code>sar -n ETCP 1</code>看到<code>retrans/s</code>不断上升 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">watch -n 0.1 &#x27;ss -tpn state syn-sent&#x27;</span><br></pre></td></tr></table></figure> 抓syn和syn+ack报文 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any <span class="string">&#x27;tcp[tcpflags] == tcp-syn or tcp[13]=18&#x27;</span></span><br></pre></td></tr></table></figure> 抓syn和syn+rst报文 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or tcp[13] &amp; 4!=0&#x27;</span><br></pre></td></tr></table></figure> 抓syn和icmp不可达报文 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> 抓syn、syn+ack、rst和icmp端口不可达报文（tcp[13]指的是从tcp报文头偏移13字节的选项） <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;(tcp[tcpflags] == tcp-syn or tcp[13]=18) or tcp[13] &amp;amp; 4!=0 or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> tcp flags抓包例子 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-rst&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-fin&#x27;</span><br></pre></td></tr></table></figure> 抓取指定报文大小 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump less 32</span><br><span class="line">tcpdump greater 32</span><br><span class="line">tcpdump &lt;= 102</span><br></pre></td></tr></table></figure> 持续抓取端口 <code>8080</code>的流量，每个文件最大 <code>100MB</code>，最多保留 <code>10</code>个文件，写满后覆盖最旧的文件 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080</span><br></pre></td></tr></table></figure> 抓取 <code>10000</code>个发往 <code>80</code>端口的包 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -i any -c 10000 -w http_requests.pcap dst port 80</span><br></pre></td></tr></table></figure></p>
-<h3 id="常用选项">常用选项</h3>
+<h2 id="常用选项">常用选项</h2>
 <table>
 <thead>
 <tr class="header">
@@ -1193,6 +1460,7 @@ $$</span></p>
 </tr>
 </tbody>
 </table>
+<h2 id="其他选项">其他选项</h2>
 <h3 id="capture-commands">Capture Commands</h3>
 <table>
 <colgroup>
@@ -1643,7 +1911,7 @@ $$</span></p>
 </tr>
 </tbody>
 </table>
-<h2 id="参考搬运">参考/搬运</h2>
+<h1 id="参考搬运">参考/搬运</h1>
 <ul>
 <li><a href="https://debugging.works/blog/network-debugging/">https://debugging.works/blog/network-debugging/</a></li>
 <li>https://www.stationx.net/tcpdump-cheat-sheet/</li>
@@ -1652,273 +1920,6 @@ $$</span></p>
       <tags>
         <tag>Linux</tag>
         <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文笔记-场地自动化定标方法研究及应用</title>
-    <url>/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="论文笔记-场地自动化定标方法研究及应用">论文笔记-场地自动化定标方法研究及应用</h1>
-<h2 id="辐射定标的意义">辐射定标的意义</h2>
-<p>卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。</p>
-<h3 id="辐射定标">辐射定标</h3>
-<h3 id="辐射校正">辐射校正</h3>
-<h2 id="遥感辐射定标方法">遥感辐射定标方法</h2>
-<p>因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限于载荷的使用寿命。那么要延长载荷的工作年限，就需要实时测出其老化程度，对于传感器的灵敏度做出评估，改变具体参数使得其能够继续工作。比如之前对于输入为 10 就能输出 10 ，现在只能输出 5，就乘以系数 2 就可以完成跟之前一样的功能。这样器件就还可以接着使用。</p>
-<span id="more"></span>
-<h3 id="发射前定标准备活动">发射前定标（准备活动）</h3>
-<p>相当于发射前，在地面上对各个参数进行测定，比如输入 10 输出 10 ，那这个系数就是 1，在发射前就需要记录下来。也就是相当于确定了一个基准，来为后面的调整参数做准备。</p>
-<h3 id="运行时定标">运行时定标</h3>
-<h4 id="星上定标">星上定标</h4>
-<p>卫星运行过程中器件老化，改变参数的过程。星上定标的方法有：</p>
-<ol type="1">
-<li>灯+积分球</li>
-<li>灯+漫反射板</li>
-</ol>
-<figure>
-<img src="星上定标几种方式1.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
-</figure>
-<p>定标灯在卫星的内部，可以通过由地面的指令频繁进行定标。但是由于灯的光谱和强度与太阳的光谱差别较大，无法真实反映整个系统的变化（那有没有实现复制太阳光谱的生产灯的技术呢？），所以光谱匹配校正增加了定标的不确定性，并且灯也是仪器，也会有一定的衰变，所以精度也会下降。</p>
-<ol start="3" type="1">
-<li>太阳+漫反射板</li>
-<li>太阳+衰减板+漫反射板</li>
-</ol>
-<figure>
-<img src="星上定标几种方式2.png" alt="定标原理图" /><figcaption aria-hidden="true">定标原理图</figcaption>
-</figure>
-<p>借助太阳的话，就能实现光源的匹配，也就是光源的误差完全被消除了，但是由于需要得到太阳光，所以漫反射板就会暴露在卫星外部。漫反射板材料会在强紫外环境下分解，并且太空中的杂质也容易粘到漫反射板上。衰减板的作用是衰减紫外辐射，减缓漫反射板的分解。</p>
-<p>所以，卫星内定标和卫星外定标都有各自的优缺点，卫星内定标主要问题是光源不匹配造成的误差，卫星外定标的主要问题是漫反射板分解造成的误差。</p>
-<h4 id="替代定标场地定标">替代定标（场地定标）</h4>
-<p>选取可知可测的地物目标作为辐射源（本身的辐射还是对太阳的反射？我的理解是太阳的反射）代替实验室和星上定标器来标定在轨器件的观测数据。因为需要计算的是卫星的表观辐亮度（也就是卫星本来应该测量出的辐亮度值）和卫星的实测辐亮度进行比较。 表观辐亮度需要通过大气传输模型得到，大气传输模型的一个重要的参数就是地表反射率，这也就是为什么我需要测量地表反射率的原因。</p>
-<p>主要有三种定标方法：</p>
-<ul>
-<li><p>反射率基法 在卫星过场地的时候（过顶），测量场地的地表反射率和一些大气参数，通过<code>辐射传输模型</code>计算卫星入瞳处的辐射亮度；卫星上面的仪器也会记录一个遥感图像，通过遥感图像可以卫星测量的入瞳处的辐亮度，二者之间的差距就是需要校正的值，也就是定标系数的确定。</p>
-<p>当然在场地的选取方面有要求，需要场地的朗伯特性好（朗伯特性是漫反射好换的评价，也是场地或者材料各向同性属性的评价标准），通过朗伯系数等参数可以计算出地表反射率（猜测应该是朗伯系数越小计算的误差越小，并且有较好的的公式）。</p>
-<p>所以地表反射率和大气参数是场地定标需要得到的非常重要的参数。</p></li>
-<li><p>辐照度基法 是反射率基法的改进流程与反射率基法基本相同，主要区别是增加了漫-总比的测量。</p></li>
-<li><p>辐亮度基法 这个是做一个飞行器，在航空范围内，搭载一台精确定标的辐射计仪器，在卫星过顶的时候保持与卫星对场地的同步几何角度（姿态角等），然后对大气层的影响，将两者标准化到统一的环境下，主要是航空器与卫星的高度不同，而且二者之间有大气，所以需要进行一定的校正，校正完成之后，二者的值应该还是不同的（因为卫星上的仪器的老化），所以这样就可以对卫星上的仪器进行标定系数。 理论上辐亮度基法应该比较准，因为它与卫星之间的距离较小，受到的大气的干扰少，底层大气会由于人类的活动受到较大的干扰。但是由于需要有精密的飞行器和辐射计，并且其要在卫星过顶时与卫星保持一致的几何角度，所以耗资比较大，并且由于航空器需要到达的高度为3km~20km，这个飞行高度有也是客机的飞行高度，所以还需要申请空域。</p></li>
-</ul>
-<h2 id="人工定标">人工定标</h2>
-<h4 id="概览">概览</h4>
-<p>首先定标需要得到的结果是计算出辐亮度，把这个辐亮度输入辐射传输模型里面，得到一个本来应该是卫星的辐亮度，叫做表观辐亮度，这个表观辐亮度与卫星上的遥感器的辐亮度比较，就可以得到定标系数，这就完成了定标。</p>
-<p>人工定标可以得到实时的地表反射率，所以根据定标流程图，直接计算代入辐射传输模型就可以了。</p>
-<p>具体过程如下图所示： <img src="反射率基法.png" alt="反射率基法" /> 从上图可以看到，通过地表反射率、大气参数和气象观测（主要做辅助功能）可以输入辐射传输模型，然后再加上太阳传感器几何测量（得到一些角度值）就可以计算出卫星上面的遥感平台的表观辐亮度，通过与卫星影像（<code>.hdf</code>等带有大量信息的格式文件）做比较就可以得到定标系数。</p>
-<p>对于第<span class="math inline"><em>i</em></span>波段光的表观反射率（卫星的表观反射率，但是我觉得好像没什么用，因为只需要测卫星的表观辐亮度就够了吧）有 <span class="math display">$$
-\rho^*_i(\theta_v,\theta_s,\phi_v,\phi_s)=\frac{\pi d^2L_i(\theta_v,\theta_s,\phi_v,\phi_s)}{E_{0i\cos\theta}}
-$$</span> <span class="math inline"><em>ρ</em><sub><em>i</em></sub><sup>*</sup>(<em>θ</em><sub><em>v</em></sub>,<em>θ</em><sub><em>s</em></sub>,<em>ϕ</em><sub><em>v</em></sub>,<em>ϕ</em><sub><em>s</em></sub>)</span>是对于第<span class="math inline"><em>i</em></span>波段光的地表反射率 <span class="math inline"><em>θ</em><sub><em>s</em></sub></span>是太阳的天顶角 <span class="math inline"><em>ϕ</em><sub><em>s</em></sub></span>是太阳的方位角 <span class="math inline"><em>θ</em><sub><em>v</em></sub></span>是观测天顶角 <span class="math inline"><em>ϕ</em><sub><em>v</em></sub></span>是观测方位角 <span class="math inline"><em>L</em><sub><em>i</em></sub>(<em>θ</em><sub><em>v</em></sub>,<em>θ</em><sub><em>s</em></sub>,<em>ϕ</em><sub><em>v</em></sub>,<em>ϕ</em><sub><em>s</em></sub>)</span>是表观辐亮度 <span class="math inline"><em>E</em><sub>0<em>i</em></sub></span>是日地平均距离处大气层顶的太阳辐照度 <span class="math inline"><em>d</em>​</span>是日地平均距离与实际距离的比值</p>
-<p>表观反射率公式如公式（1）所示，各个参数计算如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">参数</th>
-<th style="text-align: center;">计算方法</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline"><em>θ</em><sub><em>s</em></sub></span>是太阳的天顶角</td>
-<td style="text-align: center;">之前论文的公式</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline"><em>ϕ</em><sub><em>s</em></sub></span>是太阳的方位角</td>
-<td style="text-align: center;">之前论文的公式</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline"><em>θ</em><sub><em>v</em></sub></span>是观测天顶角</td>
-<td style="text-align: center;">测量</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline"><em>ϕ</em><sub><em>v</em></sub></span>是观测方位角</td>
-<td style="text-align: center;">测量</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline"><em>L</em><sub><em>i</em></sub>(<em>θ</em><sub><em>v</em></sub>,<em>θ</em><sub><em>s</em></sub>,<em>ϕ</em><sub><em>v</em></sub>,<em>ϕ</em><sub><em>s</em></sub>)</span>是表观辐亮度</td>
-<td style="text-align: center;">由地表反射率经过辐射传输模型计算</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline"><em>E</em><sub>0<em>i</em></sub></span>是日地平均距离处大气层顶的太阳辐照度</td>
-<td style="text-align: center;">？</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline"><em>d</em></span>是日地平均距离与实际距离的比值</td>
-<td style="text-align: center;">之前论文的公式</td>
-</tr>
-</tbody>
-</table>
-<h4 id="辐射传输模型">辐射传输模型</h4>
-<p>输入参数</p>
-<h2 id="自动化定标">自动化定标</h2>
-<p>自动化定标也就是不需要人参加，仪器实时计算数据，因为是计算机系统，所以计算出的是离散值，即不断计算特定时刻点的数据。 根据前面的说明，我们要得到的数据是地表反射率和大气参数。由于人工定标可以得到实时的地表反射率，但是仪器不行（为什么？？？）。</p>
-<h4 id="使用的仪器">使用的仪器</h4>
-<h5 id="asc">ASC</h5>
-<p>全天空成像仪（All Sky Cloud，ASC）。用来测量云量数据，判断天气情况是否适合自动化定标。</p>
-<h5 id="atr">ATR</h5>
-<p>通道式自动化场地辐射计（Automated Test-site Radiometer，ATR）。用来测量地表反射率，输出为<span class="math inline"><em>V</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>，即<span class="math inline"><em>i</em></span>波段的输出电压值。</p>
-<h5 id="him">HIM</h5>
-<p>超光谱辐照度仪（Hyperspectral Irradiance Meter，HIM）。用来测量漫总比<span class="math inline"><em>α</em></span>，与6S模型输出计算的直射照度一起可以计算出总照度。</p>
-<h5 id="psr">PSR</h5>
-<p>高精度太阳辐射计（Precision Solar Radiometer，PSR）。用来测量气溶胶的光学厚度。</p>
-<h5 id="svc">SVC</h5>
-<p>是一台可以精确测量高光谱地表反射率的仪器，主要是用来将ATR从多光谱扩展为高光谱的。</p>
-<h4 id="地表反射率">地表反射率</h4>
-<p>通过计算地表反射率。公式如下：</p>
-<p><span class="math display">$$
-\rho_{ATR-i}=\frac{\pi C_{ATR-i}V_{ATR-i}}{E_{总照度}}
-$$</span> <span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>是地表反射率 <span class="math inline"><em>C</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>是ATR在<span class="math inline"><em>i</em></span>波段的辐射亮度定标系数，这是个仪器标定值，可以直接得到 <span class="math inline"><em>V</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>是ATR在<span class="math inline"><em>i</em></span>波段的输出电压值，这是仪器输出值 <span class="math inline"><em>E</em><sub><em>总</em><em>照</em><em>度</em></sub></span>由HIM仪器得到漫总比，再经过6S模型输出直射照度，由直射照度除以直总比得到总照度 <span class="math display">$$
-E_{总照度}=\frac{E_{直射照度}}{1-\alpha}
-$$</span> <span class="math inline"><em>α</em></span>为漫总比，由HIM得到。</p>
-<p>但是由于仪器是通道式的（8通道），所以只能获得在八个波长对应的地表反射率<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>，但是卫星测量的却是高光谱（也就是一段波长内的辐亮度<span class="math inline"><em>L</em><sub><em>r</em><em>e</em><em>a</em><em>l</em> − <em>s</em><em>e</em><em>g</em><em>m</em><em>e</em><em>n</em><em>t</em></sub></span>），所以我需要把通道式的<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span>扩展到和卫星同波段的<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>s</em><em>e</em><em>g</em><em>m</em><em>e</em><em>n</em><em>t</em></sub>​</span>代入传输模型。</p>
-<p>获取高光谱地表反射率的过程如下图所示。</p>
-<p>其中SVC只需要定期测量，因为模型是建立在SVC的变化在短时间内很小的前提下。所以在测量一次SVC进行ATR多光谱扩展之后，之后按照SVC测量出的高光谱曲线来生成ATR的扩展即可。即从<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>这条参考线上下平移到多光谱ATR仪器的八个点处，保持尽可能小的误差，这个上下平移的距离为<span class="math inline"><em>k</em></span>。</p>
-<p>前面已经计算出了在某一时刻八个通道的地表反射率<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − 1</sub>​</span>到<span class="math inline"><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − 8</sub>​</span>。当然平移也就是同时对高光谱的地表防反射率乘以一个系数，造成曲线的上下移动。即：</p>
-<p><span class="math display"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>i</em></sub> = <em>η</em><sub><em>i</em></sub><em>ρ</em><sub><em>A</em><em>T</em><em>R</em> − <em>i</em></sub></span></p>
-<p>在确定平移因子之前，首先通过敦煌校正场的 <code>BRDF</code>模型要对光的入射方向做一次校正，这个入射方向的校正的是因为卫星过顶时得到的数据和仪器测量的数据的时间不一定完全一致，这就导致了入射角的微小差异，所以需要将仪器测量点时刻的入射角方向校正到卫星测量时刻的入射角。校正公式： <span class="math display">$$
-\rho(\lambda,\theta_2,0^\circ,0^\circ)=\frac{R(\lambda,\theta_2,0^\circ,0^\circ)}{R(\lambda,\theta_1,0^\circ,0^\circ)}\cdot\rho(\lambda,\theta_1,0^\circ,0^\circ)
-$$</span></p>
-<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>卫星过顶时刻的参考反射率</p>
-<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>仪器测量时刻的参考反射率</p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>是BRDF模型计算的反射率</p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>是BRDF模型计算的反射率</p>
-<p>采用<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em><sub><em>i</em></sub></sub></span>与参考曲线<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>的偏差的加权平均和来确定高光谱地表反射率的平移距离。平移引子<span class="math inline"><em>k</em></span>由下式计算 <span class="math display">$$
-W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
-$$</span></p>
-<p><span class="math inline"><em>i</em></span>是波段</p>
-<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应<span class="math inline"><em>i</em></span>波段的反射率，这个是由ATR测量得到的八个值</p>
-<p><span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em> − <em>i</em></sub></span>是参考反射率<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>在波段<span class="math inline"><em>i</em>​</span>处的取值</p>
-<p><span class="math inline"><em>σ</em><sub><em>i</em></sub></span>是<span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>的标准偏差（这个应该是通道反射率，即由 ATR 测量的八个通道的反射率）</p>
-<p><span class="math inline"><em>k</em>​</span>是平移的大小</p>
-<p><span class="math inline"><em>W</em></span>是用来确定<span class="math inline"><em>k</em></span>的，<span class="math inline"><em>W</em></span>的取值最小处就是<span class="math inline"><em>k</em></span>的取值处</p>
-<p><img src="高光谱地表反射率.png" /></p>
-<p>从上图看出，红线就是SVC测量的值，这个值隔一段时间测量一次即可，八个黑点就是ATR在当前时刻测量的值，通过前面的，通过公式（6）的计算得到平移距离<span class="math inline"><em>k</em></span>之后，将红线平移就可以得到蓝线（即目标曲线）。</p>
-<p>这个时候完成的工作就是得到了实时高光谱反射率。是地面的反射率，但是还有一个问题，就是现在得到的地面反射率，是入射角为卫星过顶时刻的太阳天顶角，出射方向是测量时刻的仪器对应的观测角度，现在需要的是得到卫星过顶时刻的出射角，所以还需要进行一次BRDF校正，这次是对出射方向做的BRDF校正，(这个公式怎么写？？)</p>
-<p><span class="math display">$$
-\rho(\lambda,\theta_2,0^\circ,0^\circ)=\frac{R(\lambda,\theta_2,0^\circ,0^\circ)}{R(\lambda,\theta_1,0^\circ,0^\circ)}\cdot\rho(\lambda,\theta_1,0^\circ,0^\circ)
-$$</span></p>
-<p>现在这个<span class="math inline"><em>ρ</em></span>是ATR每个测量时刻得到的高光谱通道反射率，接下来进行出射校正</p>
-<p><span class="math display">$$
-\rho_i=\frac{\int_{\lambda_{1}}^{\lambda_{2}}\rho(\lambda)R_i(\lambda)d\lambda}{\int_{\lambda_{1}}^{\lambda_{2}}R_i(\lambda)d\lambda}
-$$</span></p>
-<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应卫星<span class="math inline"><em>i</em></span>通道的BRDF出射校正的反射率</p>
-<p><span class="math inline"><em>ρ</em>(<em>λ</em>)</span>是得到的高光谱曲线</p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>)​</span>是对应<span class="math inline"><em>i</em>​</span>通道的光谱响应函数</p>
-<p>这样也就得到了对应卫星的<span class="math inline"><em>i</em></span>通道的经过BRDF校正之后的地表反射率，当然，这时候的时刻就是卫星过顶时刻的表观反射率。</p>
-<p><img src="每日的通道反射率.png" /></p>
-<p>即完成了流程图中的<code>Surface Reflectance measurement</code>参数就得到了。</p>
-<h4 id="大气参数">大气参数</h4>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">参数</th>
-<th style="text-align: center;">备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">臭氧</td>
-<td style="text-align: center;">下载</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">气溶胶光学厚度AOD</td>
-<td style="text-align: center;">PSR反演</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">水汽</td>
-<td style="text-align: center;">下载或者计算</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">太阳天顶角</td>
-<td style="text-align: center;">直接获取</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">太阳方位角</td>
-<td style="text-align: center;">直接获取</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">仪器观测天顶角</td>
-<td style="text-align: center;">直接获取</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">仪器观测方位角</td>
-<td style="text-align: center;">直接获取</td>
-</tr>
-</tbody>
-</table>
-<h4 id="计算表观反射率和表观辐亮度">计算表观反射率和表观辐亮度</h4>
-<p>输入大气传输模型6S，得到表观反射率（即卫星上本来应该是的反射率）和表观辐亮度。</p>
-<h4 id="定标">定标</h4>
-<p>得到表观反射率TOA（Top Of Atmosphere）之后，得到表观反射率和表观辐亮度，与卫星的实测的反射率和辐亮度做比较就可以得到定标系数。</p>
-<h3 id="小结">小结</h3>
-<p><img src="流程.bmp" /></p>
-<p>其中比较重要的操作是在<code>数据处理2</code>中的三步 1. BRDF入射角校正 2. 光谱扩展 3. BRDF出射校正</p>
-<p>下面就来看一下这些处理。</p>
-<h3 id="计算中的一些处理">计算中的一些处理</h3>
-<h4 id="brdf校正">*BRDF校正</h4>
-<p>BRDF模型如下：</p>
-<p><span class="math display"><em>R</em>(<em>λ</em>,<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>) = <em>f</em><sub><em>i</em><em>s</em><em>o</em></sub>(<em>λ</em>) + <em>f</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>λ</em>)<em>K</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>) + <em>f</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>λ</em>)<em>K</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)</span></p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)</span>是二向反射比</p>
-<p><span class="math inline"><em>K</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)​</span>是体散射核</p>
-<p><span class="math inline"><em>K</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)​</span>是几何光学散射核</p>
-<p><span class="math inline"><em>K</em><sub><em>v</em><em>o</em><em>l</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>), <em>K</em><sub><em>g</em><em>e</em><em>o</em></sub>(<em>θ</em><sub><em>s</em></sub>,<em>θ</em><sub><em>v</em></sub>,<em>ϕ</em>)​</span>均只与观测几何条件有关</p>
-<p><span class="math inline"><em>f</em><sub><em>i</em><em>s</em><em>o</em></sub>, <em>f</em><sub><em>v</em><em>o</em><em>l</em></sub>, <em>f</em><sub><em>g</em><em>e</em><em>o</em></sub></span>均是系数，分别叫做波长<span class="math inline"><em>λ</em></span>处的各向同性散射系数、体散射系数和几何光学散射系数。</p>
-<p><span class="math inline"><em>θ</em><sub><em>s</em></sub>​</span>是太阳天顶角</p>
-<p><span class="math inline"><em>θ</em><sub><em>v</em></sub>​</span>是观测天顶角</p>
-<p><span class="math inline"><em>ϕ</em></span>相对方位角</p>
-<h5 id="brdf入射校正">BRDF入射校正</h5>
-<p><span class="math display">$$
-\rho(\lambda,\theta_2,0^\circ,0^\circ)=\frac{R(\lambda,\theta_2,0^\circ,0^\circ)}{R(\lambda,\theta_1,0^\circ,0^\circ)}\cdot\rho(\lambda,\theta_1,0^\circ,0^\circ)
-$$</span></p>
-<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>卫星过顶时刻的参考反射率</p>
-<p><span class="math inline"><em>ρ</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)</span>仪器测量时刻的参考反射率</p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>2</sub>,0<sup>∘</sup>,0<sup>∘</sup>)​</span>是BRDF模型计算的反射率，在卫星测量的太阳天顶角<span class="math inline"><em>θ</em><sub>2</sub>​</span>，观测角<span class="math inline">0<sup>∘</sup>​</span></p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>,<em>θ</em><sub>1</sub>,0<sup>∘</sup>,0<sup>∘</sup>)</span>是BRDF模型计算的反射率，在仪器测量的太阳天顶角<span class="math inline"><em>θ</em><sub>1</sub></span>，观测角<span class="math inline">0<sup>∘</sup></span></p>
-<h5 id="brdf出射校正">BRDF出射校正</h5>
-<p>$$</p>
-<p>_i= $$</p>
-<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应卫星<span class="math inline"><em>i</em></span>通道的BRDF出射校正的反射率</p>
-<p><span class="math inline"><em>ρ</em>(<em>λ</em>)</span>是得到的高光谱曲线</p>
-<p><span class="math inline"><em>R</em>(<em>λ</em>)​</span>是对应<span class="math inline"><em>i</em>​</span>通道的光谱响应函数</p>
-<h4 id="光谱扩展">光谱扩展</h4>
-<p><span class="math display">$$
-W=\sqrt{\sum_{i=1}^8\frac{1}{\sigma_i}(\rho_{i}-(k+\rho_{SVC-Ref-i}))^2}
-$$</span></p>
-<p><span class="math inline"><em>i</em></span>是波段</p>
-<p><span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>是对应<span class="math inline"><em>i</em></span>波段的反射率，这个是由ATR测量得到的八个值</p>
-<p><span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em> − <em>i</em></sub></span>是参考反射率<span class="math inline"><em>ρ</em><sub><em>S</em><em>V</em><em>C</em> − <em>R</em><em>e</em><em>f</em></sub></span>在波段<span class="math inline"><em>i</em></span>处的取值</p>
-<p><span class="math inline"><em>σ</em><sub><em>i</em></sub></span>是<span class="math inline"><em>ρ</em><sub><em>i</em></sub></span>的标准偏差（这个应该是通道反射率，即由 ATR 测量的八个通道的反射率）</p>
-<p><span class="math inline"><em>k</em></span>是平移的大小</p>
-<p><span class="math inline"><em>W</em></span>是用来确定<span class="math inline"><em>k</em></span>的，<span class="math inline"><em>W</em></span>的取值最小处就是<span class="math inline"><em>k</em></span>的取值处</p>
-<p>即求函数<span class="math inline"><em>W</em>(<em>k</em>)​</span>取极小值时<span class="math inline"><em>k</em>​</span>的大小。</p>
-<h4 id="s传输模型">*6S传输模型</h4>
-<p>6S的源码是用FORTRAN来写的，想要对6S有所了解，还是要有一定的FORTRAN基础。由于作者是法国人，有很多变量缩写也是以法文为缩写的，不要望文生义。</p>
-<p><strong>第一节 6S简介</strong></p>
-<p>所谓6S是SECOND SIMULATION OF THE SATELLITE SIGNAL IN THE SOLAR SPECTRUM的简写，直译的意思就是<strong>“太阳光谱的卫星信号二次模拟”</strong>。其前身为法国里尔科技大学大气光学实验室开发的5S（SIMULATION OF THE SATELLITE SIGNAL IN THESOLAR SPECTRUM）大气辐射传输模型。在遥感观测的太阳-目标-传感器这种模式中，无论是使用卫星或是飞机，获取数据的过程中都不可避免的受到大气的影响。<strong>6S就是为了模拟这种地气系统中的太阳辐射，计算卫星入瞳处的辐射能量</strong>。通过这种模拟，我们就可以知道大气对太阳辐射的影响大小，由此来进行大气校正。</p>
-<p><strong>注：我的理解，6S是遥感用于对地气系统进行模拟的正演用的软件，而不是用于“大气校正”的软件，只不过正演结果往往被用于大气校正。当然也不仅仅是输出“表观辐亮度”这个正演结果，还有正演过程中所得到的有关大气一系列量。</strong></p>
-<p>6S假定晴空无云的条件下，并考虑了水汽、CO2、O3和O2等的吸收、分子和气溶胶的散射以及非均一地面和双向反射率的问题。相比与5S，6S可以模拟机载观测、设置目标高程、解释BRDF作用和临近效应，增加了新的吸收气体的计算（CO、N2O、CH4），对于瑞利和气溶胶散射的计算由于使用了逐级散射(successive order of scattering)方法，精度有了显著提升，并且光谱积分的步长从5nm改进到2.5nm。6S所能处理的光谱区间为0.25微米至4微米，低于0.25或高于4的都无法运算。缺点是对球形大气和limb (临边)观测不能处理。</p>
-<p>目前国内大部分使用的都是1997年发布的标量版本，版本号一般为6SV4，在2005年Vermote等人又发布了一个矢量版本，版本号一般为6sV-1.0。相对于标量版本，矢量又做了很多改进，最明显的就是可以对于偏振进行处理。在本文中，主要介绍标量版本的使用，如果有时间，后续会再介绍矢量版本。</p>
-<p>最后在后面说下，很多人都以为6S是一个软件，直接将图像输入，设置一些参数之后就可以获得大气校正过的影像了。其实这是一个完全错误的想法，原始的6S只是一个是使用Fortran写出来的一堆代码而已，而且也不能读取影像。可能大家使用的时候都是使用别人生成的EXE程序，在DOS界面里对各种参数进行输入。</p>
-<p><strong>第二节 6S使用</strong></p>
-<p>6S需要9个输入参数，对于这些参数都是必须仔细了解的，使用起来才能保证不会出错。学习都是一个由浅及深的过程，要努力做到知其然更知其所以然，通过对6S的学习能做到对辐射传输的公式以及推导有一个完善的了解，那么才是真正掌握了6S的使用。对于各参数下面将会一一介绍。</p>
-<ol type="1">
-<li><p>第一步需要输入的为几何参数igeom，其中有8情况，当选择igeom=0时，需要手动输入太阳高度角、方位角，卫星高度角、方位角以及影像获取月份与日期。剩下的7种为内置的一些卫星参数，如AVHRR、TM、GOES等，大部分都是需要输入日期，行列号等。</p></li>
-<li><p>第二步为大气模式idatm的选择，6S里内置了0-6共其中大气模式，依次为无大气吸收，热带，中纬度夏季，中纬度冬季，亚寒带夏季，亚寒带冬季以及美国标准62大气模式，或者选择自定义大气廓线，选择7的话，需要输入海拔，压强，温度，水汽浓度，臭氧浓度。选择8需要输入水汽与臭氧浓度，大气廓线使用美国62。</p></li>
-<li><p>第三步为选择气溶胶模式iaer，内置了7中标准气溶胶模式，为0-无气溶胶模式，1-大陆型，2-海洋型，3-城市型，5-沙漠背景的shettle模型，6-生物燃烧模型，7-平流层模型。或者自定义自己的气溶胶模式，当iaer=4时，需要输入各组分的百分比：粉状尘，水溶性物质，海洋性物质，煤烟。8为最多四种模型联合运算的一个正态分布模型。9为改进型的一种伽马分布模型。10为Junge谱幂分布模型。11为选择太阳光度计的测量值进行计算，12为读取已经设定好的参数进行计算。一般情况下如果不想做气溶胶的模式研究，就直接用刚开始介绍的7个标准模式。</p></li>
-<li><p>第四步为气溶胶浓度，关于这个由两种输入方式，气溶胶光学厚度taer55或者可见度v。可见度v的单位为千米，如选择光学厚度taer55，可见度v的值就为0，taer55为550纳米处的气溶胶光学厚度。在气溶胶模式iaer中如果选择无气溶胶，可见度v的值就要为-1。其中气溶胶光学厚度与可见度有一个公式可以转换，为了快速计算，也可以使用4.8除光学厚度得到可见度，但这只是一个约值。</p></li>
-<li><p>第五步为目标海拔高度xps的计算，如果xps&gt;=0，那么表示目标在水平面上。xps&lt;0表明你知道地面的高程，所以输入具体的值，不过前面加个负号。</p></li>
-<li><p>第六步为传感器Xpp高度的输入，xpp=-1000 表明传感器为星载传感器，xpp=0 表明传感器在地面上。-100</p></li>
-<li><p>第七步为光谱条件iwave的输入，其中6S内置了很多传感器的光谱条件，如MODIS，TM，AVHRR，SPOT，NOAA等。也可以使用自定义的光谱条件。其中光谱响应函数的计算是以2.5微米为间隔。</p></li>
-</ol>
-<p>iinf=(wlinf-.25)/0.0025+1.5 为起始光谱值</p>
-<p>isup=(wlsup-.25)/0.0025+1.5 为结束光谱值</p>
-<p>由于6S所支持的光谱区间为0.25-4，代入上式iinf=(0.25-.25)/0.0025+1.5 =1.5=1，isup=(4-.25)/0.0025+1.5=1501.5=1501。所以6S所能处理的所有光谱曲线就位1-1501条。以TM数据蓝光波段为例，其光谱范围为0.430-0.560，代入上式可以得到iinf=(0.430-.25)/0.0025+1.5=73，isup=(0.56-.25)/0.0025+1.5=125，在TM的光谱响应曲线的就可以看做前72个数值为0，后1376个也为0值。</p>
-<p>在6S之中，计算各种参数的时候，尤其是在计算光谱响应的起始与结束值时，定义的为整型，但计算结果可能会为一个小数，这就要考虑截断了，FORTRAN中并没有使用四舍五入的情况，而是直接取整。</p>
-<p>对于6S没有内置的一些光谱响应也就可以自己按照这个规则来写一个Fortran文件。</p>
-<p>第八步为地表特性的选择，这是一个比较复杂的选项，可以选择地面作为朗伯体或者各向异性来构建BRDF。下图为6S中给出的选择路径。</p>
-<p>inhomo选择0代表地表是考虑地面为朗伯体，选择1代表地表各向异性。如果inhomo=0进入第二步的选择，再次选择0表明没有方向效应的影响，然后输入roe（表面反射比）。选择1表明有方向效应的影响，然后选择内置的一些BRDF模型来进行计算。如果inhomo=1，那么接着输入igrou1（roc）（目标的反射）、igrou2（roe）（周围环境反射）、radius r（表面半径）。</p>
-<p>最后一步为选择rapp大气校正模型，如果rapp&lt;-1那么就不进行大气改正，这就为遥感之中的正演，即为通过地表反射率来求得表观反射率。如果rapp&gt;0 程序将重新赋值表观反射率，使用输入的这个辐射亮度值进行表观反射率的转换。当-1</p>
-<p>上面的介绍，其实还是很抽象的，想要了解6S，就必须自己动手去做。</p>
-]]></content>
-      <tags>
-        <tag>光学</tag>
-        <tag>遥感</tag>
       </tags>
   </entry>
   <entry>
@@ -2930,21 +2931,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>xv6-vscode调试</title>
-    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="launch.json">launch.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span> <span class="comment">// 修改kernel 或者 bootblock</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="tasks.json">tasks.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>xv6</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>qemu调试linux（二）</title>
     <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
@@ -2960,20 +2946,18 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>xv6-增加系统调用</title>
-    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
+    <title>xv6-vscode调试</title>
+    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="launch.json">launch.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span> <span class="comment">// 修改kernel 或者 bootblock</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="tasks.json">tasks.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>操作系统</tag>
-        <tag>linux</tag>
+        <tag>xv6</tag>
       </tags>
   </entry>
   <entry>
@@ -3053,6 +3037,23 @@ $$</span></p>
 ]]></content>
   </entry>
   <entry>
+    <title>xv6-增加系统调用</title>
+    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="panic">panic</h1>
+<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
+<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
+<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>内核转储文件--应用程序崩溃分析</title>
     <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
@@ -3085,6 +3086,82 @@ $$</span></p>
       <tags>
         <tag>linux</tag>
         <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最大间隙问题</title>
+    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
+<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
+<p>复杂度计算如下 <span class="math display">$$
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>那么我只能换其他的办法来做。</p>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
+<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
+<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+</ol>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
+l=\frac{max-mix}{n-1}
+$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
+seg[i]=\frac{x[i]-minx}{l}+1
+$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -3291,41 +3368,6 @@ $$</span></p>
 ]]></content>
   </entry>
   <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>考拉兹猜想</title>
     <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
     <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
@@ -3400,46 +3442,5 @@ $$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值�
 <img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
 </figure>
 ]]></content>
-  </entry>
-  <entry>
-    <title>最大间隙问题</title>
-    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
-<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
-<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
-<p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
-</ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
   </entry>
 </search>
