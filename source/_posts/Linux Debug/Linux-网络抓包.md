@@ -187,5 +187,5 @@ tcpdump -i any -c 10000 -w http_requests.pcap dst port 80
 | `tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'` | Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.                                                                |
 
 ## 参考/搬运
-[https://debugging.works/blog/network-debugging/](https://debugging.works/blog/network-debugging/)
-https://www.stationx.net/tcpdump-cheat-sheet/
+- [https://debugging.works/blog/network-debugging/](https://debugging.works/blog/network-debugging/)
+- https://www.stationx.net/tcpdump-cheat-sheet/
