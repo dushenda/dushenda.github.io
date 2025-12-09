@@ -27,7 +27,7 @@
 <meta property="og:description" content="wireshark 远程抓包 在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时开源 [[Pasted image 20251210003620.png]] [[image.png|300x300]] ## ssh+tcpdump+wireshark解析 直接抓包解析 1ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w -">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-10T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-09T17:23:32.875Z">
+<meta property="article:modified_time" content="2025-12-09T17:25:23.095Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="网络">
@@ -318,7 +318,7 @@
 </tr>
 <tr class="odd">
 <td><strong><code>-s &lt;长度&gt;</code></strong>​</td>
-<td>设置每个数据包的抓取长度（快照长度），<code>-s 0</code>表示抓取完整数据包。</td>
+<td>设置每个数据包的抓取长度（快照长度byte），<code>-s 0</code>表示抓取完整数据包。</td>
 <td><code>-s 0</code></td>
 </tr>
 </tbody>
