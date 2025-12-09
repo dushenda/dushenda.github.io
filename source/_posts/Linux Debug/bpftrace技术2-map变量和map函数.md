@@ -199,6 +199,7 @@ bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s
 @[Relay(89295)]: 6
 @[Relay(893)]: 6
 ```
+
 # map特点
 
 - **自动打印**：默认情况下，当 bpftrace 程序终止时（例如用户按下 `Ctrl-C`），所有非空的 Map 变量会自动打印出来。
