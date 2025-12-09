@@ -179,12 +179,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -216,6 +216,127 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/" class="post-title-link" itemprop="url">立体角</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-14 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-14T00:00:00+00:00">2019-10-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="立体角">立体角</h1>
+<p>在谈立体角之前，我们先来复习一下球坐标及其面积分。</p>
+<h2 id="球面坐标系及积分">球面坐标系及积分</h2>
+<h3 id="球坐标系">球坐标系</h3>
+<figure>
+<img src="sphere1.png" alt="sphere1" /><figcaption aria-hidden="true">sphere1</figcaption>
+</figure>
+<p>如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用<span class="math inline">(<em>ρ</em>,<em>ϕ</em>,<em>θ</em>)</span>来描述，与笛卡尔坐标系之间的转化如下</p>
+<p><span class="math display">$$
+x=\rho\sin\phi\cos\theta\\
+y=\rho\sin\phi\sin\theta\\
+z=\cos\phi
+$$</span></p>
+<p>上式就是球坐标和笛卡尔坐标之间的转化，这个转化很容从图上看出来。</p>
+<h3 id="球面积分">球面积分</h3>
+<figure>
+<img src="sphere3.png" alt="sphere2" /><figcaption aria-hidden="true">sphere2</figcaption>
+</figure>
+<p>从上图可以看出，面积的微元，长为<span class="math inline"><em>ρ</em><em>d</em><em>ϕ</em></span>，因为这个方向上的长度为<span class="math inline"><em>ρ</em><em>ϕ</em></span>，所以微元为<span class="math inline"><em>ρ</em><em>d</em><em>ϕ</em></span>；宽为<span class="math inline"><em>ρ</em>sin <em>ϕ</em><em>d</em><em>θ</em></span>，这是因为首先要投影到<span class="math inline"><em>x</em><em>y</em></span>平面，在这个平面上的长度为<span class="math inline"><em>ρ</em>sin <em>ϕ</em></span>，从图上可以看出，这个长度也就是宽，所以微元的宽为<span class="math inline"><em>ρ</em>sin <em>ϕ</em><em>d</em><em>ϕ</em></span>。所以球面积分的微元面积<span class="math inline"><em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em>​</span>。</p>
+<ul>
+<li>来看几个例子
+<ol type="1">
+<li><p>球的表面积计算</p>
+<figure>
+<img src="sphere4.png" alt="shpere4" /><figcaption aria-hidden="true">shpere4</figcaption>
+</figure>
+<p>表面积的求法，就是对于微元而言，<span class="math inline"><em>ϕ</em></span>的取值为<span class="math inline">0</span>到<span class="math inline">2<em>π</em></span>，<span class="math inline"><em>θ</em></span>的取值也是<span class="math inline">0</span>到<span class="math inline">2<em>π</em></span>。<span class="math inline"><em>ρ</em></span>就是球的半径。 所以微元<span class="math inline"><em>d</em><em>S</em> = <em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em></span>。表面积的求法如下： <span class="math display"><em>S</em> = ∫<sub>0</sub><sup>2<em>π</em></sup><em>d</em><em>θ</em>∫<sub>0</sub><sup>2<em>π</em></sup><em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em></span> <span class="math inline"> → 2<em>π</em><em>ρ</em><sup>2</sup>(−cos<em>θ</em>)|<sub>0</sub><sup>2<em>π</em></sup> = 4<em>π</em><em>ρ</em><sup>2</sup>​</span>，这就是很熟悉的圆表面积计算公式了。<span class="math inline"><em>S</em><sub><em>圆</em></sub> = 4<em>π</em><em>r</em><sup>2</sup>​</span>，这个公式应该在高中时候就经常使用了。</p></li>
+<li><p>球帽表面积的计算 <img src="1.png" alt="shpere5" /></p></li>
+</ol>
+蓝色部分就叫做球帽，计算这一部分的表面积。首先面积分的微元跟之前的一样，为<span class="math inline"><em>d</em><em>S</em> = <em>ρ</em><sup>2</sup>sin <em>θ</em><em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em></span>，不过这个图上的角度标的不太一样，那么改变一下，把<span class="math inline"><em>x</em><em>y</em></span>平面的角度设为<span class="math inline"><em>ϕ</em></span>，把与<span class="math inline"><em>z</em></span>轴之间的夹角设为<span class="math inline"><em>α</em></span>。很容易从图上看出，<span class="math inline"><em>ϕ</em> ∈ [0,2<em>ϕ</em>], <em>α</em> ∈ [0,<em>θ</em>]</span>，这边要注意这个<span class="math inline"><em>α</em></span>，它的取值是从<span class="math inline"><em>z</em></span>轴为<span class="math inline">0</span>，到<span class="math inline"><em>x</em><em>y</em></span>平面为<span class="math inline">$\frac{\pi}{2}$</span>。所以其表面积为</li>
+</ul>
+<p><span class="math display"><em>S</em> = ∫<sub>0</sub><sup>2<em>π</em></sup><em>d</em><em>ϕ</em>∫<sub>0</sub><sup><em>θ</em></sup><em>r</em><sup>2</sup>sin <em>θ</em><em>d</em><em>θ</em></span> ​ <span class="math inline">$\rightarrow 2\pi r^2(-\cos\theta)|^{\theta}_0=2\pi r^2(1-\cos\theta)=2\pi r^2(1-\frac{r-h}{r})=2\pi rh​$</span>，如果<span class="math inline"><em>h</em> = <em>r</em>​</span>，那么求的是半球的面积， 面积<span class="math inline"><em>S</em> = 2<em>π</em><em>r</em><sup>2</sup>​</span>，跟之前的球表面积也对上了。</p>
+<hr />
+<p>球面坐标复习到这儿，下面就进入正题了。 ## 立体角</p>
+<h3 id="角度">角度</h3>
+<p>在介绍立体角之前，也先做个铺垫，讲一下角度。</p>
+<p><img src="angle1.png" /></p>
+<p>如上图所示，平面角，简称角度定义为圆的弧长与半径之间的比值，单位为弧度(<span class="math inline"><em>r</em><em>a</em><em>d</em></span>)。 <span class="math display">$$
+\theta=\frac{l}{r}
+$$</span></p>
+<h3 id="立体角-1">立体角</h3>
+<p>参考平面角的定义，立体角的定义为表面积与半径平方的比值，即</p>
+<p><span class="math display">$$
+\Omega=\frac{S}{r^2}
+$$</span></p>
+<p>反映的是从该点出发，向球面区域张成的视野大小，是平面角的三维扩展。</p>
+<p><img src="angle2.jpg" /></p>
+<p>接上面计算的表面积的例子。</p>
+<ol type="1">
+<li>球的立体角 球的表面积为<span class="math inline"><em>S</em> = 4<em>π</em><em>r</em><sup>2</sup>​</span>，球的半径为<span class="math inline"><em>r</em>​</span>，立体角为<span class="math inline">$\Omega=\frac{S}{r^2}=4\pi​$</span>，这也是最大的立体角。</li>
+<li>球帽的立体角 球帽的表面积为<span class="math inline">2<em>π</em><em>r</em><em>h</em></span>，半径为<span class="math inline"><em>r</em></span>，立体角为<span class="math inline">$\Omega=\frac{S}{r^2}=2\pi h$</span>。</li>
+</ol>
+<p>需要注意的是，立体角计算也可以理解为是所形成表面在以原点为圆心的球的球面上的投影除以半径的平方。因为要计算的立体角表面不一定是球面的一部分，所以需要先投影到球面再进行计算。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
