@@ -269,7 +269,7 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="wireshark">wireshark</h1>
 <h2 id="远程抓包">远程抓包</h2>
-<p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时开源 <img src="img1.png" /> <img src="image.png" alt="image.png" /></p>
+<p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） <img src="img1.png" /> <img src="image.png" alt="image.png" /></p>
 <h2 id="sshtcpdumpwireshark解析">ssh+tcpdump+wireshark解析</h2>
 <p>直接抓包解析 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 跳板机执行 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 直接抓包并保存 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure></p>
 <h1 id="tcpdump">tcpdump</h1>
