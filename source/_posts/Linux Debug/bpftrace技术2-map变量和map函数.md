@@ -61,6 +61,7 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 @count[sshd]: 28
 @count[snmpd]: 102
 ```
+
 - @\[comm\]：以进程名 comm为键（key）。
 - count()：每次事件触发，对应键的值加 1
 
@@ -71,6 +72,7 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 ```shell
 @bytes: 1048576
 ```
+
 - /args->ret > 0/：过滤器，只处理成功读取（返回值大于0）的情况。
 - sum(args->ret)：对返回值（读取的字节数）进行累加
 
@@ -81,6 +83,7 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 ```shell
 @avg_size: 512
 ```
+
 - /args->ret > 0/：过滤器，只处理成功读取（返回值大于0）的情况。
 - avg(args->ret)：对返回值（读取的字节数）求平均
 
@@ -91,6 +94,7 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 ```shell
 @s: count 100, average 4096, total 409600, min 1, max 8192
 ```
+
 - /args->ret > 0/：过滤器，只处理成功读取（返回值大于0）的情况。
 - stats(args->ret)：求调用次数，对返回值（读取的字节数）求平均，求总数，求最大最小值
 
@@ -106,6 +110,7 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 ...
 [128, 256)             1 |@
 ```
+
 - hist(args->ret)：分为2^x ~2^y 大小的桶，统计每个桶的里面的数目个数
 
 ## lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布
@@ -120,6 +125,7 @@ Map 的主要作用是在不同的事件探针（probe）之间**存储、共享
 ...
 [2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |
 ```
+
 - hist(args->ret)：分为0-200区间桶，统计每个桶的里面的数目个数
 
 ## delete(@m\[key\])- 清理临时数据
@@ -132,6 +138,7 @@ bpftrace -e 'kprobe:vfs_read
 				 @us = hist($duration_ns); 
 			     delete(@start[tid]); }'
 ```
+
 - 此函数通常用于配对操作的探针（如 `kprobe`和 `kretprobe`），在操作完成后及时清理资源
 
 ## clear(@m)和 zero(@m)- 重置 Map
@@ -150,6 +157,7 @@ bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s
 @[chronyd]: 40
 @[bpftrace]: 118
 ```
+
 - `clear(@m)`会删除 Map 中的所有键值对。而 `zero(@m)`则将所有键的值重置为0，但保留键的结构
 ```c
 bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s:5 { print(@); zero(@); }'
@@ -180,6 +188,7 @@ bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s
 @[Relay(893)]: 6
 ```
 # map特点
+
 - **自动打印**：默认情况下，当 bpftrace 程序终止时（例如用户按下 `Ctrl-C`），所有非空的 Map 变量会自动打印出来。
 - **过滤条件**：使用 `/<filter>/`可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性
 - **结合变量**：Map 函数常与内置变量（如 `comm`, `pid`, `nsecs`）或临时变量（以 `$`开头）结合使用，以实现复杂的追踪逻辑
