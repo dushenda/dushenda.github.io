@@ -99,7 +99,6 @@ Page Cache 的产生有两种不同的方式：
 
 - Buffered I/O（标准 I/O）；
 - Memory-Mapped I/O（存储映射 I/O）。
-- 
 ![](pagecache_twoway.png)
 
 buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。
