@@ -330,8 +330,7 @@
 <p>Page Cache 的产生有两种不同的方式：</p>
 <ul>
 <li>Buffered I/O（标准 I/O）；</li>
-<li>Memory-Mapped I/O（存储映射 I/O）。</li>
-<li><img src="pagecache_twoway.png" /></li>
+<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
 </ul>
 <p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
 <p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
@@ -568,6 +567,102 @@
 <p>无论是service time 还是客户感知到的await time，都是非常短的，表现非常不俗。但是D2C花费的时间只占整个Q2C的30%， 51%以上的时间花费在I2D。</p>
 <h1 id="参考搬运">参考/搬运</h1>
 <p>https://bean-li.github.io/blktrace-to-report/</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">bpftrace技术1-常用命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="bpftrace是什么">bpftrace是什么</h1>
+<p>一种追踪内核态和用户态的新技术</p>
+<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
+<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
+<h2 id="是否调用">是否调用</h2>
+<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
+<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
+<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
+<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p> <code>2</code> 的含义解释如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="打印入参">打印入参</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="打印返回值">打印返回值</h2>
+<p>使用默认变量<code>retval</code>。</p>
+<h3 id="内核函数返回值">内核函数返回值</h3>
+<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
+<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
+<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤条件">过滤条件</h3>
+<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -1173,102 +1268,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">bpftrace技术1-常用命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="bpftrace是什么">bpftrace是什么</h1>
-<p>一种追踪内核态和用户态的新技术</p>
-<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
-<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
-<h2 id="是否调用">是否调用</h2>
-<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
-<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
-<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
-<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>执行结果如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p> <code>2</code> 的含义解释如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="打印入参">打印入参</h2>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="打印返回值">打印返回值</h2>
-<p>使用默认变量<code>retval</code>。</p>
-<h3 id="内核函数返回值">内核函数返回值</h3>
-<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
-<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
-<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="过滤条件">过滤条件</h3>
-<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1787,82 +1786,6 @@
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span> <span class="comment">// 修改kernel 或者 bootblock</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="tasks.json">tasks.json</h2>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">xv6-增加系统调用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-09T00:00:00+00:00">2025-12-09</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
 
       
     </div>
@@ -2843,6 +2766,82 @@ Field reference (click to expand)
 <p>Container restart loops <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Docker restart loops</span></span><br><span class="line">docker ps --filter <span class="string">&#x27;status=restarting&#x27;</span></span><br><span class="line">docker logs &lt;<span class="built_in">id</span>&gt; --<span class="built_in">tail</span>=200</span><br><span class="line"></span><br><span class="line"><span class="comment"># Kubernetes restart loops</span></span><br><span class="line">kubectl get pods -A</span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line"></span><br><span class="line"><span class="comment"># Node/agent issues</span></span><br><span class="line">journalctl -u kubelet</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>modify priority of running process</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">xv6-增加系统调用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-09T00:00:00+00:00">2025-12-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="panic">panic</h1>
+<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
+<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
+<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
