@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="正则表达式(一) 元字符 元字符（metacharacters）是按照一定规则限制表示的字符。  .匹配所有字符 []匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意\-除外 [^c1c2]c3c4不匹配’c1,c2’,即不带有c1,c2的c3c4字符串 [c1-c2]匹配c1到c2之间的所有字符 \w匹配任意单个数字，字符串或者下划线">
+    <meta name="description" content="正则表达式(一)元字符元字符（metacharacters）是按照一定规则限制表示的字符。  .匹配所有字符  []匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意\-除外  [^c1c2]c3c4不匹配’c1,c2’,即不带有c1,c2的c3c4字符串  [c1-c2]匹配c1到c2之间的所有字符  \w匹配任意单个数字，字符串或者下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则表达式(一)">
 <meta property="og:url" content="https://dushenda.github.io/2020/03/17/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="正则表达式(一) 元字符 元字符（metacharacters）是按照一定规则限制表示的字符。  .匹配所有字符 []匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意\-除外 [^c1c2]c3c4不匹配’c1,c2’,即不带有c1,c2的c3c4字符串 [c1-c2]匹配c1到c2之间的所有字符 \w匹配任意单个数字，字符串或者下划线">
+<meta property="og:description" content="正则表达式(一)元字符元字符（metacharacters）是按照一定规则限制表示的字符。  .匹配所有字符  []匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意\-除外  [^c1c2]c3c4不匹配’c1,c2’,即不带有c1,c2的c3c4字符串  [c1-c2]匹配c1到c2之间的所有字符  \w匹配任意单个数字，字符串或者下">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-17T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-14T12:45:28.445Z">
+<meta property="article:modified_time" content="2025-12-14T12:48:01.656Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="正则">
 <meta property="article:tag" content="脚本">
@@ -168,7 +168,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">正则表达式(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="nav-number">1.3.</span> <span class="nav-text">转义字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">1.4.</span> <span class="nav-text">限定符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.6.</span> <span class="nav-text">操作符的优先级</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">正则表达式(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="nav-number">1.3.</span> <span class="nav-text">转义字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">1.4.</span> <span class="nav-text">限定符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.6.</span> <span class="nav-text">操作符的优先级</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -271,220 +271,219 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="正则表达式一">正则表达式(一)</h1>
-<h2 id="元字符">元字符</h2>
-<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
-<ol type="1">
-<li><p><code>.</code>匹配所有字符</p></li>
-<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
-<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
-<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
-<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
+    <div class="post-body" itemprop="articleBody"><h1 id="正则表达式-一"><a href="#正则表达式-一" class="headerlink" title="正则表达式(一)"></a>正则表达式(一)</h1><h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol>
+<li><p><code>.</code>匹配所有字符</p>
+</li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p>
+</li>
+<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p>
+</li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p>
+</li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p>
+</li>
 </ol>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
-<ol start="6" type="1">
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,&#39;option&#39;)</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
+<ol start="6">
 <li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
 <li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
-<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
-<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
+<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符<br>tips：小写字母和大写字母的含义往往是补集的关系</li>
+<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个<br>tips<code>*</code>匹配多个</li>
 <li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
 <li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
 <li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
 </ol>
-<h2 id="表达式">表达式</h2>
-<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
-<h2 id="转义字符">转义字符</h2>
-<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
+<h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>&#x3D;<code>x&amp;p</code>，<code>[xp]</code>&#x3D;<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p><code>char(10)</code>&#x3D;<code>\n</code>，即回车。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 <p>输出为</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">转义字符</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
+<tr>
+<th align="center">转义字符</th>
+<th align="center">描述</th>
+<th align="center">示例</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>\a</code></td>
-<td style="text-align: center;">警告</td>
-<td style="text-align: center;"><code>char(7)</code></td>
+<tbody><tr>
+<td align="center"><code>\a</code></td>
+<td align="center">警告</td>
+<td align="center"><code>char(7)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\b</code></td>
-<td style="text-align: center;">退格</td>
-<td style="text-align: center;"><code>char(8)</code></td>
+<tr>
+<td align="center"><code>\b</code></td>
+<td align="center">退格</td>
+<td align="center"><code>char(8)</code></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\f</code></td>
-<td style="text-align: center;">换页符</td>
-<td style="text-align: center;"><code>char(12)</code></td>
+<tr>
+<td align="center"><code>\f</code></td>
+<td align="center">换页符</td>
+<td align="center"><code>char(12)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\n</code></td>
-<td style="text-align: center;">换行符</td>
-<td style="text-align: center;"><code>char(10)</code></td>
+<tr>
+<td align="center"><code>\n</code></td>
+<td align="center">换行符</td>
+<td align="center"><code>char(10)</code></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\r</code></td>
-<td style="text-align: center;">回车</td>
-<td style="text-align: center;"><code>char(13)</code></td>
+<tr>
+<td align="center"><code>\r</code></td>
+<td align="center">回车</td>
+<td align="center"><code>char(13)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\t</code></td>
-<td style="text-align: center;">水平制表符</td>
-<td style="text-align: center;"><code>char(9)</code></td>
+<tr>
+<td align="center"><code>\t</code></td>
+<td align="center">水平制表符</td>
+<td align="center"><code>char(9)</code></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\v</code></td>
-<td style="text-align: center;">垂直制表符</td>
-<td style="text-align: center;"><code>char(11)</code></td>
+<tr>
+<td align="center"><code>\v</code></td>
+<td align="center">垂直制表符</td>
+<td align="center"><code>char(11)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\char</code></td>
-<td style="text-align: center;">任意特殊字符</td>
-<td style="text-align: center;">-</td>
+<tr>
+<td align="center"><code>\char</code></td>
+<td align="center">任意特殊字符</td>
+<td align="center">-</td>
 </tr>
-</tbody>
-</table>
-<h2 id="限定符">限定符</h2>
-<table>
+</tbody></table>
+<h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">限定符</th>
-<th style="text-align: center;">含义</th>
+<tr>
+<th align="center">限定符</th>
+<th align="center">含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr *</td>
-<td style="text-align: center;">多次expr：0~∞</td>
+<tbody><tr>
+<td align="center">expr *</td>
+<td align="center">多次expr：0~∞</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">expr ?</td>
-<td style="text-align: center;">一次expr：0~1</td>
+<tr>
+<td align="center">expr ?</td>
+<td align="center">一次expr：0~1</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr +</td>
-<td style="text-align: center;">一次到多次expr：1~∞</td>
+<tr>
+<td align="center">expr +</td>
+<td align="center">一次到多次expr：1~∞</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">expr{m,n}</td>
-<td style="text-align: center;">m到n次expr：m~n</td>
+<tr>
+<td align="center">expr{m,n}</td>
+<td align="center">m到n次expr：m~n</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr{m,}</td>
-<td style="text-align: center;">大于等于m次expr：m~∞</td>
+<tr>
+<td align="center">expr{m,}</td>
+<td align="center">大于等于m次expr：m~∞</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">expr{m}</td>
-<td style="text-align: center;">m次expr：=m</td>
+<tr>
+<td align="center">expr{m}</td>
+<td align="center">m次expr：&#x3D;m</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>expr?</code>代表至多匹配1次</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>expr+</code>匹配一次或者连续多次</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
-<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>&#x3D;<code>&#39;?&#39;</code></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>&#x3D;<code>&#39;*&#39;</code>;<code>{1,}</code>&#x3D;<code>&#39;+&#39;</code></p>
+</li>
+<li><p><code>expr{n}</code>匹配n次，<code>n</code>&#x3D;<code>{n,n}</code></p>
+</li>
 </ul>
-<h2 id="模式">模式</h2>
-<p>表达式+限定词=模式</p>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>表达式+限定词&#x3D;模式</p>
 <table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 33%" />
-<col style="width: 55%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th style="text-align: center;">表达式+限定词</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
+<tr>
+<th align="center">表达式+限定词</th>
+<th align="center">描述</th>
+<th align="center">示例</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr q</td>
-<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
+<tbody><tr>
+<td align="center">expr q</td>
+<td align="center">积极表达式：与尽可能多的expr匹配</td>
+<td align="center">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr q？</td>
-<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
-<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
+<tr>
+<td align="center">expr q？</td>
+<td align="center">消极表达式：与所需尽可能少的expr匹配</td>
+<td align="center">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr q+</td>
-<td style="text-align: center;">主动表达式：最大程度的匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
+<tr>
+<td align="center">expr q+</td>
+<td align="center">主动表达式：最大程度的匹配</td>
+<td align="center">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
 <p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
-<h2 id="操作符的优先级">操作符的优先级</h2>
-<table>
+<h2 id="操作符的优先级"><a href="#操作符的优先级" class="headerlink" title="操作符的优先级"></a>操作符的优先级</h2><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">操作符</th>
-<th style="text-align: center;">描述</th>
+<tr>
+<th align="center">操作符</th>
+<th align="center">描述</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">\</td>
-<td style="text-align: center;">转义符</td>
+<tbody><tr>
+<td align="center">\</td>
+<td align="center">转义符</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">(), (?:), (?=), []</td>
-<td style="text-align: center;">圆括号和方括号</td>
+<tr>
+<td align="center">(), (?:), (?&#x3D;), []</td>
+<td align="center">圆括号和方括号</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
-<td style="text-align: center;">限定符</td>
+<tr>
+<td align="center">*, +, ?, {n}, {n,}, {n,m}</td>
+<td align="center">限定符</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">^, $, </td>
-<td style="text-align: center;">位置和顺序</td>
+<tr>
+<td align="center">^, $, \anymetacharacter</td>
+<td align="center">位置和顺序</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">|</td>
-<td style="text-align: center;">“或”操作</td>
+<tr>
+<td align="center">|</td>
+<td align="center">“或”操作</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
     </div>
 
