@@ -26,14 +26,14 @@ SReclaimable:      43532 kB
 ...
 ```
 Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached
-![](pagecache.png)
+![](pagecache/pagecache.png)
 
 /proc/meminfo的解释见如下网站[https://www.kernel.org/doc/Documentation/filesystems/proc.rst](https://www.kernel.org/doc/Documentation/filesystems/proc.rst)
 
 在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。
 
 而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。
-![](swapcache.png)
+![](pagecache/swapcache.png)
 SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。
 
 下面解释一下free输出
@@ -96,7 +96,7 @@ Page Cache 的产生有两种不同的方式：
 
 - Buffered I/O（标准 I/O）；
 - Memory-Mapped I/O（存储映射 I/O）。
-![](pagecache_twoway.png)
+![](pagecache/pagecache_twoway.png)
 
 buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。
 
