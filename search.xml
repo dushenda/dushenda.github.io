@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>DHCP协议分析</title>
+    <url>/2024/01/14/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="协议流程">协议流程</h2>
+<h2 id="仿真">仿真</h2>
+<h3 id="组网">组网</h3>
+<p><img src="Pastedimage20231215004144.png" /></p>
+<h3 id="路由设置">路由设置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20231215004416.png" /></p>
+<h2 id="抓包">抓包</h2>
+<p><img src="Pastedimage20231215005008.png" /></p>
+<h3 id="dhcp-discover">dhcp discover</h3>
+<p><img src="Pastedimage20231215010535.png" /></p>
+<p><img src="Pastedimage20231215010615.png" /></p>
+<h3 id="dhcp-offer">dhcp offer</h3>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+        <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SSD学习（一）</title>
+    <url>/2024/01/14/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[
+]]></content>
+      <tags>
+        <tag>SSD</tag>
+        <tag>RAID</tag>
+        <tag>存储</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CsvHelper 使用手册</title>
     <url>/2018/09/04/CsvHelper%20%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h1 id="csvhelper-使用手册">CsvHelper 使用手册</h1>
@@ -381,28 +414,6 @@
       </tags>
   </entry>
   <entry>
-    <title>DHCP协议分析</title>
-    <url>/2024/01/14/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="协议流程">协议流程</h2>
-<h2 id="仿真">仿真</h2>
-<h3 id="组网">组网</h3>
-<p><img src="Pastedimage20231215004144.png" /></p>
-<h3 id="路由设置">路由设置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20231215004416.png" /></p>
-<h2 id="抓包">抓包</h2>
-<p><img src="Pastedimage20231215005008.png" /></p>
-<h3 id="dhcp-discover">dhcp discover</h3>
-<p><img src="Pastedimage20231215010535.png" /></p>
-<p><img src="Pastedimage20231215010615.png" /></p>
-<h3 id="dhcp-offer">dhcp offer</h3>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-        <tag>网络协议</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Windows性能分析</title>
     <url>/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h1 id="windows运行参数分析">Windows运行参数分析</h1>
@@ -474,17 +485,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SSD学习（一）</title>
-    <url>/2024/01/14/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>SSD</tag>
-        <tag>RAID</tag>
-        <tag>存储</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bcc初体验</title>
     <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
     <content><![CDATA[<h2 id="安装">安装</h2>
@@ -520,229 +520,6 @@
       <tags>
         <tag>存储</tag>
         <tag>磁盘</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>正则表达式(一)</title>
-    <url>/2020/03/17/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/</url>
-    <content><![CDATA[<h1 id="正则表达式一">正则表达式(一)</h1>
-<h2 id="元字符">元字符</h2>
-<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
-<ol type="1">
-<li><p><code>.</code>匹配所有字符</p></li>
-<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
-<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
-<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
-<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
-</ol>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
-<ol start="6" type="1">
-<li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
-<li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
-<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
-<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
-<li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
-<li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
-<li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
-</ol>
-<h2 id="表达式">表达式</h2>
-<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
-<h2 id="转义字符">转义字符</h2>
-<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出为</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">转义字符</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>\a</code></td>
-<td style="text-align: center;">警告</td>
-<td style="text-align: center;"><code>char(7)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\b</code></td>
-<td style="text-align: center;">退格</td>
-<td style="text-align: center;"><code>char(8)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\f</code></td>
-<td style="text-align: center;">换页符</td>
-<td style="text-align: center;"><code>char(12)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\n</code></td>
-<td style="text-align: center;">换行符</td>
-<td style="text-align: center;"><code>char(10)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\r</code></td>
-<td style="text-align: center;">回车</td>
-<td style="text-align: center;"><code>char(13)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\t</code></td>
-<td style="text-align: center;">水平制表符</td>
-<td style="text-align: center;"><code>char(9)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\v</code></td>
-<td style="text-align: center;">垂直制表符</td>
-<td style="text-align: center;"><code>char(11)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\char</code></td>
-<td style="text-align: center;">任意特殊字符</td>
-<td style="text-align: center;">-</td>
-</tr>
-</tbody>
-</table>
-<h2 id="限定符">限定符</h2>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">限定符</th>
-<th style="text-align: center;">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr *</td>
-<td style="text-align: center;">多次expr：0~∞</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">expr ?</td>
-<td style="text-align: center;">一次expr：0~1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr +</td>
-<td style="text-align: center;">一次到多次expr：1~∞</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">expr{m,n}</td>
-<td style="text-align: center;">m到n次expr：m~n</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr{m,}</td>
-<td style="text-align: center;">大于等于m次expr：m~∞</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">expr{m}</td>
-<td style="text-align: center;">m次expr：=m</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr?</code>代表至多匹配1次</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr+</code>匹配一次或者连续多次</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
-<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
-</ul>
-<h2 id="模式">模式</h2>
-<p>表达式+限定词=模式</p>
-<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 33%" />
-<col style="width: 55%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">表达式+限定词</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr q</td>
-<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr q？</td>
-<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
-<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr q+</td>
-<td style="text-align: center;">主动表达式：最大程度的匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
-<p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
-<h2 id="操作符的优先级">操作符的优先级</h2>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">操作符</th>
-<th style="text-align: center;">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">\</td>
-<td style="text-align: center;">转义符</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">(), (?:), (?=), []</td>
-<td style="text-align: center;">圆括号和方括号</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
-<td style="text-align: center;">限定符</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">^, $, </td>
-<td style="text-align: center;">位置和顺序</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">|</td>
-<td style="text-align: center;">“或”操作</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-      <tags>
-        <tag>正则</tag>
-        <tag>脚本</tag>
       </tags>
   </entry>
   <entry>
@@ -998,42 +775,226 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>编译链接浅析</title>
-    <url>/2019/02/01/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="引子">引子</h2>
-<p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//sum.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *a = <span class="built_in">abs</span>(*a);*b=<span class="built_in">abs</span>(*b);</span><br><span class="line">    <span class="keyword">return</span> (*a+*b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果需要在<code>Linux</code>上面执行出结果，那么打上下面的代码就可以了： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.c sum.cpp <span class="literal">-o</span> a.out</span><br><span class="line">./a.out</span><br></pre></td></tr></table></figure> 输出的结果是： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
-<p>可以看到运行正确了，这个结果也是预料之中的，k 变成了 2，j 变成了 5，这个是在<code>sum</code>里面被改变了值，也会影响到原址的值。</p>
-<h2 id="程序到可执行文件">程序到可执行文件</h2>
-<p>程序到可执行文件需要经过几个阶段：</p>
-<h3 id="预编译阶段">预编译阶段</h3>
-<p>预编译阶段是把原始的代码文件的需要预编译头加进来，即对于<code>#include</code>的文件进行原样复制，<code>#include</code>文件可以由命令<code>locate</code>得到 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ubuntu@ubuntu:~/VSCode/CSAPP深入理解计算机系统<span class="variable">$</span> locate iostream</span><br><span class="line">/usr/include/c++/<span class="number">7</span>/iostream</span><br><span class="line">/usr/lib/x86_64<span class="literal">-linux-gnu</span>/libboost_iostreams.so.<span class="number">1.65</span>.<span class="number">1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/changelog.Debian.gz</span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/copyright</span><br><span class="line">/usr/share/lintian/overrides/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.list</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.md5sums</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.shlibs</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.triggers</span><br></pre></td></tr></table></figure> 或者是对于C语言的库使用<code>man</code> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">man</span> stdio</span><br></pre></td></tr></table></figure> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">STDIO(<span class="number">3</span>)                   Linux Programmer<span class="string">&#x27;s Manual                  STDIO(3)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">NAME</span></span><br><span class="line"><span class="string">       stdio - standard input/output library functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SYNOPSIS</span></span><br><span class="line"><span class="string">       #include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       FILE *stdin;</span></span><br><span class="line"><span class="string">       FILE *stdout;</span></span><br><span class="line"><span class="string">       FILE *stderr;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DESCRIPTION</span></span><br></pre></td></tr></table></figure> 预编译命令如下： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-E</span> main.cpp <span class="literal">-o</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.i</span><br></pre></td></tr></table></figure> 这个命令是把<code>main.cpp</code><span class="math inline">→</span><code>main.i</code>。 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//部分代码，在Linux试一下就知道</span></span><br><span class="line"><span class="keyword">namespace</span> std __attribute__ ((__visibility__ (<span class="string">&quot;default&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># <span class="number">60</span> <span class="string">&quot;/usr/include/c++/7/iostream&quot;</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">extern</span> istream cin;</span><br><span class="line">  <span class="keyword">extern</span> ostream cout;</span><br><span class="line">  <span class="keyword">extern</span> ostream cerr;</span><br><span class="line">  <span class="keyword">extern</span> ostream clog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">extern</span> wistream wcin;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcout;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcerr;</span><br><span class="line">  <span class="keyword">extern</span> wostream wclog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">static</span> ios_base::Init __ioinit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"># <span class="number">2</span> <span class="string">&quot;main.cpp&quot;</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3</span> <span class="string">&quot;main.cpp&quot;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以看到，这就是把<code>#include</code>里面的东西原样复制到<code>main.cpp</code>代码文件里面，整合到一起，就叫做预编译过程。 ### C++编译阶段 C++编译阶段就是把预编译好的文件编译成汇编代码，个人觉得这个过程跟翻译差不多，把一种语言翻译成另一种语言，命令如下。 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-S</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.s</span><br></pre></td></tr></table></figure> 上面的<code>g++</code>命令默认会有<code>-o main.s</code>添加上，即会产生<code>main.s</code>文件产生。 产生的<code>main.s</code>文件如下，由于太长，截取了部分。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	.file	&quot;main.cpp&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">	.type	_ZStL19piecewise_construct, @object</span><br><span class="line">	.size	_ZStL19piecewise_construct, 1</span><br><span class="line">_ZStL19piecewise_construct:</span><br><span class="line">	.zero	1</span><br><span class="line">	.local	_ZStL8__ioinit</span><br><span class="line">	.comm	_ZStL8__ioinit,1,1</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;k+j=&quot;</span><br><span class="line">.LC1:</span><br><span class="line">	.string	&quot;k=&quot;</span><br><span class="line">.LC2:</span><br><span class="line">	.string	&quot;\t&quot;</span><br><span class="line">.LC3:</span><br><span class="line">	.string	&quot;j=&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB1493:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	subq	$56, %rsp</span><br><span class="line">	.cfi_offset 3, -24</span><br><span class="line">	movl	%edi, -52(%rbp)</span><br><span class="line">	movq	%rsi, -64(%rbp)</span><br><span class="line">	movq	%fs:40, %rax</span><br><span class="line">	movq	%rax, -24(%rbp)</span><br><span class="line">	xorl	%eax, %eax</span><br><span class="line">	movl	$-2, -48(%rbp)</span><br><span class="line">	movl	$-5, -44(%rbp)</span><br><span class="line">	leaq	-48(%rbp), %rax</span><br><span class="line">	movq	%rax, -40(%rbp)</span><br><span class="line">	leaq	-44(%rbp), %rax</span><br><span class="line">	movq	%rax, -32(%rbp)</span><br><span class="line">	leaq	.LC0(%rip), %rsi</span><br><span class="line">	leaq	_ZSt4cout(%rip), %rdi</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT</span><br><span class="line">	movq	%rax, %rbx</span><br><span class="line">	movq	-32(%rbp), %rdx</span><br><span class="line">	movq	-40(%rbp), %rax</span><br><span class="line">	movq	%rdx, %rsi</span><br><span class="line">	movq	%rax, %rdi</span><br><span class="line">	call	_Z3sumPiS_@PLT</span><br><span class="line">	movl	%eax, %esi</span><br><span class="line">	movq	%rbx, %rdi</span><br><span class="line">	call	_ZNSolsEi@PLT</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	</span><br></pre></td></tr></table></figure>
-<p>从上面的代码看出，这是个汇编代码，也就完成了<code>main.i</code><span class="math inline">→</span><code>main.s</code>的转化。</p>
-<h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
-<p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
-<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
-<blockquote>
-<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
-</blockquote>
-<h3 id="链接器链接生成eof">链接器链接生成eof</h3>
-<p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
-<p>按照前面的步骤（预编译<span class="math inline">→</span>C++编译<span class="math inline"> → ​</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o</span><br></pre></td></tr></table></figure>
-<p>这时候会产生一个新的文件为<code>a.out</code>，这个名字可以自己取，也就是把默认的那个语句加上，如： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o <span class="literal">-o</span> main.out</span><br></pre></td></tr></table></figure> 当然，在 Linux 里面文件的后缀名是不重要的，<code>.x</code>也可，只不过<code>.out</code>是在Unix操作系统上第一个实现的可执行文件的后缀名，就保留了下来。</p>
-<p>之后就运行： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure> 得到结果 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure> 这个结果跟之前的一致。执行命令的时候，Linux 会使用它的加载器将可执行文件<code>a.out</code>的代码和数据复制到内存，然后将控制转移到这个程序的开头。</p>
-<h3 id="小结">小结</h3>
-<figure>
-<img src="文件编译过程.png" alt="总结" /><figcaption aria-hidden="true">总结</figcaption>
-</figure>
-<h2 id="可执行文件格式分析">可执行文件格式分析</h2>
+    <title>正则表达式(一)</title>
+    <url>/2020/03/17/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/</url>
+    <content><![CDATA[<h1 id="正则表达式一">正则表达式(一)</h1>
+<h2 id="元字符">元字符</h2>
+<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol type="1">
+<li><p><code>.</code>匹配所有字符</p></li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
+<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
+</ol>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
+<ol start="6" type="1">
+<li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
+<li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
+<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
+<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
+<li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
+<li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
+<li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
+</ol>
+<h2 id="表达式">表达式</h2>
+<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
+<h2 id="转义字符">转义字符</h2>
+<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">转义字符</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>\a</code></td>
+<td style="text-align: center;">警告</td>
+<td style="text-align: center;"><code>char(7)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\b</code></td>
+<td style="text-align: center;">退格</td>
+<td style="text-align: center;"><code>char(8)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\f</code></td>
+<td style="text-align: center;">换页符</td>
+<td style="text-align: center;"><code>char(12)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\n</code></td>
+<td style="text-align: center;">换行符</td>
+<td style="text-align: center;"><code>char(10)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\r</code></td>
+<td style="text-align: center;">回车</td>
+<td style="text-align: center;"><code>char(13)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\t</code></td>
+<td style="text-align: center;">水平制表符</td>
+<td style="text-align: center;"><code>char(9)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\v</code></td>
+<td style="text-align: center;">垂直制表符</td>
+<td style="text-align: center;"><code>char(11)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\char</code></td>
+<td style="text-align: center;">任意特殊字符</td>
+<td style="text-align: center;">-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="限定符">限定符</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">限定符</th>
+<th style="text-align: center;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr *</td>
+<td style="text-align: center;">多次expr：0~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr ?</td>
+<td style="text-align: center;">一次expr：0~1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr +</td>
+<td style="text-align: center;">一次到多次expr：1~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr{m,n}</td>
+<td style="text-align: center;">m到n次expr：m~n</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr{m,}</td>
+<td style="text-align: center;">大于等于m次expr：m~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr{m}</td>
+<td style="text-align: center;">m次expr：=m</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr?</code>代表至多匹配1次</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr+</code>匹配一次或者连续多次</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
+<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
+</ul>
+<h2 id="模式">模式</h2>
+<p>表达式+限定词=模式</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 33%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">表达式+限定词</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr q</td>
+<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr q？</td>
+<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
+<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr q+</td>
+<td style="text-align: center;">主动表达式：最大程度的匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
+<p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
+<h2 id="操作符的优先级">操作符的优先级</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">操作符</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">转义符</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">(), (?:), (?=), []</td>
+<td style="text-align: center;">圆括号和方括号</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
+<td style="text-align: center;">限定符</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">^, $, </td>
+<td style="text-align: center;">位置和顺序</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">|</td>
+<td style="text-align: center;">“或”操作</td>
+</tr>
+</tbody>
+</table>
 ]]></content>
       <tags>
-        <tag>编译</tag>
-        <tag>C</tag>
+        <tag>正则</tag>
+        <tag>脚本</tag>
       </tags>
   </entry>
   <entry>
@@ -1402,6 +1363,45 @@ $$</span></p>
 ]]></content>
       <tags>
         <tag>资源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编译链接浅析</title>
+    <url>/2019/02/01/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="引子">引子</h2>
+<p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//sum.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *a = <span class="built_in">abs</span>(*a);*b=<span class="built_in">abs</span>(*b);</span><br><span class="line">    <span class="keyword">return</span> (*a+*b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要在<code>Linux</code>上面执行出结果，那么打上下面的代码就可以了： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.c sum.cpp <span class="literal">-o</span> a.out</span><br><span class="line">./a.out</span><br></pre></td></tr></table></figure> 输出的结果是： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到运行正确了，这个结果也是预料之中的，k 变成了 2，j 变成了 5，这个是在<code>sum</code>里面被改变了值，也会影响到原址的值。</p>
+<h2 id="程序到可执行文件">程序到可执行文件</h2>
+<p>程序到可执行文件需要经过几个阶段：</p>
+<h3 id="预编译阶段">预编译阶段</h3>
+<p>预编译阶段是把原始的代码文件的需要预编译头加进来，即对于<code>#include</code>的文件进行原样复制，<code>#include</code>文件可以由命令<code>locate</code>得到 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ubuntu@ubuntu:~/VSCode/CSAPP深入理解计算机系统<span class="variable">$</span> locate iostream</span><br><span class="line">/usr/include/c++/<span class="number">7</span>/iostream</span><br><span class="line">/usr/lib/x86_64<span class="literal">-linux-gnu</span>/libboost_iostreams.so.<span class="number">1.65</span>.<span class="number">1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/changelog.Debian.gz</span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/copyright</span><br><span class="line">/usr/share/lintian/overrides/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.list</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.md5sums</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.shlibs</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.triggers</span><br></pre></td></tr></table></figure> 或者是对于C语言的库使用<code>man</code> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">man</span> stdio</span><br></pre></td></tr></table></figure> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">STDIO(<span class="number">3</span>)                   Linux Programmer<span class="string">&#x27;s Manual                  STDIO(3)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">NAME</span></span><br><span class="line"><span class="string">       stdio - standard input/output library functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SYNOPSIS</span></span><br><span class="line"><span class="string">       #include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       FILE *stdin;</span></span><br><span class="line"><span class="string">       FILE *stdout;</span></span><br><span class="line"><span class="string">       FILE *stderr;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DESCRIPTION</span></span><br></pre></td></tr></table></figure> 预编译命令如下： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-E</span> main.cpp <span class="literal">-o</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.i</span><br></pre></td></tr></table></figure> 这个命令是把<code>main.cpp</code><span class="math inline">→</span><code>main.i</code>。 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//部分代码，在Linux试一下就知道</span></span><br><span class="line"><span class="keyword">namespace</span> std __attribute__ ((__visibility__ (<span class="string">&quot;default&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># <span class="number">60</span> <span class="string">&quot;/usr/include/c++/7/iostream&quot;</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">extern</span> istream cin;</span><br><span class="line">  <span class="keyword">extern</span> ostream cout;</span><br><span class="line">  <span class="keyword">extern</span> ostream cerr;</span><br><span class="line">  <span class="keyword">extern</span> ostream clog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">extern</span> wistream wcin;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcout;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcerr;</span><br><span class="line">  <span class="keyword">extern</span> wostream wclog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">static</span> ios_base::Init __ioinit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"># <span class="number">2</span> <span class="string">&quot;main.cpp&quot;</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3</span> <span class="string">&quot;main.cpp&quot;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以看到，这就是把<code>#include</code>里面的东西原样复制到<code>main.cpp</code>代码文件里面，整合到一起，就叫做预编译过程。 ### C++编译阶段 C++编译阶段就是把预编译好的文件编译成汇编代码，个人觉得这个过程跟翻译差不多，把一种语言翻译成另一种语言，命令如下。 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-S</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.s</span><br></pre></td></tr></table></figure> 上面的<code>g++</code>命令默认会有<code>-o main.s</code>添加上，即会产生<code>main.s</code>文件产生。 产生的<code>main.s</code>文件如下，由于太长，截取了部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	.file	&quot;main.cpp&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">	.type	_ZStL19piecewise_construct, @object</span><br><span class="line">	.size	_ZStL19piecewise_construct, 1</span><br><span class="line">_ZStL19piecewise_construct:</span><br><span class="line">	.zero	1</span><br><span class="line">	.local	_ZStL8__ioinit</span><br><span class="line">	.comm	_ZStL8__ioinit,1,1</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;k+j=&quot;</span><br><span class="line">.LC1:</span><br><span class="line">	.string	&quot;k=&quot;</span><br><span class="line">.LC2:</span><br><span class="line">	.string	&quot;\t&quot;</span><br><span class="line">.LC3:</span><br><span class="line">	.string	&quot;j=&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB1493:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	subq	$56, %rsp</span><br><span class="line">	.cfi_offset 3, -24</span><br><span class="line">	movl	%edi, -52(%rbp)</span><br><span class="line">	movq	%rsi, -64(%rbp)</span><br><span class="line">	movq	%fs:40, %rax</span><br><span class="line">	movq	%rax, -24(%rbp)</span><br><span class="line">	xorl	%eax, %eax</span><br><span class="line">	movl	$-2, -48(%rbp)</span><br><span class="line">	movl	$-5, -44(%rbp)</span><br><span class="line">	leaq	-48(%rbp), %rax</span><br><span class="line">	movq	%rax, -40(%rbp)</span><br><span class="line">	leaq	-44(%rbp), %rax</span><br><span class="line">	movq	%rax, -32(%rbp)</span><br><span class="line">	leaq	.LC0(%rip), %rsi</span><br><span class="line">	leaq	_ZSt4cout(%rip), %rdi</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT</span><br><span class="line">	movq	%rax, %rbx</span><br><span class="line">	movq	-32(%rbp), %rdx</span><br><span class="line">	movq	-40(%rbp), %rax</span><br><span class="line">	movq	%rdx, %rsi</span><br><span class="line">	movq	%rax, %rdi</span><br><span class="line">	call	_Z3sumPiS_@PLT</span><br><span class="line">	movl	%eax, %esi</span><br><span class="line">	movq	%rbx, %rdi</span><br><span class="line">	call	_ZNSolsEi@PLT</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	</span><br></pre></td></tr></table></figure>
+<p>从上面的代码看出，这是个汇编代码，也就完成了<code>main.i</code><span class="math inline">→</span><code>main.s</code>的转化。</p>
+<h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
+<p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
+<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
+<blockquote>
+<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
+</blockquote>
+<h3 id="链接器链接生成eof">链接器链接生成eof</h3>
+<p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
+<p>按照前面的步骤（预编译<span class="math inline">→</span>C++编译<span class="math inline"> → ​</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o</span><br></pre></td></tr></table></figure>
+<p>这时候会产生一个新的文件为<code>a.out</code>，这个名字可以自己取，也就是把默认的那个语句加上，如： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o <span class="literal">-o</span> main.out</span><br></pre></td></tr></table></figure> 当然，在 Linux 里面文件的后缀名是不重要的，<code>.x</code>也可，只不过<code>.out</code>是在Unix操作系统上第一个实现的可执行文件的后缀名，就保留了下来。</p>
+<p>之后就运行： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure> 得到结果 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure> 这个结果跟之前的一致。执行命令的时候，Linux 会使用它的加载器将可执行文件<code>a.out</code>的代码和数据复制到内存，然后将控制转移到这个程序的开头。</p>
+<h3 id="小结">小结</h3>
+<figure>
+<img src="文件编译过程.png" alt="总结" /><figcaption aria-hidden="true">总结</figcaption>
+</figure>
+<h2 id="可执行文件格式分析">可执行文件格式分析</h2>
+]]></content>
+      <tags>
+        <tag>编译</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -2564,6 +2564,81 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>TCP学习-NS3模拟环境搭建</title>
+    <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
+</blockquote>
+<h1 id="前置工具下载">前置工具下载</h1>
+<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
+<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
+<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
+<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
+<h2 id="powershell">Powershell</h2>
+<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
+<h2 id="x-server">X server</h2>
+<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
+<ol type="1">
+<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
+<li>下载并安装 VcXsrv Windows X Server</li>
+</ol>
+<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
+<ol type="1">
+<li>启动 “XLaunch”</li>
+<li>选择 “Multiple windows”</li>
+<li>Display number 设为 “0” 或 “-1”（自动）</li>
+<li>选择 “Start no client”</li>
+<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
+<li>完成设置，VcXsrv 会在系统托盘运行</li>
+</ol>
+<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
+<h2 id="配置环境">配置环境</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<h2 id="登录虚拟机">登录虚拟机</h2>
+<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
+<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
+<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
+<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
+<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
+]]></content>
+      <tags>
+        <tag>TCP</tag>
+        <tag>NS3</tag>
+        <tag>仿真器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常见的linux性能查询命令</title>
     <url>/2025/12/09/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/%E5%B8%B8%E8%A7%81%E7%9A%84linux%E6%80%A7%E8%83%BD%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="常见的linux性能查询命令">常见的linux性能查询命令</h1>
@@ -3486,81 +3561,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>工作流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TCP学习-NS3模拟环境搭建</title>
-    <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<blockquote>
-<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
-</blockquote>
-<h1 id="前置工具下载">前置工具下载</h1>
-<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
-<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
-<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
-<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
-<h2 id="powershell">Powershell</h2>
-<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
-<h2 id="x-server">X server</h2>
-<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
-<ol type="1">
-<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
-<li>下载并安装 VcXsrv Windows X Server</li>
-</ol>
-<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
-<ol type="1">
-<li>启动 “XLaunch”</li>
-<li>选择 “Multiple windows”</li>
-<li>Display number 设为 “0” 或 “-1”（自动）</li>
-<li>选择 “Start no client”</li>
-<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
-<li>完成设置，VcXsrv 会在系统托盘运行</li>
-</ol>
-<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
-<h2 id="配置环境">配置环境</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
-<h2 id="登录虚拟机">登录虚拟机</h2>
-<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
-<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
-<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
-<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
-<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
-<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
-]]></content>
-      <tags>
-        <tag>TCP</tag>
-        <tag>NS3</tag>
-        <tag>仿真器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ubuntu下EDK2开发环境搭建</title>
     <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
@@ -3600,21 +3600,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>qemu调试linux（二）</title>
-    <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
-<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
-<h2 id="vscode调试">vscode调试</h2>
-<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
-<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>qemu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>qemu调试linux（一）</title>
     <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="编译内核">编译内核</h2>
@@ -3631,6 +3616,21 @@ Field reference (click to expand)
 <h2 id="注意">注意</h2>
 <p><code>init</code>需要设置为可执行权限</p>
 <p>qemu退出快捷键ctrl+a按下后释放，再按x</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>qemu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>qemu调试linux（二）</title>
+    <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
+<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
+<h2 id="vscode调试">vscode调试</h2>
+<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
+<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>linux</tag>
@@ -3667,41 +3667,6 @@ Field reference (click to expand)
       <tags>
         <tag>操作系统</tag>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -3781,6 +3746,41 @@ $$</span></p>
 ]]></content>
   </entry>
   <entry>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>内核转储文件--应用程序崩溃分析</title>
     <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
@@ -3814,123 +3814,6 @@ $$</span></p>
         <tag>linux</tag>
         <tag>kernel</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>最大间隙问题</title>
-    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
-<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
-<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
-<p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
-</ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>考拉兹猜想</title>
-    <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
-    <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">$$
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-$$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline"><em>n</em></span> ，下降最快的也就是每次下降 <span class="math inline">$\frac{1}{2}$</span>，这个下降速度对于的计算时间是 <span class="math inline">log <em>n</em></span> 。对于上界，用 <span class="math inline"><em>M</em><em>A</em><em>T</em><em>L</em><em>A</em><em>B</em>​</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline"><em>n</em><sub>0</sub></span> 的步长与 <span class="math inline"><em>n</em></span> 值变化</h2>
-<p><img src="3~6.bmp" /></p>
-<figure>
-<img src="7~10.bmp" alt="7~10" /><figcaption aria-hidden="true">7~10</figcaption>
-</figure>
-<figure>
-<img src="11~14.bmp" alt="11~14" /><figcaption aria-hidden="true">11~14</figcaption>
-</figure>
-<figure>
-<img src="15~18.bmp" alt="15~18" /><figcaption aria-hidden="true">15~18</figcaption>
-</figure>
-<figure>
-<img src="19~22.bmp" alt="19~22" /><figcaption aria-hidden="true">19~22</figcaption>
-</figure>
-<figure>
-<img src="23~26.bmp" alt="23~26" /><figcaption aria-hidden="true">23~26</figcaption>
-</figure>
-<figure>
-<img src="27~30.bmp" alt="27~30" /><figcaption aria-hidden="true">27~30</figcaption>
-</figure>
-<figure>
-<img src="31~34.bmp" alt="31~34" /><figcaption aria-hidden="true">31~34</figcaption>
-</figure>
-<figure>
-<img src="35~38.bmp" alt="35~38" /><figcaption aria-hidden="true">35~38</figcaption>
-</figure>
-<figure>
-<img src="39~42.bmp" alt="39~42" /><figcaption aria-hidden="true">39~42</figcaption>
-</figure>
-<figure>
-<img src="43~46.bmp" alt="43~46" /><figcaption aria-hidden="true">43~46</figcaption>
-</figure>
-<figure>
-<img src="47~50.bmp" alt="47~50" /><figcaption aria-hidden="true">47~50</figcaption>
-</figure>
-<figure>
-<img src="51~54.bmp" alt="51~54" /><figcaption aria-hidden="true">51~54</figcaption>
-</figure>
-<figure>
-<img src="55~58.bmp" alt="55~58" /><figcaption aria-hidden="true">55~58</figcaption>
-</figure>
-<figure>
-<img src="242~245.bmp" alt="242~245" /><figcaption aria-hidden="true">242~245</figcaption>
-</figure>
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline"><em>n</em><sub>0</sub></span> 与计算次数分布曲线</h2>
-<figure>
-<img src="次数与初值.bmp" alt="次数与初值" /><figcaption aria-hidden="true">次数与初值</figcaption>
-</figure>
-<p><img src="n0=400.bmp" /></p>
-<figure>
-<img src="n0=1000.bmp" alt="n0=1000" /><figcaption aria-hidden="true">n0=1000</figcaption>
-</figure>
-<figure>
-<img src="n0=5000.bmp" alt="n0=5000" /><figcaption aria-hidden="true">n0=5000</figcaption>
-</figure>
-<figure>
-<img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
-</figure>
-]]></content>
   </entry>
   <entry>
     <title>几种算法误差报告</title>
@@ -4133,6 +4016,123 @@ $$</span></p>
 <h2 id="参考文献">参考文献</h2>
 <p>[1] Roberto Grena Five new algorithms for the computation of sun position from 2010 to 2110 Solar Energy</p>
 <p>https://www.sciencedirect.com/science/article/pii/S0038092X12000400</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>最大间隙问题</title>
+    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
+<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
+<p>复杂度计算如下 <span class="math display">$$
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>那么我只能换其他的办法来做。</p>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
+<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
+<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+</ol>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
+l=\frac{max-mix}{n-1}
+$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
+seg[i]=\frac{x[i]-minx}{l}+1
+$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>考拉兹猜想</title>
+    <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
+    <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
+<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
+<p>考拉兹函数定义如下</p>
+<p><span class="math display">$$
+f(x)=\left\{
+\begin{array}{**lr**}
+3n+1&amp;x为奇数且x\neq1\\
+n/2&amp;x为偶数\\
+1&amp;x=1
+\end{array}
+\right.
+$$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
+<p>当然，下界是很容易求出来的，如果输入 <span class="math inline"><em>n</em></span> ，下降最快的也就是每次下降 <span class="math inline">$\frac{1}{2}$</span>，这个下降速度对于的计算时间是 <span class="math inline">log <em>n</em></span> 。对于上界，用 <span class="math inline"><em>M</em><em>A</em><em>T</em><em>L</em><em>A</em><em>B</em>​</span> 带入一些数值计算。得到的结果如下：</p>
+<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline"><em>n</em><sub>0</sub></span> 的步长与 <span class="math inline"><em>n</em></span> 值变化</h2>
+<p><img src="3~6.bmp" /></p>
+<figure>
+<img src="7~10.bmp" alt="7~10" /><figcaption aria-hidden="true">7~10</figcaption>
+</figure>
+<figure>
+<img src="11~14.bmp" alt="11~14" /><figcaption aria-hidden="true">11~14</figcaption>
+</figure>
+<figure>
+<img src="15~18.bmp" alt="15~18" /><figcaption aria-hidden="true">15~18</figcaption>
+</figure>
+<figure>
+<img src="19~22.bmp" alt="19~22" /><figcaption aria-hidden="true">19~22</figcaption>
+</figure>
+<figure>
+<img src="23~26.bmp" alt="23~26" /><figcaption aria-hidden="true">23~26</figcaption>
+</figure>
+<figure>
+<img src="27~30.bmp" alt="27~30" /><figcaption aria-hidden="true">27~30</figcaption>
+</figure>
+<figure>
+<img src="31~34.bmp" alt="31~34" /><figcaption aria-hidden="true">31~34</figcaption>
+</figure>
+<figure>
+<img src="35~38.bmp" alt="35~38" /><figcaption aria-hidden="true">35~38</figcaption>
+</figure>
+<figure>
+<img src="39~42.bmp" alt="39~42" /><figcaption aria-hidden="true">39~42</figcaption>
+</figure>
+<figure>
+<img src="43~46.bmp" alt="43~46" /><figcaption aria-hidden="true">43~46</figcaption>
+</figure>
+<figure>
+<img src="47~50.bmp" alt="47~50" /><figcaption aria-hidden="true">47~50</figcaption>
+</figure>
+<figure>
+<img src="51~54.bmp" alt="51~54" /><figcaption aria-hidden="true">51~54</figcaption>
+</figure>
+<figure>
+<img src="55~58.bmp" alt="55~58" /><figcaption aria-hidden="true">55~58</figcaption>
+</figure>
+<figure>
+<img src="242~245.bmp" alt="242~245" /><figcaption aria-hidden="true">242~245</figcaption>
+</figure>
+<h2 id="n_0-与计算次数分布曲线"><span class="math inline"><em>n</em><sub>0</sub></span> 与计算次数分布曲线</h2>
+<figure>
+<img src="次数与初值.bmp" alt="次数与初值" /><figcaption aria-hidden="true">次数与初值</figcaption>
+</figure>
+<p><img src="n0=400.bmp" /></p>
+<figure>
+<img src="n0=1000.bmp" alt="n0=1000" /><figcaption aria-hidden="true">n0=1000</figcaption>
+</figure>
+<figure>
+<img src="n0=5000.bmp" alt="n0=5000" /><figcaption aria-hidden="true">n0=5000</figcaption>
+</figure>
+<figure>
+<img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
+</figure>
 ]]></content>
   </entry>
 </search>
