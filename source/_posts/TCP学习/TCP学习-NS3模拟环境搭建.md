@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-# 安装文件
+# 安装wireshark虚拟机
 ## 配置环境
 ```shell
 $ git clone https://github.com/ituring/tcp-book.git
@@ -69,7 +69,7 @@ $ vagrant up
 ## 登录虚拟机
 使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成`vagrant@guest1:~$`。
 
-注意Windows操作系统，在`MobaXterm`中运行`vagrant ssh guest1`之前，请先运行`cmd.exe`，启动命令行，然后再运行`vagrant ssh guest1`，否则会报错。
+在`powershell`中运行`vagrant ssh guest1`。
 
 ```shell
 $ vagrant ssh guest1
@@ -97,3 +97,14 @@ vagrant@guest1:~$
 vagrant@guest1:~$ wireshark
 ```
 ![](环境搭建wireshark.png)
+# 安装ns3虚拟机
+当确认已经准备好VirtualBox和Vagrant的环境之后，请将[此Github代码库](https://github.com/ituring/tcp-book)克隆到任意目录。打开其中的`ns3/vagrant`目录，执行`vagrant up`命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。
+
+```shell
+$ git clone https://github.com/ituring/tcp-book.git
+$ cd tcp-book/ns3/vagrant
+$ vagrant up
+```
+![](安装虚拟机.png)
+在`powershell`中运行`vagrant ssh`
+![](ns3环境搭建.png)
