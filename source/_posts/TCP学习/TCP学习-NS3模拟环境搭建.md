@@ -19,22 +19,22 @@ VirtualBox 图形用户界面
 版本 7.0.22 r165102 (Qt5.15.2)
 Copyright © 2024 Oracle and/or its affiliates
 ```
-## Vagrant（最新版本即可）
 
+## Vagrant（最新版本即可）
 [https://developer.hashicorp.com/vagrant](https://developer.hashicorp.com/vagrant)
 ```shell
 PS C:\Users\dushenda> vagrant.exe -v
 Vagrant 2.4.9
 ```
-## Powershell
 
+## Powershell
 [https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5)
 ```shell
 PS C:\Users\dushenda> pwsh.exe -v
 PowerShell 7.1.4
 ```
-## X server
 
+## X server
 ### 下载并安装 VcXsrv：
 
 1. 访问：https://sourceforge.net/projects/vcxsrv/
@@ -89,6 +89,7 @@ $ vagrant up
 ```
 
 ## 登录虚拟机
+
 使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成`vagrant@guest1:~$`。
 
 在`powershell`中运行`vagrant ssh guest1`。
