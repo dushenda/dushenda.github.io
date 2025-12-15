@@ -47,11 +47,12 @@ symbol-file kernel
       "name": "Debug xv6 x86",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/kernel", // 修改kernel 或者 bootblock
+      "program": "${workspaceFolder}/kernel",
       "miDebuggerServerAddress": "localhost:25000",
       "miDebuggerPath": "/usr/bin/gdb",
       "stopAtEntry": true,
       "cwd": "${workspaceFolder}",
+      "externalConsole": false,
       "setupCommands": [
         {
           "text": "set architecture i386:x86-64"
@@ -67,9 +68,9 @@ symbol-file kernel
       ],
       "preLaunchTask": "xv6build",
       "logging": {
-        "trace": true,
-        "traceResponse": true,
-        "engineLogging": true
+        "trace": false,
+        "traceResponse": false,
+        "engineLogging": false
       }
     }
   ]
