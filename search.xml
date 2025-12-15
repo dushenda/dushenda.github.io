@@ -746,23 +746,6 @@
       </tags>
   </entry>
   <entry>
-    <title>现代操作系统-进程与线程16~30</title>
-    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
-    <content><![CDATA[<blockquote>
-<p>以下答案均不代表正确答案，仅代表作者观点</p>
-</blockquote>
-<ul>
-<li><h5 id="线程可以被时钟中断抢占吗如果可以在什么情形下可以如果不可以为什么不可以">16.线程可以被时钟中断抢占吗？如果可以，在什么情形下可以？如果不可以，为什么不可以？</h5>
-<p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
-<li></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>OS</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>现代操作系统-内存管理1</title>
     <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
     <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
@@ -834,6 +817,23 @@
 <p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
 </blockquote>
 <p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
+]]></content>
+      <tags>
+        <tag>OS</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-进程与线程16~30</title>
+    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
+    <content><![CDATA[<blockquote>
+<p>以下答案均不代表正确答案，仅代表作者观点</p>
+</blockquote>
+<ul>
+<li><h5 id="线程可以被时钟中断抢占吗如果可以在什么情形下可以如果不可以为什么不可以">16.线程可以被时钟中断抢占吗？如果可以，在什么情形下可以？如果不可以，为什么不可以？</h5>
+<p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
+<li></li>
+</ul>
 ]]></content>
       <tags>
         <tag>OS</tag>
@@ -1057,6 +1057,45 @@ $$</span></p>
       <tags>
         <tag>光学</tag>
         <tag>几何</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编译链接浅析</title>
+    <url>/2019/02/01/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="引子">引子</h2>
+<p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//sum.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *a = <span class="built_in">abs</span>(*a);*b=<span class="built_in">abs</span>(*b);</span><br><span class="line">    <span class="keyword">return</span> (*a+*b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要在<code>Linux</code>上面执行出结果，那么打上下面的代码就可以了： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.c sum.cpp <span class="literal">-o</span> a.out</span><br><span class="line">./a.out</span><br></pre></td></tr></table></figure> 输出的结果是： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到运行正确了，这个结果也是预料之中的，k 变成了 2，j 变成了 5，这个是在<code>sum</code>里面被改变了值，也会影响到原址的值。</p>
+<h2 id="程序到可执行文件">程序到可执行文件</h2>
+<p>程序到可执行文件需要经过几个阶段：</p>
+<h3 id="预编译阶段">预编译阶段</h3>
+<p>预编译阶段是把原始的代码文件的需要预编译头加进来，即对于<code>#include</code>的文件进行原样复制，<code>#include</code>文件可以由命令<code>locate</code>得到 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ubuntu@ubuntu:~/VSCode/CSAPP深入理解计算机系统<span class="variable">$</span> locate iostream</span><br><span class="line">/usr/include/c++/<span class="number">7</span>/iostream</span><br><span class="line">/usr/lib/x86_64<span class="literal">-linux-gnu</span>/libboost_iostreams.so.<span class="number">1.65</span>.<span class="number">1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/changelog.Debian.gz</span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/copyright</span><br><span class="line">/usr/share/lintian/overrides/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.list</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.md5sums</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.shlibs</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.triggers</span><br></pre></td></tr></table></figure> 或者是对于C语言的库使用<code>man</code> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">man</span> stdio</span><br></pre></td></tr></table></figure> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">STDIO(<span class="number">3</span>)                   Linux Programmer<span class="string">&#x27;s Manual                  STDIO(3)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">NAME</span></span><br><span class="line"><span class="string">       stdio - standard input/output library functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SYNOPSIS</span></span><br><span class="line"><span class="string">       #include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       FILE *stdin;</span></span><br><span class="line"><span class="string">       FILE *stdout;</span></span><br><span class="line"><span class="string">       FILE *stderr;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DESCRIPTION</span></span><br></pre></td></tr></table></figure> 预编译命令如下： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-E</span> main.cpp <span class="literal">-o</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.i</span><br></pre></td></tr></table></figure> 这个命令是把<code>main.cpp</code><span class="math inline">→</span><code>main.i</code>。 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//部分代码，在Linux试一下就知道</span></span><br><span class="line"><span class="keyword">namespace</span> std __attribute__ ((__visibility__ (<span class="string">&quot;default&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># <span class="number">60</span> <span class="string">&quot;/usr/include/c++/7/iostream&quot;</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">extern</span> istream cin;</span><br><span class="line">  <span class="keyword">extern</span> ostream cout;</span><br><span class="line">  <span class="keyword">extern</span> ostream cerr;</span><br><span class="line">  <span class="keyword">extern</span> ostream clog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">extern</span> wistream wcin;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcout;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcerr;</span><br><span class="line">  <span class="keyword">extern</span> wostream wclog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">static</span> ios_base::Init __ioinit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"># <span class="number">2</span> <span class="string">&quot;main.cpp&quot;</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3</span> <span class="string">&quot;main.cpp&quot;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以看到，这就是把<code>#include</code>里面的东西原样复制到<code>main.cpp</code>代码文件里面，整合到一起，就叫做预编译过程。 ### C++编译阶段 C++编译阶段就是把预编译好的文件编译成汇编代码，个人觉得这个过程跟翻译差不多，把一种语言翻译成另一种语言，命令如下。 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-S</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.s</span><br></pre></td></tr></table></figure> 上面的<code>g++</code>命令默认会有<code>-o main.s</code>添加上，即会产生<code>main.s</code>文件产生。 产生的<code>main.s</code>文件如下，由于太长，截取了部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	.file	&quot;main.cpp&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">	.type	_ZStL19piecewise_construct, @object</span><br><span class="line">	.size	_ZStL19piecewise_construct, 1</span><br><span class="line">_ZStL19piecewise_construct:</span><br><span class="line">	.zero	1</span><br><span class="line">	.local	_ZStL8__ioinit</span><br><span class="line">	.comm	_ZStL8__ioinit,1,1</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;k+j=&quot;</span><br><span class="line">.LC1:</span><br><span class="line">	.string	&quot;k=&quot;</span><br><span class="line">.LC2:</span><br><span class="line">	.string	&quot;\t&quot;</span><br><span class="line">.LC3:</span><br><span class="line">	.string	&quot;j=&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB1493:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	subq	$56, %rsp</span><br><span class="line">	.cfi_offset 3, -24</span><br><span class="line">	movl	%edi, -52(%rbp)</span><br><span class="line">	movq	%rsi, -64(%rbp)</span><br><span class="line">	movq	%fs:40, %rax</span><br><span class="line">	movq	%rax, -24(%rbp)</span><br><span class="line">	xorl	%eax, %eax</span><br><span class="line">	movl	$-2, -48(%rbp)</span><br><span class="line">	movl	$-5, -44(%rbp)</span><br><span class="line">	leaq	-48(%rbp), %rax</span><br><span class="line">	movq	%rax, -40(%rbp)</span><br><span class="line">	leaq	-44(%rbp), %rax</span><br><span class="line">	movq	%rax, -32(%rbp)</span><br><span class="line">	leaq	.LC0(%rip), %rsi</span><br><span class="line">	leaq	_ZSt4cout(%rip), %rdi</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT</span><br><span class="line">	movq	%rax, %rbx</span><br><span class="line">	movq	-32(%rbp), %rdx</span><br><span class="line">	movq	-40(%rbp), %rax</span><br><span class="line">	movq	%rdx, %rsi</span><br><span class="line">	movq	%rax, %rdi</span><br><span class="line">	call	_Z3sumPiS_@PLT</span><br><span class="line">	movl	%eax, %esi</span><br><span class="line">	movq	%rbx, %rdi</span><br><span class="line">	call	_ZNSolsEi@PLT</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	</span><br></pre></td></tr></table></figure>
+<p>从上面的代码看出，这是个汇编代码，也就完成了<code>main.i</code><span class="math inline">→</span><code>main.s</code>的转化。</p>
+<h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
+<p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
+<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
+<blockquote>
+<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
+</blockquote>
+<h3 id="链接器链接生成eof">链接器链接生成eof</h3>
+<p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
+<p>按照前面的步骤（预编译<span class="math inline">→</span>C++编译<span class="math inline"> → ​</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o</span><br></pre></td></tr></table></figure>
+<p>这时候会产生一个新的文件为<code>a.out</code>，这个名字可以自己取，也就是把默认的那个语句加上，如： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o <span class="literal">-o</span> main.out</span><br></pre></td></tr></table></figure> 当然，在 Linux 里面文件的后缀名是不重要的，<code>.x</code>也可，只不过<code>.out</code>是在Unix操作系统上第一个实现的可执行文件的后缀名，就保留了下来。</p>
+<p>之后就运行： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure> 得到结果 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure> 这个结果跟之前的一致。执行命令的时候，Linux 会使用它的加载器将可执行文件<code>a.out</code>的代码和数据复制到内存，然后将控制转移到这个程序的开头。</p>
+<h3 id="小结">小结</h3>
+<figure>
+<img src="文件编译过程.png" alt="总结" /><figcaption aria-hidden="true">总结</figcaption>
+</figure>
+<h2 id="可执行文件格式分析">可执行文件格式分析</h2>
+]]></content>
+      <tags>
+        <tag>编译</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1327,84 +1366,6 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>编译链接浅析</title>
-    <url>/2019/02/01/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="引子">引子</h2>
-<p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//sum.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *a = <span class="built_in">abs</span>(*a);*b=<span class="built_in">abs</span>(*b);</span><br><span class="line">    <span class="keyword">return</span> (*a+*b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果需要在<code>Linux</code>上面执行出结果，那么打上下面的代码就可以了： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.c sum.cpp <span class="literal">-o</span> a.out</span><br><span class="line">./a.out</span><br></pre></td></tr></table></figure> 输出的结果是： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
-<p>可以看到运行正确了，这个结果也是预料之中的，k 变成了 2，j 变成了 5，这个是在<code>sum</code>里面被改变了值，也会影响到原址的值。</p>
-<h2 id="程序到可执行文件">程序到可执行文件</h2>
-<p>程序到可执行文件需要经过几个阶段：</p>
-<h3 id="预编译阶段">预编译阶段</h3>
-<p>预编译阶段是把原始的代码文件的需要预编译头加进来，即对于<code>#include</code>的文件进行原样复制，<code>#include</code>文件可以由命令<code>locate</code>得到 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ubuntu@ubuntu:~/VSCode/CSAPP深入理解计算机系统<span class="variable">$</span> locate iostream</span><br><span class="line">/usr/include/c++/<span class="number">7</span>/iostream</span><br><span class="line">/usr/lib/x86_64<span class="literal">-linux-gnu</span>/libboost_iostreams.so.<span class="number">1.65</span>.<span class="number">1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/changelog.Debian.gz</span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/copyright</span><br><span class="line">/usr/share/lintian/overrides/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.list</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.md5sums</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.shlibs</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.triggers</span><br></pre></td></tr></table></figure> 或者是对于C语言的库使用<code>man</code> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">man</span> stdio</span><br></pre></td></tr></table></figure> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">STDIO(<span class="number">3</span>)                   Linux Programmer<span class="string">&#x27;s Manual                  STDIO(3)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">NAME</span></span><br><span class="line"><span class="string">       stdio - standard input/output library functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SYNOPSIS</span></span><br><span class="line"><span class="string">       #include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       FILE *stdin;</span></span><br><span class="line"><span class="string">       FILE *stdout;</span></span><br><span class="line"><span class="string">       FILE *stderr;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DESCRIPTION</span></span><br></pre></td></tr></table></figure> 预编译命令如下： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-E</span> main.cpp <span class="literal">-o</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.i</span><br></pre></td></tr></table></figure> 这个命令是把<code>main.cpp</code><span class="math inline">→</span><code>main.i</code>。 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//部分代码，在Linux试一下就知道</span></span><br><span class="line"><span class="keyword">namespace</span> std __attribute__ ((__visibility__ (<span class="string">&quot;default&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># <span class="number">60</span> <span class="string">&quot;/usr/include/c++/7/iostream&quot;</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">extern</span> istream cin;</span><br><span class="line">  <span class="keyword">extern</span> ostream cout;</span><br><span class="line">  <span class="keyword">extern</span> ostream cerr;</span><br><span class="line">  <span class="keyword">extern</span> ostream clog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">extern</span> wistream wcin;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcout;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcerr;</span><br><span class="line">  <span class="keyword">extern</span> wostream wclog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">static</span> ios_base::Init __ioinit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"># <span class="number">2</span> <span class="string">&quot;main.cpp&quot;</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3</span> <span class="string">&quot;main.cpp&quot;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以看到，这就是把<code>#include</code>里面的东西原样复制到<code>main.cpp</code>代码文件里面，整合到一起，就叫做预编译过程。 ### C++编译阶段 C++编译阶段就是把预编译好的文件编译成汇编代码，个人觉得这个过程跟翻译差不多，把一种语言翻译成另一种语言，命令如下。 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-S</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.s</span><br></pre></td></tr></table></figure> 上面的<code>g++</code>命令默认会有<code>-o main.s</code>添加上，即会产生<code>main.s</code>文件产生。 产生的<code>main.s</code>文件如下，由于太长，截取了部分。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	.file	&quot;main.cpp&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">	.type	_ZStL19piecewise_construct, @object</span><br><span class="line">	.size	_ZStL19piecewise_construct, 1</span><br><span class="line">_ZStL19piecewise_construct:</span><br><span class="line">	.zero	1</span><br><span class="line">	.local	_ZStL8__ioinit</span><br><span class="line">	.comm	_ZStL8__ioinit,1,1</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;k+j=&quot;</span><br><span class="line">.LC1:</span><br><span class="line">	.string	&quot;k=&quot;</span><br><span class="line">.LC2:</span><br><span class="line">	.string	&quot;\t&quot;</span><br><span class="line">.LC3:</span><br><span class="line">	.string	&quot;j=&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB1493:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	subq	$56, %rsp</span><br><span class="line">	.cfi_offset 3, -24</span><br><span class="line">	movl	%edi, -52(%rbp)</span><br><span class="line">	movq	%rsi, -64(%rbp)</span><br><span class="line">	movq	%fs:40, %rax</span><br><span class="line">	movq	%rax, -24(%rbp)</span><br><span class="line">	xorl	%eax, %eax</span><br><span class="line">	movl	$-2, -48(%rbp)</span><br><span class="line">	movl	$-5, -44(%rbp)</span><br><span class="line">	leaq	-48(%rbp), %rax</span><br><span class="line">	movq	%rax, -40(%rbp)</span><br><span class="line">	leaq	-44(%rbp), %rax</span><br><span class="line">	movq	%rax, -32(%rbp)</span><br><span class="line">	leaq	.LC0(%rip), %rsi</span><br><span class="line">	leaq	_ZSt4cout(%rip), %rdi</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT</span><br><span class="line">	movq	%rax, %rbx</span><br><span class="line">	movq	-32(%rbp), %rdx</span><br><span class="line">	movq	-40(%rbp), %rax</span><br><span class="line">	movq	%rdx, %rsi</span><br><span class="line">	movq	%rax, %rdi</span><br><span class="line">	call	_Z3sumPiS_@PLT</span><br><span class="line">	movl	%eax, %esi</span><br><span class="line">	movq	%rbx, %rdi</span><br><span class="line">	call	_ZNSolsEi@PLT</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	</span><br></pre></td></tr></table></figure>
-<p>从上面的代码看出，这是个汇编代码，也就完成了<code>main.i</code><span class="math inline">→</span><code>main.s</code>的转化。</p>
-<h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
-<p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
-<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
-<blockquote>
-<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
-</blockquote>
-<h3 id="链接器链接生成eof">链接器链接生成eof</h3>
-<p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
-<p>按照前面的步骤（预编译<span class="math inline">→</span>C++编译<span class="math inline"> → ​</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o</span><br></pre></td></tr></table></figure>
-<p>这时候会产生一个新的文件为<code>a.out</code>，这个名字可以自己取，也就是把默认的那个语句加上，如： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o <span class="literal">-o</span> main.out</span><br></pre></td></tr></table></figure> 当然，在 Linux 里面文件的后缀名是不重要的，<code>.x</code>也可，只不过<code>.out</code>是在Unix操作系统上第一个实现的可执行文件的后缀名，就保留了下来。</p>
-<p>之后就运行： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure> 得到结果 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure> 这个结果跟之前的一致。执行命令的时候，Linux 会使用它的加载器将可执行文件<code>a.out</code>的代码和数据复制到内存，然后将控制转移到这个程序的开头。</p>
-<h3 id="小结">小结</h3>
-<figure>
-<img src="文件编译过程.png" alt="总结" /><figcaption aria-hidden="true">总结</figcaption>
-</figure>
-<h2 id="可执行文件格式分析">可执行文件格式分析</h2>
-]]></content>
-      <tags>
-        <tag>编译</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>资源收集</title>
-    <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
-    <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
-<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
-<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
-<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
-<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
-<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
-<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
-<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
-<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
-<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
-<p>yeolar: http://www.yeolar.com/</p>
-<p>http://www.yeolar.com/note/2012/03/29/virtual-memory/</p>
-<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
-<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</p>
-<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</p>
-<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
-<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
-<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
-<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
-<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
-<p>Flannel: http://dockone.io/article/618</p>
-<p>SDN: https://www.opennetworking.org/</p>
-<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
-<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
-<p>http://blog.csdn.net/dog250/article/details/45788279</p>
-<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
-<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
-<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
-<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
-<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
-<p>汇编:</p>
-]]></content>
-      <tags>
-        <tag>资源</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bpftrace技术1-常用命令</title>
     <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
@@ -1435,6 +1396,258 @@ $$</span></p>
 <p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="过滤条件">过滤条件</h3>
 <p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>bpftrace</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bpftrace技术2-map变量和map函数</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
+<p>在 bpftrace 中，符号 <code>@</code>用于定义和操作 <strong>Map 变量</strong>（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的<strong>迷你数据库</strong></p>
+<p>Map 的主要作用是在不同的事件探针（probe）之间<strong>存储、共享和聚合数据</strong>。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂的追踪逻辑成为可能。</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>数据持久化</strong>​</td>
+<td>Map 中的数据在多个探针事件之间保持存在，不像普通变量那样每次事件触发后就被重置。（全局变量）</td>
+</tr>
+<tr class="even">
+<td><strong>键值对结构</strong>​</td>
+<td>Map 使用键（key）来索引值（value），格式为 <code>@map_name[key] = value</code>。键可以是单一值，也可以是多个值的组合（如 <code>@a[pid, comm]</code>）。kv结构</td>
+</tr>
+<tr class="odd">
+<td><strong>自动输出</strong>​</td>
+<td>默认情况下，当 bpftrace 程序退出时（例如你按下 <code>Ctrl-C</code>），所有非空的 Map 内容会自动打印到屏幕上。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="map-的常见操作与示例"> Map 的常见操作与示例</h1>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 24%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>操作/函数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>赋值</strong>​</td>
+<td>直接给 Map 赋值。</td>
+<td><code>@start_time[tid] = nsecs</code>(记录线程的开始时间)</td>
+</tr>
+<tr class="even">
+<td><strong>计数 (<code>count()</code>)</strong>​</td>
+<td>统计事件发生的次数。</td>
+<td><code>@syscall_count[comm] = count()</code>(统计每个进程名的系统调用次数)</td>
+</tr>
+<tr class="odd">
+<td><strong>求和 (<code>sum()</code>)</strong>​</td>
+<td>对数值进行累加。</td>
+<td><code>@total_bytes[pid] = sum(args-&gt;ret)</code>(累计每个进程读取的总字节数)</td>
+</tr>
+<tr class="even">
+<td><strong>统计 (<code>avg()</code>, <code>min()</code>, <code>max()</code>)</strong>​</td>
+<td>计算平均值、最小值、最大值。</td>
+<td><code>@response_time = avg($latency)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>直方图 (<code>hist()</code>)</strong>​</td>
+<td><strong>非常实用</strong>，生成2的幂次方的直方图，直观展示数据分布。</td>
+<td><code>@latency_ns = hist(nsecs - @start[tid])</code>(可视化读操作的延迟分布)</td>
+</tr>
+<tr class="even">
+<td><strong>线性直方图 (<code>lhist()</code>)</strong>​</td>
+<td>生成自定义区间的线性直方图。</td>
+<td><code>@read_sizes = lhist(args-&gt;ret, 0, 10000, 1000)</code>(统计读取大小的分布)</td>
+</tr>
+<tr class="odd">
+<td><strong>数据清理 (<code>delete()</code>)</strong>​</td>
+<td>从 Map 中删除特定的键值对，防止内存无限增长。</td>
+<td><code>delete(@start_time[tid])</code>(在处理完一个事件后清理对应的开始时间)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="与其他变量的区别"> 与其他变量的区别</h1>
+<table>
+<thead>
+<tr class="header">
+<th>变量类型</th>
+<th>前缀</th>
+<th>作用域与用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Map 变量</strong>​</td>
+<td><code>@</code></td>
+<td><strong>全局</strong>。用于在探针之间持久化存储和聚合数据。</td>
+</tr>
+<tr class="even">
+<td><strong>内置变量</strong>​</td>
+<td>无</td>
+<td><strong>只读</strong>。提供事件上下文信息，如 <code>pid</code>(进程ID)、<code>comm</code>(命令名)、<code>retval</code>(函数返回值)等。</td>
+</tr>
+<tr class="odd">
+<td><strong>暂存变量</strong>​</td>
+<td><code>$</code></td>
+<td><strong>局部临时</strong>。用于单次探针触发过程中的中间计算，例如 <code>$duration = nsecs - @start[tid]</code>。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="map函数参考表">map函数参考表</h1>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 36%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数原型</th>
+<th>核心作用与参数说明</th>
+<th>典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>count()</code></strong>​</td>
+<td><strong>计数</strong>。统计事件被触发的次数。无参数。</td>
+<td>统计系统调用次数、函数调用次数等。</td>
+</tr>
+<tr class="even">
+<td><strong><code>sum(int n)</code></strong>​</td>
+<td><strong>求和</strong>。对参数 <code>n</code>的值进行累加。</td>
+<td>计算总的字节读写量、总耗时等。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>avg(int n)</code></strong>​</td>
+<td><strong>求平均值</strong>。计算参数 <code>n</code>的平均值。</td>
+<td>计算平均延迟、平均数据包大小等。</td>
+</tr>
+<tr class="even">
+<td><strong><code>min(int n)</code></strong>​</td>
+<td><strong>求最小值</strong>。记录参数 <code>n</code>的最小值。</td>
+<td>追踪最小延迟、最小数据块大小。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>max(int n)</code></strong>​</td>
+<td><strong>求最大值</strong>。记录参数 <code>n</code>的最大值。</td>
+<td>追踪最大延迟、最大数据块大小。</td>
+</tr>
+<tr class="even">
+<td><strong><code>stats(int n)</code></strong>​</td>
+<td><strong>统计摘要</strong>。返回参数 <code>n</code>的计数、平均值、总和、最小值、最大值。</td>
+<td>获取一个指标的全面统计信息。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>hist(int n)</code></strong>​</td>
+<td><strong>对数直方图</strong>。按2的幂次方区间（如 <code>[4-8)</code>, <code>[8-16)</code>）展示参数 <code>n</code>的分布。</td>
+<td>直观展示延迟、数据大小的分布情况，易于发现模式。</td>
+</tr>
+<tr class="even">
+<td><strong><code>lhist(int n, int min, int max, int step)</code></strong>​</td>
+<td><strong>线性直方图</strong>。在指定的线性区间（<code>min</code>到<code>max</code>，步长为<code>step</code>）内展示参数 <code>n</code>的分布。</td>
+<td>当需要自定义固定区间进行分析时使用。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>delete(@m[key])</code></strong>​</td>
+<td><strong>删除键值对</strong>。从 Map <code>@m</code>中删除指定的 <code>key</code>及其对应的值。</td>
+<td>清理临时数据，防止 Map 无限增长，常用于配对探针（如 kprobe/kretprobe）。</td>
+</tr>
+<tr class="even">
+<td><strong><code>clear(@m)</code></strong>​</td>
+<td><strong>清空 Map</strong>。清除 Map <code>@m</code>中的所有键值对。</td>
+<td>在定时器（如 <code>interval</code>）中定期重置统计。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>zero(@m)</code></strong>​</td>
+<td><strong>归零 Map</strong>。将 Map <code>@m</code>中所有键的值重置为 0。</td>
+<td>重置计数或求和等数据，但保留键的结构。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="count--统计系统调用次数">count()- 统计系统调用次数</h2>
+<p>统计每个进程调用的系统调用次数</p>
+<p><code>bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@count[bash]: 15</span><br><span class="line">@count[sshd]: 28</span><br><span class="line">@count[snmpd]: 102</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>@[comm]：以进程名 comm为键（key）。</li>
+<li>count()：每次事件触发，对应键的值加 1</li>
+</ul>
+<h2 id="sumint-n--计算读取的总字节数">sum(int n)- 计算读取的总字节数</h2>
+<p>累计所有进程通过 read 系统调用成功读取的字节数</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @bytes = sum(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes: 1048576</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>sum(args-&gt;ret)：对返回值（读取的字节数）进行累加</li>
+</ul>
+<h2 id="avgint-n--计算平均读取大小">avg(int n)- 计算平均读取大小</h2>
+<p>计算每次 <code>read</code>系统调用成功读取的平均字节数。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @avg_size = avg(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@avg_size: 512</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>avg(args-&gt;ret)：对返回值（读取的字节数）求平均</li>
+</ul>
+<h2 id="statsint-n--获取完整的统计摘要">stats(int n)- 获取完整的统计摘要</h2>
+<p>对 <code>read</code>系统调用的返回值进行全面的统计。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @s = stats(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@s: count 100, average 4096, total 409600, min 1, max 8192</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>stats(args-&gt;ret)：求调用次数，对返回值（读取的字节数）求平均，求总数，求最大最小值</li>
+</ul>
+<h2 id="histint-n--分析读取字节数的对数分布">hist(int n)- 分析读取字节数的对数分布</h2>
+<p>显示 <code>read</code>系统调用返回值的分布，区间按2的幂次方划分。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = hist(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">[0, 1]                12 |@@@@@@@@@@@@@@@@@@@@                                |</span><br><span class="line">[2, 4)                18 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |</span><br><span class="line">[4, 8)                 0 |                                                    |</span><br><span class="line">...</span><br><span class="line">[128, 256)             1 |@</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>hist(args-&gt;ret)：分为2^x ~2^y 大小的桶，统计每个桶的里面的数目个数</li>
+</ul>
+<h2 id="lhistint-n-int-min-int-max-int-step--分析读取字节数的线性分布">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</h2>
+<p>使用线性直方图统计 <code>read</code>返回值，范围从0到2000，步长为200。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = lhist(args-&gt;ret, 0, 2000, 200); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">(..., 0)                0 |                                                    |</span><br><span class="line">[0, 200)              66 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[200, 400)             2 |@                                                   |</span><br><span class="line">...</span><br><span class="line">[2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>hist(args-&gt;ret)：分为0-200区间桶，统计每个桶的里面的数目个数</li>
+</ul>
+<h2 id="deletemkey--清理临时数据">delete(<span class="citation" data-cites="m">@m</span>[key])- 清理临时数据</h2>
+<p>在计算函数耗时后，删除用于存储开始时间的临时键，避免 Map 无限增长。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read </span></span><br><span class="line"><span class="string">			&#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">			   kretprobe:vfs_read /@start[tid]/ </span></span><br><span class="line"><span class="string">			   &#123; $duration_ns = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">				 @us = hist($duration_ns); </span></span><br><span class="line"><span class="string">			     delete(@start[tid]); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>此函数通常用于配对操作的探针（如 <code>kprobe</code>和 <code>kretprobe</code>），在操作完成后及时清理资源</li>
+</ul>
+<h2 id="clearm和-zerom--重置-map">clear(<span class="citation" data-cites="m">@m</span>)和 zero(<span class="citation" data-cites="m">@m</span>)- 重置 Map</h2>
+<p>每5秒打印并清空一次系统调用计数 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); clear(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[Relay(89295)]: 3</span><br><span class="line">@[mini_init]: 4</span><br><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[systemd-udevd]: 37</span><br><span class="line">@[chronyd]: 40</span><br><span class="line">@[bpftrace]: 118</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>clear(@m)</code>会删除 Map 中的所有键值对。而 <code>zero(@m)</code>则将所有键的值重置为0，但保留键的结构 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); zero(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 9</span><br><span class="line">@[mini_init]: 12</span><br><span class="line">@[chronyd]: 44</span><br><span class="line">@[init]: 103</span><br><span class="line">@[bpftrace]: 114</span><br><span class="line">@[GnsPortTracker]: 242</span><br><span class="line">@[top]: 350</span><br><span class="line">@[grep]: 664</span><br><span class="line">@[sh]: 923</span><br><span class="line">@[Xwayland]: 1978</span><br><span class="line">@[ps]: 2778</span><br><span class="line">@[libuv-worker]: 4028</span><br><span class="line">@[ls]: 4256</span><br><span class="line">@[node]: 4722</span><br><span class="line">@[mini_init]: 0   &lt;---------主要看这个，明显没有调用，但是结构被保留下来了</span><br><span class="line">@[Relay(109)]: 3</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="map特点">map特点</h1>
+<ul>
+<li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
+<li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
+<li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
+</ul>
 ]]></content>
       <tags>
         <tag>linux</tag>
@@ -2062,258 +2275,6 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>bpftrace技术2-map变量和map函数</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
-<p>在 bpftrace 中，符号 <code>@</code>用于定义和操作 <strong>Map 变量</strong>（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的<strong>迷你数据库</strong></p>
-<p>Map 的主要作用是在不同的事件探针（probe）之间<strong>存储、共享和聚合数据</strong>。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂的追踪逻辑成为可能。</p>
-<table>
-<colgroup>
-<col style="width: 9%" />
-<col style="width: 90%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>特性</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>数据持久化</strong>​</td>
-<td>Map 中的数据在多个探针事件之间保持存在，不像普通变量那样每次事件触发后就被重置。（全局变量）</td>
-</tr>
-<tr class="even">
-<td><strong>键值对结构</strong>​</td>
-<td>Map 使用键（key）来索引值（value），格式为 <code>@map_name[key] = value</code>。键可以是单一值，也可以是多个值的组合（如 <code>@a[pid, comm]</code>）。kv结构</td>
-</tr>
-<tr class="odd">
-<td><strong>自动输出</strong>​</td>
-<td>默认情况下，当 bpftrace 程序退出时（例如你按下 <code>Ctrl-C</code>），所有非空的 Map 内容会自动打印到屏幕上。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="map-的常见操作与示例"> Map 的常见操作与示例</h1>
-<table>
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 24%" />
-<col style="width: 47%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>操作/函数</th>
-<th>说明</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>赋值</strong>​</td>
-<td>直接给 Map 赋值。</td>
-<td><code>@start_time[tid] = nsecs</code>(记录线程的开始时间)</td>
-</tr>
-<tr class="even">
-<td><strong>计数 (<code>count()</code>)</strong>​</td>
-<td>统计事件发生的次数。</td>
-<td><code>@syscall_count[comm] = count()</code>(统计每个进程名的系统调用次数)</td>
-</tr>
-<tr class="odd">
-<td><strong>求和 (<code>sum()</code>)</strong>​</td>
-<td>对数值进行累加。</td>
-<td><code>@total_bytes[pid] = sum(args-&gt;ret)</code>(累计每个进程读取的总字节数)</td>
-</tr>
-<tr class="even">
-<td><strong>统计 (<code>avg()</code>, <code>min()</code>, <code>max()</code>)</strong>​</td>
-<td>计算平均值、最小值、最大值。</td>
-<td><code>@response_time = avg($latency)</code></td>
-</tr>
-<tr class="odd">
-<td><strong>直方图 (<code>hist()</code>)</strong>​</td>
-<td><strong>非常实用</strong>，生成2的幂次方的直方图，直观展示数据分布。</td>
-<td><code>@latency_ns = hist(nsecs - @start[tid])</code>(可视化读操作的延迟分布)</td>
-</tr>
-<tr class="even">
-<td><strong>线性直方图 (<code>lhist()</code>)</strong>​</td>
-<td>生成自定义区间的线性直方图。</td>
-<td><code>@read_sizes = lhist(args-&gt;ret, 0, 10000, 1000)</code>(统计读取大小的分布)</td>
-</tr>
-<tr class="odd">
-<td><strong>数据清理 (<code>delete()</code>)</strong>​</td>
-<td>从 Map 中删除特定的键值对，防止内存无限增长。</td>
-<td><code>delete(@start_time[tid])</code>(在处理完一个事件后清理对应的开始时间)</td>
-</tr>
-</tbody>
-</table>
-<h1 id="与其他变量的区别"> 与其他变量的区别</h1>
-<table>
-<thead>
-<tr class="header">
-<th>变量类型</th>
-<th>前缀</th>
-<th>作用域与用途</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Map 变量</strong>​</td>
-<td><code>@</code></td>
-<td><strong>全局</strong>。用于在探针之间持久化存储和聚合数据。</td>
-</tr>
-<tr class="even">
-<td><strong>内置变量</strong>​</td>
-<td>无</td>
-<td><strong>只读</strong>。提供事件上下文信息，如 <code>pid</code>(进程ID)、<code>comm</code>(命令名)、<code>retval</code>(函数返回值)等。</td>
-</tr>
-<tr class="odd">
-<td><strong>暂存变量</strong>​</td>
-<td><code>$</code></td>
-<td><strong>局部临时</strong>。用于单次探针触发过程中的中间计算，例如 <code>$duration = nsecs - @start[tid]</code>。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="map函数参考表">map函数参考表</h1>
-<table>
-<colgroup>
-<col style="width: 31%" />
-<col style="width: 36%" />
-<col style="width: 31%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>函数原型</th>
-<th>核心作用与参数说明</th>
-<th>典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>count()</code></strong>​</td>
-<td><strong>计数</strong>。统计事件被触发的次数。无参数。</td>
-<td>统计系统调用次数、函数调用次数等。</td>
-</tr>
-<tr class="even">
-<td><strong><code>sum(int n)</code></strong>​</td>
-<td><strong>求和</strong>。对参数 <code>n</code>的值进行累加。</td>
-<td>计算总的字节读写量、总耗时等。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>avg(int n)</code></strong>​</td>
-<td><strong>求平均值</strong>。计算参数 <code>n</code>的平均值。</td>
-<td>计算平均延迟、平均数据包大小等。</td>
-</tr>
-<tr class="even">
-<td><strong><code>min(int n)</code></strong>​</td>
-<td><strong>求最小值</strong>。记录参数 <code>n</code>的最小值。</td>
-<td>追踪最小延迟、最小数据块大小。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>max(int n)</code></strong>​</td>
-<td><strong>求最大值</strong>。记录参数 <code>n</code>的最大值。</td>
-<td>追踪最大延迟、最大数据块大小。</td>
-</tr>
-<tr class="even">
-<td><strong><code>stats(int n)</code></strong>​</td>
-<td><strong>统计摘要</strong>。返回参数 <code>n</code>的计数、平均值、总和、最小值、最大值。</td>
-<td>获取一个指标的全面统计信息。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>hist(int n)</code></strong>​</td>
-<td><strong>对数直方图</strong>。按2的幂次方区间（如 <code>[4-8)</code>, <code>[8-16)</code>）展示参数 <code>n</code>的分布。</td>
-<td>直观展示延迟、数据大小的分布情况，易于发现模式。</td>
-</tr>
-<tr class="even">
-<td><strong><code>lhist(int n, int min, int max, int step)</code></strong>​</td>
-<td><strong>线性直方图</strong>。在指定的线性区间（<code>min</code>到<code>max</code>，步长为<code>step</code>）内展示参数 <code>n</code>的分布。</td>
-<td>当需要自定义固定区间进行分析时使用。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>delete(@m[key])</code></strong>​</td>
-<td><strong>删除键值对</strong>。从 Map <code>@m</code>中删除指定的 <code>key</code>及其对应的值。</td>
-<td>清理临时数据，防止 Map 无限增长，常用于配对探针（如 kprobe/kretprobe）。</td>
-</tr>
-<tr class="even">
-<td><strong><code>clear(@m)</code></strong>​</td>
-<td><strong>清空 Map</strong>。清除 Map <code>@m</code>中的所有键值对。</td>
-<td>在定时器（如 <code>interval</code>）中定期重置统计。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>zero(@m)</code></strong>​</td>
-<td><strong>归零 Map</strong>。将 Map <code>@m</code>中所有键的值重置为 0。</td>
-<td>重置计数或求和等数据，但保留键的结构。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="count--统计系统调用次数">count()- 统计系统调用次数</h2>
-<p>统计每个进程调用的系统调用次数</p>
-<p><code>bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@count[bash]: 15</span><br><span class="line">@count[sshd]: 28</span><br><span class="line">@count[snmpd]: 102</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>@[comm]：以进程名 comm为键（key）。</li>
-<li>count()：每次事件触发，对应键的值加 1</li>
-</ul>
-<h2 id="sumint-n--计算读取的总字节数">sum(int n)- 计算读取的总字节数</h2>
-<p>累计所有进程通过 read 系统调用成功读取的字节数</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @bytes = sum(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes: 1048576</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
-<li>sum(args-&gt;ret)：对返回值（读取的字节数）进行累加</li>
-</ul>
-<h2 id="avgint-n--计算平均读取大小">avg(int n)- 计算平均读取大小</h2>
-<p>计算每次 <code>read</code>系统调用成功读取的平均字节数。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @avg_size = avg(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@avg_size: 512</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
-<li>avg(args-&gt;ret)：对返回值（读取的字节数）求平均</li>
-</ul>
-<h2 id="statsint-n--获取完整的统计摘要">stats(int n)- 获取完整的统计摘要</h2>
-<p>对 <code>read</code>系统调用的返回值进行全面的统计。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @s = stats(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@s: count 100, average 4096, total 409600, min 1, max 8192</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
-<li>stats(args-&gt;ret)：求调用次数，对返回值（读取的字节数）求平均，求总数，求最大最小值</li>
-</ul>
-<h2 id="histint-n--分析读取字节数的对数分布">hist(int n)- 分析读取字节数的对数分布</h2>
-<p>显示 <code>read</code>系统调用返回值的分布，区间按2的幂次方划分。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = hist(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">[0, 1]                12 |@@@@@@@@@@@@@@@@@@@@                                |</span><br><span class="line">[2, 4)                18 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |</span><br><span class="line">[4, 8)                 0 |                                                    |</span><br><span class="line">...</span><br><span class="line">[128, 256)             1 |@</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>hist(args-&gt;ret)：分为2^x ~2^y 大小的桶，统计每个桶的里面的数目个数</li>
-</ul>
-<h2 id="lhistint-n-int-min-int-max-int-step--分析读取字节数的线性分布">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</h2>
-<p>使用线性直方图统计 <code>read</code>返回值，范围从0到2000，步长为200。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = lhist(args-&gt;ret, 0, 2000, 200); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">(..., 0)                0 |                                                    |</span><br><span class="line">[0, 200)              66 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[200, 400)             2 |@                                                   |</span><br><span class="line">...</span><br><span class="line">[2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>hist(args-&gt;ret)：分为0-200区间桶，统计每个桶的里面的数目个数</li>
-</ul>
-<h2 id="deletemkey--清理临时数据">delete(<span class="citation" data-cites="m">@m</span>[key])- 清理临时数据</h2>
-<p>在计算函数耗时后，删除用于存储开始时间的临时键，避免 Map 无限增长。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read </span></span><br><span class="line"><span class="string">			&#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">			   kretprobe:vfs_read /@start[tid]/ </span></span><br><span class="line"><span class="string">			   &#123; $duration_ns = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">				 @us = hist($duration_ns); </span></span><br><span class="line"><span class="string">			     delete(@start[tid]); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>此函数通常用于配对操作的探针（如 <code>kprobe</code>和 <code>kretprobe</code>），在操作完成后及时清理资源</li>
-</ul>
-<h2 id="clearm和-zerom--重置-map">clear(<span class="citation" data-cites="m">@m</span>)和 zero(<span class="citation" data-cites="m">@m</span>)- 重置 Map</h2>
-<p>每5秒打印并清空一次系统调用计数 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); clear(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[Relay(89295)]: 3</span><br><span class="line">@[mini_init]: 4</span><br><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[systemd-udevd]: 37</span><br><span class="line">@[chronyd]: 40</span><br><span class="line">@[bpftrace]: 118</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><code>clear(@m)</code>会删除 Map 中的所有键值对。而 <code>zero(@m)</code>则将所有键的值重置为0，但保留键的结构 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); zero(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 9</span><br><span class="line">@[mini_init]: 12</span><br><span class="line">@[chronyd]: 44</span><br><span class="line">@[init]: 103</span><br><span class="line">@[bpftrace]: 114</span><br><span class="line">@[GnsPortTracker]: 242</span><br><span class="line">@[top]: 350</span><br><span class="line">@[grep]: 664</span><br><span class="line">@[sh]: 923</span><br><span class="line">@[Xwayland]: 1978</span><br><span class="line">@[ps]: 2778</span><br><span class="line">@[libuv-worker]: 4028</span><br><span class="line">@[ls]: 4256</span><br><span class="line">@[node]: 4722</span><br><span class="line">@[mini_init]: 0   &lt;---------主要看这个，明显没有调用，但是结构被保留下来了</span><br><span class="line">@[Relay(109)]: 3</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="map特点">map特点</h1>
-<ul>
-<li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
-<li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
-<li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>bpftrace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux内存子系统-Page Cache</title>
     <url>/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/</url>
     <content><![CDATA[<h1 id="pagecache是什么">pagecache是什么</h1>
@@ -2561,6 +2522,69 @@ $$</span></p>
       <tags>
         <tag>Linux</tag>
         <tag>性能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>资源收集</title>
+    <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
+<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
+<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
+<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
+<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
+<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
+<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
+<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
+<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
+<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
+<p>yeolar: http://www.yeolar.com/</p>
+<p>http://www.yeolar.com/note/2012/03/29/virtual-memory/</p>
+<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
+<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</p>
+<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</p>
+<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
+<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
+<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
+<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
+<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
+<p>Flannel: http://dockone.io/article/618</p>
+<p>SDN: https://www.opennetworking.org/</p>
+<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
+<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
+<p>http://blog.csdn.net/dog250/article/details/45788279</p>
+<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
+<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
+<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
+<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
+<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
+<p>汇编:</p>
+]]></content>
+      <tags>
+        <tag>资源</tag>
       </tags>
   </entry>
   <entry>
@@ -3486,14 +3510,34 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>TCP学习-NS3模拟环境搭建</title>
     <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<blockquote>
 <p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
 </blockquote>
 <h1 id="前置工具下载">前置工具下载</h1>
 <h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
-<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure> ## Vagrant（最新版本即可） <a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure> ## Powershell <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure> ## X server ### 下载并安装 VcXsrv： 1. 访问：https://sourceforge.net/projects/vcxsrv/ 2. 下载并安装 VcXsrv Windows X Server ### 配置 VcXsrv： 1. 启动 “XLaunch” 2. 选择 “Multiple windows” 3. Display number 设为 “0” 或 “-1”（自动） 4. 选择 “Start no client” 5. 在 “Extra settings” 中勾选 “Disable access control”（重要！） 6. 完成设置，VcXsrv 会在系统托盘运行 ### 设置 PowerShell 环境变量 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure> ### 修改 Vagrantfile 配置 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure> ## Vagrant（最新版本即可）</p>
+<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure> ## Powershell</p>
+<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure> ## X server</p>
+<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
+<ol type="1">
+<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
+<li>下载并安装 VcXsrv Windows X Server</li>
+</ol>
+<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
+<ol type="1">
+<li>启动 “XLaunch”</li>
+<li>选择 “Multiple windows”</li>
+<li>Display number 设为 “0” 或 “-1”（自动）</li>
+<li>选择 “Start no client”</li>
+<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
+<li>完成设置，VcXsrv 会在系统托盘运行</li>
+</ol>
+<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
 <h2 id="配置环境">配置环境</h2>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
@@ -3501,33 +3545,16 @@ Field reference (click to expand)
 <p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
 <p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
-<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /> # 安装ns3虚拟机 当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
+<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
+<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
+<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
 <p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
       <tags>
-        <tag>工作流</tag>
+        <tag>TCP</tag>
+        <tag>NS3</tag>
+        <tag>仿真器</tag>
       </tags>
   </entry>
   <entry>
@@ -3570,29 +3597,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>qemu调试linux（一）</title>
-    <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="编译内核">编译内核</h2>
-<h3 id="下载">下载</h3>
-<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
-<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
-<h3 id="编译">编译</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
-<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
-<h2 id="制作initramfs">制作initramfs</h2>
-<h3 id="使用busybox">使用busybox</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make -j`nproc`</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make install</span><br></pre></td></tr></table></figure>
-<p><img src="qemu调试linux（一）_20240124_3.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_4.png" /> <img src="qemu调试linux（一）_20240124_5.png" /> 制作initramfs.img，首先构造如下的目录结构 <img src="qemu调试linux（一）_20240124_6.png" /> init文件内容如下： <img src="qemu调试linux（一）_20240124_10.png" /> <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img</span><br></pre></td></tr></table></figure> 最后生成文件 <img src="qemu调试linux（一）_20240124_7.png" /> qemu运行新内核 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \  </span><br><span class="line">											-kernel bzImage \  </span><br><span class="line">											-initrd initramfs.img \  </span><br><span class="line">											-m 1G \  </span><br><span class="line">											-nographic \  </span><br><span class="line">											-append &quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span><br></pre></td></tr></table></figure> 运行结果如下 <img src="qemu调试linux（一）_20240124_9.png" /> <img src="qemu调试linux（一）_20240124_8.png" /></p>
-<h2 id="注意">注意</h2>
-<p><code>init</code>需要设置为可执行权限</p>
-<p>qemu退出快捷键ctrl+a按下后释放，再按x</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>qemu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>qemu调试linux（二）</title>
     <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
@@ -3620,6 +3624,29 @@ Field reference (click to expand)
       <tags>
         <tag>操作系统</tag>
         <tag>xv6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>qemu调试linux（一）</title>
+    <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="编译内核">编译内核</h2>
+<h3 id="下载">下载</h3>
+<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
+<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
+<h3 id="编译">编译</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
+<h2 id="制作initramfs">制作initramfs</h2>
+<h3 id="使用busybox">使用busybox</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make -j`nproc`</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make install</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_3.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_4.png" /> <img src="qemu调试linux（一）_20240124_5.png" /> 制作initramfs.img，首先构造如下的目录结构 <img src="qemu调试linux（一）_20240124_6.png" /> init文件内容如下： <img src="qemu调试linux（一）_20240124_10.png" /> <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img</span><br></pre></td></tr></table></figure> 最后生成文件 <img src="qemu调试linux（一）_20240124_7.png" /> qemu运行新内核 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \  </span><br><span class="line">											-kernel bzImage \  </span><br><span class="line">											-initrd initramfs.img \  </span><br><span class="line">											-m 1G \  </span><br><span class="line">											-nographic \  </span><br><span class="line">											-append &quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span><br></pre></td></tr></table></figure> 运行结果如下 <img src="qemu调试linux（一）_20240124_9.png" /> <img src="qemu调试linux（一）_20240124_8.png" /></p>
+<h2 id="注意">注意</h2>
+<p><code>init</code>需要设置为可执行权限</p>
+<p>qemu退出快捷键ctrl+a按下后释放，再按x</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>qemu</tag>
       </tags>
   </entry>
   <entry>
@@ -3783,47 +3810,6 @@ $$</span></p>
       <tags>
         <tag>linux</tag>
         <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>最大间隙问题</title>
-    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
-<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
-<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
-<p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
-</ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4104,5 +4090,46 @@ $$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值�
 <img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
 </figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>最大间隙问题</title>
+    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
+<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
+<p>复杂度计算如下 <span class="math display">$$
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>那么我只能换其他的办法来做。</p>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
+<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
+<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+</ol>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
+l=\frac{max-mix}{n-1}
+$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
+seg[i]=\frac{x[i]-minx}{l}+1
+$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
   </entry>
 </search>
