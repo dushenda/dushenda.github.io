@@ -1366,40 +1366,42 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>bpftrace技术1-常用命令</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
-<p>一种追踪内核态和用户态的新技术</p>
-<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
-<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
-<h2 id="是否调用">是否调用</h2>
-<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
-<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
-<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
-<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>执行结果如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p> <code>2</code> 的含义解释如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="打印入参">打印入参</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="打印返回值">打印返回值</h2>
-<p>使用默认变量<code>retval</code>。</p>
-<h3 id="内核函数返回值">内核函数返回值</h3>
-<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
-<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
-<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="过滤条件">过滤条件</h3>
-<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+    <title>资源收集</title>
+    <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
+<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
+<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
+<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
+<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
+<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
+<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
+<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
+<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
+<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
+<p>yeolar: http://www.yeolar.com/</p>
+<p>http://www.yeolar.com/note/2012/03/29/virtual-memory/</p>
+<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
+<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</p>
+<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</p>
+<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
+<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
+<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
+<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
+<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
+<p>Flannel: http://dockone.io/article/618</p>
+<p>SDN: https://www.opennetworking.org/</p>
+<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
+<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
+<p>http://blog.csdn.net/dog250/article/details/45788279</p>
+<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
+<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
+<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
+<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
+<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
+<p>汇编:</p>
 ]]></content>
       <tags>
-        <tag>linux</tag>
-        <tag>bpftrace</tag>
+        <tag>资源</tag>
       </tags>
   </entry>
   <entry>
@@ -1923,42 +1925,40 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>资源收集</title>
-    <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
-    <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
-<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
-<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
-<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
-<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
-<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
-<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
-<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
-<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
-<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
-<p>yeolar: http://www.yeolar.com/</p>
-<p>http://www.yeolar.com/note/2012/03/29/virtual-memory/</p>
-<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
-<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</p>
-<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</p>
-<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
-<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
-<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
-<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
-<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
-<p>Flannel: http://dockone.io/article/618</p>
-<p>SDN: https://www.opennetworking.org/</p>
-<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
-<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
-<p>http://blog.csdn.net/dog250/article/details/45788279</p>
-<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
-<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
-<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
-<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
-<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
-<p>汇编:</p>
+    <title>bpftrace技术1-常用命令</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
+<p>一种追踪内核态和用户态的新技术</p>
+<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
+<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
+<h2 id="是否调用">是否调用</h2>
+<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
+<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
+<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
+<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p> <code>2</code> 的含义解释如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="打印入参">打印入参</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="打印返回值">打印返回值</h2>
+<p>使用默认变量<code>retval</code>。</p>
+<h3 id="内核函数返回值">内核函数返回值</h3>
+<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
+<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
+<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤条件">过滤条件</h3>
+<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
-        <tag>资源</tag>
+        <tag>linux</tag>
+        <tag>bpftrace</tag>
       </tags>
   </entry>
   <entry>
@@ -2214,85 +2214,6 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>Linux内存子系统-Page Cache</title>
-    <url>/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/</url>
-    <content><![CDATA[<h1 id="pagecache是什么">pagecache是什么</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached</p>
-<p><img src="pagecache.png" /></p>
-<p>/proc/meminfo的解释见如下网站<a href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
-<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。</p>
-<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。</p>
-<p><img src="swapcache.png" /></p>
-<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。</p>
-<p>下面解释一下free输出</p>
-<p>buff/cache = Buffers + Cached + SReclaimable <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure></p>
-<table>
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 18%" />
-<col style="width: 67%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>指标</th>
-<th>数据来源 (参考 <code>/proc/meminfo</code>)</th>
-<th>主要作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>Buffers</code></strong>​</td>
-<td><code>Buffers</code>值</td>
-<td>临时存放<strong>原始磁盘块数据</strong>，用于优化对磁盘（块设备）的直接读写操作。</td>
-</tr>
-<tr class="even">
-<td><strong><code>Cached</code></strong>​</td>
-<td><code>Cached</code>值</td>
-<td>缓存<strong>从文件读取的数据</strong>（即页缓存/Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>SReclaimable</code></strong>​</td>
-<td><code>SReclaimable</code>值</td>
-<td>属于 <strong>Slab 分配器</strong>​ 的一部分，记录内核对象（如目录项、inode 等）缓存中<strong>可以被回收</strong>占用的内存。指可以被回收的内核内存，包括 dentry 和 inode 等。</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if=/dev/urandom of=/dev/sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if=/dev/urandom of=/tmp/file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
-</blockquote>
-<h1 id="pagecache出现的意义">pagecache出现的意义</h1>
-<p>先看如何使用pagecache的方法</p>
-<ul>
-<li>第一种，应用程序维护自己的 Cache 做更加细粒度的控制，比如 MySQL 就是这样做的，你可以参考MySQL Buffer Pool 。</li>
-<li>第二种，使用 Direct I/O 来绕过 Page Cache。</li>
-</ul>
-<p>pagecache的意义就是加速：标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率。</p>
-<p>我们看一个具体的例子。首先，我们来生成一个 1G 大小的新文件，然后把 Page Cache 清空，确保文件内容不在内存中，以此来比较第一次读文件和第二次读文件耗时的差异。具体的流程如下。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=./dd.out bs=4096 count=((1024*256))</span><br></pre></td></tr></table></figure>
-<p>清空 Page Cache，需要先执行一下 sync 来将脏页同步到磁盘再去 drop cache。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>读两次文件，计算耗时 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure></p>
-<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I/O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I/O，提升应用的 I/O 速度。</p>
-<h1 id="pagecache机制">pagecache机制</h1>
-<h2 id="pagecache产生">pagecache产生</h2>
-<p>Page Cache 的产生有两种不同的方式：</p>
-<ul>
-<li>Buffered I/O（标准 I/O）；</li>
-<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
-</ul>
-<p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
-<p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
-<p>显然，存储映射 I/O 要比标准 I/O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I/O 比标准 I/O 方式性能要好一些的主要原因。</p>
-<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I/O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
-<h2 id="pagecache回收">pagecache回收</h2>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>内存子系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bpftrace技术3-内置变量</title>
     <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<h1 id="内置变量">内置变量</h1>
@@ -2390,6 +2311,85 @@ $$</span></p>
       <tags>
         <tag>linux</tag>
         <tag>bpftrace</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux内存子系统-Page Cache</title>
+    <url>/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/</url>
+    <content><![CDATA[<h1 id="pagecache是什么">pagecache是什么</h1>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached</p>
+<p><img src="pagecache.png" /></p>
+<p>/proc/meminfo的解释见如下网站<a href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
+<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。</p>
+<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。</p>
+<p><img src="swapcache.png" /></p>
+<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。</p>
+<p>下面解释一下free输出</p>
+<p>buff/cache = Buffers + Cached + SReclaimable <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure></p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>数据来源 (参考 <code>/proc/meminfo</code>)</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>Buffers</code></strong>​</td>
+<td><code>Buffers</code>值</td>
+<td>临时存放<strong>原始磁盘块数据</strong>，用于优化对磁盘（块设备）的直接读写操作。</td>
+</tr>
+<tr class="even">
+<td><strong><code>Cached</code></strong>​</td>
+<td><code>Cached</code>值</td>
+<td>缓存<strong>从文件读取的数据</strong>（即页缓存/Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>SReclaimable</code></strong>​</td>
+<td><code>SReclaimable</code>值</td>
+<td>属于 <strong>Slab 分配器</strong>​ 的一部分，记录内核对象（如目录项、inode 等）缓存中<strong>可以被回收</strong>占用的内存。指可以被回收的内核内存，包括 dentry 和 inode 等。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if=/dev/urandom of=/dev/sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if=/dev/urandom of=/tmp/file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
+</blockquote>
+<h1 id="pagecache出现的意义">pagecache出现的意义</h1>
+<p>先看如何使用pagecache的方法</p>
+<ul>
+<li>第一种，应用程序维护自己的 Cache 做更加细粒度的控制，比如 MySQL 就是这样做的，你可以参考MySQL Buffer Pool 。</li>
+<li>第二种，使用 Direct I/O 来绕过 Page Cache。</li>
+</ul>
+<p>pagecache的意义就是加速：标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率。</p>
+<p>我们看一个具体的例子。首先，我们来生成一个 1G 大小的新文件，然后把 Page Cache 清空，确保文件内容不在内存中，以此来比较第一次读文件和第二次读文件耗时的差异。具体的流程如下。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=./dd.out bs=4096 count=((1024*256))</span><br></pre></td></tr></table></figure>
+<p>清空 Page Cache，需要先执行一下 sync 来将脏页同步到磁盘再去 drop cache。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>读两次文件，计算耗时 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure></p>
+<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I/O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I/O，提升应用的 I/O 速度。</p>
+<h1 id="pagecache机制">pagecache机制</h1>
+<h2 id="pagecache产生">pagecache产生</h2>
+<p>Page Cache 的产生有两种不同的方式：</p>
+<ul>
+<li>Buffered I/O（标准 I/O）；</li>
+<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
+</ul>
+<p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
+<p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
+<p>显然，存储映射 I/O 要比标准 I/O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I/O 比标准 I/O 方式性能要好一些的主要原因。</p>
+<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I/O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
+<h2 id="pagecache回收">pagecache回收</h2>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>内存子系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2561,92 +2561,6 @@ $$</span></p>
       <tags>
         <tag>Linux</tag>
         <tag>性能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>工作流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu下EDK2开发环境搭建</title>
-    <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
-<p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下 <img src="Ubuntu下EDK2开发环境搭建_20240122_1.png" /></p>
-<p>特点</p>
-<ul>
-<li>apt-get源可以访问</li>
-<li>github不能访问</li>
-<li>gitee可以访问</li>
-</ul>
-<h2 id="远程仓库迁移">远程仓库迁移</h2>
-<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下</p>
-<ol type="1">
-<li><p>建立组织，用来合并仓库环境</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /></p></li>
-<li><p>迁移主仓库</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_3.png" /></p></li>
-<li><p>导入submodule，因为edk2后续编译还需要一些子模块，找到如下仓库的路径，按照2导入到组织</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_4.png" /></p></li>
-<li><p>修改主仓库的submodule路径</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_5.png" /></p></li>
-</ol>
-<h2 id="下载">下载</h2>
-<p>下载edk2代码仓 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git clone git@gitee.com:edk2_back/edk2.git</span><br></pre></td></tr></table></figure> 下载子模块到对应路径，可以看到地址都替换了gitee路径 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_6.png" /></p>
-<h2 id="编译工具链安装">编译工具链安装</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># apt-get install build-essential uuid-dev iasl git gcc nasm python3</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># python3 --version</span></span></span><br><span class="line">Python 3.10.12</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ln -s /usr/bin/python3.10 /usr/bin/python</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="编译">编译</h2>
-<h3 id="基本工具">基本工具</h3>
-<p>看一下当前的目录结构，使用<code>make -C BaseTools</code>编译基本工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ls</span></span></span><br><span class="line">ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg</span><br><span class="line">ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg</span><br><span class="line">ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg</span><br><span class="line">BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg</span><br><span class="line">Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg</span><br><span class="line">CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># make -C BaseTools</span></span></span><br></pre></td></tr></table></figure> 编译基本工具完成 <img src="Ubuntu下EDK2开发环境搭建_20240122_7.png" /></p>
-<h3 id="编译目标文件">编译目标文件</h3>
-<p>设置环境变量，<code>path/to/edk/BaseTools</code>需要换成当前的<code>BaseTools</code>所在路径。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># export EDK_TOOLS_PATH=`path/to/edk/BaseTools`</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ./edksetup.sh --help</span></span></span><br><span class="line">Usage: edksetup.sh [Options]</span><br><span class="line"></span><br><span class="line">The system environment variable, WORKSPACE, is always set to the current</span><br><span class="line">working directory.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --help, -h, -?        Print this help screen and exit.</span><br><span class="line"></span><br><span class="line">  --reconfig            Overwrite the WORKSPACE/Conf/*.txt files with the</span><br><span class="line">                        template files from the BaseTools/Conf directory.</span><br><span class="line"></span><br><span class="line">Please note: This script must be &#x27;sourced&#x27; so the environment can be changed.</span><br><span class="line">. edksetup.sh</span><br><span class="line">source edksetup.sh</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># source edksetup.sh BaseTools</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_8.png" /> 在<code>edk</code>目录下使用<code>build</code>命令编译 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># build</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_9.png" /></p>
-]]></content>
-      <tags>
-        <tag>EDK2</tag>
-        <tag>UEFI</tag>
-        <tag>环境搭建</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>qemu调试linux（一）</title>
-    <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="编译内核">编译内核</h2>
-<h3 id="下载">下载</h3>
-<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
-<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
-<h3 id="编译">编译</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
-<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
-<h2 id="制作initramfs">制作initramfs</h2>
-<h3 id="使用busybox">使用busybox</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make -j`nproc`</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make install</span><br></pre></td></tr></table></figure>
-<p><img src="qemu调试linux（一）_20240124_3.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_4.png" /> <img src="qemu调试linux（一）_20240124_5.png" /> 制作initramfs.img，首先构造如下的目录结构 <img src="qemu调试linux（一）_20240124_6.png" /> init文件内容如下： <img src="qemu调试linux（一）_20240124_10.png" /> <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img</span><br></pre></td></tr></table></figure> 最后生成文件 <img src="qemu调试linux（一）_20240124_7.png" /> qemu运行新内核 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \  </span><br><span class="line">											-kernel bzImage \  </span><br><span class="line">											-initrd initramfs.img \  </span><br><span class="line">											-m 1G \  </span><br><span class="line">											-nographic \  </span><br><span class="line">											-append &quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span><br></pre></td></tr></table></figure> 运行结果如下 <img src="qemu调试linux（一）_20240124_9.png" /> <img src="qemu调试linux（一）_20240124_8.png" /></p>
-<h2 id="注意">注意</h2>
-<p><code>init</code>需要设置为可执行权限</p>
-<p>qemu退出快捷键ctrl+a按下后释放，再按x</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>qemu</tag>
       </tags>
   </entry>
   <entry>
@@ -3572,18 +3486,89 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>xv6-vscode调试</title>
-    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="launch.json">launch.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span> <span class="comment">// 修改kernel 或者 bootblock</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="tasks.json">tasks.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
 ]]></content>
       <tags>
-        <tag>操作系统</tag>
-        <tag>xv6</tag>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu下EDK2开发环境搭建</title>
+    <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
+<p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下 <img src="Ubuntu下EDK2开发环境搭建_20240122_1.png" /></p>
+<p>特点</p>
+<ul>
+<li>apt-get源可以访问</li>
+<li>github不能访问</li>
+<li>gitee可以访问</li>
+</ul>
+<h2 id="远程仓库迁移">远程仓库迁移</h2>
+<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下</p>
+<ol type="1">
+<li><p>建立组织，用来合并仓库环境</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /></p></li>
+<li><p>迁移主仓库</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_3.png" /></p></li>
+<li><p>导入submodule，因为edk2后续编译还需要一些子模块，找到如下仓库的路径，按照2导入到组织</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_4.png" /></p></li>
+<li><p>修改主仓库的submodule路径</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_5.png" /></p></li>
+</ol>
+<h2 id="下载">下载</h2>
+<p>下载edk2代码仓 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git clone git@gitee.com:edk2_back/edk2.git</span><br></pre></td></tr></table></figure> 下载子模块到对应路径，可以看到地址都替换了gitee路径 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_6.png" /></p>
+<h2 id="编译工具链安装">编译工具链安装</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># apt-get install build-essential uuid-dev iasl git gcc nasm python3</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># python3 --version</span></span></span><br><span class="line">Python 3.10.12</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ln -s /usr/bin/python3.10 /usr/bin/python</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="编译">编译</h2>
+<h3 id="基本工具">基本工具</h3>
+<p>看一下当前的目录结构，使用<code>make -C BaseTools</code>编译基本工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ls</span></span></span><br><span class="line">ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg</span><br><span class="line">ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg</span><br><span class="line">ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg</span><br><span class="line">BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg</span><br><span class="line">Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg</span><br><span class="line">CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># make -C BaseTools</span></span></span><br></pre></td></tr></table></figure> 编译基本工具完成 <img src="Ubuntu下EDK2开发环境搭建_20240122_7.png" /></p>
+<h3 id="编译目标文件">编译目标文件</h3>
+<p>设置环境变量，<code>path/to/edk/BaseTools</code>需要换成当前的<code>BaseTools</code>所在路径。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># export EDK_TOOLS_PATH=`path/to/edk/BaseTools`</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ./edksetup.sh --help</span></span></span><br><span class="line">Usage: edksetup.sh [Options]</span><br><span class="line"></span><br><span class="line">The system environment variable, WORKSPACE, is always set to the current</span><br><span class="line">working directory.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --help, -h, -?        Print this help screen and exit.</span><br><span class="line"></span><br><span class="line">  --reconfig            Overwrite the WORKSPACE/Conf/*.txt files with the</span><br><span class="line">                        template files from the BaseTools/Conf directory.</span><br><span class="line"></span><br><span class="line">Please note: This script must be &#x27;sourced&#x27; so the environment can be changed.</span><br><span class="line">. edksetup.sh</span><br><span class="line">source edksetup.sh</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># source edksetup.sh BaseTools</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_8.png" /> 在<code>edk</code>目录下使用<code>build</code>命令编译 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># build</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_9.png" /></p>
+]]></content>
+      <tags>
+        <tag>EDK2</tag>
+        <tag>UEFI</tag>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>qemu调试linux（一）</title>
+    <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="编译内核">编译内核</h2>
+<h3 id="下载">下载</h3>
+<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
+<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
+<h3 id="编译">编译</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
+<h2 id="制作initramfs">制作initramfs</h2>
+<h3 id="使用busybox">使用busybox</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make -j`nproc`</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make install</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_3.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_4.png" /> <img src="qemu调试linux（一）_20240124_5.png" /> 制作initramfs.img，首先构造如下的目录结构 <img src="qemu调试linux（一）_20240124_6.png" /> init文件内容如下： <img src="qemu调试linux（一）_20240124_10.png" /> <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img</span><br></pre></td></tr></table></figure> 最后生成文件 <img src="qemu调试linux（一）_20240124_7.png" /> qemu运行新内核 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \  </span><br><span class="line">											-kernel bzImage \  </span><br><span class="line">											-initrd initramfs.img \  </span><br><span class="line">											-m 1G \  </span><br><span class="line">											-nographic \  </span><br><span class="line">											-append &quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span><br></pre></td></tr></table></figure> 运行结果如下 <img src="qemu调试linux（一）_20240124_9.png" /> <img src="qemu调试linux（一）_20240124_8.png" /></p>
+<h2 id="注意">注意</h2>
+<p><code>init</code>需要设置为可执行权限</p>
+<p>qemu退出快捷键ctrl+a按下后释放，再按x</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>qemu</tag>
       </tags>
   </entry>
   <entry>
@@ -3602,38 +3587,35 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+    <title>xv6-vscode调试</title>
+    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="launch.json">launch.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="tasks.json">tasks.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
+        <tag>操作系统</tag>
+        <tag>xv6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xv6-增加系统调用</title>
+    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="panic">panic</h1>
+<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
+<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
+<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
         <tag>linux</tag>
-        <tag>kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -3713,20 +3695,38 @@ $$</span></p>
 ]]></content>
   </entry>
   <entry>
-    <title>xv6-增加系统调用</title>
-    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>操作系统</tag>
         <tag>linux</tag>
+        <tag>kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -3762,47 +3762,6 @@ $$</span></p>
       <tags>
         <tag>linux</tag>
         <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>最大间隙问题</title>
-    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
-<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
-<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
-<p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
-</ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4007,6 +3966,47 @@ $$</span></p>
 <p>[1] Roberto Grena Five new algorithms for the computation of sun position from 2010 to 2110 Solar Energy</p>
 <p>https://www.sciencedirect.com/science/article/pii/S0038092X12000400</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>最大间隙问题</title>
+    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
+<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
+<p>复杂度计算如下 <span class="math display">$$
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>那么我只能换其他的办法来做。</p>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
+<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
+<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+</ol>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
+l=\frac{max-mix}{n-1}
+$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
+seg[i]=\frac{x[i]-minx}{l}+1
+$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
   </entry>
   <entry>
     <title>考拉兹猜想</title>
