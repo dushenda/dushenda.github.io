@@ -1,8 +1,18 @@
+---
+title: TCP学习-NS3模拟环境搭建
+date: 2025-12-15
+tags:
+  - TCP
+  - NS3
+  - 仿真器
+---
 
 > 参考https://github.com/ituring/tcp-book/?tab=readme-ov-file
 
 # 前置工具下载
+
 ## virtualBox（最新版本即可）
+
 [https://www.virtualbox.org/](https://www.virtualbox.org/)
 ```shell
 VirtualBox 图形用户界面
@@ -10,29 +20,37 @@ VirtualBox 图形用户界面
 Copyright © 2024 Oracle and/or its affiliates
 ```
 ## Vagrant（最新版本即可）
+
 [https://developer.hashicorp.com/vagrant](https://developer.hashicorp.com/vagrant)
 ```shell
 PS C:\Users\dushenda> vagrant.exe -v
 Vagrant 2.4.9
 ```
 ## Powershell
+
 [https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5)
 ```shell
 PS C:\Users\dushenda> pwsh.exe -v
 PowerShell 7.1.4
 ```
 ## X server
+
 ### 下载并安装 VcXsrv：
+
 1. 访问：https://sourceforge.net/projects/vcxsrv/
 2. 下载并安装 VcXsrv Windows X Server
+
 ### 配置 VcXsrv：
+
 1. 启动 "XLaunch"
 2. 选择 "Multiple windows"
 3. Display number 设为 "0" 或 "-1"（自动）
 4. 选择 "Start no client"
 5. 在 "Extra settings" 中勾选 "Disable access control"（重要！）
 6. 完成设置，VcXsrv 会在系统托盘运行
+
 ### 设置 PowerShell 环境变量
+
 ```shell
 # 在启动 Vagrant 前设置 DISPLAY
 $env:DISPLAY = "localhost:0.0"
@@ -40,7 +58,9 @@ $env:DISPLAY = "localhost:0.0"
 # 或者尝试
 $env:DISPLAY = "127.0.0.1:0.0"
 ```
+
 ### 修改 Vagrantfile 配置
+
 ```shell
 Vagrant.configure("2") do |config|
   config.vm.define "guest1" do |guest1|
@@ -59,7 +79,9 @@ end
 ```
 
 # 安装wireshark虚拟机
+
 ## 配置环境
+
 ```shell
 $ git clone https://github.com/ituring/tcp-book.git
 $ cd tcp-book/wireshark/vagrant
@@ -97,7 +119,9 @@ vagrant@guest1:~$
 vagrant@guest1:~$ wireshark
 ```
 ![](环境搭建wireshark.png)
+
 # 安装ns3虚拟机
+
 当确认已经准备好VirtualBox和Vagrant的环境之后，请将[此Github代码库](https://github.com/ituring/tcp-book)克隆到任意目录。打开其中的`ns3/vagrant`目录，执行`vagrant up`命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。
 
 ```shell
