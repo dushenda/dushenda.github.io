@@ -23,6 +23,7 @@ tags:
 
 Windows自带的，详细使用方法，参考官方[链接](https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481)
 ![](perfmon.png)
+
 ## Sysinternals
 
 下载后即可使用的工具集，官方下链接[下载](https://learn.microsoft.com/zh-cn/sysinternals/)，如常用的process monitor也包括在内
