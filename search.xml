@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>DHCP协议分析</title>
-    <url>/2024/01/14/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="协议流程">协议流程</h2>
-<h2 id="仿真">仿真</h2>
-<h3 id="组网">组网</h3>
-<p><img src="Pastedimage20231215004144.png" /></p>
-<h3 id="路由设置">路由设置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20231215004416.png" /></p>
-<h2 id="抓包">抓包</h2>
-<p><img src="Pastedimage20231215005008.png" /></p>
-<h3 id="dhcp-discover">dhcp discover</h3>
-<p><img src="Pastedimage20231215010535.png" /></p>
-<p><img src="Pastedimage20231215010615.png" /></p>
-<h3 id="dhcp-offer">dhcp offer</h3>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-        <tag>网络协议</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SSD学习（一）</title>
-    <url>/2024/01/14/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>SSD</tag>
-        <tag>RAID</tag>
-        <tag>存储</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CsvHelper 使用手册</title>
     <url>/2018/09/04/CsvHelper%20%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h1 id="csvhelper-使用手册">CsvHelper 使用手册</h1>
@@ -414,35 +381,36 @@
       </tags>
   </entry>
   <entry>
-    <title>Windows性能分析</title>
-    <url>/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h1 id="windows运行参数分析">Windows运行参数分析</h1>
-<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
-<p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
-<p><img src="任务管理.png" /></p>
-<span id="more"></span>
-<blockquote>
-<p>Windows Hardware Lab Kit (Windows HLK) 是一个测试框架，用于测试 Windows 10 以及从 Windows Server 2016 开始的所有 Windows Server 版本的硬件设备。 你的产品必须通过使用 Windows HLK 进行的某些测试，才有资格加入 <a href="https://docs.microsoft.com/en-us/windows-hardware/design/compatibility/">Windows 硬件兼容性计划</a>。</p>
-<p>Windows 性能工具包位于 <a href="https://aka.ms/adk">Windows 评估和部署工具包</a>中，其中包含各种性能监控工具，这些工具可生成有关 Windows 操作系统和应用程序的详细性能概况。 本文档同时讨论了 Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA)。</p>
-<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows 性能记录器 (WPR) 是一种性能录制工具为基础上事件跟踪 Windows (ETW)。 它记录系统事件，然后可以通过使用 Windows Performance Analyzer (WPA) 进行分析。</p>
-<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows Performance Analyzer (WPA) 是一种工具，创建的事件跟踪 Windows (ETW) 事件所记录的 Windows 性能的关系图和数据表记录器 (WPR)、 Xperf 或评估运行评估平台中。 WPA 可以打开任何事件跟踪日志 (ETL) 文件进行分析。</p>
-</blockquote>
-<h2 id="windows-performance-record">Windows Performance Record</h2>
-<ol type="1">
-<li><p>在程序中搜索到 Windows Performance Record 并且打开， <img src="wpr_start.png" /></p></li>
-<li><p>从当前时刻开始记录，记录完成后保存文件 <img src="wpr_save.png" /> <img src="wpr_save_finish.png" /></p></li>
-<li><p>记下文件保存位置</p></li>
-</ol>
-<h2 id="windows-performance-analysis">Windows Performance Analysis</h2>
-<ol type="1">
-<li><p>在程序中找到 Windows Performance Analysis 并且打开 <img src="wpa_open.png" /></p></li>
-<li><p>File-&gt;Open，打开前面保存的文件 <img src="wpa_file_in1.png" /> <img src="wpafileincpu.png" /> <img src="wpafileincpumem.png" /></p></li>
-</ol>
+    <title>DHCP协议分析</title>
+    <url>/2024/01/14/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="协议流程">协议流程</h2>
+<h2 id="仿真">仿真</h2>
+<h3 id="组网">组网</h3>
+<p><img src="Pastedimage20231215004144.png" /></p>
+<h3 id="路由设置">路由设置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20231215004416.png" /></p>
+<h2 id="抓包">抓包</h2>
+<p><img src="Pastedimage20231215005008.png" /></p>
+<h3 id="dhcp-discover">dhcp discover</h3>
+<p><img src="Pastedimage20231215010535.png" /></p>
+<p><img src="Pastedimage20231215010615.png" /></p>
+<h3 id="dhcp-offer">dhcp offer</h3>
 ]]></content>
       <tags>
-        <tag>OS</tag>
-        <tag>操作系统</tag>
-        <tag>Windows</tag>
+        <tag>计算机网络</tag>
+        <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SSD学习（一）</title>
+    <url>/2024/01/14/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[
+]]></content>
+      <tags>
+        <tag>SSD</tag>
+        <tag>RAID</tag>
+        <tag>存储</tag>
       </tags>
   </entry>
   <entry>
@@ -485,21 +453,6 @@
       </tags>
   </entry>
   <entry>
-    <title>bcc初体验</title>
-    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="安装">安装</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用">使用</h2>
-<p>funccount</p>
-<p>stackcount</p>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>bpf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>判断磁盘是ssd还是hdd</title>
     <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
     <content><![CDATA[<h2 id="linux">Linux</h2>
@@ -520,258 +473,6 @@
       <tags>
         <tag>存储</tag>
         <tag>磁盘</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-内存管理1</title>
-    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
-    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
-<h2 id="空闲内存的管理">空闲内存的管理</h2>
-<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
-<p><img src="内存存储管理1.jpg" /></p>
-<ul>
-<li><p>使用位图的存储器管理</p>
-<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
-<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
-</ul>
-<h2 id="覆盖与交换">覆盖与交换</h2>
-<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">技术</th>
-<th style="text-align: center;">优点</th>
-<th style="text-align: center;">缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">交换技术</td>
-<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
-<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">覆盖技术</td>
-<td style="text-align: center;">交换力度小，产生的开销小</td>
-<td style="text-align: center;">由程序员完成，不方便且易出错</td>
-</tr>
-</tbody>
-</table>
-<h3 id="交换技术">交换技术</h3>
-<h4 id="交换过程">交换过程</h4>
-<p><img src="操作系统内存交换技术.png" /></p>
-<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
-<ol type="1">
-<li>运行进程A，进程A的程序和数据从头开始放</li>
-<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
-<li>加载C进程，和前面的方法类似</li>
-<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
-<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
-<li>杀死进程B</li>
-<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
-</ol>
-<h4 id="内存紧缩">内存紧缩</h4>
-<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
-<p><img src="操作系统内存紧缩.png" /></p>
-<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
-<p><img src="操作系统内存紧缩2.png" /></p>
-<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
-<blockquote>
-<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
-</blockquote>
-<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
-<h4 id="动态分配">动态分配</h4>
-<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
-<h3 id="覆盖技术">覆盖技术</h3>
-<blockquote>
-<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
-</blockquote>
-<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
-<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
-<blockquote>
-<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
-</blockquote>
-<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
-]]></content>
-      <tags>
-        <tag>OS</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-进程与线程16~30</title>
-    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
-    <content><![CDATA[<blockquote>
-<p>以下答案均不代表正确答案，仅代表作者观点</p>
-</blockquote>
-<ul>
-<li><h5 id="线程可以被时钟中断抢占吗如果可以在什么情形下可以如果不可以为什么不可以">16.线程可以被时钟中断抢占吗？如果可以，在什么情形下可以？如果不可以，为什么不可以？</h5>
-<p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
-<li></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>OS</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-进程与线程1~15</title>
-    <url>/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/</url>
-    <content><![CDATA[<h1 id="现代操作系统-进程与线程115">现代操作系统-进程与线程1~15</h1>
-<blockquote>
-<p>以下答案都是作者作答，不代表正确答案，望周知。</p>
-</blockquote>
-<hr />
-<ol type="1">
-<li><h5 id="如图对于每一个进程都有四种状态照理应该有6种切换方式但是为什么只有四种为什么另外两种不行">如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？</h5></li>
-</ol>
-<p><img src="1.bmp" alt="img" /> 答：<strong>从逻辑上来说，就绪态和运行态是类似的</strong>，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现就绪态向阻塞态的转变；从阻塞态到运行态是得到了有效的输入和CPU计算资源才能完成的转化，但是得到有效的输入肯定会位于得到资源的前面，因为没有有效的输入都不能进行计算，而当出现有效输入的时候，就已经是就绪态了，即使有效输入和CPU资源获取的间隔很小，但是始终存在，所以肯定会经过就绪态。</p>
-<span id="more"></span>
-<ol start="2" type="1">
-<li><h5 id="假设要设计一种先进的计算机体系结构它使用硬件替代中断来完成进程切换进程切换时cpu需要哪些信息请描述用硬件完成进程切换的工作过程">假设要设计一种先进的计算机体系结构，它使用硬件替代中断来完成进程切换。进程切换时CPU需要哪些信息？请描述用硬件完成进程切换的工作过程。</h5></li>
-</ol>
-<p>首先需要知道，进程的管理是使用进程表来实现的。操作系统维护着一张表格，里面存储着各个进程的信息，是用结构数组实现的，每一个进程都占一个进程表项。所以管理进程也就是管理进程表，如果用硬件完成切换，首先需要有一个包含当前正在运行的进程的进程表项的指针，当当前进程从运行态转换到就绪态或者阻塞态的时候，将这部分信息存入进程表中，之后调度程序再加载下一个进程，并且更新该寄存器的指针值。P.S. 进程表和进程表项大概是这样的:</p>
-<table>
-<thead>
-<tr class="header">
-<th>进程表</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>进程1</td>
-</tr>
-<tr class="even">
-<td>进程2</td>
-</tr>
-<tr class="odd">
-<td>进程3</td>
-</tr>
-</tbody>
-</table>
-<p>进程表项：</p>
-<table>
-<thead>
-<tr class="header">
-<th>进程管理</th>
-<th>存储管理</th>
-<th>文件目录</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>寄存器</td>
-<td>正文段指针</td>
-<td>根目录</td>
-</tr>
-<tr class="even">
-<td>程序计数器</td>
-<td>数据段指针</td>
-<td>工作目录</td>
-</tr>
-<tr class="odd">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-</tbody>
-</table>
-<ol start="3" type="1">
-<li><h5 id="当代计算机中为什么中断处理程序至少有一部分的是由汇编语言写的">当代计算机中，为什么中断处理程序至少有一部分的是由汇编语言写的？</h5></li>
-</ol>
-<p>答：因为要有部分功能需要直接访问硬件。</p>
-<ol start="4" type="1">
-<li><h5 id="中断或系统调用把控制权交给操作系统的时候为什么通常会用到与被中断进程的栈分离的内核栈">中断或系统调用把控制权交给操作系统的时候，为什么通常会用到与被中断进程的栈分离的内核栈？</h5></li>
-</ol>
-<p>答：这个问题的实质应该是问的为什么内核使用单独的堆栈而不是使用中断进程的堆栈。中断是由外部的用户进程产生的，用户进程和内核进程的重要程度和安全要求不一样，首先用户进程的堆栈有可能崩溃，如果将内核栈放在其中，会导致操作系统的崩溃，并且用户进程的堆栈是可以为用户读写的，如果将内核堆栈放在其中，则计算机系统可能会被某些恶意程序所劫持。</p>
-<ol start="5" type="1">
-<li><h5 id="一个计算机系统的内存有足够的空间容纳5个程序这些程序有一半的时间处于等待io的空闲状态请问cpu时间浪费的比例是多少">一个计算机系统的内存有足够的空间容纳5个程序。这些程序有一半的时间处于等待I/O的空闲状态。请问CPU时间浪费的比例是多少？</h5></li>
-</ol>
-<p>答：一个程序空闲的概率为<span class="math inline">$p=\frac{1}{2}$</span>，要等到五个程序都空闲时候，CPU才不做任何计算，这时候处于空闲状态，这五个进程相互独立，则CPU的空闲（即浪费时间）为<span class="math inline">$p^5=\frac{1}{2^5}=\frac{1}{32}$</span>。</p>
-<hr />
-<ol start="6" type="1">
-<li><h5 id="一个计算机的ram有4gb其中操作系统占512mb所有进程占256mb为了简化计算并且特征相同要使cpu利用率达到99最大io等待为多少">一个计算机的RAM有4GB，其中操作系统占512MB，。所有进程占256MB（为了简化计算）并且特征相同。要使CPU利用率达到99%，最大I/O等待为多少？</h5></li>
-</ol>
-<p>答：首先要看懂所有进程占256MB这句话的意思，这是说每个进程都是256MB并且一样。先计算在4G内存下最多存在的进程数目<span class="math inline">$m=\frac{4GB-512MB}{256MB}=14$</span>，说明最多有14个进程。设每个进程的I/O等待为<span class="math inline"><em>p</em></span>，则CPU的空闲率为<span class="math inline"><em>p</em><sup>14</sup></span>，并且要求占用率<span class="math inline"> ≥ 99%</span>，所以有等式</p>
-<p><span class="math display">1 − <em>p</em><sup>14</sup> ≥ 99%</span></p>
-<p>计算得到<span class="math inline"><em>p</em> ≤ 71.9%</span>。</p>
-<ol start="7" type="1">
-<li><h5 id="如果多个作业能够并行运行会比他们顺序执行完成的快假设有两个作业同时开始执行每个需要20min的cpu时间如果顺序执行那么完成最后一个作业需要多长时间如果并行执行又需要多长时间假设io等待占50">如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I/O等待占50%。</h5></li>
-</ol>
-<p>答：</p>
-<figure>
-<img src="2.bmp" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>如图所示，如果顺序执行，那么每个进程在输入需要10min，在输出需要10min，所以进行一个就需要40min的时间，共需要80min。</p>
-<p>如果是并行执行，那么每个进程得到的CPU的利用率为<span class="math inline">$\frac{1-p^2}{2}=0.375$</span>，每个进程本来在CPU利用率为1的时候需要20min，现在在CPU利用率为0.375的情况下需要时间为<span class="math inline">$\frac{20\min}{0.375}\approx53.3\min$</span>，由于是并行执行，取其最大的即可，即<span class="math inline">max {<em>T</em><sub>1</sub>, <em>T</em><sub>2</sub>, ...<em>T</em><sub><em>n</em></sub>}</span>，在这里两个进程的时间一样，所以运行的时间为53.3min。</p>
-<ol start="8" type="1">
-<li><h5 id="考虑一个6级多道程序系统内存中可同时容纳6个程序假设每个进程的io等待占40那么cpu的利用率是多少">考虑一个6级多道程序系统（内存中可同时容纳6个程序）。假设每个进程的I/O等待占40%，那么CPU的利用率是多少？</h5></li>
-</ol>
-<p>答： <span class="math display">$$
-CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
-$$</span></p>
-<ol start="9" type="1">
-<li><h5 id="假设要从互联网上下载一个2gb大小的文件文件的内容可从一组镜像服务器获得每个服务器可以传输文件的一部分假设每个传输请求给定起始字节和结束字节如何利用多线程优化下载时间">假设要从互联网上下载一个2GB大小的文件，文件的内容可从一组镜像服务器获得，每个服务器可以传输文件的一部分。假设每个传输请求给定起始字节和结束字节。如何利用多线程优化下载时间？</h5></li>
-</ol>
-<p>答：客户机进程可以创建单独的线程；每个线程可以从一个镜像服务器获取文件的不同部分。这有助于减少停机时间。当然，所有线程都共享一个网络链接。当线程数量变得非常大时，此链接可能成为瓶颈。</p>
-<ol start="10" type="1">
-<li><h5 id="为什么下图的模型不适合用于内存中使用高速缓存的文件服务器每个进程可以有自己的高速缓存吗">为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？</h5></li>
-</ol>
-<p><img src="3.jpg" /></p>
-<p>答：要牢记进程和线程在很多方面是类似的，线程可以理解为轻量级进程。但是最重要的区别是<strong>进程共享存储空间</strong>，共享存储空间说明他们操作的文件是一样的，所以将文件存于高速缓存是可以的。但是进程不同，操作的文件是不一样的，如果将其文件存于同一个缓存中，很可能前一个进程的文件就会被后一个进程的文件所覆盖。</p>
-<hr />
-<ol start="11" type="1">
-<li><h5 id="当一个多线程进程创建子进程时如果子进程复制父进程的所有线程就会出现问题假如父进程中有一个线程在等待键盘输入那么当子进程复制父进程的时候那么也会复制一个正在等待的等待键盘输入的子进程那么当键盘输入的时候父进程和子进程都会各有一个这种问题在单线程进程中也会发生吗">当一个多线程进程创建子进程时，如果子进程复制父进程的所有线程，就会出现问题：假如父进程中有一个线程在等待键盘输入，那么当子进程复制父进程的时候，那么也会复制一个正在等待的等待键盘输入的子进程，那么当键盘输入的时候，父进程和子进程都会各有一个。这种问题在单线程进程中也会发生吗？</h5></li>
-</ol>
-<p>答：不会。如果单线程进程在键盘上阻塞，就不能创建子进程。（而多线程进程在一个线程阻塞时可以运行另一个线程，整个进程不会因此被阻塞。）</p>
-<ol start="12" type="1">
-<li><h5 id="下图给了一个多线程web服务器如果读取文件只能使用阻塞的read系统调用那么web服务器应该使用用户级线程还是内核级线程">下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？</h5></li>
-</ol>
-<p><img src="4.jpg" /></p>
-<p>答：当工作线程从磁盘读取Web页时，它就会被阻塞。如果使用用户级线程，该动作将阻塞整个进程，而破坏多线程的价值。这就是使用内核线程的原因：某些线程的阻塞不会影响到其他线程。</p>
-<ol start="13" type="1">
-<li><h5 id="在本章中我们介绍了多线程web服务器说明它比单线程服务器和有限状态机服务器更好的原因存在单线程服务器更好一些的情形吗请举例">在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。</h5></li>
-</ol>
-<table>
-<thead>
-<tr class="header">
-<th>模型</th>
-<th>特性</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>多线程</td>
-<td>并行性、阻塞系统调用</td>
-</tr>
-<tr class="even">
-<td>单线程进程</td>
-<td>无并行性、阻塞系统调用</td>
-</tr>
-<tr class="odd">
-<td>有限状态机</td>
-<td>并行性、非阻塞系统调用、中断</td>
-</tr>
-</tbody>
-</table>
-<p>答：多线程，即可以并行执行多种工作，CPU的利用率高，而单线程进程和有限状态机在一个时刻只能执行一种工作，在切换线程的时候会造成I/O等待。比如有数据需要从web服务器输入输出，如果是多线程，那么可以在一个进程的情况下，一个线程实现数据的读入，一个处理线程和一个输出线程，这样相当于一个人打三份工，虽然累，但是不需要来回切换，一直在做。如果是单线程，那么需要不断切换，相当于几个人干不同的活，但是在交接的时候需要等待时间。这时候就没有在工作 。CPU就闲置了。</p>
-<ol start="14" type="1">
-<li><h5 id="既然计算机中只有一套寄存器为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出">既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。</h5></li>
-</ol>
-<p><img src="5.jpg" /></p>
-<p>答：当一个线程停止时，它在寄存器中有值。它们必须被保存，就像进程停止时，必须保存寄存器。多线程和多进程没有什么不同，所以每个线程需要自己的寄存器保存区。</p>
-<ol start="15" type="1">
-<li><h5 id="在没有时钟中断的系统中一个线程放弃cpu后可能再也不会获得cpu资源那么为什么线程还要通过调用thread_yield自愿放弃cpu">在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread_yield自愿放弃CPU？</h5></li>
-</ol>
-<p>答：进程中的线程合作。它们彼此不敌对。如果应用程序需要阻塞以运行得更好，那么一个线程可以调用thread_yield自愿放弃CPU。毕竟，同一个进程中的线程的全部代码通常是一个程序员写的。</p>
-<hr />
-]]></content>
-      <tags>
-        <tag>OS</tag>
-        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -998,6 +699,258 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>现代操作系统-进程与线程16~30</title>
+    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
+    <content><![CDATA[<blockquote>
+<p>以下答案均不代表正确答案，仅代表作者观点</p>
+</blockquote>
+<ul>
+<li><h5 id="线程可以被时钟中断抢占吗如果可以在什么情形下可以如果不可以为什么不可以">16.线程可以被时钟中断抢占吗？如果可以，在什么情形下可以？如果不可以，为什么不可以？</h5>
+<p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>OS</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-内存管理1</title>
+    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
+    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
+<h2 id="空闲内存的管理">空闲内存的管理</h2>
+<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
+<p><img src="内存存储管理1.jpg" /></p>
+<ul>
+<li><p>使用位图的存储器管理</p>
+<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
+<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
+</ul>
+<h2 id="覆盖与交换">覆盖与交换</h2>
+<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">技术</th>
+<th style="text-align: center;">优点</th>
+<th style="text-align: center;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">交换技术</td>
+<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
+<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">覆盖技术</td>
+<td style="text-align: center;">交换力度小，产生的开销小</td>
+<td style="text-align: center;">由程序员完成，不方便且易出错</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交换技术">交换技术</h3>
+<h4 id="交换过程">交换过程</h4>
+<p><img src="操作系统内存交换技术.png" /></p>
+<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
+<ol type="1">
+<li>运行进程A，进程A的程序和数据从头开始放</li>
+<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
+<li>加载C进程，和前面的方法类似</li>
+<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
+<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
+<li>杀死进程B</li>
+<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
+</ol>
+<h4 id="内存紧缩">内存紧缩</h4>
+<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
+<p><img src="操作系统内存紧缩.png" /></p>
+<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
+<p><img src="操作系统内存紧缩2.png" /></p>
+<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
+<blockquote>
+<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
+</blockquote>
+<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
+<h4 id="动态分配">动态分配</h4>
+<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
+<h3 id="覆盖技术">覆盖技术</h3>
+<blockquote>
+<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
+</blockquote>
+<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
+<h2 id="虚拟内存">虚拟内存</h2>
+<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
+<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
+<blockquote>
+<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
+</blockquote>
+<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
+]]></content>
+      <tags>
+        <tag>OS</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-进程与线程1~15</title>
+    <url>/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/</url>
+    <content><![CDATA[<h1 id="现代操作系统-进程与线程115">现代操作系统-进程与线程1~15</h1>
+<blockquote>
+<p>以下答案都是作者作答，不代表正确答案，望周知。</p>
+</blockquote>
+<hr />
+<ol type="1">
+<li><h5 id="如图对于每一个进程都有四种状态照理应该有6种切换方式但是为什么只有四种为什么另外两种不行">如图，对于每一个进程都有四种状态，照理应该有6种切换方式，但是为什么只有四种，为什么另外两种不行？</h5></li>
+</ol>
+<p><img src="1.bmp" alt="img" /> 答：<strong>从逻辑上来说，就绪态和运行态是类似的</strong>，唯一的不同是在于是否得到CPU资源。如果从就绪态可以转换到阻塞态，那么出现的事件也就是需要等待输入，但是，就绪态就是因为已经出现了有效的输入只不过没有得到CPU资源而产生的等待，所以不可能出现就绪态向阻塞态的转变；从阻塞态到运行态是得到了有效的输入和CPU计算资源才能完成的转化，但是得到有效的输入肯定会位于得到资源的前面，因为没有有效的输入都不能进行计算，而当出现有效输入的时候，就已经是就绪态了，即使有效输入和CPU资源获取的间隔很小，但是始终存在，所以肯定会经过就绪态。</p>
+<span id="more"></span>
+<ol start="2" type="1">
+<li><h5 id="假设要设计一种先进的计算机体系结构它使用硬件替代中断来完成进程切换进程切换时cpu需要哪些信息请描述用硬件完成进程切换的工作过程">假设要设计一种先进的计算机体系结构，它使用硬件替代中断来完成进程切换。进程切换时CPU需要哪些信息？请描述用硬件完成进程切换的工作过程。</h5></li>
+</ol>
+<p>首先需要知道，进程的管理是使用进程表来实现的。操作系统维护着一张表格，里面存储着各个进程的信息，是用结构数组实现的，每一个进程都占一个进程表项。所以管理进程也就是管理进程表，如果用硬件完成切换，首先需要有一个包含当前正在运行的进程的进程表项的指针，当当前进程从运行态转换到就绪态或者阻塞态的时候，将这部分信息存入进程表中，之后调度程序再加载下一个进程，并且更新该寄存器的指针值。P.S. 进程表和进程表项大概是这样的:</p>
+<table>
+<thead>
+<tr class="header">
+<th>进程表</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>进程1</td>
+</tr>
+<tr class="even">
+<td>进程2</td>
+</tr>
+<tr class="odd">
+<td>进程3</td>
+</tr>
+</tbody>
+</table>
+<p>进程表项：</p>
+<table>
+<thead>
+<tr class="header">
+<th>进程管理</th>
+<th>存储管理</th>
+<th>文件目录</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>寄存器</td>
+<td>正文段指针</td>
+<td>根目录</td>
+</tr>
+<tr class="even">
+<td>程序计数器</td>
+<td>数据段指针</td>
+<td>工作目录</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="1">
+<li><h5 id="当代计算机中为什么中断处理程序至少有一部分的是由汇编语言写的">当代计算机中，为什么中断处理程序至少有一部分的是由汇编语言写的？</h5></li>
+</ol>
+<p>答：因为要有部分功能需要直接访问硬件。</p>
+<ol start="4" type="1">
+<li><h5 id="中断或系统调用把控制权交给操作系统的时候为什么通常会用到与被中断进程的栈分离的内核栈">中断或系统调用把控制权交给操作系统的时候，为什么通常会用到与被中断进程的栈分离的内核栈？</h5></li>
+</ol>
+<p>答：这个问题的实质应该是问的为什么内核使用单独的堆栈而不是使用中断进程的堆栈。中断是由外部的用户进程产生的，用户进程和内核进程的重要程度和安全要求不一样，首先用户进程的堆栈有可能崩溃，如果将内核栈放在其中，会导致操作系统的崩溃，并且用户进程的堆栈是可以为用户读写的，如果将内核堆栈放在其中，则计算机系统可能会被某些恶意程序所劫持。</p>
+<ol start="5" type="1">
+<li><h5 id="一个计算机系统的内存有足够的空间容纳5个程序这些程序有一半的时间处于等待io的空闲状态请问cpu时间浪费的比例是多少">一个计算机系统的内存有足够的空间容纳5个程序。这些程序有一半的时间处于等待I/O的空闲状态。请问CPU时间浪费的比例是多少？</h5></li>
+</ol>
+<p>答：一个程序空闲的概率为<span class="math inline">$p=\frac{1}{2}$</span>，要等到五个程序都空闲时候，CPU才不做任何计算，这时候处于空闲状态，这五个进程相互独立，则CPU的空闲（即浪费时间）为<span class="math inline">$p^5=\frac{1}{2^5}=\frac{1}{32}$</span>。</p>
+<hr />
+<ol start="6" type="1">
+<li><h5 id="一个计算机的ram有4gb其中操作系统占512mb所有进程占256mb为了简化计算并且特征相同要使cpu利用率达到99最大io等待为多少">一个计算机的RAM有4GB，其中操作系统占512MB，。所有进程占256MB（为了简化计算）并且特征相同。要使CPU利用率达到99%，最大I/O等待为多少？</h5></li>
+</ol>
+<p>答：首先要看懂所有进程占256MB这句话的意思，这是说每个进程都是256MB并且一样。先计算在4G内存下最多存在的进程数目<span class="math inline">$m=\frac{4GB-512MB}{256MB}=14$</span>，说明最多有14个进程。设每个进程的I/O等待为<span class="math inline"><em>p</em></span>，则CPU的空闲率为<span class="math inline"><em>p</em><sup>14</sup></span>，并且要求占用率<span class="math inline"> ≥ 99%</span>，所以有等式</p>
+<p><span class="math display">1 − <em>p</em><sup>14</sup> ≥ 99%</span></p>
+<p>计算得到<span class="math inline"><em>p</em> ≤ 71.9%</span>。</p>
+<ol start="7" type="1">
+<li><h5 id="如果多个作业能够并行运行会比他们顺序执行完成的快假设有两个作业同时开始执行每个需要20min的cpu时间如果顺序执行那么完成最后一个作业需要多长时间如果并行执行又需要多长时间假设io等待占50">如果多个作业能够并行运行，会比他们顺序执行完成的快。假设有两个作业同时开始执行，每个需要20min的CPU时间。如果顺序执行，那么完成最后一个作业需要多长时间？如果并行执行，又需要多长时间？假设I/O等待占50%。</h5></li>
+</ol>
+<p>答：</p>
+<figure>
+<img src="2.bmp" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>如图所示，如果顺序执行，那么每个进程在输入需要10min，在输出需要10min，所以进行一个就需要40min的时间，共需要80min。</p>
+<p>如果是并行执行，那么每个进程得到的CPU的利用率为<span class="math inline">$\frac{1-p^2}{2}=0.375$</span>，每个进程本来在CPU利用率为1的时候需要20min，现在在CPU利用率为0.375的情况下需要时间为<span class="math inline">$\frac{20\min}{0.375}\approx53.3\min$</span>，由于是并行执行，取其最大的即可，即<span class="math inline">max {<em>T</em><sub>1</sub>, <em>T</em><sub>2</sub>, ...<em>T</em><sub><em>n</em></sub>}</span>，在这里两个进程的时间一样，所以运行的时间为53.3min。</p>
+<ol start="8" type="1">
+<li><h5 id="考虑一个6级多道程序系统内存中可同时容纳6个程序假设每个进程的io等待占40那么cpu的利用率是多少">考虑一个6级多道程序系统（内存中可同时容纳6个程序）。假设每个进程的I/O等待占40%，那么CPU的利用率是多少？</h5></li>
+</ol>
+<p>答： <span class="math display">$$
+CPU_总=1-p^6=1-0.004096=0.995904,CPU_{每个}\frac{0.995904}{6}=0.16598
+$$</span></p>
+<ol start="9" type="1">
+<li><h5 id="假设要从互联网上下载一个2gb大小的文件文件的内容可从一组镜像服务器获得每个服务器可以传输文件的一部分假设每个传输请求给定起始字节和结束字节如何利用多线程优化下载时间">假设要从互联网上下载一个2GB大小的文件，文件的内容可从一组镜像服务器获得，每个服务器可以传输文件的一部分。假设每个传输请求给定起始字节和结束字节。如何利用多线程优化下载时间？</h5></li>
+</ol>
+<p>答：客户机进程可以创建单独的线程；每个线程可以从一个镜像服务器获取文件的不同部分。这有助于减少停机时间。当然，所有线程都共享一个网络链接。当线程数量变得非常大时，此链接可能成为瓶颈。</p>
+<ol start="10" type="1">
+<li><h5 id="为什么下图的模型不适合用于内存中使用高速缓存的文件服务器每个进程可以有自己的高速缓存吗">为什么下图的模型不适合用于内存中使用高速缓存的文件服务器？每个进程可以有自己的高速缓存吗？</h5></li>
+</ol>
+<p><img src="3.jpg" /></p>
+<p>答：要牢记进程和线程在很多方面是类似的，线程可以理解为轻量级进程。但是最重要的区别是<strong>进程共享存储空间</strong>，共享存储空间说明他们操作的文件是一样的，所以将文件存于高速缓存是可以的。但是进程不同，操作的文件是不一样的，如果将其文件存于同一个缓存中，很可能前一个进程的文件就会被后一个进程的文件所覆盖。</p>
+<hr />
+<ol start="11" type="1">
+<li><h5 id="当一个多线程进程创建子进程时如果子进程复制父进程的所有线程就会出现问题假如父进程中有一个线程在等待键盘输入那么当子进程复制父进程的时候那么也会复制一个正在等待的等待键盘输入的子进程那么当键盘输入的时候父进程和子进程都会各有一个这种问题在单线程进程中也会发生吗">当一个多线程进程创建子进程时，如果子进程复制父进程的所有线程，就会出现问题：假如父进程中有一个线程在等待键盘输入，那么当子进程复制父进程的时候，那么也会复制一个正在等待的等待键盘输入的子进程，那么当键盘输入的时候，父进程和子进程都会各有一个。这种问题在单线程进程中也会发生吗？</h5></li>
+</ol>
+<p>答：不会。如果单线程进程在键盘上阻塞，就不能创建子进程。（而多线程进程在一个线程阻塞时可以运行另一个线程，整个进程不会因此被阻塞。）</p>
+<ol start="12" type="1">
+<li><h5 id="下图给了一个多线程web服务器如果读取文件只能使用阻塞的read系统调用那么web服务器应该使用用户级线程还是内核级线程">下图给了一个多线程Web服务器。如果读取文件只能使用阻塞的read系统调用，那么Web服务器应该使用用户级线程还是内核级线程？</h5></li>
+</ol>
+<p><img src="4.jpg" /></p>
+<p>答：当工作线程从磁盘读取Web页时，它就会被阻塞。如果使用用户级线程，该动作将阻塞整个进程，而破坏多线程的价值。这就是使用内核线程的原因：某些线程的阻塞不会影响到其他线程。</p>
+<ol start="13" type="1">
+<li><h5 id="在本章中我们介绍了多线程web服务器说明它比单线程服务器和有限状态机服务器更好的原因存在单线程服务器更好一些的情形吗请举例">在本章中，我们介绍了多线程Web服务器，说明它比单线程服务器和有限状态机服务器更好的原因。存在单线程服务器更好一些的情形吗？请举例。</h5></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th>模型</th>
+<th>特性</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>多线程</td>
+<td>并行性、阻塞系统调用</td>
+</tr>
+<tr class="even">
+<td>单线程进程</td>
+<td>无并行性、阻塞系统调用</td>
+</tr>
+<tr class="odd">
+<td>有限状态机</td>
+<td>并行性、非阻塞系统调用、中断</td>
+</tr>
+</tbody>
+</table>
+<p>答：多线程，即可以并行执行多种工作，CPU的利用率高，而单线程进程和有限状态机在一个时刻只能执行一种工作，在切换线程的时候会造成I/O等待。比如有数据需要从web服务器输入输出，如果是多线程，那么可以在一个进程的情况下，一个线程实现数据的读入，一个处理线程和一个输出线程，这样相当于一个人打三份工，虽然累，但是不需要来回切换，一直在做。如果是单线程，那么需要不断切换，相当于几个人干不同的活，但是在交接的时候需要等待时间。这时候就没有在工作 。CPU就闲置了。</p>
+<ol start="14" type="1">
+<li><h5 id="既然计算机中只有一套寄存器为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出">既然计算机中只有一套寄存器，为什么在图中的寄存器集合是按每个线程中列出而不是按每个进程列出。</h5></li>
+</ol>
+<p><img src="5.jpg" /></p>
+<p>答：当一个线程停止时，它在寄存器中有值。它们必须被保存，就像进程停止时，必须保存寄存器。多线程和多进程没有什么不同，所以每个线程需要自己的寄存器保存区。</p>
+<ol start="15" type="1">
+<li><h5 id="在没有时钟中断的系统中一个线程放弃cpu后可能再也不会获得cpu资源那么为什么线程还要通过调用thread_yield自愿放弃cpu">在没有时钟中断的系统中，一个线程放弃CPU后可能再也不会获得CPU资源，那么为什么线程还要通过调用thread_yield自愿放弃CPU？</h5></li>
+</ol>
+<p>答：进程中的线程合作。它们彼此不敌对。如果应用程序需要阻塞以运行得更好，那么一个线程可以调用thread_yield自愿放弃CPU。毕竟，同一个进程中的线程的全部代码通常是一个程序员写的。</p>
+<hr />
+]]></content>
+      <tags>
+        <tag>OS</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>立体角</title>
     <url>/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92/</url>
     <content><![CDATA[<h1 id="立体角">立体角</h1>
@@ -1057,6 +1010,45 @@ $$</span></p>
       <tags>
         <tag>光学</tag>
         <tag>几何</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编译链接浅析</title>
+    <url>/2019/02/01/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="引子">引子</h2>
+<p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//sum.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *a = <span class="built_in">abs</span>(*a);*b=<span class="built_in">abs</span>(*b);</span><br><span class="line">    <span class="keyword">return</span> (*a+*b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要在<code>Linux</code>上面执行出结果，那么打上下面的代码就可以了： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.c sum.cpp <span class="literal">-o</span> a.out</span><br><span class="line">./a.out</span><br></pre></td></tr></table></figure> 输出的结果是： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到运行正确了，这个结果也是预料之中的，k 变成了 2，j 变成了 5，这个是在<code>sum</code>里面被改变了值，也会影响到原址的值。</p>
+<h2 id="程序到可执行文件">程序到可执行文件</h2>
+<p>程序到可执行文件需要经过几个阶段：</p>
+<h3 id="预编译阶段">预编译阶段</h3>
+<p>预编译阶段是把原始的代码文件的需要预编译头加进来，即对于<code>#include</code>的文件进行原样复制，<code>#include</code>文件可以由命令<code>locate</code>得到 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ubuntu@ubuntu:~/VSCode/CSAPP深入理解计算机系统<span class="variable">$</span> locate iostream</span><br><span class="line">/usr/include/c++/<span class="number">7</span>/iostream</span><br><span class="line">/usr/lib/x86_64<span class="literal">-linux-gnu</span>/libboost_iostreams.so.<span class="number">1.65</span>.<span class="number">1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/changelog.Debian.gz</span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/copyright</span><br><span class="line">/usr/share/lintian/overrides/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.list</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.md5sums</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.shlibs</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.triggers</span><br></pre></td></tr></table></figure> 或者是对于C语言的库使用<code>man</code> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">man</span> stdio</span><br></pre></td></tr></table></figure> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">STDIO(<span class="number">3</span>)                   Linux Programmer<span class="string">&#x27;s Manual                  STDIO(3)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">NAME</span></span><br><span class="line"><span class="string">       stdio - standard input/output library functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SYNOPSIS</span></span><br><span class="line"><span class="string">       #include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       FILE *stdin;</span></span><br><span class="line"><span class="string">       FILE *stdout;</span></span><br><span class="line"><span class="string">       FILE *stderr;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DESCRIPTION</span></span><br></pre></td></tr></table></figure> 预编译命令如下： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-E</span> main.cpp <span class="literal">-o</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.i</span><br></pre></td></tr></table></figure> 这个命令是把<code>main.cpp</code><span class="math inline">→</span><code>main.i</code>。 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//部分代码，在Linux试一下就知道</span></span><br><span class="line"><span class="keyword">namespace</span> std __attribute__ ((__visibility__ (<span class="string">&quot;default&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># <span class="number">60</span> <span class="string">&quot;/usr/include/c++/7/iostream&quot;</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">extern</span> istream cin;</span><br><span class="line">  <span class="keyword">extern</span> ostream cout;</span><br><span class="line">  <span class="keyword">extern</span> ostream cerr;</span><br><span class="line">  <span class="keyword">extern</span> ostream clog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">extern</span> wistream wcin;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcout;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcerr;</span><br><span class="line">  <span class="keyword">extern</span> wostream wclog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">static</span> ios_base::Init __ioinit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"># <span class="number">2</span> <span class="string">&quot;main.cpp&quot;</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3</span> <span class="string">&quot;main.cpp&quot;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以看到，这就是把<code>#include</code>里面的东西原样复制到<code>main.cpp</code>代码文件里面，整合到一起，就叫做预编译过程。 ### C++编译阶段 C++编译阶段就是把预编译好的文件编译成汇编代码，个人觉得这个过程跟翻译差不多，把一种语言翻译成另一种语言，命令如下。 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-S</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.s</span><br></pre></td></tr></table></figure> 上面的<code>g++</code>命令默认会有<code>-o main.s</code>添加上，即会产生<code>main.s</code>文件产生。 产生的<code>main.s</code>文件如下，由于太长，截取了部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	.file	&quot;main.cpp&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">	.type	_ZStL19piecewise_construct, @object</span><br><span class="line">	.size	_ZStL19piecewise_construct, 1</span><br><span class="line">_ZStL19piecewise_construct:</span><br><span class="line">	.zero	1</span><br><span class="line">	.local	_ZStL8__ioinit</span><br><span class="line">	.comm	_ZStL8__ioinit,1,1</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;k+j=&quot;</span><br><span class="line">.LC1:</span><br><span class="line">	.string	&quot;k=&quot;</span><br><span class="line">.LC2:</span><br><span class="line">	.string	&quot;\t&quot;</span><br><span class="line">.LC3:</span><br><span class="line">	.string	&quot;j=&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB1493:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	subq	$56, %rsp</span><br><span class="line">	.cfi_offset 3, -24</span><br><span class="line">	movl	%edi, -52(%rbp)</span><br><span class="line">	movq	%rsi, -64(%rbp)</span><br><span class="line">	movq	%fs:40, %rax</span><br><span class="line">	movq	%rax, -24(%rbp)</span><br><span class="line">	xorl	%eax, %eax</span><br><span class="line">	movl	$-2, -48(%rbp)</span><br><span class="line">	movl	$-5, -44(%rbp)</span><br><span class="line">	leaq	-48(%rbp), %rax</span><br><span class="line">	movq	%rax, -40(%rbp)</span><br><span class="line">	leaq	-44(%rbp), %rax</span><br><span class="line">	movq	%rax, -32(%rbp)</span><br><span class="line">	leaq	.LC0(%rip), %rsi</span><br><span class="line">	leaq	_ZSt4cout(%rip), %rdi</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT</span><br><span class="line">	movq	%rax, %rbx</span><br><span class="line">	movq	-32(%rbp), %rdx</span><br><span class="line">	movq	-40(%rbp), %rax</span><br><span class="line">	movq	%rdx, %rsi</span><br><span class="line">	movq	%rax, %rdi</span><br><span class="line">	call	_Z3sumPiS_@PLT</span><br><span class="line">	movl	%eax, %esi</span><br><span class="line">	movq	%rbx, %rdi</span><br><span class="line">	call	_ZNSolsEi@PLT</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	</span><br></pre></td></tr></table></figure>
+<p>从上面的代码看出，这是个汇编代码，也就完成了<code>main.i</code><span class="math inline">→</span><code>main.s</code>的转化。</p>
+<h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
+<p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
+<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
+<blockquote>
+<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
+</blockquote>
+<h3 id="链接器链接生成eof">链接器链接生成eof</h3>
+<p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
+<p>按照前面的步骤（预编译<span class="math inline">→</span>C++编译<span class="math inline"> → ​</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o</span><br></pre></td></tr></table></figure>
+<p>这时候会产生一个新的文件为<code>a.out</code>，这个名字可以自己取，也就是把默认的那个语句加上，如： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o <span class="literal">-o</span> main.out</span><br></pre></td></tr></table></figure> 当然，在 Linux 里面文件的后缀名是不重要的，<code>.x</code>也可，只不过<code>.out</code>是在Unix操作系统上第一个实现的可执行文件的后缀名，就保留了下来。</p>
+<p>之后就运行： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure> 得到结果 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure> 这个结果跟之前的一致。执行命令的时候，Linux 会使用它的加载器将可执行文件<code>a.out</code>的代码和数据复制到内存，然后将控制转移到这个程序的开头。</p>
+<h3 id="小结">小结</h3>
+<figure>
+<img src="文件编译过程.png" alt="总结" /><figcaption aria-hidden="true">总结</figcaption>
+</figure>
+<h2 id="可执行文件格式分析">可执行文件格式分析</h2>
+]]></content>
+      <tags>
+        <tag>编译</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1327,6 +1319,21 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>bcc初体验</title>
+    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="安装">安装</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用">使用</h2>
+<p>funccount</p>
+<p>stackcount</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>bpf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>资源收集</title>
     <url>/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
     <content><![CDATA[<p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
@@ -1363,82 +1370,6 @@ $$</span></p>
 ]]></content>
       <tags>
         <tag>资源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>编译链接浅析</title>
-    <url>/2019/02/01/%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E6%B5%85%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="引子">引子</h2>
-<p>先来看两段代码，这两段代码很简单。<code>main</code>是主函数，调用<code>sum</code>进行求和，其中<code>sum</code>函数参数是指针类型的，也就是说在<code>sum</code>函数进行改变会引起原来的值的改变。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//sum.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *a = <span class="built_in">abs</span>(*a);*b=<span class="built_in">abs</span>(*b);</span><br><span class="line">    <span class="keyword">return</span> (*a+*b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果需要在<code>Linux</code>上面执行出结果，那么打上下面的代码就可以了： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.c sum.cpp <span class="literal">-o</span> a.out</span><br><span class="line">./a.out</span><br></pre></td></tr></table></figure> 输出的结果是： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
-<p>可以看到运行正确了，这个结果也是预料之中的，k 变成了 2，j 变成了 5，这个是在<code>sum</code>里面被改变了值，也会影响到原址的值。</p>
-<h2 id="程序到可执行文件">程序到可执行文件</h2>
-<p>程序到可执行文件需要经过几个阶段：</p>
-<h3 id="预编译阶段">预编译阶段</h3>
-<p>预编译阶段是把原始的代码文件的需要预编译头加进来，即对于<code>#include</code>的文件进行原样复制，<code>#include</code>文件可以由命令<code>locate</code>得到 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ubuntu@ubuntu:~/VSCode/CSAPP深入理解计算机系统<span class="variable">$</span> locate iostream</span><br><span class="line">/usr/include/c++/<span class="number">7</span>/iostream</span><br><span class="line">/usr/lib/x86_64<span class="literal">-linux-gnu</span>/libboost_iostreams.so.<span class="number">1.65</span>.<span class="number">1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/changelog.Debian.gz</span><br><span class="line">/usr/share/doc/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>/copyright</span><br><span class="line">/usr/share/lintian/overrides/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span></span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.list</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.md5sums</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.shlibs</span><br><span class="line">/var/lib/dpkg/info/libboost<span class="literal">-iostreams1</span>.<span class="number">65.1</span>:amd64.triggers</span><br></pre></td></tr></table></figure> 或者是对于C语言的库使用<code>man</code> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">man</span> stdio</span><br></pre></td></tr></table></figure> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">STDIO(<span class="number">3</span>)                   Linux Programmer<span class="string">&#x27;s Manual                  STDIO(3)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">NAME</span></span><br><span class="line"><span class="string">       stdio - standard input/output library functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SYNOPSIS</span></span><br><span class="line"><span class="string">       #include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       FILE *stdin;</span></span><br><span class="line"><span class="string">       FILE *stdout;</span></span><br><span class="line"><span class="string">       FILE *stderr;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DESCRIPTION</span></span><br></pre></td></tr></table></figure> 预编译命令如下： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-E</span> main.cpp <span class="literal">-o</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.i</span><br></pre></td></tr></table></figure> 这个命令是把<code>main.cpp</code><span class="math inline">→</span><code>main.i</code>。 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//部分代码，在Linux试一下就知道</span></span><br><span class="line"><span class="keyword">namespace</span> std __attribute__ ((__visibility__ (<span class="string">&quot;default&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># <span class="number">60</span> <span class="string">&quot;/usr/include/c++/7/iostream&quot;</span> <span class="number">3</span></span><br><span class="line">  <span class="keyword">extern</span> istream cin;</span><br><span class="line">  <span class="keyword">extern</span> ostream cout;</span><br><span class="line">  <span class="keyword">extern</span> ostream cerr;</span><br><span class="line">  <span class="keyword">extern</span> ostream clog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">extern</span> wistream wcin;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcout;</span><br><span class="line">  <span class="keyword">extern</span> wostream wcerr;</span><br><span class="line">  <span class="keyword">extern</span> wostream wclog;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">static</span> ios_base::Init __ioinit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"># <span class="number">2</span> <span class="string">&quot;main.cpp&quot;</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">3</span> <span class="string">&quot;main.cpp&quot;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span>* b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">-2</span>;</span><br><span class="line">    <span class="type">int</span> j=<span class="number">-5</span>;</span><br><span class="line">    <span class="type">int</span>* a;</span><br><span class="line">    <span class="type">int</span>* b;</span><br><span class="line">    a = &amp;k;</span><br><span class="line">    b = &amp;j;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k+j=&quot;</span>&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;k=&quot;</span>&lt;&lt;k&lt;&lt;<span class="string">&quot;\t&quot;</span>&lt;&lt;<span class="string">&quot;j=&quot;</span>&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以看到，这就是把<code>#include</code>里面的东西原样复制到<code>main.cpp</code>代码文件里面，整合到一起，就叫做预编译过程。 ### C++编译阶段 C++编译阶段就是把预编译好的文件编译成汇编代码，个人觉得这个过程跟翻译差不多，把一种语言翻译成另一种语言，命令如下。 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-S</span> main.i</span><br><span class="line"><span class="built_in">cat</span> main.s</span><br></pre></td></tr></table></figure> 上面的<code>g++</code>命令默认会有<code>-o main.s</code>添加上，即会产生<code>main.s</code>文件产生。 产生的<code>main.s</code>文件如下，由于太长，截取了部分。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	.file	&quot;main.cpp&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">	.type	_ZStL19piecewise_construct, @object</span><br><span class="line">	.size	_ZStL19piecewise_construct, 1</span><br><span class="line">_ZStL19piecewise_construct:</span><br><span class="line">	.zero	1</span><br><span class="line">	.local	_ZStL8__ioinit</span><br><span class="line">	.comm	_ZStL8__ioinit,1,1</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;k+j=&quot;</span><br><span class="line">.LC1:</span><br><span class="line">	.string	&quot;k=&quot;</span><br><span class="line">.LC2:</span><br><span class="line">	.string	&quot;\t&quot;</span><br><span class="line">.LC3:</span><br><span class="line">	.string	&quot;j=&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB1493:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	subq	$56, %rsp</span><br><span class="line">	.cfi_offset 3, -24</span><br><span class="line">	movl	%edi, -52(%rbp)</span><br><span class="line">	movq	%rsi, -64(%rbp)</span><br><span class="line">	movq	%fs:40, %rax</span><br><span class="line">	movq	%rax, -24(%rbp)</span><br><span class="line">	xorl	%eax, %eax</span><br><span class="line">	movl	$-2, -48(%rbp)</span><br><span class="line">	movl	$-5, -44(%rbp)</span><br><span class="line">	leaq	-48(%rbp), %rax</span><br><span class="line">	movq	%rax, -40(%rbp)</span><br><span class="line">	leaq	-44(%rbp), %rax</span><br><span class="line">	movq	%rax, -32(%rbp)</span><br><span class="line">	leaq	.LC0(%rip), %rsi</span><br><span class="line">	leaq	_ZSt4cout(%rip), %rdi</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@PLT</span><br><span class="line">	movq	%rax, %rbx</span><br><span class="line">	movq	-32(%rbp), %rdx</span><br><span class="line">	movq	-40(%rbp), %rax</span><br><span class="line">	movq	%rdx, %rsi</span><br><span class="line">	movq	%rax, %rdi</span><br><span class="line">	call	_Z3sumPiS_@PLT</span><br><span class="line">	movl	%eax, %esi</span><br><span class="line">	movq	%rbx, %rdi</span><br><span class="line">	call	_ZNSolsEi@PLT</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	</span><br></pre></td></tr></table></figure>
-<p>从上面的代码看出，这是个汇编代码，也就完成了<code>main.i</code><span class="math inline">→</span><code>main.s</code>的转化。</p>
-<h3 id="汇编代码转化为rof文件">汇编代码转化为rof文件</h3>
-<p><code>rof</code>是relocatable object file的简称，称为可重定向目标文件。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ <span class="literal">-c</span> main.s</span><br></pre></td></tr></table></figure>
-<p>输出的文件为<code>main.o</code>，这个文件不是文本文件，是一个二进制文件。</p>
-<blockquote>
-<p>文本文件：由ASCII码组成的文件，可以由文本编辑器直接打开 二进制文件：除了文本文件之外的所有文件，如图片格式文件就属于二进制文件，这种文件需要专门的解码软件打开，如果使用文本编辑器打开就是乱码的。</p>
-</blockquote>
-<h3 id="链接器链接生成eof">链接器链接生成eof</h3>
-<p><code>eof</code>是executable object file的简称，称为可执行目标文件。</p>
-<p>按照前面的步骤（预编译<span class="math inline">→</span>C++编译<span class="math inline"> → ​</span>rof文件生成）得到<code>sum.o</code>文件。然后进行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o</span><br></pre></td></tr></table></figure>
-<p>这时候会产生一个新的文件为<code>a.out</code>，这个名字可以自己取，也就是把默认的那个语句加上，如： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">g++ main.o sum.o <span class="literal">-o</span> main.out</span><br></pre></td></tr></table></figure> 当然，在 Linux 里面文件的后缀名是不重要的，<code>.x</code>也可，只不过<code>.out</code>是在Unix操作系统上第一个实现的可执行文件的后缀名，就保留了下来。</p>
-<p>之后就运行： <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure> 得到结果 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">k+j=<span class="number">7</span></span><br><span class="line">k=<span class="number">2</span>	j=<span class="number">5</span></span><br></pre></td></tr></table></figure> 这个结果跟之前的一致。执行命令的时候，Linux 会使用它的加载器将可执行文件<code>a.out</code>的代码和数据复制到内存，然后将控制转移到这个程序的开头。</p>
-<h3 id="小结">小结</h3>
-<figure>
-<img src="文件编译过程.png" alt="总结" /><figcaption aria-hidden="true">总结</figcaption>
-</figure>
-<h2 id="可执行文件格式分析">可执行文件格式分析</h2>
-]]></content>
-      <tags>
-        <tag>编译</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bpftrace技术1-常用命令</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
-<p>一种追踪内核态和用户态的新技术</p>
-<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
-<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
-<h2 id="是否调用">是否调用</h2>
-<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
-<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
-<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
-<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>执行结果如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p> <code>2</code> 的含义解释如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="打印入参">打印入参</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="打印返回值">打印返回值</h2>
-<p>使用默认变量<code>retval</code>。</p>
-<h3 id="内核函数返回值">内核函数返回值</h3>
-<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
-<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
-<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="过滤条件">过滤条件</h3>
-<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>bpftrace</tag>
       </tags>
   </entry>
   <entry>
@@ -1962,99 +1893,36 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>bpftrace技术3-内置变量</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<h1 id="内置变量">内置变量</h1>
-<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 24%" />
-<col style="width: 63%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>变量类别</th>
-<th>变量名</th>
-<th>说明与典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>进程/线程信息</strong>​</td>
-<td><code>pid</code></td>
-<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>tid</code></td>
-<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>comm</code></td>
-<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>uid</code></td>
-<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
-</tr>
-<tr class="odd">
-<td><strong>时间信息</strong>​</td>
-<td><code>nsecs</code></td>
-<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
-</tr>
-<tr class="even">
-<td><strong>CPU/系统信息</strong>​</td>
-<td><code>cpu</code></td>
-<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>curtask</code></td>
-<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
-</tr>
-<tr class="even">
-<td><strong>探针上下文信息</strong>​</td>
-<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
-<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>args</code></td>
-<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>retval</code></td>
-<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>func</code></td>
-<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>kstack</code>/ <code>ustack</code></td>
-<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
-<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
-<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
-<p><img src="bpftrace3/image1.png" /></p>
-<h1 id="其他说明">其他说明</h1>
-<ul>
-<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
-<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
-</ul>
+    <title>bpftrace技术1-常用命令</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
+<p>一种追踪内核态和用户态的新技术</p>
+<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
+<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
+<h2 id="是否调用">是否调用</h2>
+<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
+<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
+<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
+<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p> <code>2</code> 的含义解释如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="打印入参">打印入参</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="打印返回值">打印返回值</h2>
+<p>使用默认变量<code>retval</code>。</p>
+<h3 id="内核函数返回值">内核函数返回值</h3>
+<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
+<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
+<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤条件">过滤条件</h3>
+<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
         <tag>linux</tag>
@@ -2393,6 +2261,106 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>bpftrace技术3-内置变量</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<h1 id="内置变量">内置变量</h1>
+<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 24%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>变量类别</th>
+<th>变量名</th>
+<th>说明与典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>进程/线程信息</strong>​</td>
+<td><code>pid</code></td>
+<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>tid</code></td>
+<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>comm</code></td>
+<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>uid</code></td>
+<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
+</tr>
+<tr class="odd">
+<td><strong>时间信息</strong>​</td>
+<td><code>nsecs</code></td>
+<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
+</tr>
+<tr class="even">
+<td><strong>CPU/系统信息</strong>​</td>
+<td><code>cpu</code></td>
+<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>curtask</code></td>
+<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
+</tr>
+<tr class="even">
+<td><strong>探针上下文信息</strong>​</td>
+<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
+<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>args</code></td>
+<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>retval</code></td>
+<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>func</code></td>
+<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>kstack</code>/ <code>ustack</code></td>
+<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
+</tr>
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
+<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
+<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
+<p><img src="bpftrace3/image1.png" /></p>
+<h1 id="其他说明">其他说明</h1>
+<ul>
+<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
+<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>bpftrace</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux性能IO-blktrace工具</title>
     <url>/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<h1 id="快速分析">快速分析</h1>
@@ -2564,6 +2532,30 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TCP学习-NS3模拟环境搭建</title>
     <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<blockquote>
@@ -2615,27 +2607,74 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
+    <title>Ubuntu下EDK2开发环境搭建</title>
+    <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
+<p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下 <img src="Ubuntu下EDK2开发环境搭建_20240122_1.png" /></p>
+<p>特点</p>
+<ul>
+<li>apt-get源可以访问</li>
+<li>github不能访问</li>
+<li>gitee可以访问</li>
+</ul>
+<h2 id="远程仓库迁移">远程仓库迁移</h2>
+<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下</p>
+<ol type="1">
+<li><p>建立组织，用来合并仓库环境</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /></p></li>
+<li><p>迁移主仓库</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_3.png" /></p></li>
+<li><p>导入submodule，因为edk2后续编译还需要一些子模块，找到如下仓库的路径，按照2导入到组织</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_4.png" /></p></li>
+<li><p>修改主仓库的submodule路径</p>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_5.png" /></p></li>
+</ol>
+<h2 id="下载">下载</h2>
+<p>下载edk2代码仓 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git clone git@gitee.com:edk2_back/edk2.git</span><br></pre></td></tr></table></figure> 下载子模块到对应路径，可以看到地址都替换了gitee路径 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_6.png" /></p>
+<h2 id="编译工具链安装">编译工具链安装</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># apt-get install build-essential uuid-dev iasl git gcc nasm python3</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># python3 --version</span></span></span><br><span class="line">Python 3.10.12</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ln -s /usr/bin/python3.10 /usr/bin/python</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="编译">编译</h2>
+<h3 id="基本工具">基本工具</h3>
+<p>看一下当前的目录结构，使用<code>make -C BaseTools</code>编译基本工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ls</span></span></span><br><span class="line">ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg</span><br><span class="line">ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg</span><br><span class="line">ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg</span><br><span class="line">BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg</span><br><span class="line">Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg</span><br><span class="line">CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># make -C BaseTools</span></span></span><br></pre></td></tr></table></figure> 编译基本工具完成 <img src="Ubuntu下EDK2开发环境搭建_20240122_7.png" /></p>
+<h3 id="编译目标文件">编译目标文件</h3>
+<p>设置环境变量，<code>path/to/edk/BaseTools</code>需要换成当前的<code>BaseTools</code>所在路径。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># export EDK_TOOLS_PATH=`path/to/edk/BaseTools`</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ./edksetup.sh --help</span></span></span><br><span class="line">Usage: edksetup.sh [Options]</span><br><span class="line"></span><br><span class="line">The system environment variable, WORKSPACE, is always set to the current</span><br><span class="line">working directory.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --help, -h, -?        Print this help screen and exit.</span><br><span class="line"></span><br><span class="line">  --reconfig            Overwrite the WORKSPACE/Conf/*.txt files with the</span><br><span class="line">                        template files from the BaseTools/Conf directory.</span><br><span class="line"></span><br><span class="line">Please note: This script must be &#x27;sourced&#x27; so the environment can be changed.</span><br><span class="line">. edksetup.sh</span><br><span class="line">source edksetup.sh</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># source edksetup.sh BaseTools</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_8.png" /> 在<code>edk</code>目录下使用<code>build</code>命令编译 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># build</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_9.png" /></p>
 ]]></content>
       <tags>
-        <tag>工作流</tag>
+        <tag>EDK2</tag>
+        <tag>UEFI</tag>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows性能分析</title>
+    <url>/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="windows运行参数分析">Windows运行参数分析</h1>
+<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
+<p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
+<p><img src="任务管理.png" /></p>
+<span id="more"></span>
+<blockquote>
+<p>Windows Hardware Lab Kit (Windows HLK) 是一个测试框架，用于测试 Windows 10 以及从 Windows Server 2016 开始的所有 Windows Server 版本的硬件设备。 你的产品必须通过使用 Windows HLK 进行的某些测试，才有资格加入 <a href="https://docs.microsoft.com/en-us/windows-hardware/design/compatibility/">Windows 硬件兼容性计划</a>。</p>
+<p>Windows 性能工具包位于 <a href="https://aka.ms/adk">Windows 评估和部署工具包</a>中，其中包含各种性能监控工具，这些工具可生成有关 Windows 操作系统和应用程序的详细性能概况。 本文档同时讨论了 Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA)。</p>
+<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows 性能记录器 (WPR) 是一种性能录制工具为基础上事件跟踪 Windows (ETW)。 它记录系统事件，然后可以通过使用 Windows Performance Analyzer (WPA) 进行分析。</p>
+<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows Performance Analyzer (WPA) 是一种工具，创建的事件跟踪 Windows (ETW) 事件所记录的 Windows 性能的关系图和数据表记录器 (WPR)、 Xperf 或评估运行评估平台中。 WPA 可以打开任何事件跟踪日志 (ETL) 文件进行分析。</p>
+</blockquote>
+<h2 id="windows-performance-record">Windows Performance Record</h2>
+<ol type="1">
+<li><p>在程序中搜索到 Windows Performance Record 并且打开， <img src="wpr_start.png" /></p></li>
+<li><p>从当前时刻开始记录，记录完成后保存文件 <img src="wpr_save.png" /> <img src="wpr_save_finish.png" /></p></li>
+<li><p>记下文件保存位置</p></li>
+</ol>
+<h2 id="windows-performance-analysis">Windows Performance Analysis</h2>
+<ol type="1">
+<li><p>在程序中找到 Windows Performance Analysis 并且打开 <img src="wpa_open.png" /></p></li>
+<li><p>File-&gt;Open，打开前面保存的文件 <img src="wpa_file_in1.png" /> <img src="wpafileincpu.png" /> <img src="wpafileincpumem.png" /></p></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>OS</tag>
+        <tag>操作系统</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -3561,43 +3600,30 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu下EDK2开发环境搭建</title>
-    <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
-<p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下 <img src="Ubuntu下EDK2开发环境搭建_20240122_1.png" /></p>
-<p>特点</p>
+    <title></title>
+    <url>/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="overview">Overview</h1>
+<p>介绍几款Windows下的性能分析工具。</p>
+<h1 id="工具介绍">工具介绍</h1>
 <ul>
-<li>apt-get源可以访问</li>
-<li>github不能访问</li>
-<li>gitee可以访问</li>
+<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
+<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
+<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
+<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
+<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
 </ul>
-<h2 id="远程仓库迁移">远程仓库迁移</h2>
-<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下</p>
-<ol type="1">
-<li><p>建立组织，用来合并仓库环境</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /></p></li>
-<li><p>迁移主仓库</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_3.png" /></p></li>
-<li><p>导入submodule，因为edk2后续编译还需要一些子模块，找到如下仓库的路径，按照2导入到组织</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_4.png" /></p></li>
-<li><p>修改主仓库的submodule路径</p>
-<p><img src="Ubuntu下EDK2开发环境搭建_20240122_5.png" /></p></li>
-</ol>
-<h2 id="下载">下载</h2>
-<p>下载edk2代码仓 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git clone git@gitee.com:edk2_back/edk2.git</span><br></pre></td></tr></table></figure> 下载子模块到对应路径，可以看到地址都替换了gitee路径 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_6.png" /></p>
-<h2 id="编译工具链安装">编译工具链安装</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># apt-get install build-essential uuid-dev iasl git gcc nasm python3</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># python3 --version</span></span></span><br><span class="line">Python 3.10.12</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ln -s /usr/bin/python3.10 /usr/bin/python</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="编译">编译</h2>
-<h3 id="基本工具">基本工具</h3>
-<p>看一下当前的目录结构，使用<code>make -C BaseTools</code>编译基本工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ls</span></span></span><br><span class="line">ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg</span><br><span class="line">ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg</span><br><span class="line">ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg</span><br><span class="line">BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg</span><br><span class="line">Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg</span><br><span class="line">CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># make -C BaseTools</span></span></span><br></pre></td></tr></table></figure> 编译基本工具完成 <img src="Ubuntu下EDK2开发环境搭建_20240122_7.png" /></p>
-<h3 id="编译目标文件">编译目标文件</h3>
-<p>设置环境变量，<code>path/to/edk/BaseTools</code>需要换成当前的<code>BaseTools</code>所在路径。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># export EDK_TOOLS_PATH=`path/to/edk/BaseTools`</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ./edksetup.sh --help</span></span></span><br><span class="line">Usage: edksetup.sh [Options]</span><br><span class="line"></span><br><span class="line">The system environment variable, WORKSPACE, is always set to the current</span><br><span class="line">working directory.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --help, -h, -?        Print this help screen and exit.</span><br><span class="line"></span><br><span class="line">  --reconfig            Overwrite the WORKSPACE/Conf/*.txt files with the</span><br><span class="line">                        template files from the BaseTools/Conf directory.</span><br><span class="line"></span><br><span class="line">Please note: This script must be &#x27;sourced&#x27; so the environment can be changed.</span><br><span class="line">. edksetup.sh</span><br><span class="line">source edksetup.sh</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># source edksetup.sh BaseTools</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_8.png" /> 在<code>edk</code>目录下使用<code>build</code>命令编译 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># build</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_9.png" /></p>
+<h1 id="工具概览">工具概览</h1>
+<h2 id="perfmon">Perfmon</h2>
+<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /> ## Sysinternals</p>
+<p>下载后即可使用的工具集，官方下链接<a href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
+<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
+<p>这个是Windows下的性能工具合集，见<a href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
+<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
+<h2 id="perfview">perfview</h2>
+<p>perfview<a href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
+<h2 id="system-informer">System Informer</h2>
+<p>系统资源监控工具，支持windows10、windows11，官网<a href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
 ]]></content>
-      <tags>
-        <tag>EDK2</tag>
-        <tag>UEFI</tag>
-        <tag>环境搭建</tag>
-      </tags>
   </entry>
   <entry>
     <title>qemu调试linux（一）</title>
@@ -3746,6 +3772,41 @@ $$</span></p>
 ]]></content>
   </entry>
   <entry>
+    <title>内核转储文件--应用程序崩溃分析</title>
+    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
+<p><img src="Pastedimage20240113005115.png" /></p>
+<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
+<p>查看命令：<code>ulimit -c</code></p>
+<p>打开命令：<code>ulimit -c unlimited</code></p>
+<p>0：关闭</p>
+<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>所以修改有两种方法</p>
+<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
+<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<blockquote>
+<p>%e：进程名称</p>
+<p>%s：崩溃时收到的信号</p>
+<p>%p：进程ID</p>
+<p>%t：时间戳</p>
+</blockquote>
+<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
+<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
+<h2 id="centos">CentOS</h2>
+<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
+<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20240113011447.png" /></p>
+<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>内核转储文件--内核崩溃</title>
     <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
     <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
@@ -3781,38 +3842,44 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>内核转储文件--应用程序崩溃分析</title>
-    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
-<p><img src="Pastedimage20240113005115.png" /></p>
-<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
-<p>查看命令：<code>ulimit -c</code></p>
-<p>打开命令：<code>ulimit -c unlimited</code></p>
-<p>0：关闭</p>
-<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
-<p>所以修改有两种方法</p>
-<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
-<blockquote>
-<p>%e：进程名称</p>
-<p>%s：崩溃时收到的信号</p>
-<p>%p：进程ID</p>
-<p>%t：时间戳</p>
-</blockquote>
-<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
-<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
-<h2 id="centos">CentOS</h2>
-<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
-<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
-<h2 id="分析崩溃">分析崩溃</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20240113011447.png" /></p>
-<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
+    <title>最大间隙问题</title>
+    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
+<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
+<p>复杂度计算如下 <span class="math display">$$
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>那么我只能换其他的办法来做。</p>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
+<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
+<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+</ol>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
+l=\frac{max-mix}{n-1}
+$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
+seg[i]=\frac{x[i]-minx}{l}+1
+$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4017,47 +4084,6 @@ $$</span></p>
 <p>[1] Roberto Grena Five new algorithms for the computation of sun position from 2010 to 2110 Solar Energy</p>
 <p>https://www.sciencedirect.com/science/article/pii/S0038092X12000400</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>最大间隙问题</title>
-    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
-<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
-<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
-<p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
-</ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
   </entry>
   <entry>
     <title>考拉兹猜想</title>
