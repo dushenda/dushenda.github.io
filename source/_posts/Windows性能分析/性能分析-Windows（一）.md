@@ -2,9 +2,9 @@
 title: Windows性能分析
 date: 2020-10-20
 tags:
-	- OS
-	- 操作系统
-	- Windows
+- OS
+- 操作系统
+- Windows
 ---
 # Windows运行参数分析
 
@@ -12,7 +12,7 @@ tags:
 
 一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。
 
-![](Windows性能分析/任务管理.png)
+![](任务管理.png)
 
 <!--more-->
 
@@ -27,7 +27,7 @@ tags:
 ## Windows Performance Record
 
 1. 在程序中搜索到 Windows Performance Record 并且打开，
-   ![](Windows性能分析/wpr_start.png)
+   ![](wpr_start.png)
 
 2. 从当前时刻开始记录，记录完成后保存文件
    ![](wpr_save.png)
@@ -42,5 +42,5 @@ tags:
 
 2. File->Open，打开前面保存的文件
    ![](wpa_file_in1.png)
-   ![](Windows性能分析/wpafileincpu.png)
-   ![](Windows性能分析/wpafileincpumem.png)
+   ![](wpafileincpu.png)
+   ![](wpafileincpumem.png)
