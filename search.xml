@@ -453,6 +453,21 @@
       </tags>
   </entry>
   <entry>
+    <title>bcc初体验</title>
+    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="安装">安装</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用">使用</h2>
+<p>funccount</p>
+<p>stackcount</p>
+]]></content>
+      <tags>
+        <tag>bpf</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>判断磁盘是ssd还是hdd</title>
     <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
     <content><![CDATA[<h2 id="linux">Linux</h2>
@@ -473,21 +488,6 @@
       <tags>
         <tag>存储</tag>
         <tag>磁盘</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bcc初体验</title>
-    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="安装">安装</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用">使用</h2>
-<p>funccount</p>
-<p>stackcount</p>
-]]></content>
-      <tags>
-        <tag>bpf</tag>
-        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -711,6 +711,84 @@
       <tags>
         <tag>正则</tag>
         <tag>脚本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-内存管理1</title>
+    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
+    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
+<h2 id="空闲内存的管理">空闲内存的管理</h2>
+<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
+<p><img src="内存存储管理1.jpg" /></p>
+<ul>
+<li><p>使用位图的存储器管理</p>
+<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
+<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
+</ul>
+<h2 id="覆盖与交换">覆盖与交换</h2>
+<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">技术</th>
+<th style="text-align: center;">优点</th>
+<th style="text-align: center;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">交换技术</td>
+<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
+<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">覆盖技术</td>
+<td style="text-align: center;">交换力度小，产生的开销小</td>
+<td style="text-align: center;">由程序员完成，不方便且易出错</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交换技术">交换技术</h3>
+<h4 id="交换过程">交换过程</h4>
+<p><img src="操作系统内存交换技术.png" /></p>
+<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
+<ol type="1">
+<li>运行进程A，进程A的程序和数据从头开始放</li>
+<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
+<li>加载C进程，和前面的方法类似</li>
+<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
+<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
+<li>杀死进程B</li>
+<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
+</ol>
+<h4 id="内存紧缩">内存紧缩</h4>
+<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
+<p><img src="操作系统内存紧缩.png" /></p>
+<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
+<p><img src="操作系统内存紧缩2.png" /></p>
+<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
+<blockquote>
+<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
+</blockquote>
+<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
+<h4 id="动态分配">动态分配</h4>
+<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
+<h3 id="覆盖技术">覆盖技术</h3>
+<blockquote>
+<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
+</blockquote>
+<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
+<h2 id="虚拟内存">虚拟内存</h2>
+<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
+<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
+<blockquote>
+<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
+</blockquote>
+<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -986,84 +1064,6 @@ $$</span></p>
       <tags>
         <tag>编译</tag>
         <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-内存管理1</title>
-    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
-    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
-<h2 id="空闲内存的管理">空闲内存的管理</h2>
-<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
-<p><img src="内存存储管理1.jpg" /></p>
-<ul>
-<li><p>使用位图的存储器管理</p>
-<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
-<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
-</ul>
-<h2 id="覆盖与交换">覆盖与交换</h2>
-<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">技术</th>
-<th style="text-align: center;">优点</th>
-<th style="text-align: center;">缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">交换技术</td>
-<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
-<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">覆盖技术</td>
-<td style="text-align: center;">交换力度小，产生的开销小</td>
-<td style="text-align: center;">由程序员完成，不方便且易出错</td>
-</tr>
-</tbody>
-</table>
-<h3 id="交换技术">交换技术</h3>
-<h4 id="交换过程">交换过程</h4>
-<p><img src="操作系统内存交换技术.png" /></p>
-<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
-<ol type="1">
-<li>运行进程A，进程A的程序和数据从头开始放</li>
-<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
-<li>加载C进程，和前面的方法类似</li>
-<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
-<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
-<li>杀死进程B</li>
-<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
-</ol>
-<h4 id="内存紧缩">内存紧缩</h4>
-<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
-<p><img src="操作系统内存紧缩.png" /></p>
-<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
-<p><img src="操作系统内存紧缩2.png" /></p>
-<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
-<blockquote>
-<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
-</blockquote>
-<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
-<h4 id="动态分配">动态分配</h4>
-<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
-<h3 id="覆盖技术">覆盖技术</h3>
-<blockquote>
-<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
-</blockquote>
-<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
-<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
-<blockquote>
-<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
-</blockquote>
-<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -3454,6 +3454,30 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TCP学习-NS3模拟环境搭建</title>
     <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<blockquote>
@@ -3589,7 +3613,8 @@ Field reference (click to expand)
 </ul>
 <h1 id="工具概览">工具概览</h1>
 <h2 id="perfmon">Perfmon</h2>
-<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /> ## Sysinternals</p>
+<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
+<h2 id="sysinternals">Sysinternals</h2>
 <p>下载后即可使用的工具集，官方下链接<a href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
 <h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
 <p>这个是Windows下的性能工具合集，见<a href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
@@ -3628,21 +3653,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>qemu调试linux（二）</title>
-    <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
-<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
-<h2 id="vscode调试">vscode调试</h2>
-<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
-<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>qemu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>xv6-vscode调试</title>
     <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
@@ -3672,30 +3682,6 @@ Field reference (click to expand)
       <tags>
         <tag>操作系统</tag>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>工作流</tag>
       </tags>
   </entry>
   <entry>
@@ -3773,6 +3759,76 @@ $$</span></p>
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal2</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal2(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.50572</span>;b=<span class="number">6.07995</span>;c=<span class="number">1.6364</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal3</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.6556</span>;b=<span class="number">6.379</span>;c=<span class="number">1.757</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内核转储文件--应用程序崩溃分析</title>
+    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
+<p><img src="Pastedimage20240113005115.png" /></p>
+<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
+<p>查看命令：<code>ulimit -c</code></p>
+<p>打开命令：<code>ulimit -c unlimited</code></p>
+<p>0：关闭</p>
+<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>所以修改有两种方法</p>
+<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
+<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<blockquote>
+<p>%e：进程名称</p>
+<p>%s：崩溃时收到的信号</p>
+<p>%p：进程ID</p>
+<p>%t：时间戳</p>
+</blockquote>
+<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
+<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
+<h2 id="centos">CentOS</h2>
+<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
+<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20240113011447.png" /></p>
+<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
   </entry>
   <entry>
     <title>几种算法误差报告</title>
@@ -3978,6 +4034,47 @@ $$</span></p>
 ]]></content>
   </entry>
   <entry>
+    <title>最大间隙问题</title>
+    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
+<h2 id="题目">题目</h2>
+<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code> <code>output.txt</code></p>
+<p>5 0.8</p>
+<p>1.1 1.3 2.5 0.7 2.1</p>
+<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考">思考</h2>
+<h3 id="办法一">办法一</h3>
+<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
+<p>复杂度计算如下 <span class="math display">$$
+O(n\log n)+O(n)+O(n)=O(n\log n) \\
+O(n\log n) &gt; O(n)
+$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>那么我只能换其他的办法来做。</p>
+<h3 id="办法二">办法二</h3>
+<ol type="1">
+<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
+<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
+<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+</ol>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
+l=\frac{max-mix}{n-1}
+$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
+seg[i]=\frac{x[i]-minx}{l}+1
+$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
+<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码">伪代码</h2>
+<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>考拉兹猜想</title>
     <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
     <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
@@ -4054,114 +4151,18 @@ $$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值�
 ]]></content>
   </entry>
   <entry>
-    <title>最大间隙问题</title>
-    <url>/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
-<p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
-<p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
-<p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
-</ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+    <title>qemu调试linux（二）</title>
+    <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
+<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
+<h2 id="vscode调试">vscode调试</h2>
+<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
+<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>linux</tag>
-        <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内核转储文件--应用程序崩溃分析</title>
-    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
-<p><img src="Pastedimage20240113005115.png" /></p>
-<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
-<p>查看命令：<code>ulimit -c</code></p>
-<p>打开命令：<code>ulimit -c unlimited</code></p>
-<p>0：关闭</p>
-<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
-<p>所以修改有两种方法</p>
-<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
-<blockquote>
-<p>%e：进程名称</p>
-<p>%s：崩溃时收到的信号</p>
-<p>%p：进程ID</p>
-<p>%t：时间戳</p>
-</blockquote>
-<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
-<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
-<h2 id="centos">CentOS</h2>
-<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
-<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
-<h2 id="分析崩溃">分析崩溃</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20240113011447.png" /></p>
-<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
+        <tag>qemu</tag>
       </tags>
   </entry>
 </search>
