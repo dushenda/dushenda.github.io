@@ -22,29 +22,29 @@
     <meta name="description" content="论文笔记-场地自动化定标方法研究及应用 辐射定标的意义 卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。 辐射定标 辐射校正 遥感辐射定标方法 因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记-场地自动化定标方法研究及应用">
-<meta property="og:url" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:url" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="dushenda">
 <meta property="og:description" content="论文笔记-场地自动化定标方法研究及应用 辐射定标的意义 卫星获取地物图像时候，由于存在各种各样的干扰，造成观测值与实际值的偏差，定标就是来（尽可能）消除这些偏差，使得卫星得到的图像与真实的物体之间（尽可能）没有这些偏差，即反映客观事物。 辐射定标 辐射校正 遥感辐射定标方法 因为卫星所在环境为外太空，会受到强烈的电磁干扰和强辐射，所以器件的老化程度是很快的，这也就是卫星存在使用寿命的一个原因，受限">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F2.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E5%8F%8D%E5%B0%84%E7%8E%87%E5%9F%BA%E6%B3%95.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E9%AB%98%E5%85%89%E8%B0%B1%E5%9C%B0%E8%A1%A8%E5%8F%8D%E5%B0%84%E7%8E%87.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%AF%8F%E6%97%A5%E7%9A%84%E9%80%9A%E9%81%93%E5%8F%8D%E5%B0%84%E7%8E%87.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%B5%81%E7%A8%8B.bmp">
+<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
+<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F2.png">
+<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E5%8F%8D%E5%B0%84%E7%8E%87%E5%9F%BA%E6%B3%95.png">
+<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E9%AB%98%E5%85%89%E8%B0%B1%E5%9C%B0%E8%A1%A8%E5%8F%8D%E5%B0%84%E7%8E%87.png">
+<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%AF%8F%E6%97%A5%E7%9A%84%E9%80%9A%E9%81%93%E5%8F%8D%E5%B0%84%E7%8E%87.png">
+<meta property="og:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%B5%81%E7%A8%8B.bmp">
 <meta property="article:published_time" content="2019-03-01T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-18T14:04:22.635Z">
+<meta property="article:modified_time" content="2025-12-18T14:05:13.000Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="光学">
 <meta property="article:tag" content="遥感">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E6%98%9F%E4%B8%8A%E5%AE%9A%E6%A0%87%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F1.png">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/">
+<link rel="canonical" href="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/","path":"2019/03/01/论文笔记-场地自动化定标方法研究及应用/","title":"论文笔记-场地自动化定标方法研究及应用"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/","path":"2019/03/01/论文笔记-场地自动化定标方法研究及应用/论文笔记-场地自动化定标方法研究及应用/","title":"论文笔记-场地自动化定标方法研究及应用"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>论文笔记-场地自动化定标方法研究及应用 | dushenda</title>
@@ -237,7 +237,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
