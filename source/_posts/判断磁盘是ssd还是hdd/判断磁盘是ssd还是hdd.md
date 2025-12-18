@@ -26,7 +26,7 @@ sdb 1 Msft
 sdc 1 Msft
 ```
 `lsblk`可选行信息如下等，通过`lsblk --help`查看
-![](判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121.png)
+![](判断磁盘是ssd还是hdd_20240121.png)
 
 ### smartctl
 该工具需要自行安装Ubuntu和CentOS安装包名称均为`smartmontools`。
@@ -59,4 +59,4 @@ Number FriendlyName                  SerialNumber    MediaType CanPool Operation
 
 ### GUI
 在任务管理器下查看
-![](判断磁盘是ssd还是hdd/判断磁盘是ssd还是hdd_20240121_1.png)
+![](判断磁盘是ssd还是hdd_20240121_1.png)
