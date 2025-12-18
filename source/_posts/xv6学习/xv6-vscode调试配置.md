@@ -4,6 +4,7 @@ date: 2025-12-10
 tags:
   - xv6
   - 操作系统
+  - 环境搭建
 ---
 ## .gdbinit
 ```shell

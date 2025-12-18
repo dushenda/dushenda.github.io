@@ -1,11 +1,9 @@
 ---
 title: audit审计工具使用
 date: 2024-04-11
-tags: 
- - RHEL系列
- - 审计
- - 监控
- - audit
+tags:
+  - 监控
+  - audit
 ---
 ## audit用途
 监控文件、命令、网络等，生成监控报告。

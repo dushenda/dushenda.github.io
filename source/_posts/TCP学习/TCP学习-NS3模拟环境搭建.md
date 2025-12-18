@@ -5,6 +5,7 @@ tags:
   - TCP
   - NS3
   - 仿真器
+  - 环境搭建
 ---
 
 > 参考https://github.com/ituring/tcp-book/?tab=readme-ov-file

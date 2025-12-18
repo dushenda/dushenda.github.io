@@ -2,8 +2,9 @@
 title: qemu调试linux（二）
 date: 2024-03-19
 tags:
-- linux
-- qemu
+  - linux
+  - qemu
+  - 环境搭建
 ---
 ## GDB调试
 

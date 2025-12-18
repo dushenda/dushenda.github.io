@@ -2,8 +2,9 @@
 title: qemu调试linux（一）
 date: 2024-01-24
 tags:
-- linux
-- qemu
+  - linux
+  - qemu
+  - 环境搭建
 ---
 ## 编译内核
 
