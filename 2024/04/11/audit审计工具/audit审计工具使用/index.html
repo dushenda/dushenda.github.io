@@ -22,25 +22,25 @@
     <meta name="description" content="audit用途 监控文件、命令、网络等，生成监控报告。 安装启动audit 安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start 将 auditd 配置为在引导时启动： 1systemctl enable audit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="audit审计工具使用">
-<meta property="og:url" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:url" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="dushenda">
 <meta property="og:description" content="audit用途 监控文件、命令、网络等，生成监控报告。 安装启动audit 安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start 将 auditd 配置为在引导时启动： 1systemctl enable audit">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_1.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_1.png">
 <meta property="article:published_time" content="2024-04-11T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-18T14:15:45.802Z">
+<meta property="article:modified_time" content="2025-12-18T14:17:20.094Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="audit">
 <meta property="article:tag" content="监控">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+<link rel="canonical" href="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/","path":"2024/04/11/audit审计工具使用/audit审计工具使用/","title":"audit审计工具使用"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/","path":"2024/04/11/audit审计工具/audit审计工具使用/","title":"audit审计工具使用"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>audit审计工具使用 | dushenda</title>
@@ -233,7 +233,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
