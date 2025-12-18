@@ -19,23 +19,23 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="pagecache是什么 12345678910111213141516$ cat &#x2F;proc&#x2F;meminfo...Buffers:            1224 kBCached:           111472 kBSwapCached:        36364 kBActive:          6224232 kBInactive:         979432 kBActive(">
+    <meta name="description" content="pagecache是什么12345678910111213141516$ cat &#x2F;proc&#x2F;meminfo...Buffers:            1224 kBCached:           111472 kBSwapCached:        36364 kBActive:          6224232 kBInactive:         979432 kBActive(a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux内存子系统-Page Cache">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="pagecache是什么 12345678910111213141516$ cat &#x2F;proc&#x2F;meminfo...Buffers:            1224 kBCached:           111472 kBSwapCached:        36364 kBActive:          6224232 kBInactive:         979432 kBActive(">
+<meta property="og:description" content="pagecache是什么12345678910111213141516$ cat &#x2F;proc&#x2F;meminfo...Buffers:            1224 kBCached:           111472 kBSwapCached:        36364 kBActive:          6224232 kBInactive:         979432 kBActive(a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/pagecache.png">
-<meta property="og:image" content="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/swapcache.png">
-<meta property="og:image" content="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/pagecache_twoway.png">
+<meta property="og:image" content="https://dushenda.github.io/pagecache.png">
+<meta property="og:image" content="https://dushenda.github.io/swapcache.png">
+<meta property="og:image" content="https://dushenda.github.io/pagecache_twoway.png">
 <meta property="article:published_time" content="2025-12-13T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-18T14:05:52.281Z">
+<meta property="article:modified_time" content="2025-12-18T14:11:54.585Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="内存子系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/pagecache.png">
+<meta name="twitter:image" content="https://dushenda.github.io/pagecache.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/">
@@ -192,7 +192,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -275,77 +275,71 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="pagecache是什么">pagecache是什么</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached</p>
-<p><img src="pagecache.png" /></p>
-<p>/proc/meminfo的解释见如下网站<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
-<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。</p>
-<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。</p>
-<p><img src="swapcache.png" /></p>
-<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="pagecache是什么"><a href="#pagecache是什么" class="headerlink" title="pagecache是什么"></a>pagecache是什么</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Page Cache &#x3D; Buffers + Cached + SwapCached &#x3D; Active(file) + Inactive(file) + Shmem + SwapCached</p>
+<p><img src="/pagecache.png"></p>
+<p>&#x2F;proc&#x2F;meminfo的解释见如下网站<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
+<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I&#x2F;O 来消耗的内存就属于这部分。</p>
+<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I&#x2F;O。</p>
+<p><img src="/swapcache.png"></p>
+<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I&#x2F;O 会很容易引起性能抖动。</p>
 <p>下面解释一下free输出</p>
-<p>buff/cache = Buffers + Cached + SReclaimable <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure></p>
+<p>buff&#x2F;cache &#x3D; Buffers + Cached + SReclaimable</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure>
+
 <table>
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 18%" />
-<col style="width: 67%" />
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>指标</th>
 <th>数据来源 (参考 <code>/proc/meminfo</code>)</th>
 <th>主要作用</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>Buffers</code></strong>​</td>
+<tbody><tr>
+<td>**<code>Buffers</code>**​</td>
 <td><code>Buffers</code>值</td>
 <td>临时存放<strong>原始磁盘块数据</strong>，用于优化对磁盘（块设备）的直接读写操作。</td>
 </tr>
-<tr class="even">
-<td><strong><code>Cached</code></strong>​</td>
+<tr>
+<td>**<code>Cached</code>**​</td>
 <td><code>Cached</code>值</td>
-<td>缓存<strong>从文件读取的数据</strong>（即页缓存/Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
+<td>缓存<strong>从文件读取的数据</strong>（即页缓存&#x2F;Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
 </tr>
-<tr class="odd">
-<td><strong><code>SReclaimable</code></strong>​</td>
+<tr>
+<td>**<code>SReclaimable</code>**​</td>
 <td><code>SReclaimable</code>值</td>
 <td>属于 <strong>Slab 分配器</strong>​ 的一部分，记录内核对象（如目录项、inode 等）缓存中<strong>可以被回收</strong>占用的内存。指可以被回收的内核内存，包括 dentry 和 inode 等。</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <blockquote>
-<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if=/dev/urandom of=/dev/sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if=/dev/urandom of=/tmp/file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
+<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if&#x3D;&#x2F;dev&#x2F;urandom of&#x3D;&#x2F;dev&#x2F;sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if&#x3D;&#x2F;dev&#x2F;urandom of&#x3D;&#x2F;tmp&#x2F;file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
 </blockquote>
-<h1 id="pagecache出现的意义">pagecache出现的意义</h1>
-<p>先看如何使用pagecache的方法</p>
+<h1 id="pagecache出现的意义"><a href="#pagecache出现的意义" class="headerlink" title="pagecache出现的意义"></a>pagecache出现的意义</h1><p>先看如何使用pagecache的方法</p>
 <ul>
 <li>第一种，应用程序维护自己的 Cache 做更加细粒度的控制，比如 MySQL 就是这样做的，你可以参考MySQL Buffer Pool 。</li>
-<li>第二种，使用 Direct I/O 来绕过 Page Cache。</li>
+<li>第二种，使用 Direct I&#x2F;O 来绕过 Page Cache。</li>
 </ul>
-<p>pagecache的意义就是加速：标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率。</p>
+<p>pagecache的意义就是加速：标准 I&#x2F;O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I&#x2F;O 次数来提升读写效率。</p>
 <p>我们看一个具体的例子。首先，我们来生成一个 1G 大小的新文件，然后把 Page Cache 清空，确保文件内容不在内存中，以此来比较第一次读文件和第二次读文件耗时的差异。具体的流程如下。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=./dd.out bs=4096 count=((1024*256))</span><br></pre></td></tr></table></figure>
+
 <p>清空 Page Cache，需要先执行一下 sync 来将脏页同步到磁盘再去 drop cache。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>读两次文件，计算耗时 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure></p>
-<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I/O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I/O，提升应用的 I/O 速度。</p>
-<h1 id="pagecache机制">pagecache机制</h1>
-<h2 id="pagecache产生">pagecache产生</h2>
-<p>Page Cache 的产生有两种不同的方式：</p>
-<ul>
-<li>Buffered I/O（标准 I/O）；</li>
-<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
-</ul>
-<p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
-<p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
-<p>显然，存储映射 I/O 要比标准 I/O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I/O 比标准 I/O 方式性能要好一些的主要原因。</p>
-<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I/O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
-<h2 id="pagecache回收">pagecache回收</h2>
 
+<p>读两次文件，计算耗时</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure>
+
+<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I&#x2F;O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I&#x2F;O，提升应用的 I&#x2F;O 速度。</p>
+<h1 id="pagecache机制"><a href="#pagecache机制" class="headerlink" title="pagecache机制"></a>pagecache机制</h1><h2 id="pagecache产生"><a href="#pagecache产生" class="headerlink" title="pagecache产生"></a>pagecache产生</h2><p>Page Cache 的产生有两种不同的方式：</p>
+<ul>
+<li>Buffered I&#x2F;O（标准 I&#x2F;O）；</li>
+<li>Memory-Mapped I&#x2F;O（存储映射 I&#x2F;O）。<br><img src="/pagecache_twoway.png"></li>
+</ul>
+<p>buffered&#x2F;mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I&#x2F;O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
+<p>对于存储映射 I&#x2F;O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
+<p>显然，存储映射 I&#x2F;O 要比标准 I&#x2F;O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I&#x2F;O 比标准 I&#x2F;O 方式性能要好一些的主要原因。</p>
+<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I&#x2F;O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
+<h2 id="pagecache回收"><a href="#pagecache回收" class="headerlink" title="pagecache回收"></a>pagecache回收</h2>
     </div>
 
     
