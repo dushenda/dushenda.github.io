@@ -23,373 +23,6 @@
       </tags>
   </entry>
   <entry>
-    <title>bcc初体验</title>
-    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="安装">安装</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用">使用</h2>
-<p>funccount</p>
-<p>stackcount</p>
-]]></content>
-      <tags>
-        <tag>bpf</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SSD学习（一）</title>
-    <url>/2024/01/14/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>SSD</tag>
-        <tag>RAID</tag>
-        <tag>存储</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>判断磁盘是ssd还是hdd</title>
-    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
-    <content><![CDATA[<h2 id="linux">Linux</h2>
-<h3 id="通过文件系统">通过文件系统</h3>
-<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
-<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
-<h3 id="lsblk">lsblk</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
-<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="判断磁盘是ssd还是hdd_20240121.png" /></p>
-<h3 id="smartctl">smartctl</h3>
-<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
-<h2 id="windows">Windows</h2>
-<h3 id="powershell">powershell</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
-<h3 id="gui">GUI</h3>
-<p>在任务管理器下查看 <img src="判断磁盘是ssd还是hdd_20240121_1.png" /></p>
-]]></content>
-      <tags>
-        <tag>存储</tag>
-        <tag>磁盘</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>正则表达式(一)</title>
-    <url>/2020/03/17/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/</url>
-    <content><![CDATA[<h1 id="正则表达式一">正则表达式(一)</h1>
-<h2 id="元字符">元字符</h2>
-<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
-<ol type="1">
-<li><p><code>.</code>匹配所有字符</p></li>
-<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
-<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
-<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
-<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
-</ol>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
-<ol start="6" type="1">
-<li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
-<li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
-<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
-<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
-<li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
-<li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
-<li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
-</ol>
-<h2 id="表达式">表达式</h2>
-<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
-<h2 id="转义字符">转义字符</h2>
-<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出为</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">转义字符</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>\a</code></td>
-<td style="text-align: center;">警告</td>
-<td style="text-align: center;"><code>char(7)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\b</code></td>
-<td style="text-align: center;">退格</td>
-<td style="text-align: center;"><code>char(8)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\f</code></td>
-<td style="text-align: center;">换页符</td>
-<td style="text-align: center;"><code>char(12)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\n</code></td>
-<td style="text-align: center;">换行符</td>
-<td style="text-align: center;"><code>char(10)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\r</code></td>
-<td style="text-align: center;">回车</td>
-<td style="text-align: center;"><code>char(13)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\t</code></td>
-<td style="text-align: center;">水平制表符</td>
-<td style="text-align: center;"><code>char(9)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\v</code></td>
-<td style="text-align: center;">垂直制表符</td>
-<td style="text-align: center;"><code>char(11)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>\char</code></td>
-<td style="text-align: center;">任意特殊字符</td>
-<td style="text-align: center;">-</td>
-</tr>
-</tbody>
-</table>
-<h2 id="限定符">限定符</h2>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">限定符</th>
-<th style="text-align: center;">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr *</td>
-<td style="text-align: center;">多次expr：0~∞</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">expr ?</td>
-<td style="text-align: center;">一次expr：0~1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr +</td>
-<td style="text-align: center;">一次到多次expr：1~∞</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">expr{m,n}</td>
-<td style="text-align: center;">m到n次expr：m~n</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr{m,}</td>
-<td style="text-align: center;">大于等于m次expr：m~∞</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">expr{m}</td>
-<td style="text-align: center;">m次expr：=m</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr?</code>代表至多匹配1次</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr+</code>匹配一次或者连续多次</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
-<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
-</ul>
-<h2 id="模式">模式</h2>
-<p>表达式+限定词=模式</p>
-<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 33%" />
-<col style="width: 55%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">表达式+限定词</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr q</td>
-<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr q？</td>
-<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
-<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">expr q+</td>
-<td style="text-align: center;">主动表达式：最大程度的匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
-<p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
-<h2 id="操作符的优先级">操作符的优先级</h2>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">操作符</th>
-<th style="text-align: center;">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">\</td>
-<td style="text-align: center;">转义符</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">(), (?:), (?=), []</td>
-<td style="text-align: center;">圆括号和方括号</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
-<td style="text-align: center;">限定符</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">^, $, </td>
-<td style="text-align: center;">位置和顺序</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">|</td>
-<td style="text-align: center;">“或”操作</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-      <tags>
-        <tag>正则</tag>
-        <tag>脚本</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-内存管理1</title>
-    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
-    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
-<h2 id="空闲内存的管理">空闲内存的管理</h2>
-<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
-<p><img src="内存存储管理1.jpg" /></p>
-<ul>
-<li><p>使用位图的存储器管理</p>
-<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
-<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
-</ul>
-<h2 id="覆盖与交换">覆盖与交换</h2>
-<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">技术</th>
-<th style="text-align: center;">优点</th>
-<th style="text-align: center;">缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">交换技术</td>
-<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
-<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">覆盖技术</td>
-<td style="text-align: center;">交换力度小，产生的开销小</td>
-<td style="text-align: center;">由程序员完成，不方便且易出错</td>
-</tr>
-</tbody>
-</table>
-<h3 id="交换技术">交换技术</h3>
-<h4 id="交换过程">交换过程</h4>
-<p><img src="操作系统内存交换技术.png" /></p>
-<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
-<ol type="1">
-<li>运行进程A，进程A的程序和数据从头开始放</li>
-<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
-<li>加载C进程，和前面的方法类似</li>
-<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
-<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
-<li>杀死进程B</li>
-<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
-</ol>
-<h4 id="内存紧缩">内存紧缩</h4>
-<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
-<p><img src="操作系统内存紧缩.png" /></p>
-<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
-<p><img src="操作系统内存紧缩2.png" /></p>
-<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
-<blockquote>
-<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
-</blockquote>
-<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
-<h4 id="动态分配">动态分配</h4>
-<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
-<h3 id="覆盖技术">覆盖技术</h3>
-<blockquote>
-<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
-</blockquote>
-<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
-<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
-<blockquote>
-<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
-</blockquote>
-<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>OS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-进程与线程16~30</title>
-    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
-    <content><![CDATA[<blockquote>
-<p>以下答案均不代表正确答案，仅代表作者观点</p>
-</blockquote>
-<ul>
-<li><h5 id="线程可以被时钟中断抢占吗如果可以在什么情形下可以如果不可以为什么不可以">16.线程可以被时钟中断抢占吗？如果可以，在什么情形下可以？如果不可以，为什么不可以？</h5>
-<p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
-<li></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>OS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CsvHelper 使用手册</title>
     <url>/2018/09/04/CsvHelper%20%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h1 id="csvhelper-使用手册">CsvHelper 使用手册</h1>
@@ -767,6 +400,272 @@
       <tags>
         <tag>CSharp</tag>
         <tag>CSV</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SSD学习（一）</title>
+    <url>/2024/01/14/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[
+]]></content>
+      <tags>
+        <tag>SSD</tag>
+        <tag>RAID</tag>
+        <tag>存储</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bcc初体验</title>
+    <url>/2024/01/22/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="安装">安装</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用">使用</h2>
+<p>funccount</p>
+<p>stackcount</p>
+]]></content>
+      <tags>
+        <tag>bpf</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>正则表达式(一)</title>
+    <url>/2020/03/17/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F(%E4%B8%80)/</url>
+    <content><![CDATA[<h1 id="正则表达式一">正则表达式(一)</h1>
+<h2 id="元字符">元字符</h2>
+<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol type="1">
+<li><p><code>.</code>匹配所有字符</p></li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
+<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
+</ol>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
+<ol start="6" type="1">
+<li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
+<li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
+<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
+<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
+<li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
+<li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
+<li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
+</ol>
+<h2 id="表达式">表达式</h2>
+<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
+<h2 id="转义字符">转义字符</h2>
+<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">转义字符</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>\a</code></td>
+<td style="text-align: center;">警告</td>
+<td style="text-align: center;"><code>char(7)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\b</code></td>
+<td style="text-align: center;">退格</td>
+<td style="text-align: center;"><code>char(8)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\f</code></td>
+<td style="text-align: center;">换页符</td>
+<td style="text-align: center;"><code>char(12)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\n</code></td>
+<td style="text-align: center;">换行符</td>
+<td style="text-align: center;"><code>char(10)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\r</code></td>
+<td style="text-align: center;">回车</td>
+<td style="text-align: center;"><code>char(13)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\t</code></td>
+<td style="text-align: center;">水平制表符</td>
+<td style="text-align: center;"><code>char(9)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>\v</code></td>
+<td style="text-align: center;">垂直制表符</td>
+<td style="text-align: center;"><code>char(11)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>\char</code></td>
+<td style="text-align: center;">任意特殊字符</td>
+<td style="text-align: center;">-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="限定符">限定符</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">限定符</th>
+<th style="text-align: center;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr *</td>
+<td style="text-align: center;">多次expr：0~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr ?</td>
+<td style="text-align: center;">一次expr：0~1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr +</td>
+<td style="text-align: center;">一次到多次expr：1~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr{m,n}</td>
+<td style="text-align: center;">m到n次expr：m~n</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr{m,}</td>
+<td style="text-align: center;">大于等于m次expr：m~∞</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">expr{m}</td>
+<td style="text-align: center;">m次expr：=m</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr?</code>代表至多匹配1次</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr+</code>匹配一次或者连续多次</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
+<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
+</ul>
+<h2 id="模式">模式</h2>
+<p>表达式+限定词=模式</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 33%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">表达式+限定词</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr q</td>
+<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr q？</td>
+<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
+<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">expr q+</td>
+<td style="text-align: center;">主动表达式：最大程度的匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
+<p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
+<h2 id="操作符的优先级">操作符的优先级</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">操作符</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">转义符</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">(), (?:), (?=), []</td>
+<td style="text-align: center;">圆括号和方括号</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
+<td style="text-align: center;">限定符</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">^, $, </td>
+<td style="text-align: center;">位置和顺序</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">|</td>
+<td style="text-align: center;">“或”操作</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      <tags>
+        <tag>正则</tag>
+        <tag>脚本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-进程与线程16~30</title>
+    <url>/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/</url>
+    <content><![CDATA[<blockquote>
+<p>以下答案均不代表正确答案，仅代表作者观点</p>
+</blockquote>
+<ul>
+<li><h5 id="线程可以被时钟中断抢占吗如果可以在什么情形下可以如果不可以为什么不可以">16.线程可以被时钟中断抢占吗？如果可以，在什么情形下可以？如果不可以，为什么不可以？</h5>
+<p>用户级线程不能被时钟剥夺，除非整个进程的时间片用完。内核级线程可以单独地被剥夺。在后一种情况下，如果线程运行过久，时钟将中断该当前进程，因而当前线程也被中断。内核可以自由地从同一个进程中选取其他线程运行。</p></li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -1523,106 +1422,6 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>bpftrace技术3-内置变量</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<h1 id="内置变量">内置变量</h1>
-<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 24%" />
-<col style="width: 63%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>变量类别</th>
-<th>变量名</th>
-<th>说明与典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>进程/线程信息</strong>​</td>
-<td><code>pid</code></td>
-<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>tid</code></td>
-<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>comm</code></td>
-<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>uid</code></td>
-<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
-</tr>
-<tr class="odd">
-<td><strong>时间信息</strong>​</td>
-<td><code>nsecs</code></td>
-<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
-</tr>
-<tr class="even">
-<td><strong>CPU/系统信息</strong>​</td>
-<td><code>cpu</code></td>
-<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>curtask</code></td>
-<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
-</tr>
-<tr class="even">
-<td><strong>探针上下文信息</strong>​</td>
-<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
-<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>args</code></td>
-<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>retval</code></td>
-<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>func</code></td>
-<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>kstack</code>/ <code>ustack</code></td>
-<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
-<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
-<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
-<p><img src="bpftrace3/image1.png" /></p>
-<h1 id="其他说明">其他说明</h1>
-<ul>
-<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
-<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>bpftrace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bpftrace技术2-map变量和map函数</title>
     <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
@@ -1867,6 +1666,184 @@ $$</span></p>
 <li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
 <li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
 <li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>bpftrace</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-内存管理1</title>
+    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
+    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
+<h2 id="空闲内存的管理">空闲内存的管理</h2>
+<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
+<p><img src="内存存储管理1.jpg" /></p>
+<ul>
+<li><p>使用位图的存储器管理</p>
+<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
+<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
+</ul>
+<h2 id="覆盖与交换">覆盖与交换</h2>
+<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">技术</th>
+<th style="text-align: center;">优点</th>
+<th style="text-align: center;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">交换技术</td>
+<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
+<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">覆盖技术</td>
+<td style="text-align: center;">交换力度小，产生的开销小</td>
+<td style="text-align: center;">由程序员完成，不方便且易出错</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交换技术">交换技术</h3>
+<h4 id="交换过程">交换过程</h4>
+<p><img src="操作系统内存交换技术.png" /></p>
+<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
+<ol type="1">
+<li>运行进程A，进程A的程序和数据从头开始放</li>
+<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
+<li>加载C进程，和前面的方法类似</li>
+<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
+<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
+<li>杀死进程B</li>
+<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
+</ol>
+<h4 id="内存紧缩">内存紧缩</h4>
+<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
+<p><img src="操作系统内存紧缩.png" /></p>
+<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
+<p><img src="操作系统内存紧缩2.png" /></p>
+<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
+<blockquote>
+<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
+</blockquote>
+<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
+<h4 id="动态分配">动态分配</h4>
+<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
+<h3 id="覆盖技术">覆盖技术</h3>
+<blockquote>
+<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
+</blockquote>
+<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
+<h2 id="虚拟内存">虚拟内存</h2>
+<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
+<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
+<blockquote>
+<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
+</blockquote>
+<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>OS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bpftrace技术3-内置变量</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<h1 id="内置变量">内置变量</h1>
+<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 24%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>变量类别</th>
+<th>变量名</th>
+<th>说明与典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>进程/线程信息</strong>​</td>
+<td><code>pid</code></td>
+<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>tid</code></td>
+<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>comm</code></td>
+<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>uid</code></td>
+<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
+</tr>
+<tr class="odd">
+<td><strong>时间信息</strong>​</td>
+<td><code>nsecs</code></td>
+<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
+</tr>
+<tr class="even">
+<td><strong>CPU/系统信息</strong>​</td>
+<td><code>cpu</code></td>
+<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>curtask</code></td>
+<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
+</tr>
+<tr class="even">
+<td><strong>探针上下文信息</strong>​</td>
+<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
+<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>args</code></td>
+<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>retval</code></td>
+<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>func</code></td>
+<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>kstack</code>/ <code>ustack</code></td>
+<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
+</tr>
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
+<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
+<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
+<p><img src="bpftrace3/image1.png" /></p>
+<h1 id="其他说明">其他说明</h1>
+<ul>
+<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
+<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
       <tags>
@@ -2122,30 +2099,6 @@ $$</span></p>
       <tags>
         <tag>Linux</tag>
         <tag>性能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
-<blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>工作流</tag>
       </tags>
   </entry>
   <entry>
@@ -3071,6 +3024,81 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TCP学习-NS3模拟环境搭建</title>
+    <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
+</blockquote>
+<h1 id="前置工具下载">前置工具下载</h1>
+<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
+<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
+<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
+<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
+<h2 id="powershell">Powershell</h2>
+<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
+<h2 id="x-server">X server</h2>
+<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
+<ol type="1">
+<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
+<li>下载并安装 VcXsrv Windows X Server</li>
+</ol>
+<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
+<ol type="1">
+<li>启动 “XLaunch”</li>
+<li>选择 “Multiple windows”</li>
+<li>Display number 设为 “0” 或 “-1”（自动）</li>
+<li>选择 “Start no client”</li>
+<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
+<li>完成设置，VcXsrv 会在系统托盘运行</li>
+</ol>
+<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
+<h2 id="配置环境">配置环境</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<h2 id="登录虚拟机">登录虚拟机</h2>
+<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
+<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
+<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
+<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
+<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
+]]></content>
+      <tags>
+        <tag>TCP</tag>
+        <tag>NS3</tag>
+        <tag>仿真器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu下EDK2开发环境搭建</title>
     <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
@@ -3141,6 +3169,37 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
+    <title>性能分析-Windows（二）</title>
+    <url>/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="overview">Overview</h1>
+<p>介绍几款Windows下的性能分析工具。</p>
+<h1 id="工具介绍">工具介绍</h1>
+<ul>
+<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
+<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
+<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
+<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
+<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
+</ul>
+<h1 id="工具概览">工具概览</h1>
+<h2 id="perfmon">Perfmon</h2>
+<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
+<h2 id="sysinternals">Sysinternals</h2>
+<p>下载后即可使用的工具集，官方下链接<a href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
+<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
+<p>这个是Windows下的性能工具合集，见<a href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
+<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
+<h2 id="perfview">perfview</h2>
+<p>perfview<a href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
+<h2 id="system-informer">System Informer</h2>
+<p>系统资源监控工具，支持windows10、windows11，官网<a href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
+]]></content>
+      <tags>
+        <tag>性能</tag>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>audit审计工具使用</title>
     <url>/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="audit用途">audit用途</h2>
@@ -3180,88 +3239,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>TCP学习-NS3模拟环境搭建</title>
-    <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<blockquote>
-<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
-</blockquote>
-<h1 id="前置工具下载">前置工具下载</h1>
-<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
-<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
-<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
-<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
-<h2 id="powershell">Powershell</h2>
-<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
-<h2 id="x-server">X server</h2>
-<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
-<ol type="1">
-<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
-<li>下载并安装 VcXsrv Windows X Server</li>
-</ol>
-<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
-<ol type="1">
-<li>启动 “XLaunch”</li>
-<li>选择 “Multiple windows”</li>
-<li>Display number 设为 “0” 或 “-1”（自动）</li>
-<li>选择 “Start no client”</li>
-<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
-<li>完成设置，VcXsrv 会在系统托盘运行</li>
-</ol>
-<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
-<h2 id="配置环境">配置环境</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
-<h2 id="登录虚拟机">登录虚拟机</h2>
-<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
-<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
-<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
-<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
-<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
-<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
-]]></content>
-      <tags>
-        <tag>TCP</tag>
-        <tag>NS3</tag>
-        <tag>仿真器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>性能分析-Windows（二）</title>
-    <url>/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="overview">Overview</h1>
-<p>介绍几款Windows下的性能分析工具。</p>
-<h1 id="工具介绍">工具介绍</h1>
-<ul>
-<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
-<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
-<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
-<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
-<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
-</ul>
-<h1 id="工具概览">工具概览</h1>
-<h2 id="perfmon">Perfmon</h2>
-<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
-<h2 id="sysinternals">Sysinternals</h2>
-<p>下载后即可使用的工具集，官方下链接<a href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
-<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
-<p>这个是Windows下的性能工具合集，见<a href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
-<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
-<h2 id="perfview">perfview</h2>
-<p>perfview<a href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
-<h2 id="system-informer">System Informer</h2>
-<p>系统资源监控工具，支持windows10、windows11，官网<a href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
-]]></content>
-      <tags>
-        <tag>性能</tag>
-        <tag>windows</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>qemu调试linux（一）</title>
     <url>/2024/01/24/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="编译内核">编译内核</h2>
@@ -3285,38 +3262,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>xv6-vscode调试</title>
-    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="launch.json">launch.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="tasks.json">tasks.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>xv6</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>xv6-增加系统调用</title>
-    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>qemu调试linux（二）</title>
     <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
@@ -3332,73 +3277,18 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+    <title>xv6-vscode调试</title>
+    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="launch.json">launch.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="tasks.json">tasks.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内核转储文件--应用程序崩溃分析</title>
-    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
-<p><img src="Pastedimage20240113005115.png" /></p>
-<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
-<p>查看命令：<code>ulimit -c</code></p>
-<p>打开命令：<code>ulimit -c unlimited</code></p>
-<p>0：关闭</p>
-<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
-<p>所以修改有两种方法</p>
-<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
-<blockquote>
-<p>%e：进程名称</p>
-<p>%s：崩溃时收到的信号</p>
-<p>%p：进程ID</p>
-<p>%t：时间戳</p>
-</blockquote>
-<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
-<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
-<h2 id="centos">CentOS</h2>
-<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
-<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
-<h2 id="分析崩溃">分析崩溃</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20240113011447.png" /></p>
-<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
+        <tag>操作系统</tag>
+        <tag>xv6</tag>
       </tags>
   </entry>
   <entry>
@@ -3476,6 +3366,93 @@ $$</span></p>
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal2</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal2(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.50572</span>;b=<span class="number">6.07995</span>;c=<span class="number">1.6364</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 计算方法3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">massCal3</span><span class="params">(gamma)</span></span></span><br><span class="line"><span class="comment">%函数调用格式：airMass=massCal(gamma)</span></span><br><span class="line"><span class="comment">%输入参数说明：gamma是天顶角，单位是°</span></span><br><span class="line"><span class="comment">%输出参数说明：airMass是大气质量</span></span><br><span class="line">a=<span class="number">0.6556</span>;b=<span class="number">6.379</span>;c=<span class="number">1.757</span>;</span><br><span class="line">y=(<span class="built_in">sin</span>(<span class="built_in">gamma</span>*<span class="built_in">pi</span>/<span class="number">180</span>)+a*(<span class="built_in">gamma</span>+b).^(-c)).^(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>xv6-增加系统调用</title>
+    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="panic">panic</h1>
+<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
+<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
+<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内核转储文件--应用程序崩溃分析</title>
+    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
+<p><img src="Pastedimage20240113005115.png" /></p>
+<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
+<p>查看命令：<code>ulimit -c</code></p>
+<p>打开命令：<code>ulimit -c unlimited</code></p>
+<p>0：关闭</p>
+<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>所以修改有两种方法</p>
+<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
+<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<blockquote>
+<p>%e：进程名称</p>
+<p>%s：崩溃时收到的信号</p>
+<p>%p：进程ID</p>
+<p>%t：时间戳</p>
+</blockquote>
+<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
+<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
+<h2 id="centos">CentOS</h2>
+<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
+<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20240113011447.png" /></p>
+<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
   </entry>
   <entry>
     <title>几种算法误差报告</title>
@@ -3679,6 +3656,29 @@ $$</span></p>
 <p>[1] Roberto Grena Five new algorithms for the computation of sun position from 2010 to 2110 Solar Energy</p>
 <p>https://www.sciencedirect.com/science/article/pii/S0038092X12000400</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>判断磁盘是ssd还是hdd</title>
+    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
+    <content><![CDATA[<h2 id="linux">Linux</h2>
+<h3 id="通过文件系统">通过文件系统</h3>
+<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
+<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
+<h3 id="lsblk">lsblk</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
+<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="判断磁盘是ssd还是hdd_20240121.png" /></p>
+<h3 id="smartctl">smartctl</h3>
+<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
+<h2 id="windows">Windows</h2>
+<h3 id="powershell">powershell</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
+<h3 id="gui">GUI</h3>
+<p>在任务管理器下查看 <img src="判断磁盘是ssd还是hdd_20240121_1.png" /></p>
+]]></content>
+      <tags>
+        <tag>存储</tag>
+        <tag>磁盘</tag>
+      </tags>
   </entry>
   <entry>
     <title>最大间隙问题</title>
