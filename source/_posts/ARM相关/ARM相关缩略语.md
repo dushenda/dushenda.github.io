@@ -1,3 +1,10 @@
+---
+title: ARM相关缩略语
+date: 2025-12-20
+tags:
+  - ARM
+  - 缩略语
+---
 
 > 转载：https://zhuanlan.zhihu.com/p/1985799288740136627
 
