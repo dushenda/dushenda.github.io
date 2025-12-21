@@ -1,10 +1,7 @@
 ---
-tags:
-  - LinuxTroubleshooting
+title: Linux TroubleShooting
 date: 2025-12-21
-title:
-  - linux
-  - shell
+tags:
 ---
 # Linux Commands
 
