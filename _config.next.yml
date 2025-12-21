@@ -531,8 +531,7 @@ mermaid:
   # Available themes: default | dark | forest | neutral
   theme:
     light: forest
-    cdn: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js
-    # dark: dark
+    dark: dark
 
 
 # ---------------------------------------------------------------
