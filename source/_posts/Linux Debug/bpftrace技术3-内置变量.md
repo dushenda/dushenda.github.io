@@ -155,7 +155,7 @@ Attaching 1 probe...
 ]: 8
 ```
 
-![](bpftrace3/image1.png)
+![](image1.png)
 
 # 其他说明
 

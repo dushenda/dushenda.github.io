@@ -6,6 +6,7 @@ tags:
   - linux
 ---
 # Bash快捷键
+
 ![](moving_cli.png)
 
 ## Moving
