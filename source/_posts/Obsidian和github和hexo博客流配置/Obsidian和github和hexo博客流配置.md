@@ -1,8 +1,9 @@
 ---
 title: Obsidian和github和hexo博客流配置
-date: 2024-01-14
-tags: 
- - 工作流
+date: 2025-12-21
+tags:
+  - 工作流
+  - hexo
 ---
 
 ## hexo配置
