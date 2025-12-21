@@ -114,10 +114,6 @@ search:
 # Mermaid
 mermaid:
   enable: true
-  version: "latest"
+  version: "10.6.0"
   options:
-    theme: default
-
-markdown:
-    render:
-        html: true
+    theme: forest
