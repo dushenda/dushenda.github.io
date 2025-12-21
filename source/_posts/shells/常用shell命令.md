@@ -7,6 +7,7 @@ tags:
 ---
 # Bash快捷键
 ![](moving_cli.png)
+
 ## Moving
 
 |command|description|
@@ -116,12 +117,11 @@ source ~/.bashrc
 
 - `wc` 去计算新行数（`-l`），字符数（`-m`），单词数（`-w`）以及字节数（`-c`）。
 - 使用 `tee` 将标准输入复制到文件甚至标准输出，例如 `ls -al | tee file.txt`。
-- - 替换一个或多个文件中出现的字符串：
+- 替换一个或多个文件中出现的字符串：
 ```shell
-	perl -pi.bak -e 's/old-string/new-string/g' my-files-*.txt
+perl -pi.bak -e 's/old-string/new-string/g' my-files-*.txt
 ```
 - `rsync` 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 `rsync` 代替 `scp` 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的[最快方法](https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html)之一：
-
 ```shell
 mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 ```
