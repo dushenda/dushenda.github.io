@@ -268,7 +268,6 @@
     
     <div class="post-body" itemprop="articleBody">
           
-
       
     </div>
 
@@ -336,23 +335,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+          <h2 id="hexo配置"><a href="#hexo配置" class="headerlink" title="hexo配置"></a>hexo配置</h2><h3 id="node-js配置"><a href="#node-js配置" class="headerlink" title="node.js配置"></a>node.js配置</h3><h3 id="hexo主题配置"><a href="#hexo主题配置" class="headerlink" title="hexo主题配置"></a>hexo主题配置</h3><h2 id="Obsidian配置"><a href="#Obsidian配置" class="headerlink" title="Obsidian配置"></a>Obsidian配置</h2><p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/img1.png"></p>
 <p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
+<p><img src="/img3.png"></p>
 <p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
+<p><img src="/img2.png"></p>
 <blockquote>
 <p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
 </blockquote>
-
+<h2 id="github配置"><a href="#github配置" class="headerlink" title="github配置"></a>github配置</h2><h3 id="workflows配置"><a href="#workflows配置" class="headerlink" title="workflows配置"></a>workflows配置</h3><h2 id="dependabot配置"><a href="#dependabot配置" class="headerlink" title="dependabot配置"></a>dependabot配置</h2>
       
     </div>
 
@@ -420,20 +412,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="协议流程">协议流程</h2>
-<h2 id="仿真">仿真</h2>
-<h3 id="组网">组网</h3>
-<p><img src="Pastedimage20231215004144.png" /></p>
-<h3 id="路由设置">路由设置</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20231215004416.png" /></p>
-<h2 id="抓包">抓包</h2>
-<p><img src="Pastedimage20231215005008.png" /></p>
-<h3 id="dhcp-discover">dhcp discover</h3>
-<p><img src="Pastedimage20231215010535.png" /></p>
-<p><img src="Pastedimage20231215010615.png" /></p>
-<h3 id="dhcp-offer">dhcp offer</h3>
-
+          <h2 id="协议流程"><a href="#协议流程" class="headerlink" title="协议流程"></a>协议流程</h2><h2 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h2><h3 id="组网"><a href="#组网" class="headerlink" title="组网"></a>组网</h3><p><img src="/Pastedimage20231215004144.png"></p>
+<h3 id="路由设置"><a href="#路由设置" class="headerlink" title="路由设置"></a>路由设置</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
+<p><img src="/Pastedimage20231215004416.png"></p>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><p><img src="/Pastedimage20231215005008.png"></p>
+<h3 id="dhcp-discover"><a href="#dhcp-discover" class="headerlink" title="dhcp discover"></a>dhcp discover</h3><p><img src="/Pastedimage20231215010535.png"></p>
+<p><img src="/Pastedimage20231215010615.png"></p>
+<h3 id="dhcp-offer"><a href="#dhcp-offer" class="headerlink" title="dhcp offer"></a>dhcp offer</h3>
       
     </div>
 
@@ -501,37 +486,36 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
-<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
-<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
-<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
-<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
-<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
-<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
-<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
-<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
-<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
-<p>yeolar: http://www.yeolar.com/</p>
-<p>http://www.yeolar.com/note/2012/03/29/virtual-memory/</p>
-<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
-<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</p>
-<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</p>
-<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
-<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
-<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
-<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
-<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
-<p>Flannel: http://dockone.io/article/618</p>
-<p>SDN: https://www.opennetworking.org/</p>
-<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
-<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
-<p>http://blog.csdn.net/dog250/article/details/45788279</p>
-<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
-<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
-<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
-<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
-<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
-<p>汇编:</p>
+          <p>malloc: <a target="_blank" rel="noopener" href="http://blog.codinglabs.org/articles/a-malloc-tutorial.html">http://blog.codinglabs.org/articles/a-malloc-tutorial.html</a></p>
+<p>duartes.org: <a target="_blank" rel="noopener" href="http://duartes.org/gustavo/blog/archives/">http://duartes.org/gustavo/blog/archives/</a></p>
+<p>github mannul: <a target="_blank" rel="noopener" href="http://www.epubit.com.cn/article/844#what">http://www.epubit.com.cn/article/844#what</a> </p>
+<p>liaoxuefeng.com: <a target="_blank" rel="noopener" href="http://www.liaoxuefeng.com/">http://www.liaoxuefeng.com/</a></p>
+<p>TCP&#x2F;IP network: <a target="_blank" rel="noopener" href="http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/">http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</a></p>
+<p>netfilter.org: <a target="_blank" rel="noopener" href="https://people.netfilter.org/pablo/netdev0.1/papers/">https://people.netfilter.org/pablo/netdev0.1/papers/</a></p>
+<p>tuning-linux-sending: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/">https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</a></p>
+<p>tuning-linux-receiving: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/">https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</a></p>
+<p>strace: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/">https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</a></p>
+<p>IBM-Tim: <a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90">https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</a></p>
+<p>yeolar: <a target="_blank" rel="noopener" href="http://www.yeolar.com/">http://www.yeolar.com/</a> </p>
+<p><a target="_blank" rel="noopener" href="http://www.yeolar.com/note/2012/03/29/virtual-memory/">http://www.yeolar.com/note/2012/03/29/virtual-memory/</a></p>
+<p>vxlan: <a target="_blank" rel="noopener" href="https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html">https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767">http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html">http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</a></p>
+<p>ali-kernel: <a target="_blank" rel="noopener" href="http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02">http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</a></p>
+<p>linux-performance: <a target="_blank" rel="noopener" href="http://www.brendangregg.com/linuxperf.html">http://www.brendangregg.com/linuxperf.html</a></p>
+<p>systemTap: <a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/">https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</a></p>
+<p>calico: <a target="_blank" rel="noopener" href="http://docs.projectcalico.org/v2.0/introduction/">http://docs.projectcalico.org/v2.0/introduction/</a></p>
+<p>docker: <a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice">http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</a></p>
+<p>Flannel: <a target="_blank" rel="noopener" href="http://dockone.io/article/618">http://dockone.io/article/618</a></p>
+<p>SDN: <a target="_blank" rel="noopener" href="https://www.opennetworking.org/">https://www.opennetworking.org/</a></p>
+<p>Linux Kernel Networking: <a target="_blank" rel="noopener" href="https://wiki.linuxfoundation.org/networking/start">https://wiki.linuxfoundation.org/networking/start</a></p>
+<p>MacVtap: <a target="_blank" rel="noopener" href="https://blog.kghost.info/2013/03/27/linux-network-tun/">https://blog.kghost.info/2013/03/27/linux-network-tun/</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/45788279">http://blog.csdn.net/dog250/article/details/45788279</a><br>	<br>Neutron: <a target="_blank" rel="noopener" href="http://blog.csdn.net/quqi99/article/details/22853403">http://blog.csdn.net/quqi99/article/details/22853403</a></p>
+<p>Linux Bridge: <a target="_blank" rel="noopener" href="http://blog.csdn.net/yeasy/article/details/50728243">http://blog.csdn.net/yeasy/article/details/50728243</a></p>
+<p>Docker Networking: <a target="_blank" rel="noopener" href="http://edgedef.com/docker-networking.html">http://edgedef.com/docker-networking.html</a></p>
+<p>Tun&#x2F;Tap interface: <a target="_blank" rel="noopener" href="http://backreference.org/2010/03/26/tuntap-interface-tutorial/">http://backreference.org/2010/03/26/tuntap-interface-tutorial/</a></p>
+<p>TC ifb: <a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&utm_medium=referral">http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</a></p>
+<p>汇编: </p>
 
       
     </div>
@@ -600,32 +584,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
+          <h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><h3 id="安装crash工具"><a href="#安装crash工具" class="headerlink" title="安装crash工具"></a>安装crash工具</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+
+<h3 id="检查kdump配置"><a href="#检查kdump配置" class="headerlink" title="检查kdump配置"></a>检查kdump配置</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+
+<p>USE_KDUMP&#x3D;1 代表kdump打开</p>
 <p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+
 <p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
+<h3 id="手动触发sysrq"><a href="#手动触发sysrq" class="headerlink" title="手动触发sysrq"></a>手动触发sysrq</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+
+<ol>
 <li>sysrq值不为0代表工作正常</li>
 <li>echo写主动触发kdump</li>
 </ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="安装crash工具-1"><a href="#安装crash工具-1" class="headerlink" title="安装crash工具"></a>安装crash工具</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装内核调试信息包"><a href="#安装内核调试信息包" class="headerlink" title="安装内核调试信息包"></a>安装内核调试信息包</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断服务正常开启"><a href="#判断服务正常开启" class="headerlink" title="判断服务正常开启"></a>判断服务正常开启</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+
+<h3 id="主动触发分析"><a href="#主动触发分析" class="headerlink" title="主动触发分析"></a>主动触发分析</h3><p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试"><a href="#分析调试" class="headerlink" title="分析调试"></a>分析调试</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -694,31 +675,32 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="ubuntu">Ubuntu</h2>
-<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
-<p><img src="Pastedimage20240113005115.png" /></p>
-<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
-<p>查看命令：<code>ulimit -c</code></p>
+          <h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><p>设置如下的程序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下就是生成了dump文件</p>
+<p><img src="/Pastedimage20240113005115.png"></p>
+<h3 id="查看coredump是否打开"><a href="#查看coredump是否打开" class="headerlink" title="查看coredump是否打开"></a>查看coredump是否打开</h3><p>查看命令：<code>ulimit -c</code></p>
 <p>打开命令：<code>ulimit -c unlimited</code></p>
 <p>0：关闭</p>
-<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>unlimited：打开</p>
+<h3 id="配置规则"><a href="#配置规则" class="headerlink" title="配置规则"></a>配置规则</h3><p>主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
 <p>所以修改有两种方法</p>
 <p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<p>2、<code>echo -e &quot;/root/core/core-%e.%s.%p.%t&quot; &gt; /proc/sys/kernel/core_pattern</code></p>
 <blockquote>
 <p>%e：进程名称</p>
 <p>%s：崩溃时收到的信号</p>
 <p>%p：进程ID</p>
 <p>%t：时间戳</p>
 </blockquote>
-<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
-<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
-<h2 id="centos">CentOS</h2>
-<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
-<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
-<h2 id="分析崩溃">分析崩溃</h2>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20240113011447.png" /></p>
+<h3 id="注意关闭apport服务"><a href="#注意关闭apport服务" class="headerlink" title="注意关闭apport服务"></a>注意关闭apport服务</h3><p>这个服务会读取core文件分析，不会保存源文件</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="编辑-etc-security-limits-conf文件"><a href="#编辑-etc-security-limits-conf文件" class="headerlink" title="编辑/etc/security/limits.conf文件"></a>编辑<code>/etc/security/limits.conf</code>文件</h3><p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制</p>
+<h3 id="配置规则-1"><a href="#配置规则-1" class="headerlink" title="配置规则"></a>配置规则</h3><p>和Ubuntu一样</p>
+<h3 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h3><h2 id="分析崩溃"><a href="#分析崩溃" class="headerlink" title="分析崩溃"></a>分析崩溃</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Pastedimage20240113011447.png"></p>
 <p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
 
       
@@ -788,10 +770,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="windows运行参数分析">Windows运行参数分析</h1>
-<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
+          <h1 id="Windows运行参数分析"><a href="#Windows运行参数分析" class="headerlink" title="Windows运行参数分析"></a>Windows运行参数分析</h1><p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
 <p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
-<p><img src="任务管理.png" /></p>
+<p><img src="/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
@@ -867,220 +848,219 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="正则表达式一">正则表达式(一)</h1>
-<h2 id="元字符">元字符</h2>
-<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
-<ol type="1">
-<li><p><code>.</code>匹配所有字符</p></li>
-<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
-<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
-<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
-<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
+          <h1 id="正则表达式-一"><a href="#正则表达式-一" class="headerlink" title="正则表达式(一)"></a>正则表达式(一)</h1><h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol>
+<li><p><code>.</code>匹配所有字符</p>
+</li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p>
+</li>
+<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p>
+</li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p>
+</li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p>
+</li>
 </ol>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
-<ol start="6" type="1">
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,&#39;option&#39;)</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
+<ol start="6">
 <li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
 <li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
-<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
-<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
+<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符<br>tips：小写字母和大写字母的含义往往是补集的关系</li>
+<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个<br>tips<code>*</code>匹配多个</li>
 <li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
 <li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
 <li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
 </ol>
-<h2 id="表达式">表达式</h2>
-<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
-<h2 id="转义字符">转义字符</h2>
-<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
+<h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>&#x3D;<code>x&amp;p</code>，<code>[xp]</code>&#x3D;<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p><code>char(10)</code>&#x3D;<code>\n</code>，即回车。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 <p>输出为</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">转义字符</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
+<tr>
+<th align="center">转义字符</th>
+<th align="center">描述</th>
+<th align="center">示例</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>\a</code></td>
-<td style="text-align: center;">警告</td>
-<td style="text-align: center;"><code>char(7)</code></td>
+<tbody><tr>
+<td align="center"><code>\a</code></td>
+<td align="center">警告</td>
+<td align="center"><code>char(7)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\b</code></td>
-<td style="text-align: center;">退格</td>
-<td style="text-align: center;"><code>char(8)</code></td>
+<tr>
+<td align="center"><code>\b</code></td>
+<td align="center">退格</td>
+<td align="center"><code>char(8)</code></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\f</code></td>
-<td style="text-align: center;">换页符</td>
-<td style="text-align: center;"><code>char(12)</code></td>
+<tr>
+<td align="center"><code>\f</code></td>
+<td align="center">换页符</td>
+<td align="center"><code>char(12)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\n</code></td>
-<td style="text-align: center;">换行符</td>
-<td style="text-align: center;"><code>char(10)</code></td>
+<tr>
+<td align="center"><code>\n</code></td>
+<td align="center">换行符</td>
+<td align="center"><code>char(10)</code></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\r</code></td>
-<td style="text-align: center;">回车</td>
-<td style="text-align: center;"><code>char(13)</code></td>
+<tr>
+<td align="center"><code>\r</code></td>
+<td align="center">回车</td>
+<td align="center"><code>char(13)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\t</code></td>
-<td style="text-align: center;">水平制表符</td>
-<td style="text-align: center;"><code>char(9)</code></td>
+<tr>
+<td align="center"><code>\t</code></td>
+<td align="center">水平制表符</td>
+<td align="center"><code>char(9)</code></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>\v</code></td>
-<td style="text-align: center;">垂直制表符</td>
-<td style="text-align: center;"><code>char(11)</code></td>
+<tr>
+<td align="center"><code>\v</code></td>
+<td align="center">垂直制表符</td>
+<td align="center"><code>char(11)</code></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>\char</code></td>
-<td style="text-align: center;">任意特殊字符</td>
-<td style="text-align: center;">-</td>
+<tr>
+<td align="center"><code>\char</code></td>
+<td align="center">任意特殊字符</td>
+<td align="center">-</td>
 </tr>
-</tbody>
-</table>
-<h2 id="限定符">限定符</h2>
-<table>
+</tbody></table>
+<h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">限定符</th>
-<th style="text-align: center;">含义</th>
+<tr>
+<th align="center">限定符</th>
+<th align="center">含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr *</td>
-<td style="text-align: center;">多次expr：0~∞</td>
+<tbody><tr>
+<td align="center">expr *</td>
+<td align="center">多次expr：0~∞</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">expr ?</td>
-<td style="text-align: center;">一次expr：0~1</td>
+<tr>
+<td align="center">expr ?</td>
+<td align="center">一次expr：0~1</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr +</td>
-<td style="text-align: center;">一次到多次expr：1~∞</td>
+<tr>
+<td align="center">expr +</td>
+<td align="center">一次到多次expr：1~∞</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">expr{m,n}</td>
-<td style="text-align: center;">m到n次expr：m~n</td>
+<tr>
+<td align="center">expr{m,n}</td>
+<td align="center">m到n次expr：m~n</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr{m,}</td>
-<td style="text-align: center;">大于等于m次expr：m~∞</td>
+<tr>
+<td align="center">expr{m,}</td>
+<td align="center">大于等于m次expr：m~∞</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">expr{m}</td>
-<td style="text-align: center;">m次expr：=m</td>
+<tr>
+<td align="center">expr{m}</td>
+<td align="center">m次expr：&#x3D;m</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>expr?</code>代表至多匹配1次</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>expr+</code>匹配一次或者连续多次</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
-<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>&#x3D;<code>&#39;?&#39;</code></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>&#x3D;<code>&#39;*&#39;</code>;<code>{1,}</code>&#x3D;<code>&#39;+&#39;</code></p>
+</li>
+<li><p><code>expr{n}</code>匹配n次，<code>n</code>&#x3D;<code>{n,n}</code></p>
+</li>
 </ul>
-<h2 id="模式">模式</h2>
-<p>表达式+限定词=模式</p>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>表达式+限定词&#x3D;模式</p>
 <table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 33%" />
-<col style="width: 55%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th style="text-align: center;">表达式+限定词</th>
-<th style="text-align: center;">描述</th>
-<th style="text-align: center;">示例</th>
+<tr>
+<th align="center">表达式+限定词</th>
+<th align="center">描述</th>
+<th align="center">示例</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">expr q</td>
-<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
+<tbody><tr>
+<td align="center">expr q</td>
+<td align="center">积极表达式：与尽可能多的expr匹配</td>
+<td align="center">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr q？</td>
-<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
-<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
+<tr>
+<td align="center">expr q？</td>
+<td align="center">消极表达式：与所需尽可能少的expr匹配</td>
+<td align="center">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">expr q+</td>
-<td style="text-align: center;">主动表达式：最大程度的匹配</td>
-<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
+<tr>
+<td align="center">expr q+</td>
+<td align="center">主动表达式：最大程度的匹配</td>
+<td align="center">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
 <p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
-<h2 id="操作符的优先级">操作符的优先级</h2>
-<table>
+<h2 id="操作符的优先级"><a href="#操作符的优先级" class="headerlink" title="操作符的优先级"></a>操作符的优先级</h2><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">操作符</th>
-<th style="text-align: center;">描述</th>
+<tr>
+<th align="center">操作符</th>
+<th align="center">描述</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">\</td>
-<td style="text-align: center;">转义符</td>
+<tbody><tr>
+<td align="center">\</td>
+<td align="center">转义符</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">(), (?:), (?=), []</td>
-<td style="text-align: center;">圆括号和方括号</td>
+<tr>
+<td align="center">(), (?:), (?&#x3D;), []</td>
+<td align="center">圆括号和方括号</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
-<td style="text-align: center;">限定符</td>
+<tr>
+<td align="center">*, +, ?, {n}, {n,}, {n,m}</td>
+<td align="center">限定符</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">^, $, </td>
-<td style="text-align: center;">位置和顺序</td>
+<tr>
+<td align="center">^, $, \anymetacharacter</td>
+<td align="center">位置和顺序</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">|</td>
-<td style="text-align: center;">“或”操作</td>
+<tr>
+<td align="center">|</td>
+<td align="center">“或”操作</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
       
     </div>
@@ -1149,39 +1129,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="最大间隙问题">最大间隙问题</h1>
-<h2 id="题目">题目</h2>
-<p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
-<p><code>input.txt</code> <code>output.txt</code></p>
-<p>5 0.8</p>
-<p>1.1 1.3 2.5 0.7 2.1</p>
+          <h1 id="最大间隙问题"><a href="#最大间隙问题" class="headerlink" title="最大间隙问题"></a>最大间隙问题</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>对于输入的一组数，个数为 n ，求这 n 个数中大小相邻的两个数之间最大差。假设对于任何实数的下取整函数耗时都是 O(1) ，设计此问题的最大间隙解法。例如。</p>
+<p><code>input.txt</code>						<code>output.txt</code></p>
+<p>5								   0.8</p>
+<p>1.1  1.3  2.5  0.7  2.1</p>
 <p>其中这个几个数依次排列 0.7&lt;1.1&lt;1.3&lt;2.1&lt;2.5</p>
-<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3=0.8，所以求得这几个数字之间的最大间距是 0.8</p>
-<h2 id="思考">思考</h2>
-<h3 id="办法一">办法一</h3>
-<p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
+<p>可以看到，这几个相邻数字之间的差距最大在 2.1-1.3&#x3D;0.8，所以求得这几个数字之间的最大间距是 0.8</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><h3 id="办法一"><a href="#办法一" class="headerlink" title="办法一"></a>办法一</h3><p>对于这个题目，首先我想到的也就是上面这个思路，首先要判断整个数组的两数相邻与否，那么我要做的就是将其排序，排序完，我再将其相邻数做差，那么也就是的都一个相邻两数的数组，得到数组之后，我就寻找数组中的最大元素，找到最大元素，再对应其索引，我就能找到那两个数字了。</p>
 <p>但是，我立刻又想到了复杂度问题，因为排序算法的复杂度最低的是分治法，普通的搜索算法复杂度会比排序低的</p>
-<p>复杂度计算如下 <span class="math display">$$
-O(n\log n)+O(n)+O(n)=O(n\log n) \\
-O(n\log n) &gt; O(n)
-$$</span> ​ <!--排序算法+做差+搜索--> 这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
+<p>复杂度计算如下<br>$$<br>O(n\log n)+O(n)+O(n)&#x3D;O(n\log n) \<br>O(n\log n) &gt; O(n)<br>$$<br>​									<!--排序算法+做差+搜索--><br>这个复杂度有点尴尬，因为他不是线性复杂度，不符合题目的要求，所以这个思路是不可行的。</p>
 <p>那么我只能换其他的办法来做。</p>
-<h3 id="办法二">办法二</h3>
-<ol type="1">
-<li>设输入的是n个数，分别为 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, ..., <em>a</em><sub><em>n</em></sub>​</span> ，设在这些数中最大的数为<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub>​</span>，最小的是<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub>​</span>；</li>
-<li>在<span class="math inline"><em>a</em><sub><em>m</em><em>a</em><em>x</em></sub></span>与<span class="math inline"><em>a</em><sub><em>m</em><em>i</em><em>n</em></sub></span>之间均匀插入<span class="math inline"><em>n</em> − 2</span>个等分点，将其分为<span class="math inline"><em>n</em> − 1</span>段，如下图； <img src="分段.png" /></li>
-<li>把需要剩下的<span class="math inline"><em>n</em> − 2</span>个数按照大小放入这<span class="math inline"><em>n</em> − 1​</span>个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
-<li>计算每个段中的最大值最小值<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>]</span>和<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，再使用后一段的<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1]</span>减去前一段的<span class="math inline"><em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
+<h3 id="办法二"><a href="#办法二" class="headerlink" title="办法二"></a>办法二</h3><ol>
+<li>设输入的是n个数，分别为 $a_1,a_2,…,a_n​$ ，设在这些数中最大的数为$a_{max}​$，最小的是$a_{min}​$；</li>
+<li>在$a_{max}$与$a_{min}$之间均匀插入$n-2$个等分点，将其分为$n-1$段，如下图；<br><img src="/%E5%88%86%E6%AE%B5.png"></li>
+<li>把需要剩下的$n-2$个数按照大小放入这$n-1​$个段中，根据鸽巢原理，那么其中必定有一个段是空的，如果有一个段是空的，那么我们就可以知道两个相邻数字之间的差值肯定是在两个段中的；</li>
+<li>计算每个段中的最大值最小值$low[i]$和$high[i]$，再使用后一段的$low[i+1]$减去前一段的$high[i]$，得到这些差值中的最大值就是相邻两数的最大间隙了。</li>
 </ol>
-<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为<span class="math inline"><em>O</em>(<em>n</em>)​</span>，等分点只需要得到单位长度即可，单位长度为 <span class="math display">$$
-l=\frac{max-mix}{n-1}
-$$</span> 每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可 <span class="math display">$$
-seg[i]=\frac{x[i]-minx}{l}+1
-$$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</em>]</span>是一个纽带氏作用，它的索引与<span class="math inline"><em>x</em>[<em>i</em>]</span>的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是<span class="math inline"><em>O</em>(<em>n</em>)</span>，最后需要做差，使用<span class="math inline"><em>l</em><em>o</em><em>w</em>[<em>i</em>+1] − <em>h</em><em>i</em><em>g</em><em>h</em>[<em>i</em>]</span>得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要<span class="math inline"><em>O</em>(<em>n</em>)</span>。</p>
-<p>根据前面的分析，每个过程的复杂度均为<span class="math inline"><em>O</em>(<em>n</em>)</span>，那么有限个<span class="math inline"><em>O</em>(<em>n</em>)</span>的累加复杂度还是<span class="math inline"><em>O</em>(<em>n</em>)</span>，说明这个方法是可行的，满足题目要求。</p>
-<h2 id="伪代码">伪代码</h2>
-<p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
+<p>分析一下复杂度，对于找最大最小值，也只需要遍历一次即可，所以复杂度为$O(n)​$，等分点只需要得到单位长度即可，单位长度为<br>$$<br>l&#x3D;\frac{max-mix}{n-1}<br>$$<br>每个数要判断在哪个段里面也只需要知道自己跟起始处距离几个单位长度即可<br>$$<br>seg[i]&#x3D;\frac{x[i]-minx}{l}+1<br>$$<br>数组$seg[i]$是一个纽带氏作用，它的索引与$x[i]$的数的索引是一样的，数组里面存储的数对于的第几个段。这个过程也是用这个公式就可以计算完成的，所以这个过程的复杂度也是$O(n)$，最后需要做差，使用$low[i+1]-high[i]$得到数组的间隙的最大值即可，最后这个过程的复杂吨也只需要$O(n)$。</p>
+<p>根据前面的分析，每个过程的复杂度均为$O(n)$，那么有限个$O(n)$的累加复杂度还是$O(n)$，说明这个方法是可行的，满足题目要求。</p>
+<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><p>通过前面的分析，确定了方法二是可行的，那么就可以采用这个方法来进行伪代码书写。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先要求出最大值最小值。在这里求出它的索引，这样通过 x 数组访问就可得到它的值了</span></span><br><span class="line">function maxi</span><br><span class="line">maxi = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[maxi])	maxi = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> maxi;</span><br><span class="line"></span><br><span class="line">function mini</span><br><span class="line">mini = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">x</span>(i) &gt; x[mini])	mini = i;</span><br><span class="line">end</span><br><span class="line"><span class="keyword">return</span> mini;</span><br><span class="line"><span class="comment">//计算最大最小值，计算刻度，计算索引映射数据段数组 seg</span></span><br><span class="line">maxx = x[maxi];minx = x[mini];</span><br><span class="line">l = (maxx - minx)/(n<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>:<span class="number">1</span>:n</span><br><span class="line">	seg[i] = (x[i] - minx)/l;</span><br><span class="line">end</span><br><span class="line"><span class="comment">//初始化 low 和 high 数组</span></span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span>:<span class="number">1</span>:n<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -1250,57 +1218,40 @@ $$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="立体角">立体角</h1>
-<p>在谈立体角之前，我们先来复习一下球坐标及其面积分。</p>
-<h2 id="球面坐标系及积分">球面坐标系及积分</h2>
-<h3 id="球坐标系">球坐标系</h3>
-<figure>
-<img src="sphere1.png" alt="sphere1" /><figcaption aria-hidden="true">sphere1</figcaption>
-</figure>
-<p>如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用<span class="math inline">(<em>ρ</em>,<em>ϕ</em>,<em>θ</em>)</span>来描述，与笛卡尔坐标系之间的转化如下</p>
-<p><span class="math display">$$
-x=\rho\sin\phi\cos\theta\\
-y=\rho\sin\phi\sin\theta\\
-z=\cos\phi
-$$</span></p>
+          <h1 id="立体角"><a href="#立体角" class="headerlink" title="立体角"></a>立体角</h1><p>在谈立体角之前，我们先来复习一下球坐标及其面积分。</p>
+<h2 id="球面坐标系及积分"><a href="#球面坐标系及积分" class="headerlink" title="球面坐标系及积分"></a>球面坐标系及积分</h2><h3 id="球坐标系"><a href="#球坐标系" class="headerlink" title="球坐标系"></a>球坐标系</h3><p><img src="/sphere1.png" alt="sphere1"></p>
+<p>如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用$(\rho,\phi,\theta)$来描述，与笛卡尔坐标系之间的转化如下</p>
+<p>$$<br>x&#x3D;\rho\sin\phi\cos\theta\<br>y&#x3D;\rho\sin\phi\sin\theta\<br>z&#x3D;\cos\phi<br>$$</p>
 <p>上式就是球坐标和笛卡尔坐标之间的转化，这个转化很容从图上看出来。</p>
-<h3 id="球面积分">球面积分</h3>
-<figure>
-<img src="sphere3.png" alt="sphere2" /><figcaption aria-hidden="true">sphere2</figcaption>
-</figure>
-<p>从上图可以看出，面积的微元，长为<span class="math inline"><em>ρ</em><em>d</em><em>ϕ</em></span>，因为这个方向上的长度为<span class="math inline"><em>ρ</em><em>ϕ</em></span>，所以微元为<span class="math inline"><em>ρ</em><em>d</em><em>ϕ</em></span>；宽为<span class="math inline"><em>ρ</em>sin <em>ϕ</em><em>d</em><em>θ</em></span>，这是因为首先要投影到<span class="math inline"><em>x</em><em>y</em></span>平面，在这个平面上的长度为<span class="math inline"><em>ρ</em>sin <em>ϕ</em></span>，从图上可以看出，这个长度也就是宽，所以微元的宽为<span class="math inline"><em>ρ</em>sin <em>ϕ</em><em>d</em><em>ϕ</em></span>。所以球面积分的微元面积<span class="math inline"><em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em>​</span>。</p>
+<h3 id="球面积分"><a href="#球面积分" class="headerlink" title="球面积分"></a>球面积分</h3><p><img src="/sphere3.png" alt="sphere2"></p>
+<p>从上图可以看出，面积的微元，长为$\rho d\phi$，因为这个方向上的长度为$\rho\phi$，所以微元为$\rho d\phi$；宽为$\rho\sin\phi d\theta$，这是因为首先要投影到$xy$平面，在这个平面上的长度为$\rho \sin\phi$，从图上可以看出，这个长度也就是宽，所以微元的宽为$\rho \sin\phi d\phi$。所以球面积分的微元面积$\rho^2 \sin\phi d\phi d\theta​$。</p>
 <ul>
-<li>来看几个例子
-<ol type="1">
+<li><p>来看几个例子</p>
+<ol>
 <li><p>球的表面积计算</p>
-<figure>
-<img src="sphere4.png" alt="shpere4" /><figcaption aria-hidden="true">shpere4</figcaption>
-</figure>
-<p>表面积的求法，就是对于微元而言，<span class="math inline"><em>ϕ</em></span>的取值为<span class="math inline">0</span>到<span class="math inline">2<em>π</em></span>，<span class="math inline"><em>θ</em></span>的取值也是<span class="math inline">0</span>到<span class="math inline">2<em>π</em></span>。<span class="math inline"><em>ρ</em></span>就是球的半径。 所以微元<span class="math inline"><em>d</em><em>S</em> = <em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em></span>。表面积的求法如下： <span class="math display"><em>S</em> = ∫<sub>0</sub><sup>2<em>π</em></sup><em>d</em><em>θ</em>∫<sub>0</sub><sup>2<em>π</em></sup><em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em></span> <span class="math inline"> → 2<em>π</em><em>ρ</em><sup>2</sup>(−cos<em>θ</em>)|<sub>0</sub><sup>2<em>π</em></sup> = 4<em>π</em><em>ρ</em><sup>2</sup>​</span>，这就是很熟悉的圆表面积计算公式了。<span class="math inline"><em>S</em><sub><em>圆</em></sub> = 4<em>π</em><em>r</em><sup>2</sup>​</span>，这个公式应该在高中时候就经常使用了。</p></li>
-<li><p>球帽表面积的计算 <img src="1.png" alt="shpere5" /></p></li>
+<p><img src="/sphere4.png" alt="shpere4"></p>
+<p>表面积的求法，就是对于微元而言，$\phi$的取值为$0$到$2\pi$，$\theta$的取值也是$0$到$2\pi$。$\rho$就是球的半径。<br>所以微元$dS&#x3D;\rho^2\sin\phi d\phi d\theta$。表面积的求法如下：<br>$$<br>S&#x3D;\int_0^{2\pi}d\theta\int_0^{2\pi}\rho^2\sin\phi d\phi<br>$$<br>$\rightarrow 2\pi\rho^2(-\cos\theta)|^{2\pi}_0&#x3D;4\pi\rho^2​$，这就是很熟悉的圆表面积计算公式了。$S_圆&#x3D;4\pi r^2​$，这个公式应该在高中时候就经常使用了。</p>
+</li>
+<li><p>球帽表面积的计算<br><img src="/1.png" alt="shpere5"></p>
+</li>
 </ol>
-蓝色部分就叫做球帽，计算这一部分的表面积。首先面积分的微元跟之前的一样，为<span class="math inline"><em>d</em><em>S</em> = <em>ρ</em><sup>2</sup>sin <em>θ</em><em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em></span>，不过这个图上的角度标的不太一样，那么改变一下，把<span class="math inline"><em>x</em><em>y</em></span>平面的角度设为<span class="math inline"><em>ϕ</em></span>，把与<span class="math inline"><em>z</em></span>轴之间的夹角设为<span class="math inline"><em>α</em></span>。很容易从图上看出，<span class="math inline"><em>ϕ</em> ∈ [0,2<em>ϕ</em>], <em>α</em> ∈ [0,<em>θ</em>]</span>，这边要注意这个<span class="math inline"><em>α</em></span>，它的取值是从<span class="math inline"><em>z</em></span>轴为<span class="math inline">0</span>，到<span class="math inline"><em>x</em><em>y</em></span>平面为<span class="math inline">$\frac{\pi}{2}$</span>。所以其表面积为</li>
+<p>蓝色部分就叫做球帽，计算这一部分的表面积。首先面积分的微元跟之前的一样，为$dS&#x3D;\rho^2\sin\theta\phi d\phi d\theta$，不过这个图上的角度标的不太一样，那么改变一下，把$xy$平面的角度设为$\phi$，把与$z$轴之间的夹角设为$\alpha$。很容易从图上看出，$\phi\in[0,2\phi],\alpha\in[0,\theta]$，这边要注意这个$\alpha$，它的取值是从$z$轴为$0$，到$xy$平面为$\frac{\pi}{2}$。所以其表面积为</p>
+</li>
 </ul>
-<p><span class="math display"><em>S</em> = ∫<sub>0</sub><sup>2<em>π</em></sup><em>d</em><em>ϕ</em>∫<sub>0</sub><sup><em>θ</em></sup><em>r</em><sup>2</sup>sin <em>θ</em><em>d</em><em>θ</em></span> ​ <span class="math inline">$\rightarrow 2\pi r^2(-\cos\theta)|^{\theta}_0=2\pi r^2(1-\cos\theta)=2\pi r^2(1-\frac{r-h}{r})=2\pi rh​$</span>，如果<span class="math inline"><em>h</em> = <em>r</em>​</span>，那么求的是半球的面积， 面积<span class="math inline"><em>S</em> = 2<em>π</em><em>r</em><sup>2</sup>​</span>，跟之前的球表面积也对上了。</p>
-<hr />
-<p>球面坐标复习到这儿，下面就进入正题了。 ## 立体角</p>
-<h3 id="角度">角度</h3>
-<p>在介绍立体角之前，也先做个铺垫，讲一下角度。</p>
-<p><img src="angle1.png" /></p>
-<p>如上图所示，平面角，简称角度定义为圆的弧长与半径之间的比值，单位为弧度(<span class="math inline"><em>r</em><em>a</em><em>d</em></span>)。 <span class="math display">$$
-\theta=\frac{l}{r}
-$$</span></p>
-<h3 id="立体角-1">立体角</h3>
-<p>参考平面角的定义，立体角的定义为表面积与半径平方的比值，即</p>
-<p><span class="math display">$$
-\Omega=\frac{S}{r^2}
-$$</span></p>
+<p>$$<br>S&#x3D;\int_0^{2\pi}d\phi\int_0^{\theta}r^2\sin\theta d\theta<br>$$<br>​	$\rightarrow 2\pi r^2(-\cos\theta)|^{\theta}_0&#x3D;2\pi r^2(1-\cos\theta)&#x3D;2\pi r^2(1-\frac{r-h}{r})&#x3D;2\pi rh​$，如果$h&#x3D;r​$，那么求的是半球的面积，	面积$S&#x3D;2\pi r^2​$，跟之前的球表面积也对上了。</p>
+<hr>
+<p>球面坐标复习到这儿，下面就进入正题了。</p>
+<h2 id="立体角-1"><a href="#立体角-1" class="headerlink" title="立体角"></a>立体角</h2><h3 id="角度"><a href="#角度" class="headerlink" title="角度"></a>角度</h3><p>在介绍立体角之前，也先做个铺垫，讲一下角度。</p>
+<p><img src="/angle1.png"></p>
+<p>如上图所示，平面角，简称角度定义为圆的弧长与半径之间的比值，单位为弧度($rad$)。<br>$$<br>\theta&#x3D;\frac{l}{r}<br>$$</p>
+<h3 id="立体角-2"><a href="#立体角-2" class="headerlink" title="立体角"></a>立体角</h3><p>参考平面角的定义，立体角的定义为表面积与半径平方的比值，即</p>
+<p>$$<br>\Omega&#x3D;\frac{S}{r^2}<br>$$</p>
 <p>反映的是从该点出发，向球面区域张成的视野大小，是平面角的三维扩展。</p>
-<p><img src="angle2.jpg" /></p>
+<p><img src="/angle2.jpg"></p>
 <p>接上面计算的表面积的例子。</p>
-<ol type="1">
-<li>球的立体角 球的表面积为<span class="math inline"><em>S</em> = 4<em>π</em><em>r</em><sup>2</sup>​</span>，球的半径为<span class="math inline"><em>r</em>​</span>，立体角为<span class="math inline">$\Omega=\frac{S}{r^2}=4\pi​$</span>，这也是最大的立体角。</li>
-<li>球帽的立体角 球帽的表面积为<span class="math inline">2<em>π</em><em>r</em><em>h</em></span>，半径为<span class="math inline"><em>r</em></span>，立体角为<span class="math inline">$\Omega=\frac{S}{r^2}=2\pi h$</span>。</li>
+<ol>
+<li>球的立体角<br>球的表面积为$S&#x3D;4\pi r^2​$，球的半径为$r​$，立体角为$\Omega&#x3D;\frac{S}{r^2}&#x3D;4\pi​$，这也是最大的立体角。</li>
+<li>球帽的立体角<br>球帽的表面积为$2\pi rh$，半径为$r$，立体角为$\Omega&#x3D;\frac{S}{r^2}&#x3D;2\pi h$。</li>
 </ol>
 <p>需要注意的是，立体角计算也可以理解为是所形成表面在以原点为圆心的球的球面上的投影除以半径的平方。因为要计算的立体角表面不一定是球面的一部分，所以需要先投影到球面再进行计算。</p>
 
