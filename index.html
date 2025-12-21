@@ -272,23 +272,7 @@
 <p>转载：https://github.com/rahulrajaram/linux_troubleshooting</p>
 </blockquote>
 <p>Purpose: a single-page, production-ready cheatsheet for Linux/SRE triage. Optimized for fast on-call use: concise flags, copy-paste recipes, brief notes, and clear risk callouts.</p>
-<p>Quick Navigation</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#binaries--elf">Binaries &amp; ELF</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#text--data-utilities">Text &amp; Data Utilities</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#networking">Networking</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#kernel--tracing">Kernel &amp; Tracing</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#disk--filesystems">Disk &amp; Filesystems</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#processes--scheduling">Processes &amp; Scheduling</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#cpu">CPU</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#memory">Memory</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#logs--systemd">Logs &amp; Systemd</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#security--audit">Security &amp; Audit</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#containers--namespaces">Containers &amp; Namespaces</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rahulrajaram/linux_troubleshooting#incident-playbooks">Incident Playbooks</a></li>
-</ul>
-<p>Tip: Use your editor/browser search to jump to any command by its number, e.g., “## 41. lsof”.</p>
-<h2 id="binaries-elf">Binaries &amp; ELF</h2>
+<h1 id="binaries-elf">Binaries &amp; ELF</h1>
 <p>Cheat Card</p>
 <ul>
 <li>Linked libs: <code>ldd /path/to/bin</code> (security caveat: may execute code in rare cases)</li>
@@ -354,7 +338,7 @@
 <li>Pretty print: <code>awk '{printf "%-20s %10d\n", $1, $2}' file</code></li>
 <li>Count unique values: <code>awk '{c[$1]++} END{for (k in c) print k, c[k]}' file</code></li>
 </ul>
-<h2 id="networking">Networking</h2>
+<h1 id="networking">Networking</h1>
 <p>Cheat Card</p>
 <ul>
 <li>Ports→PIDs: <code>ss -ltnp</code>; established only: <code>ss -tn state established</code></li>
@@ -377,12 +361,7 @@
 <li><code>-t</code>: set IP time-to-live</li>
 <li><code>ping 224.0.0.1</code>: ping multicast address</li>
 </ul>
-<p>Notes:</p>
-<ul>
-<li>Using average <code>rtt</code> values, you can determine whether there are huge variations causing jitter, especially in RT applications</li>
-<li>ping will report duplications, however, duplicate packets should never occur, and seem to be caused by inappropriate link-level retransmissions</li>
-<li>ping will report damaged packets, suggesting broken hardware in the network Requires: iputils-ping.</li>
-</ul>
+<p>Notes: - Using average <code>rtt</code> values, you can determine whether there are huge variations causing jitter, especially in RT applications - ping will report duplications, however, duplicate packets should never occur, and seem to be caused by inappropriate link-level retransmissions - ping will report damaged packets, suggesting broken hardware in the network Requires: iputils-ping.</p>
 <h2 id="ip">6. ip</h2>
 <ul>
 <li>Compat: Linux; Root: not required for reads; Requires: iproute2.</li>
@@ -399,7 +378,15 @@
 <li>Multicast: <code>ip maddr</code> or <code>ip maddr show dev &lt;iface&gt;</code></li>
 </ul></li>
 </ul>
-<p>Example <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Query path and chosen <span class="built_in">source</span> IP</span></span><br><span class="line">ip route get 8.8.8.8</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Expect: 8.8.8.8 via 192.168.1.1 dev wlo1 src 192.168.1.23</span></span><br></pre></td></tr></table></figure> - <code>ip route</code>: List all of the route entries in the kernel - <code>ip route add</code>: Add a route entry to the kernel routing table - <code>ip route replace</code>: Replace an existing route (add if not present) - <code>ip maddr</code>: Display multicast information for all devices - <code>ip maddr show dev wlo1</code> - <code>ip neigh show dev wlo1</code>: check for reachability of specific interfaces Requires: iproute2.</p>
+<p>Example <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Query path and chosen <span class="built_in">source</span> IP</span></span><br><span class="line">ip route get 8.8.8.8</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Expect: 8.8.8.8 via 192.168.1.1 dev wlo1 src 192.168.1.23</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>ip route</code>: List all of the route entries in the kernel</li>
+<li><code>ip route add</code>: Add a route entry to the kernel routing table</li>
+<li><code>ip route replace</code>: Replace an existing route (add if not present)</li>
+<li><code>ip maddr</code>: Display multicast information for all devices</li>
+<li><code>ip maddr show dev wlo1</code></li>
+<li><code>ip neigh show dev wlo1</code>: check for reachability of specific interfaces Requires: iproute2.</li>
+</ul>
 <h2 id="arp">7. arp</h2>
 <ul>
 <li>Compat: Legacy; prefer <code>ip neigh</code>; Requires: net-tools.</li>
@@ -458,9 +445,21 @@
 <li><code>ss -A tcp,udp</code>: dump socket tables Requires: iproute2.</li>
 </ul>
 <h2 id="tcpdump">37. tcpdump</h2>
-<p>Compat: Linux; Root/CAP_NET_RAW required for captures; Requires: tcpdump. What it does: capture packets for inspection and troubleshooting. Requires: tcpdump. - Interface and no name resolution: <code>tcpdump -ni &lt;iface&gt;</code> - Host or subnet: <code>tcpdump -ni &lt;iface&gt; host &lt;ip&gt;</code>; <code>tcpdump -ni &lt;iface&gt; net 10.0.0.0/8</code> - Ports/protocols: <code>tcpdump -ni &lt;iface&gt; tcp port 443</code> or <code>udp port 53</code> - SYNs only (new TCP handshakes): <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">New TCP handshakes only (SYN without ACK)</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; &#x27;tcp[tcpflags] &amp; (tcp-syn) != 0 and tcp[tcpflags] &amp; (tcp-ack) == 0&#x27;</span><br></pre></td></tr></table></figure> - DNS queries: <code>tcpdump -ni &lt;iface&gt; port 53</code> - ICMP reachability: <code>tcpdump -ni &lt;iface&gt; icmp</code> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: tcpdump</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Capture full packets to a file</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; -s 0 -w capture.pcap</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Rotate captures every 5m, keep 6 files</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; -s 0 -G 300 -W 6 -w &#x27;cap-%Y%m%d%H%M%S.pcap&#x27;</span><br></pre></td></tr></table></figure></p>
+<p>Compat: Linux; Root/CAP_NET_RAW required for captures; Requires: tcpdump. What it does: capture packets for inspection and troubleshooting. Requires: tcpdump.</p>
+<ul>
+<li><p>Interface and no name resolution: <code>tcpdump -ni &lt;iface&gt;</code></p></li>
+<li><p>Host or subnet: <code>tcpdump -ni &lt;iface&gt; host &lt;ip&gt;</code>; <code>tcpdump -ni &lt;iface&gt; net 10.0.0.0/8</code></p></li>
+<li><p>Ports/protocols: <code>tcpdump -ni &lt;iface&gt; tcp port 443</code> or <code>udp port 53</code></p></li>
+<li><p>SYNs only (new TCP handshakes): <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">New TCP handshakes only (SYN without ACK)</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; &#x27;tcp[tcpflags] &amp; (tcp-syn) != 0 and tcp[tcpflags] &amp; (tcp-ack) == 0&#x27;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>DNS queries: <code>tcpdump -ni &lt;iface&gt; port 53</code></p></li>
+<li><p>ICMP reachability: <code>tcpdump -ni &lt;iface&gt; icmp</code> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: tcpdump</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Capture full packets to a file</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; -s 0 -w capture.pcap</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Rotate captures every 5m, keep 6 files</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; -s 0 -G 300 -W 6 -w &#x27;cap-%Y%m%d%H%M%S.pcap&#x27;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
 <h2 id="mtr">38. mtr</h2>
-<p>Compat: Linux; May need root/CAP_NET_RAW for certain probe types; Requires: mtr. What it does: combines ping and traceroute to visualize latency and loss per hop. - Run with extra info: <code>mtr -ezbw &lt;dest&gt;</code> - Report mode (one-off): <code>mtr -ezbwrc 10 &lt;dest&gt;</code> Requires: mtr.</p>
+<p>Compat: Linux; May need root/CAP_NET_RAW for certain probe types; Requires: mtr. What it does: combines ping and traceroute to visualize latency and loss per hop.</p>
+<ul>
+<li>Run with extra info: <code>mtr -ezbw &lt;dest&gt;</code></li>
+<li>Report mode (one-off): <code>mtr -ezbwrc 10 &lt;dest&gt;</code> Requires: mtr.</li>
+</ul>
 <h2 id="traceroute">39. traceroute</h2>
 <ul>
 <li>Compat: Linux; Requires: traceroute; TCP mode may need CAP_NET_RAW/root.</li>
@@ -529,7 +528,7 @@
 <li>Compat: Legacy; prefer <code>ip link</code> and <code>bridge</code>; Requires: bridge-utils.</li>
 <li>brctl is used to set up, maintain, and inspect the ethernet bridge configuration in the linux kernel. Legacy: prefer <code>ip link add name br0 type bridge</code> and <code>bridge</code> (iproute2) tooling. Requires: bridge-utils.</li>
 </ul>
-<h2 id="kernel-tracing">Kernel &amp; Tracing</h2>
+<h1 id="kernel-tracing">Kernel &amp; Tracing</h1>
 <p>Cheat Card</p>
 <ul>
 <li>Kernel logs: <code>dmesg -T -l err,crit,alert,emerg</code></li>
@@ -579,9 +578,28 @@
 <li>Unload: <code>modprobe -r &lt;module&gt;</code> (fails if in use)</li>
 <li>Caution: loading/unloading modules can destabilize systems; prefer persistent config and ensure module compatibility.</li>
 </ul>
-<h2 id="disk-filesystems">Disk &amp; Filesystems</h2>
-<p>Cheat Card - Space/inodes: <code>df -h</code> and <code>df -i</code>; biggest dirs: <code>du -xhd1 /path | sort -h</code> - IO saturation: <code>iostat -xz 1</code>; per-proc IO: <code>pidstat -d 1</code>, <code>iotop -oPa</code> - Devices/FS: <code>lsblk -o NAME,TYPE,SIZE,ROTA,MOUNTPOINT,MODEL</code>; mounts: <code>findmnt</code> - Mount ops: <code>mount --bind olddir newdir</code>; remount ro: <code>mount -o remount,ro /mnt</code></p>
-<p>Inventory and health - Device tree: <code>lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,MODEL</code> - Identify filesystem UUID/TYPE: <code>blkid</code> - SMART check (if supported): <code>smartctl -H /dev/sdX</code> and <code>smartctl -a /dev/sdX</code> (Requires: smartmontools) - NVMe info: <code>nvme list</code>; <code>nvme smart-log /dev/nvme0</code> (Requires: nvme-cli) Notes - iostat quick view (Requires: sysstat): <code>iostat -xz 1</code> (watch <code>await</code>, <code>%util</code>, <code>r/s</code>, <code>w/s</code>) - findmnt: show mount hierarchy or lookup by target: <code>findmnt /mount/point</code> - adds or removes modules from the Linux Kernel - Caution: loading/unloading modules can destabilize systems; prefer persistent config and ensure module compatibility.</p>
+<h1 id="disk-filesystems">Disk &amp; Filesystems</h1>
+<p>Cheat Card</p>
+<ul>
+<li>Space/inodes: <code>df -h</code> and <code>df -i</code>; biggest dirs: <code>du -xhd1 /path | sort -h</code></li>
+<li>IO saturation: <code>iostat -xz 1</code>; per-proc IO: <code>pidstat -d 1</code>, <code>iotop -oPa</code></li>
+<li>Devices/FS: <code>lsblk -o NAME,TYPE,SIZE,ROTA,MOUNTPOINT,MODEL</code>; mounts: <code>findmnt</code></li>
+<li>Mount ops: <code>mount --bind olddir newdir</code>; remount ro: <code>mount -o remount,ro /mnt</code></li>
+</ul>
+<p>Inventory and health</p>
+<ul>
+<li>Device tree: <code>lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,MODEL</code></li>
+<li>Identify filesystem UUID/TYPE: <code>blkid</code></li>
+<li>SMART check (if supported): <code>smartctl -H /dev/sdX</code> and <code>smartctl -a /dev/sdX</code> (Requires: smartmontools)</li>
+<li>NVMe info: <code>nvme list</code>; <code>nvme smart-log /dev/nvme0</code> (Requires: nvme-cli)</li>
+</ul>
+<p><strong>Notes</strong></p>
+<ul>
+<li>iostat quick view (Requires: sysstat): <code>iostat -xz 1</code> (watch <code>await</code>, <code>%util</code>, <code>r/s</code>, <code>w/s</code>)</li>
+<li>findmnt: show mount hierarchy or lookup by target: <code>findmnt /mount/point</code></li>
+<li>adds or removes modules from the Linux Kernel</li>
+<li>Caution: loading/unloading modules can destabilize systems; prefer persistent config and ensure module compatibility.</li>
+</ul>
 <h2 id="dd-danger-destructive-read-first">14. dd (DANGER: DESTRUCTIVE — READ FIRST)</h2>
 <ul>
 <li>Compat: Linux; Root required for raw devices; Highly destructive when writing; Requires: coreutils.</li>
@@ -590,14 +608,14 @@
 </ul>
 <h2 id="jq">15. jq</h2>
 <ul>
-<li>Compat: Linux; Requires: jq package. What it does: parse/query/transform JSON on the command line. Requires: jq.</li>
-<li>Pretty-print: <code>jq . file.json</code></li>
-<li>Extract field list: <code>jq -r '.items[].metadata.name' file.json</code></li>
-<li>Filter by condition: <code>jq '.[] | select(.status=="RUNNING")' file.json</code></li>
-<li>Transform and count: <code>jq '[.[] | .level] | group_by(.) | map({level: .[0], count: length})' file.json</code></li>
-<li>Sort and top N: <code>jq 'sort_by(.time) | reverse | .[0:5]' file.json</code></li>
-<li>From journald: <code>journalctl -o json | jq -r 'select(.PRIORITY&lt;=3) | .MESSAGE'</code> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: jq — show high-priority messages from journald</span></span><br><span class="line">journalctl -o json | jq -r &#x27;select(.PRIORITY&lt;=3) | .MESSAGE&#x27;</span><br></pre></td></tr></table></figure></li>
-<li>Keys and length: <code>jq 'keys, length' file.json</code></li>
+<li><p>Compat: Linux; Requires: jq package. What it does: parse/query/transform JSON on the command line. Requires: jq.</p></li>
+<li><p>Pretty-print: <code>jq . file.json</code></p></li>
+<li><p>Extract field list: <code>jq -r '.items[].metadata.name' file.json</code></p></li>
+<li><p>Filter by condition: <code>jq '.[] | select(.status=="RUNNING")' file.json</code></p></li>
+<li><p>Transform and count: <code>jq '[.[] | .level] | group_by(.) | map({level: .[0], count: length})' file.json</code></p></li>
+<li><p>Sort and top N: <code>jq 'sort_by(.time) | reverse | .[0:5]' file.json</code></p></li>
+<li><p>From journald: <code>journalctl -o json | jq -r 'select(.PRIORITY&lt;=3) | .MESSAGE'</code> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: jq — show high-priority messages from journald</span></span><br><span class="line">journalctl -o json | jq -r &#x27;select(.PRIORITY&lt;=3) | .MESSAGE&#x27;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Keys and length: <code>jq 'keys, length' file.json</code></p></li>
 </ul>
 <h2 id="diff">16. diff</h2>
 <ul>
@@ -649,7 +667,12 @@
 <li>see: <a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E19455-01/805-7228/6j6q7uf0e/index.html">https://docs.oracle.com/cd/E19455-01/805-7228/6j6q7uf0e/index.html</a></li>
 <li>Caution: avoid running fsck on a mounted filesystem (except with specific fs support); prefer read-only mounts or maintenance windows.</li>
 </ul>
-<p>Extended notes - ext* specifics: <code>e2fsck</code> checks ext2/3/4; use <code>-f</code> to force, <code>-n</code> for read-only, <code>-p</code> for preen (auto-fix safe issues). Requires: e2fsprogs. - Bad blocks (DANGER): <code>badblocks</code> scans devices for bad sectors; write-mode is destructive. Prefer read-only first. Examples <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Read-only badblocks scan (non-destructive)</span></span><br><span class="line">sudo badblocks -sv /dev/sdX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DANGER: write-mode destructive scan — data loss</span></span><br><span class="line">sudo badblocks -wsv /dev/sdX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ext* filesystem check (read-only)</span></span><br><span class="line">sudo e2fsck -fn /dev/sdXN</span><br></pre></td></tr></table></figure></p>
+<p>Extended notes</p>
+<ul>
+<li>ext* specifics: <code>e2fsck</code> checks ext2/3/4; use <code>-f</code> to force, <code>-n</code> for read-only, <code>-p</code> for preen (auto-fix safe issues). Requires: e2fsprogs.</li>
+<li>Bad blocks (DANGER): <code>badblocks</code> scans devices for bad sectors; write-mode is destructive. Prefer read-only first.</li>
+</ul>
+<p>Examples <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Read-only badblocks scan (non-destructive)</span></span><br><span class="line">sudo badblocks -sv /dev/sdX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DANGER: write-mode destructive scan — data loss</span></span><br><span class="line">sudo badblocks -wsv /dev/sdX</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ext* filesystem check (read-only)</span></span><br><span class="line">sudo e2fsck -fn /dev/sdXN</span><br></pre></td></tr></table></figure></p>
 <h2 id="mount">21. mount</h2>
 <ul>
 <li>Compat: Linux; Root required unless user mounts configured; Requires: util-linux.</li>
@@ -689,20 +712,20 @@
 <ul>
 <li>Compat: Legacy; prefer <code>ss</code>; Requires: net-tools.</li>
 </ul>
-<h2 id="processes-scheduling">Processes &amp; Scheduling</h2>
+<h1 id="processes-scheduling">Processes &amp; Scheduling</h1>
 <p>Cheat Card</p>
 <ul>
-<li>Top offenders: <code>ps -eo pid,ppid,user,%cpu,%mem,cmd --sort=-%cpu | head</code></li>
-<li>Threads view: <code>top -H</code> or <code>ps -Lp &lt;pid&gt; -o pid,tid,pcpu,comm</code></li>
-<li>Target processes: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Preview before signaling</span></span><br><span class="line">pgrep -a &lt;name&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Then send a scoped, safe signal (example: TERM)</span></span><br><span class="line">pkill -TERM -u &lt;user&gt; -f &#x27;&lt;exact-pattern&gt;&#x27;</span><br></pre></td></tr></table></figure></li>
-<li>Over time: <code>pidstat -u 1 -p &lt;pid&gt;</code> (CPU) and <code>pidstat -d 1</code> (IO)</li>
-<li>Find PIDs: <code>pidof &lt;proc&gt;</code>; list threads: <code>ps -Lp &lt;pid&gt;</code></li>
-<li>Niceness: start <code>nice -n 10 cmd</code>; adjust: <code>renice -n 10 -p &lt;pid&gt;</code></li>
-<li>Locks: <code>/proc/locks</code> shows current file locks (read-only)</li>
-<li>Sessions: users <code>who</code>; recent logins <code>last | head</code></li>
-<li>Schedule: <code>crontab -l</code> list; <code>crontab -e</code> edit</li>
-<li>Deprecated in many distros; prefer <code>ss</code>.</li>
-<li>Common mappings:
+<li><p>Top offenders: <code>ps -eo pid,ppid,user,%cpu,%mem,cmd --sort=-%cpu | head</code></p></li>
+<li><p>Threads view: <code>top -H</code> or <code>ps -Lp &lt;pid&gt; -o pid,tid,pcpu,comm</code></p></li>
+<li><p>Target processes: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Preview before signaling</span></span><br><span class="line">pgrep -a &lt;name&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Then send a scoped, safe signal (example: TERM)</span></span><br><span class="line">pkill -TERM -u &lt;user&gt; -f &#x27;&lt;exact-pattern&gt;&#x27;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>Over time: <code>pidstat -u 1 -p &lt;pid&gt;</code> (CPU) and <code>pidstat -d 1</code> (IO)</p></li>
+<li><p>Find PIDs: <code>pidof &lt;proc&gt;</code>; list threads: <code>ps -Lp &lt;pid&gt;</code></p></li>
+<li><p>Niceness: start <code>nice -n 10 cmd</code>; adjust: <code>renice -n 10 -p &lt;pid&gt;</code></p></li>
+<li><p>Locks: <code>/proc/locks</code> shows current file locks (read-only)</p></li>
+<li><p>Sessions: users <code>who</code>; recent logins <code>last | head</code></p></li>
+<li><p>Schedule: <code>crontab -l</code> list; <code>crontab -e</code> edit</p></li>
+<li><p>Deprecated in many distros; prefer <code>ss</code>.</p></li>
+<li><p>Common mappings:</p>
 <ul>
 <li><code>netstat -tulpn</code> -&gt; <code>ss -tulpn</code></li>
 <li><code>netstat -anp</code> -&gt; <code>ss -anp</code></li>
@@ -801,7 +824,7 @@
 <li><code>Z</code> - defunct (“zombie”) process, terminated but not reaped by its parent</li>
 </ul>
 <p>see STANDARD FORMAT SPECIFIERS in <code>man ps</code></p>
-<h2 id="cpu">CPU</h2>
+<h1 id="cpu">CPU</h1>
 <p>Cheat Card</p>
 <ul>
 <li>CPU saturation: <code>mpstat -P ALL 1</code> (sys/iowait/irq/soft)</li>
@@ -836,7 +859,12 @@
 </ul></li>
 </ul>
 <h2 id="memory">Memory</h2>
-<p>Cheat Card - Snapshot: <code>free -h --wide</code>; paging: <code>vmstat -a 1</code> (si/so) - Per-proc memory: <code>ps -eo pid,user,rss,cmd --sort=-rss | head</code>; deep dive: <code>pmap -x &lt;pid&gt;</code> - OOM evidence: <code>dmesg -T | grep -i oom</code> or <code>journalctl -k -g OOM</code></p>
+<p>Cheat Card</p>
+<ul>
+<li>Snapshot: <code>free -h --wide</code>; paging: <code>vmstat -a 1</code> (si/so)</li>
+<li>Per-proc memory: <code>ps -eo pid,user,rss,cmd --sort=-rss | head</code>; deep dive: <code>pmap -x &lt;pid&gt;</code></li>
+<li>OOM evidence: <code>dmesg -T | grep -i oom</code> or <code>journalctl -k -g OOM</code></li>
+</ul>
 <h2 id="free">35. free</h2>
 <ul>
 <li>Compat: Linux; Requires: procps.</li>
@@ -1153,13 +1181,48 @@
 <li>interactive confirm: <code>xargs -p rm</code> (ask before each batch)</li>
 <li>do nothing on empty input: <code>xargs -r cmd</code> (GNU)</li>
 </ul>
-<h2 id="logs-systemd">Logs &amp; Systemd</h2>
-<p>Cheat Card - Unit status: <code>systemctl status &lt;unit&gt;</code>; failed: <code>systemctl list-units --failed</code> - Hot errors: <code>journalctl -xeu &lt;unit&gt;</code>; follow: <code>journalctl -fu &lt;unit&gt;</code> - Boot scoping: <code>journalctl -b</code> and <code>-b -1</code>; size: <code>journalctl --disk-usage</code> Systemd basics <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Unit status and enablement</span></span><br><span class="line">systemctl status &lt;unit&gt;</span><br><span class="line">systemctl is-active &lt;unit&gt;</span><br><span class="line">systemctl is-enabled &lt;unit&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Failed units overview</span></span><br><span class="line">systemctl list-units --failed</span><br><span class="line">journalctl -xe  # recent critical logs</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Restart and verify logs from this boot</span></span><br><span class="line">systemctl restart &lt;unit&gt;</span><br><span class="line">journalctl -u &lt;unit&gt; -b -n 50</span><br></pre></td></tr></table></figure> Journal essentials <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Recent errors <span class="keyword">for</span> a unit and live follow</span></span><br><span class="line">journalctl -xeu &lt;unit&gt;</span><br><span class="line">journalctl -fu &lt;unit&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Time window and priority</span></span><br><span class="line">journalctl -u &lt;unit&gt; --since &quot;1 hour ago&quot; --until now</span><br><span class="line">journalctl -p err..alert -b</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Previous boot</span></span><br><span class="line">journalctl -b -1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">JSON output piped to jq (Requires: jq)</span></span><br><span class="line">journalctl -u &lt;unit&gt; -o json | jq -r &#x27;.MESSAGE&#x27;</span><br></pre></td></tr></table></figure> Journal management <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Disk usage and vacuum</span></span><br><span class="line">journalctl --disk-usage</span><br><span class="line">journalctl --vacuum-size=1G</span><br><span class="line">journalctl --vacuum-time=7d</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Make logs persistent (requires root; edit journald.conf)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/systemd/journald.conf: <span class="built_in">set</span> Storage=persistent</span></span><br><span class="line">systemctl restart systemd-journald</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Tip: tune RateLimitIntervalSec/RateLimitBurst to manage <span class="built_in">log</span> storms</span></span><br></pre></td></tr></table></figure> Resolved (DNS) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Overall resolver status</span></span><br><span class="line">resolvectl status</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Query using systemd-resolved</span></span><br><span class="line">resolvectl query example.com</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Flush caches</span></span><br><span class="line">resolvectl flush-caches</span><br></pre></td></tr></table></figure></p>
-<h2 id="security-audit">Security &amp; Audit</h2>
-<p>Cheat Card - SELinux mode: <code>getenforce</code>; recent denials: <code>ausearch -m AVC -ts recent</code> - AppArmor status: <code>aa-status</code>; set complain/enforce on a profile - Audit rule example: <code>auditctl -w /etc/ssh/sshd_config -p wa -k sshcfg</code> SELinux <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Current mode and temporary permissive (diagnostic; requires root)</span></span><br><span class="line">getenforce</span><br><span class="line">setenforce 0  # Caution: reduces enforcement</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Contexts and recent denials</span></span><br><span class="line">ls -Z</span><br><span class="line">ps -eZ | head</span><br><span class="line">ausearch -m AVC -ts recent</span><br><span class="line">journalctl -t setroubleshoot</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Manage booleans (example: allow httpd network connect)</span></span><br><span class="line">getsebool -a | grep httpd</span><br><span class="line">setsebool -P httpd_can_network_connect on</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: selinux-utils/policycoreutils; setroubleshoot (optional)</span></span><br></pre></td></tr></table></figure> AppArmor <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Status and service</span></span><br><span class="line">aa-status</span><br><span class="line">systemctl status apparmor</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Toggle a profile mode</span></span><br><span class="line">aa-complain /path/to/bin</span><br><span class="line">aa-enforce /path/to/bin</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: apparmor-utils</span></span><br></pre></td></tr></table></figure> Auditd <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Service and rules</span></span><br><span class="line">systemctl status auditd</span><br><span class="line">auditctl -l</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Search recent denials / by PID</span></span><br><span class="line">ausearch -m avc -ts recent</span><br><span class="line">ausearch -p &lt;pid&gt; -ts recent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Watch a file <span class="keyword">for</span> writes/attr changes (key: sshcfg)</span></span><br><span class="line">auditctl -w /etc/ssh/sshd_config -p wa -k sshcfg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Summary report</span></span><br><span class="line">aureport --summary -ts today</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: auditd (auditd, auditctl, ausearch, aureport)</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="containers-namespaces">Containers &amp; Namespaces</h2>
-<p>Cheat Card - Enter container namespace: <code>nsenter --target &lt;pid&gt; --mount --uts --ipc --net --pid -- bash</code> - Docker triage: <code>docker ps</code>, <code>docker logs --tail=200 -f &lt;id&gt;</code>, <code>docker exec -it &lt;id&gt; sh</code> - K8s triage: <code>kubectl get pods -A</code>, <code>kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</code>, <code>kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</code> nsenter (enter namespaces of a PID) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Get target PID (e.g., container process)</span></span><br><span class="line">pidof &lt;proc&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Enter multiple namespaces of a PID</span></span><br><span class="line">nsenter --target &lt;pid&gt; --mount --uts --ipc --net --pid -- bash</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Inspect and chroot-like into the process rootfs</span></span><br><span class="line">ls -l /proc/&lt;pid&gt;/root</span><br><span class="line">nsenter --target &lt;pid&gt; --mount -- chroot /proc/&lt;pid&gt;/root bash</span><br></pre></td></tr></table></figure> Docker (if present) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">List, <span class="built_in">exec</span>, inspect PID, and <span class="built_in">tail</span> logs</span></span><br><span class="line">docker ps --format &#x27;&#123;&#123;.ID&#125;&#125; &#123;&#123;.Names&#125;&#125; &#123;&#123;.Status&#125;&#125;&#x27;</span><br><span class="line">docker exec -it &lt;id|name&gt; bash  # or sh</span><br><span class="line">docker inspect -f &#x27;&#123;&#123;.State.Pid&#125;&#125;&#x27; &lt;id&gt;</span><br><span class="line">docker logs --tail=200 -f &lt;id&gt;</span><br></pre></td></tr></table></figure> Kubernetes (if present) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Pods and events</span></span><br><span class="line">kubectl get pods -A -o wide</span><br><span class="line">kubectl get events -A --sort-by=.lastTimestamp | tail</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Describe, logs, and <span class="built_in">exec</span></span></span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --tail=200</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line">kubectl exec -it &lt;pod&gt; -n &lt;ns&gt; -- bash</span><br></pre></td></tr></table></figure> CRI/containerd (if present) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">List, inspect, and logs via crictl</span></span><br><span class="line">crictl ps -a</span><br><span class="line">crictl inspect &lt;id&gt;</span><br><span class="line">crictl logs &lt;id&gt;</span><br></pre></td></tr></table></figure> Notes - Without runtime CLIs, use <code>nsenter</code> by PID from <code>ps</code>/<code>systemctl</code>. - Requires: docker or podman for Docker-like commands; kubectl; crictl for containerd/CRI. ## Incident Playbooks</p>
-<p>High CPU <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Top CPU processes and hot threads</span></span><br><span class="line">ps -eo pid,ppid,user,%cpu,%mem,cmd --sort=-%cpu | head</span><br><span class="line">top -H</span><br><span class="line">ps -Lp &lt;pid&gt; -o pid,tid,pcpu,comm</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Per-process CPU over <span class="keyword">time</span>; optional perf <span class="keyword">if</span> available</span></span><br><span class="line">pidstat -u 1 -p &lt;pid&gt;</span><br><span class="line">perf top  # if installed</span><br></pre></td></tr></table></figure> High IO wait / Disk latency <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Device saturation and per-process IO</span></span><br><span class="line">iostat -xz 1   # watch await, %util, r/s, w/s</span><br><span class="line">pidstat -d 1</span><br><span class="line">iotop -oPa</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Device/FS inventory and kernel errors</span></span><br><span class="line">lsblk -o NAME,TYPE,SIZE,ROTA,MOUNTPOINT,MODEL</span><br><span class="line">dmesg -T | egrep -i &#x27;error|reset|blk|nvme&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optional deep dive</span></span><br><span class="line">blktrace -d /dev/sdX -o - | blkparse -i -</span><br></pre></td></tr></table></figure> Memory leak / OOM <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Snapshot and top RSS processes</span></span><br><span class="line">free -h</span><br><span class="line">ps aux --sort=-rss | head</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Per-process mappings and over-time faults</span></span><br><span class="line">pmap -x &lt;pid&gt; | sort -nrk 3 | head</span><br><span class="line">pidstat -r 1 -p &lt;pid&gt;</span><br><span class="line">smem -r  # if installed</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OOM evidence</span></span><br><span class="line">dmesg -T | grep -i oom || journalctl -k -g OOM</span><br></pre></td></tr></table></figure> Packet loss / High latency <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Path and end-to-end latency</span></span><br><span class="line">ip route get &lt;dest&gt;</span><br><span class="line">mtr -ezbw &lt;dest&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Interface health and TCP details</span></span><br><span class="line">ip -s link show &lt;iface&gt;</span><br><span class="line">ethtool -S &lt;iface&gt;</span><br><span class="line">ss -i dst &lt;dest&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Targeted capture samples</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; host &lt;dest&gt; and icmp</span><br><span class="line">tcpdump -ni &lt;iface&gt; tcp port 443 and &#x27;tcp[tcpflags] &amp; tcp-syn != 0&#x27;</span><br></pre></td></tr></table></figure> DNS failures <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Resolve via systemd-resolved (or dig <span class="keyword">if</span> available)</span></span><br><span class="line">resolvectl query example.com</span><br><span class="line">resolvectl status</span><br><span class="line">dig @8.8.8.8 example.com A +time=2 +tries=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Reachability and captures</span></span><br><span class="line">ss -u &#x27;sport = :53 or dport = :53&#x27;</span><br><span class="line">tcpdump -ni &lt;iface&gt; port 53</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Config checks</span></span><br><span class="line">ls -l /etc/resolv.conf</span><br><span class="line">resolvectl flush-caches</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check firewall rules as appropriate</span></span><br></pre></td></tr></table></figure> TLS handshake issues <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Inspect handshake/cert chain (TLS1.2 example)</span></span><br><span class="line">openssl s_client -connect host:443 -servername host -tls1_2 -showcerts</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check expiry/subject/issuer quickly</span></span><br><span class="line">echo | openssl s_client -connect host:443 -servername host 2&gt;/dev/null \</span><br><span class="line">  | openssl x509 -noout -dates -subject -issuer</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">App behavior (SNI, ALPN, protocols)</span></span><br><span class="line">curl -v https://host/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If proxy/MTLS: verify CA path and client certs; check <span class="keyword">time</span> skew</span></span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure> Disk full / Inode exhaustion <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Space vs inodes</span></span><br><span class="line">df -h</span><br><span class="line">df -i</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find biggest <span class="built_in">dirs</span> on same filesystem</span></span><br><span class="line">du -xhd1 /path | sort -h</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Deleted-but-open files</span></span><br><span class="line">lsof +L1</span><br><span class="line">journalctl --vacuum-size=1G  # cull journal size</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Many small files</span></span><br><span class="line">find /path -xdev -type f | wc -l</span><br></pre></td></tr></table></figure> Syscall slowness <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Trace syscalls and timings</span></span><br><span class="line">strace -ttT -p &lt;pid&gt; -f -e trace=network,file,fsync,clock,nanosleep</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optional CPU hotspot profiling</span></span><br><span class="line">perf record -g -p &lt;pid&gt;; perf report</span><br></pre></td></tr></table></figure> Container restart loops <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Docker restart loops</span></span><br><span class="line">docker ps --filter &#x27;status=restarting&#x27;</span><br><span class="line">docker logs &lt;id&gt; --tail=200</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kubernetes restart loops</span></span><br><span class="line">kubectl get pods -A</span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Node/agent issues</span></span><br><span class="line">journalctl -u kubelet</span><br></pre></td></tr></table></figure> - modify priority of running process</p>
+<h1 id="logs-systemd">Logs &amp; Systemd</h1>
+<p>Cheat Card</p>
+<ul>
+<li>Unit status: <code>systemctl status &lt;unit&gt;</code>; failed: <code>systemctl list-units --failed</code></li>
+<li>Hot errors: <code>journalctl -xeu &lt;unit&gt;</code>; follow: <code>journalctl -fu &lt;unit&gt;</code></li>
+<li>Boot scoping: <code>journalctl -b</code> and <code>-b -1</code>; size: <code>journalctl --disk-usage</code></li>
+</ul>
+<p>Systemd basics <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Unit status and enablement</span></span><br><span class="line">systemctl status &lt;unit&gt;</span><br><span class="line">systemctl is-active &lt;unit&gt;</span><br><span class="line">systemctl is-enabled &lt;unit&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Failed units overview</span></span><br><span class="line">systemctl list-units --failed</span><br><span class="line">journalctl -xe  # recent critical logs</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Restart and verify logs from this boot</span></span><br><span class="line">systemctl restart &lt;unit&gt;</span><br><span class="line">journalctl -u &lt;unit&gt; -b -n 50</span><br></pre></td></tr></table></figure> Journal essentials <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Recent errors <span class="keyword">for</span> a unit and live follow</span></span><br><span class="line">journalctl -xeu &lt;unit&gt;</span><br><span class="line">journalctl -fu &lt;unit&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Time window and priority</span></span><br><span class="line">journalctl -u &lt;unit&gt; --since &quot;1 hour ago&quot; --until now</span><br><span class="line">journalctl -p err..alert -b</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Previous boot</span></span><br><span class="line">journalctl -b -1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">JSON output piped to jq (Requires: jq)</span></span><br><span class="line">journalctl -u &lt;unit&gt; -o json | jq -r &#x27;.MESSAGE&#x27;</span><br></pre></td></tr></table></figure> Journal management <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Disk usage and vacuum</span></span><br><span class="line">journalctl --disk-usage</span><br><span class="line">journalctl --vacuum-size=1G</span><br><span class="line">journalctl --vacuum-time=7d</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Make logs persistent (requires root; edit journald.conf)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/systemd/journald.conf: <span class="built_in">set</span> Storage=persistent</span></span><br><span class="line">systemctl restart systemd-journald</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Tip: tune RateLimitIntervalSec/RateLimitBurst to manage <span class="built_in">log</span> storms</span></span><br></pre></td></tr></table></figure> Resolved (DNS) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Overall resolver status</span></span><br><span class="line">resolvectl status</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Query using systemd-resolved</span></span><br><span class="line">resolvectl query example.com</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Flush caches</span></span><br><span class="line">resolvectl flush-caches</span><br></pre></td></tr></table></figure></p>
+<h1 id="security-audit">Security &amp; Audit</h1>
+<p>Cheat Card</p>
+<ul>
+<li>SELinux mode: <code>getenforce</code>; recent denials: <code>ausearch -m AVC -ts recent</code></li>
+<li>AppArmor status: <code>aa-status</code>; set complain/enforce on a profile</li>
+<li>Audit rule example: <code>auditctl -w /etc/ssh/sshd_config -p wa -k sshcfg</code> SELinux <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Current mode and temporary permissive (diagnostic; requires root)</span></span><br><span class="line">getenforce</span><br><span class="line">setenforce 0  # Caution: reduces enforcement</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Contexts and recent denials</span></span><br><span class="line">ls -Z</span><br><span class="line">ps -eZ | head</span><br><span class="line">ausearch -m AVC -ts recent</span><br><span class="line">journalctl -t setroubleshoot</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Manage booleans (example: allow httpd network connect)</span></span><br><span class="line">getsebool -a | grep httpd</span><br><span class="line">setsebool -P httpd_can_network_connect on</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: selinux-utils/policycoreutils; setroubleshoot (optional)</span></span><br></pre></td></tr></table></figure> AppArmor <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Status and service</span></span><br><span class="line">aa-status</span><br><span class="line">systemctl status apparmor</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Toggle a profile mode</span></span><br><span class="line">aa-complain /path/to/bin</span><br><span class="line">aa-enforce /path/to/bin</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: apparmor-utils</span></span><br></pre></td></tr></table></figure> Auditd <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Service and rules</span></span><br><span class="line">systemctl status auditd</span><br><span class="line">auditctl -l</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Search recent denials / by PID</span></span><br><span class="line">ausearch -m avc -ts recent</span><br><span class="line">ausearch -p &lt;pid&gt; -ts recent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Watch a file <span class="keyword">for</span> writes/attr changes (key: sshcfg)</span></span><br><span class="line">auditctl -w /etc/ssh/sshd_config -p wa -k sshcfg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Summary report</span></span><br><span class="line">aureport --summary -ts today</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Requires: auditd (auditd, auditctl, ausearch, aureport)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="containers-namespaces">Containers &amp; Namespaces</h1>
+<p>Cheat Card</p>
+<ul>
+<li><p>Enter container namespace: <code>nsenter --target &lt;pid&gt; --mount --uts --ipc --net --pid -- bash</code></p></li>
+<li><p>Docker triage: <code>docker ps</code>, <code>docker logs --tail=200 -f &lt;id&gt;</code>, <code>docker exec -it &lt;id&gt; sh</code></p></li>
+<li><p>K8s triage: <code>kubectl get pods -A</code>, <code>kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</code>, <code>kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</code> nsenter (enter namespaces of a PID) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Get target PID (e.g., container process)</span></span><br><span class="line">pidof &lt;proc&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Enter multiple namespaces of a PID</span></span><br><span class="line">nsenter --target &lt;pid&gt; --mount --uts --ipc --net --pid -- bash</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Inspect and chroot-like into the process rootfs</span></span><br><span class="line">ls -l /proc/&lt;pid&gt;/root</span><br><span class="line">nsenter --target &lt;pid&gt; --mount -- chroot /proc/&lt;pid&gt;/root bash</span><br></pre></td></tr></table></figure> Docker (if present) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">List, <span class="built_in">exec</span>, inspect PID, and <span class="built_in">tail</span> logs</span></span><br><span class="line">docker ps --format &#x27;&#123;&#123;.ID&#125;&#125; &#123;&#123;.Names&#125;&#125; &#123;&#123;.Status&#125;&#125;&#x27;</span><br><span class="line">docker exec -it &lt;id|name&gt; bash  # or sh</span><br><span class="line">docker inspect -f &#x27;&#123;&#123;.State.Pid&#125;&#125;&#x27; &lt;id&gt;</span><br><span class="line">docker logs --tail=200 -f &lt;id&gt;</span><br></pre></td></tr></table></figure> Kubernetes (if present) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Pods and events</span></span><br><span class="line">kubectl get pods -A -o wide</span><br><span class="line">kubectl get events -A --sort-by=.lastTimestamp | tail</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Describe, logs, and <span class="built_in">exec</span></span></span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --tail=200</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line">kubectl exec -it &lt;pod&gt; -n &lt;ns&gt; -- bash</span><br></pre></td></tr></table></figure> CRI/containerd (if present) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">List, inspect, and logs via crictl</span></span><br><span class="line">crictl ps -a</span><br><span class="line">crictl inspect &lt;id&gt;</span><br><span class="line">crictl logs &lt;id&gt;</span><br></pre></td></tr></table></figure> Notes</p></li>
+<li><p>Without runtime CLIs, use <code>nsenter</code> by PID from <code>ps</code>/<code>systemctl</code>.</p></li>
+<li><p>Requires: docker or podman for Docker-like commands; kubectl; crictl for containerd/CRI. # Incident Playbooks</p></li>
+</ul>
+<h2 id="high-cpu">High CPU</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Top CPU processes and hot threads</span></span><br><span class="line">ps -eo pid,ppid,user,%cpu,%mem,cmd --sort=-%cpu | head</span><br><span class="line">top -H</span><br><span class="line">ps -Lp &lt;pid&gt; -o pid,tid,pcpu,comm</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Per-process CPU over <span class="keyword">time</span>; optional perf <span class="keyword">if</span> available</span></span><br><span class="line">pidstat -u 1 -p &lt;pid&gt;</span><br><span class="line">perf top  # if installed</span><br></pre></td></tr></table></figure>
+<h2 id="high-io-wait-disk-latency">High IO wait / Disk latency</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Device saturation and per-process IO</span></span><br><span class="line">iostat -xz 1   # watch await, %util, r/s, w/s</span><br><span class="line">pidstat -d 1</span><br><span class="line">iotop -oPa</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Device/FS inventory and kernel errors</span></span><br><span class="line">lsblk -o NAME,TYPE,SIZE,ROTA,MOUNTPOINT,MODEL</span><br><span class="line">dmesg -T | egrep -i &#x27;error|reset|blk|nvme&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optional deep dive</span></span><br><span class="line">blktrace -d /dev/sdX -o - | blkparse -i -</span><br></pre></td></tr></table></figure>
+<h2 id="memory-leak-oom">Memory leak / OOM</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Snapshot and top RSS processes</span></span><br><span class="line">free -h</span><br><span class="line">ps aux --sort=-rss | head</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Per-process mappings and over-time faults</span></span><br><span class="line">pmap -x &lt;pid&gt; | sort -nrk 3 | head</span><br><span class="line">pidstat -r 1 -p &lt;pid&gt;</span><br><span class="line">smem -r  # if installed</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OOM evidence</span></span><br><span class="line">dmesg -T | grep -i oom || journalctl -k -g OOM</span><br></pre></td></tr></table></figure>
+<h2 id="packet-loss-high-latency">Packet loss / High latency</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Path and end-to-end latency</span></span><br><span class="line">ip route get &lt;dest&gt;</span><br><span class="line">mtr -ezbw &lt;dest&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Interface health and TCP details</span></span><br><span class="line">ip -s link show &lt;iface&gt;</span><br><span class="line">ethtool -S &lt;iface&gt;</span><br><span class="line">ss -i dst &lt;dest&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Targeted capture samples</span></span><br><span class="line">tcpdump -ni &lt;iface&gt; host &lt;dest&gt; and icmp</span><br><span class="line">tcpdump -ni &lt;iface&gt; tcp port 443 and &#x27;tcp[tcpflags] &amp; tcp-syn != 0&#x27;</span><br></pre></td></tr></table></figure>
+<h2 id="dns-failures">DNS failures</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Resolve via systemd-resolved (or dig <span class="keyword">if</span> available)</span></span><br><span class="line">resolvectl query example.com</span><br><span class="line">resolvectl status</span><br><span class="line">dig @8.8.8.8 example.com A +time=2 +tries=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Reachability and captures</span></span><br><span class="line">ss -u &#x27;sport = :53 or dport = :53&#x27;</span><br><span class="line">tcpdump -ni &lt;iface&gt; port 53</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Config checks</span></span><br><span class="line">ls -l /etc/resolv.conf</span><br><span class="line">resolvectl flush-caches</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check firewall rules as appropriate</span></span><br></pre></td></tr></table></figure>
+<h2 id="tls-handshake-issues">TLS handshake issues</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Inspect handshake/cert chain (TLS1.2 example)</span></span><br><span class="line">openssl s_client -connect host:443 -servername host -tls1_2 -showcerts</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check expiry/subject/issuer quickly</span></span><br><span class="line">echo | openssl s_client -connect host:443 -servername host 2&gt;/dev/null \</span><br><span class="line">  | openssl x509 -noout -dates -subject -issuer</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">App behavior (SNI, ALPN, protocols)</span></span><br><span class="line">curl -v https://host/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If proxy/MTLS: verify CA path and client certs; check <span class="keyword">time</span> skew</span></span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
+<h2 id="disk-full-inode-exhaustion">Disk full / Inode exhaustion</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Space vs inodes</span></span><br><span class="line">df -h</span><br><span class="line">df -i</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find biggest <span class="built_in">dirs</span> on same filesystem</span></span><br><span class="line">du -xhd1 /path | sort -h</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Deleted-but-open files</span></span><br><span class="line">lsof +L1</span><br><span class="line">journalctl --vacuum-size=1G  # cull journal size</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Many small files</span></span><br><span class="line">find /path -xdev -type f | wc -l</span><br></pre></td></tr></table></figure>
+<h2 id="syscall-slowness">Syscall slowness</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Trace syscalls and timings</span></span><br><span class="line">strace -ttT -p &lt;pid&gt; -f -e trace=network,file,fsync,clock,nanosleep</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optional CPU hotspot profiling</span></span><br><span class="line">perf record -g -p &lt;pid&gt;; perf report</span><br></pre></td></tr></table></figure>
+<h2 id="container-restart-loops">Container restart loops</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Docker restart loops</span></span><br><span class="line">docker ps --filter &#x27;status=restarting&#x27;</span><br><span class="line">docker logs &lt;id&gt; --tail=200</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kubernetes restart loops</span></span><br><span class="line">kubectl get pods -A</span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Node/agent issues</span></span><br><span class="line">journalctl -u kubelet</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -2962,6 +3025,585 @@ AMBA 总线协议</p>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/" class="post-title-link" itemprop="url">Linux-网络抓包</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="wireshark">wireshark</h1>
+<h2 id="远程抓包">远程抓包</h2>
+<p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） <img src="img1.png" /> <img src="image.png" alt="image.png" /></p>
+<h2 id="sshtcpdumpwireshark解析">ssh+tcpdump+wireshark解析</h2>
+<p>直接抓包解析 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 跳板机执行 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 直接抓包并保存 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure></p>
+<h1 id="tcpdump">tcpdump</h1>
+<h2 id="常用抓包指令">常用抓包指令</h2>
+<p>过滤tcp flags，比如抓syn报文，看是否能握手成功 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br></pre></td></tr></table></figure> 查看tcp状态，如下为发送了sync，如果一直未回复，则可以在<code>sar -n ETCP 1</code>看到<code>retrans/s</code>不断上升 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 0.1 &#x27;ss -tpn state syn-sent&#x27;</span><br></pre></td></tr></table></figure> 抓syn和syn+ack报文 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any <span class="string">&#x27;tcp[tcpflags] == tcp-syn or tcp[13]=18&#x27;</span></span><br></pre></td></tr></table></figure> 抓syn和syn+rst报文 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or tcp[13] &amp; 4!=0&#x27;</span><br></pre></td></tr></table></figure> 抓syn和icmp不可达报文 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> 抓syn、syn+ack、rst和icmp端口不可达报文（tcp[13]指的是从tcp报文头偏移13字节的选项） <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;(tcp[tcpflags] == tcp-syn or tcp[13]=18) or tcp[13] &amp;amp; 4!=0 or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> tcp flags抓包例子 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-rst&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-fin&#x27;</span><br></pre></td></tr></table></figure> 抓取指定报文大小 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tcpdump less 32</span><br><span class="line">tcpdump greater 32</span><br><span class="line">tcpdump &lt;= 102</span><br></pre></td></tr></table></figure> 持续抓取端口 <code>8080</code>的流量，每个文件最大 <code>100MB</code>，最多保留 <code>10</code>个文件，写满后覆盖最旧的文件 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080</span><br></pre></td></tr></table></figure> 抓取 <code>10000</code>个发往 <code>80</code>端口的包 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -c 10000 -w http_requests.pcap dst port 80</span><br></pre></td></tr></table></figure></p>
+<h2 id="常用选项">常用选项</h2>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>-i &lt;interface&gt;</code></strong>​</td>
+<td>指定抓包网卡。<code>any</code>表示所有网卡。</td>
+<td><code>-i any</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>port &lt;端口号&gt;</code></strong>​</td>
+<td>过滤特定端口的流量（TCP/UDP）。</td>
+<td><code>port 8080</code></td>
+</tr>
+<tr class="odd">
+<td><strong><code>-C &lt;大小&gt;</code></strong>​</td>
+<td><strong>按文件大小分割</strong>。单位通常为MB（M）。</td>
+<td><code>-C 100</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>-W &lt;数量&gt;</code></strong>​</td>
+<td><strong>限制文件总数</strong>，与 <code>-C</code>配合实现循环覆盖。</td>
+<td><code>-W 10</code></td>
+</tr>
+<tr class="odd">
+<td><strong><code>-w &lt;文件名&gt;</code></strong>​</td>
+<td>将抓取的原始数据包写入指定文件。</td>
+<td><code>-w my_capture.pcap</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>-c &lt;数量&gt;</code></strong>​</td>
+<td>抓取指定数量的数据包后自动退出。</td>
+<td><code>-c 10000</code></td>
+</tr>
+<tr class="odd">
+<td><strong><code>-s &lt;长度&gt;</code></strong>​</td>
+<td>设置每个数据包的抓取长度（快照长度byte），<code>-s 0</code>表示抓取完整数据包。<strong>(在长期抓只需要分析报文头很实用)</strong></td>
+<td><code>-s 0</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他选项">其他选项</h2>
+<h3 id="capture-commands">Capture Commands</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Example usage</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-i any</code></td>
+<td><code>tcpdump -i any</code></td>
+<td>Capture from all interfaces; may require superuser (<code>sudo/su</code>)</td>
+</tr>
+<tr class="even">
+<td><code>-i eth0</code></td>
+<td><code>tcpdump -i eth0</code></td>
+<td>Capture from the interface <code>eth0</code></td>
+</tr>
+<tr class="odd">
+<td><code>-c count</code></td>
+<td><code>tcpdump -i eth0 -c 5</code></td>
+<td>Exit after receiving <code>count (5)</code> packets</td>
+</tr>
+<tr class="even">
+<td><code>-r captures.pcap</code></td>
+<td><code>tcpdump -i eth0 -r captures.pcap</code></td>
+<td>Read and analyze saved capture file <code>captures.pcap</code></td>
+</tr>
+<tr class="odd">
+<td><code>tcp</code></td>
+<td><code>tcpdump -i eth0 tcp</code></td>
+<td>Show TCP packets only</td>
+</tr>
+<tr class="even">
+<td><code>udp</code></td>
+<td><code>tcpdump -i eth0 udp</code></td>
+<td>Show UDP packets only</td>
+</tr>
+<tr class="odd">
+<td><code>icmp</code></td>
+<td><code>tcpdump -i eth0 icmp</code></td>
+<td>Show ICMP packets only</td>
+</tr>
+<tr class="even">
+<td><code>ip</code></td>
+<td><code>tcpdump -i eth0 ip</code></td>
+<td>Show IPv4 packets only</td>
+</tr>
+<tr class="odd">
+<td><code>ip6</code></td>
+<td><code>tcpdump -i eth0 ip6</code></td>
+<td>Show IPv6 packets only</td>
+</tr>
+<tr class="even">
+<td><code>arp</code></td>
+<td><code>tcpdump -i eth0 arp</code></td>
+<td>Show ARP packets only</td>
+</tr>
+<tr class="odd">
+<td><code>rarp</code></td>
+<td><code>tcpdump -i eth0 rarp</code></td>
+<td>Show RARP packets only</td>
+</tr>
+<tr class="even">
+<td><code>slip</code></td>
+<td><code>tcpdump -i eth0 slip</code></td>
+<td>Show SLIP packets only</td>
+</tr>
+<tr class="odd">
+<td><code>-I</code></td>
+<td><code>tcpdump -i eth0 -I</code></td>
+<td>Set interface as monitor mode</td>
+</tr>
+<tr class="even">
+<td><code>-K</code></td>
+<td><code>tcpdump -i eth0 -K</code></td>
+<td>Don’t verify checksum</td>
+</tr>
+<tr class="odd">
+<td><code>-p</code></td>
+<td><code>tcpdump -i eth0 -p</code></td>
+<td>Don’t capture in promiscuous mode</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filter-commands">Filter Commands</h3>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter expression</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>src host 127.0.0.1</code></td>
+<td>Filter by source IP/hostname <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>dst host 127.0.0.1</code></td>
+<td>Filter by destination IP/hostname <code>127.0.0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>host 127.0.0.1</code></td>
+<td>Filter by source or destination = <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>ether src 01:23:45:AB:CD:EF</code></td>
+<td>Filter by source MAC <code>01:23:45:AB:CD:EF</code></td>
+</tr>
+<tr class="odd">
+<td><code>ether dst 01:23:45:AB:CD:EF</code></td>
+<td>Filter by destination MAC <code>01:23:45:AB:CD:EF</code></td>
+</tr>
+<tr class="even">
+<td><code>ether host 01:23:45:AB:CD:EF</code></td>
+<td>Filter by source or destination MAC <code>01:23:45:AB:CD:EF</code></td>
+</tr>
+<tr class="odd">
+<td><code>src net 127.0.0.1</code></td>
+<td>Filter by source network location <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>dst net 127.0.0.1</code></td>
+<td>Filter by destination network location <code>127.0.0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>net 127.0.0.1</code></td>
+<td>Filter by source or destination network location <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>net 127.0.0.1/24</code></td>
+<td>Filter by source or destination network location <code>127.0.0.1</code> with the tcpdump subnet mask of length <code>24</code></td>
+</tr>
+<tr class="odd">
+<td><code>src port 80</code></td>
+<td>Filter by source port = 80</td>
+</tr>
+<tr class="even">
+<td><code>dst port 80</code></td>
+<td>Filter by destination port = 80</td>
+</tr>
+<tr class="odd">
+<td><code>port 80</code></td>
+<td>Filter by source or destination port = 80</td>
+</tr>
+<tr class="even">
+<td><code>src portrange 80-400</code></td>
+<td>Filter by source port value between 80 and 400</td>
+</tr>
+<tr class="odd">
+<td><code>dst portrange 80-400</code></td>
+<td>Filter by destination port value between 80 and 400</td>
+</tr>
+<tr class="even">
+<td><code>portrange 80-400</code></td>
+<td>Filter by source or destination port value between 80 and 400</td>
+</tr>
+<tr class="odd">
+<td><code>ether broadcast</code></td>
+<td>Filter for Ethernet broadcasts</td>
+</tr>
+<tr class="even">
+<td><code>ip broadcast</code></td>
+<td>Filter for IPv4 broadcasts</td>
+</tr>
+<tr class="odd">
+<td><code>ether multicast</code></td>
+<td>Filter for Ethernet multicasts</td>
+</tr>
+<tr class="even">
+<td><code>ip multicast</code></td>
+<td>Filter for IPv4 multicasts</td>
+</tr>
+<tr class="odd">
+<td><code>ip6 multicast</code></td>
+<td>Filter for IPv6 multicasts</td>
+</tr>
+<tr class="even">
+<td><code>ip src host mydevice</code></td>
+<td>Filter by IPv4 source hostname <code>mydevice</code></td>
+</tr>
+<tr class="odd">
+<td><code>arp dst host mycar</code></td>
+<td>Filter by ARP destination hostname <code>mycar</code></td>
+</tr>
+<tr class="even">
+<td><code>rarp src host 127.0.0.1</code></td>
+<td>Filter by RARP source <code>127.0.0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>ip6 dst host mywatch</code></td>
+<td>Filter by IPv6 destination hostname <code>mywatch</code></td>
+</tr>
+<tr class="even">
+<td><code>tcp dst port 8000</code></td>
+<td>Filter by destination TCP port = 8000</td>
+</tr>
+<tr class="odd">
+<td><code>udp src portrange 1000-2000</code></td>
+<td>Filter by source TCP ports in 1000–2000</td>
+</tr>
+<tr class="even">
+<td><code>sctp port 22</code></td>
+<td>Filter by source or destination port = 22</td>
+</tr>
+</tbody>
+</table>
+<h3 id="display-commands">Display Commands</h3>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -A</code></td>
+<td>Print each packet (minus its link level header) in ASCII. Handy for capturing web pages. <br> <br>[![Screenshot with ASCII (sudo tcpdump twitter)</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -D</code></td>
+<td>Print the list of the network interfaces available on the system and on which tcpdump can capture packets.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -e</code></td>
+<td>Print the link-level header on each output line, such as MAC layer addresses for protocols such as Ethernet and IEEE 802.11.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -F /path/to/params.conf</code></td>
+<td>Use the file <code>params.conf</code> as input for the <a href="###%20Filter%20Commands">filter expression</a>. (Ignore other expressions on the command line.)</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -n</code></td>
+<td>Don’t convert addresses (i.e., host addresses, port numbers, etc.) to names.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -S</code></td>
+<td>Print absolute, rather than relative, TCP sequence numbers. (Absolute TCP sequence numbers are longer.)</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 --time-stamp-precision=nano</code></td>
+<td>When capturing, set the timestamp precision for the capture to <code>tsp</code>: <br>• <code>micro</code> for microsecond (default) <br>• <code>nano</code> for nanosecond.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -t</code></td>
+<td>Omit the timestamp on each output line.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -tt</code></td>
+<td>Print the timestamp, as seconds since January 1, 1970, 00:00:00, UTC, and fractions of a second since that time, on each dump line.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -ttt</code></td>
+<td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and previous line on each output line. The default is microsecond resolution.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -tttt</code></td>
+<td>Print a timestamp as hours, minutes, seconds, and fractions of a second since midnight, preceded by the date, on each dump line.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -ttttt</code></td>
+<td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and first line on each dump line. The default is microsecond resolution.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -u</code></td>
+<td>Print undecoded network file system (NFS) handles.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -v</code></td>
+<td>Produce verbose output. <br>When writing to a file (<code>-w</code> option) and at the same time not reading from a file (<code>-r</code> option), report to standard error, once per second, the number of packets captured.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -vv</code></td>
+<td>Additional verbose output than <code>-v</code></td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -vvv</code></td>
+<td>Additional verbose output than <code>-vv</code></td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -x</code></td>
+<td>Print the headers and data of each packet (minus its link level header) in hex.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -xx</code></td>
+<td>Print the headers and data of each packet, including its link level header, in hex.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -X</code></td>
+<td>Print the headers and data of each packet (minus its link level header) in hex and ASCII.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -XX</code></td>
+<td>Print the headers and data of each packet, including its link level header, in hex and ASCII.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="output-commands">Output Commands</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Example</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-w captures.pcap</code></td>
+<td><code>tcpdump -i eth0 -w captures.pcap</code></td>
+<td>Output capture to a file <code>captures.pcap</code></td>
+</tr>
+<tr class="even">
+<td><code>-d</code></td>
+<td><code>tcpdump -i eth0 -d</code></td>
+<td>Display human-readable form in standard output</td>
+</tr>
+<tr class="odd">
+<td><code>-L</code></td>
+<td><code>tcpdump -i eth0 -L</code></td>
+<td>Display data link types for the interface</td>
+</tr>
+<tr class="even">
+<td><code>-q</code></td>
+<td><code>tcpdump -i eth0 -q</code></td>
+<td>Quick/quiet output. Print less protocol information, so output lines are shorter.</td>
+</tr>
+<tr class="odd">
+<td><code>-U</code></td>
+<td><code>tcpdump -i eth0 -U -w out.pcap</code></td>
+<td><strong>Without -w option</strong> <br>Print a description of each packet’s contents. <br><strong>With -w option</strong> <br>Write each packet to the output file <code>out.pcap</code> in real time rather than only when the output buffer fills.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="miscellaneous-commands">Miscellaneous Commands</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Syntax</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>AND</code></td>
+<td><code>and, &amp;&amp;</code></td>
+<td><code>tcpdump -n src 127.0.0.1 and dst port 21</code></td>
+<td>Combine filtering options joined by “and”</td>
+</tr>
+<tr class="even">
+<td><code>OR</code></td>
+<td><code>or, \|</code></td>
+<td><code>tcpdump dst 127.0.0.1 or src port 22</code></td>
+<td>Match any of the conditions joined by “or”</td>
+</tr>
+<tr class="odd">
+<td><code>EXCEPT</code></td>
+<td><code>not, !</code></td>
+<td><code>tcpdump dst 127.0.0.1 and not icmp</code></td>
+<td>Negate the condition prefixed by “not”</td>
+</tr>
+<tr class="even">
+<td><code>LESS</code></td>
+<td><code>less, &lt;, (&lt;=)</code></td>
+<td><code>tcpdump dst host 127.0.0.1 and less 128</code></td>
+<td>Shows packets shorter than (or equal to) 128 bytes in length. <br>&lt; only applies to length 32, i.e., <code>&lt;32</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>GREATER</code></td>
+<td><code>greater, &gt;, (&gt;=)</code></td>
+<td><code>tcpdump dst host 127.0.0.1 and greater 64</code></td>
+<td>Shows packets longer than (or equal to) 64 bytes in length. <br>&gt; only applies to length 32, i.e., <code>&gt;32</code>.</td>
+</tr>
+<tr class="even">
+<td><code>EQUAL</code></td>
+<td><code>=, ==</code></td>
+<td><code>tcpdump host 127.0.0.1 = 0</code></td>
+<td>Show packets with zero length</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-usage">Example Usage</h3>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tcpdump -r outfile.pcap src host 10.0.2.15</code></td>
+<td>Print all packets in the file <code>outfile.pcap</code> coming from the host with IP address 10.0.2.15</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i any ip and not tcp port 80</code></td>
+<td>Listen for non-HTTP packets (which have TCP port number 80) on any network interface</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -n &gt;32 -w pv01.pcap -c 30</code></td>
+<td>Save 30 packets of length exceeding 32 bytes to <code>captures.pcap</code> without DNS resolution on the <code>eth0</code> network interface</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -AtuvX icmp</code></td>
+<td>Capture ICMP traffic and print ICMP packets in hex and ASCII and the following features: <br>With: <br>• headers <br>• data <br>• undecoded NFS handles <br>Without: <br>• link level headers <br>• timestamps.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)'</code></td>
+<td>Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考搬运">参考/搬运</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://debugging.works/blog/network-debugging/">https://debugging.works/blog/network-debugging/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.stationx.net/tcpdump-cheat-sheet/">https://www.stationx.net/tcpdump-cheat-sheet/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3342,165 +3984,6 @@ AMBA 总线协议</p>
 <li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
 <li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
 <li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">bpftrace技术3-内置变量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="内置变量">内置变量</h1>
-<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 24%" />
-<col style="width: 63%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>变量类别</th>
-<th>变量名</th>
-<th>说明与典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>进程/线程信息</strong>​</td>
-<td><code>pid</code></td>
-<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>tid</code></td>
-<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>comm</code></td>
-<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>uid</code></td>
-<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
-</tr>
-<tr class="odd">
-<td><strong>时间信息</strong>​</td>
-<td><code>nsecs</code></td>
-<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
-</tr>
-<tr class="even">
-<td><strong>CPU/系统信息</strong>​</td>
-<td><code>cpu</code></td>
-<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>curtask</code></td>
-<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
-</tr>
-<tr class="even">
-<td><strong>探针上下文信息</strong>​</td>
-<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
-<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>args</code></td>
-<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>retval</code></td>
-<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>func</code></td>
-<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>kstack</code>/ <code>ustack</code></td>
-<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
-<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
-<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
-<p><img src="bpftrace3/image1.png" /></p>
-<h1 id="其他说明">其他说明</h1>
-<ul>
-<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
-<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
