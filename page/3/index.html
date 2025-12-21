@@ -267,43 +267,35 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下<br><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_1.png"></p>
+          <h2 id="背景介绍">背景介绍</h2>
+<p>编译edk2代码，配置开发环境，服务器使用华为云耀云服务器，OS信息如下 <img src="Ubuntu下EDK2开发环境搭建_20240122_1.png" /></p>
 <p>特点</p>
 <ul>
 <li>apt-get源可以访问</li>
 <li>github不能访问</li>
 <li>gitee可以访问</li>
 </ul>
-<h2 id="远程仓库迁移"><a href="#远程仓库迁移" class="headerlink" title="远程仓库迁移"></a>远程仓库迁移</h2><p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下</p>
-<ol>
+<h2 id="远程仓库迁移">远程仓库迁移</h2>
+<p>因为编译需要clone相关仓库到指定路径，并且为了今后的同步方便，所以把github仓库迁移到gitee后再配置相关环境。配置流程如下</p>
+<ol type="1">
 <li><p>建立组织，用来合并仓库环境</p>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_2.png"></p>
-</li>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_2.png" /></p></li>
 <li><p>迁移主仓库</p>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_3.png"></p>
-</li>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_3.png" /></p></li>
 <li><p>导入submodule，因为edk2后续编译还需要一些子模块，找到如下仓库的路径，按照2导入到组织</p>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_4.png"></p>
-</li>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_4.png" /></p></li>
 <li><p>修改主仓库的submodule路径</p>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_5.png"></p>
-</li>
+<p><img src="Ubuntu下EDK2开发环境搭建_20240122_5.png" /></p></li>
 </ol>
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>下载edk2代码仓</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@gitee.com:edk2_back/edk2.git</span><br></pre></td></tr></table></figure>
-<p>下载子模块到对应路径，可以看到地址都替换了gitee路径</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_6.png"></p>
-<h2 id="编译工具链安装"><a href="#编译工具链安装" class="headerlink" title="编译工具链安装"></a>编译工具链安装</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># apt-get install build-essential uuid-dev iasl git gcc nasm python3</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># python3 --version</span></span></span><br><span class="line">Python 3.10.12</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ln -s /usr/bin/python3.10 /usr/bin/python</span></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><h3 id="基本工具"><a href="#基本工具" class="headerlink" title="基本工具"></a>基本工具</h3><p>看一下当前的目录结构，使用<code>make -C BaseTools</code>编译基本工具</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ls</span></span></span><br><span class="line">ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg</span><br><span class="line">ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg</span><br><span class="line">ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg</span><br><span class="line">BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg</span><br><span class="line">Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg</span><br><span class="line">CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># make -C BaseTools</span></span></span><br></pre></td></tr></table></figure>
-<p>编译基本工具完成<br><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_7.png"></p>
-<h3 id="编译目标文件"><a href="#编译目标文件" class="headerlink" title="编译目标文件"></a>编译目标文件</h3><p>设置环境变量，<code>path/to/edk/BaseTools</code>需要换成当前的<code>BaseTools</code>所在路径。</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># export EDK_TOOLS_PATH=`path/to/edk/BaseTools`</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ./edksetup.sh --help</span></span></span><br><span class="line">Usage: edksetup.sh [Options]</span><br><span class="line"></span><br><span class="line">The system environment variable, WORKSPACE, is always set to the current</span><br><span class="line">working directory.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --help, -h, -?        Print this help screen and exit.</span><br><span class="line"></span><br><span class="line">  --reconfig            Overwrite the WORKSPACE/Conf/*.txt files with the</span><br><span class="line">                        template files from the BaseTools/Conf directory.</span><br><span class="line"></span><br><span class="line">Please note: This script must be &#x27;sourced&#x27; so the environment can be changed.</span><br><span class="line">. edksetup.sh</span><br><span class="line">source edksetup.sh</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># source edksetup.sh BaseTools</span></span></span><br></pre></td></tr></table></figure>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_8.png"><br>在<code>edk</code>目录下使用<code>build</code>命令编译</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># build</span></span></span><br></pre></td></tr></table></figure>
-<p><img src="/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_20240122_9.png"></p>
+<h2 id="下载">下载</h2>
+<p>下载edk2代码仓 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@gitee.com:edk2_back/edk2.git</span><br></pre></td></tr></table></figure> 下载子模块到对应路径，可以看到地址都替换了gitee路径 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_6.png" /></p>
+<h2 id="编译工具链安装">编译工具链安装</h2>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># apt-get install build-essential uuid-dev iasl git gcc nasm python3</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># python3 --version</span></span></span><br><span class="line">Python 3.10.12</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ln -s /usr/bin/python3.10 /usr/bin/python</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="编译">编译</h2>
+<h3 id="基本工具">基本工具</h3>
+<p>看一下当前的目录结构，使用<code>make -C BaseTools</code>编译基本工具 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ls</span></span></span><br><span class="line">ArmPkg           CryptoPkg         FatPkg               Maintainers.txt  pip-requirements.txt  SignedCapsulePkg</span><br><span class="line">ArmPlatformPkg   DynamicTablesPkg  FmpDevicePkg         MdeModulePkg     PrmPkg                SourceLevelDebugPkg</span><br><span class="line">ArmVirtPkg       edksetup.bat      IntelFsp2Pkg         MdePkg           ReadMe.rst            StandaloneMmPkg</span><br><span class="line">BaseTools        edksetup.sh       IntelFsp2WrapperPkg  NetworkPkg       RedfishPkg            UefiCpuPkg</span><br><span class="line">Conf             EmbeddedPkg       License-History.txt  OvmfPkg          SecurityPkg           UefiPayloadPkg</span><br><span class="line">CONTRIBUTING.md  EmulatorPkg       License.txt          PcAtChipsetPkg   ShellPkg              UnitTestFrameworkPkg</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># make -C BaseTools</span></span></span><br></pre></td></tr></table></figure> 编译基本工具完成 <img src="Ubuntu下EDK2开发环境搭建_20240122_7.png" /></p>
+<h3 id="编译目标文件">编译目标文件</h3>
+<p>设置环境变量，<code>path/to/edk/BaseTools</code>需要换成当前的<code>BaseTools</code>所在路径。 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># export EDK_TOOLS_PATH=`path/to/edk/BaseTools`</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># ./edksetup.sh --help</span></span></span><br><span class="line">Usage: edksetup.sh [Options]</span><br><span class="line"></span><br><span class="line">The system environment variable, WORKSPACE, is always set to the current</span><br><span class="line">working directory.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --help, -h, -?        Print this help screen and exit.</span><br><span class="line"></span><br><span class="line">  --reconfig            Overwrite the WORKSPACE/Conf/*.txt files with the</span><br><span class="line">                        template files from the BaseTools/Conf directory.</span><br><span class="line"></span><br><span class="line">Please note: This script must be &#x27;sourced&#x27; so the environment can be changed.</span><br><span class="line">. edksetup.sh</span><br><span class="line">source edksetup.sh</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># source edksetup.sh BaseTools</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_8.png" /> 在<code>edk</code>目录下使用<code>build</code>命令编译 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># build</span></span></span><br></pre></td></tr></table></figure> <img src="Ubuntu下EDK2开发环境搭建_20240122_9.png" /></p>
 
       
     </div>
@@ -372,18 +364,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="通过文件系统"><a href="#通过文件系统" class="headerlink" title="通过文件系统"></a>通过文件系统</h3><p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
-<p>查看位置在<code>/sys/block/sd*/queue/rotational</code></p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure>
-
-<h3 id="lsblk"><a href="#lsblk" class="headerlink" title="lsblk"></a>lsblk</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
-<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看<br><img src="/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd_20240121.png"></p>
-<h3 id="smartctl"><a href="#smartctl" class="headerlink" title="smartctl"></a>smartctl</h3><p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure>
-
-<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
-
-<h3 id="GUI"><a href="#GUI" class="headerlink" title="GUI"></a>GUI</h3><p>在任务管理器下查看<br><img src="/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd_20240121_1.png"></p>
+          <h2 id="linux">Linux</h2>
+<h3 id="通过文件系统">通过文件系统</h3>
+<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
+<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
+<h3 id="lsblk">lsblk</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
+<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="判断磁盘是ssd还是hdd_20240121.png" /></p>
+<h3 id="smartctl">smartctl</h3>
+<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
+<h2 id="windows">Windows</h2>
+<h3 id="powershell">powershell</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
+<h3 id="gui">GUI</h3>
+<p>在任务管理器下查看 <img src="判断磁盘是ssd还是hdd_20240121_1.png" /></p>
 
       
     </div>
@@ -453,6 +447,7 @@
     
     <div class="post-body" itemprop="articleBody">
           
+
       
     </div>
 
@@ -520,27 +515,34 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="协议流程"><a href="#协议流程" class="headerlink" title="协议流程"></a>协议流程</h1><h2 id="直接DHCP"><a href="#直接DHCP" class="headerlink" title="直接DHCP"></a>直接DHCP</h2><p>DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。</p>
+          <h1 id="协议流程">协议流程</h1>
+<h2 id="直接dhcp">直接DHCP</h2>
+<p>DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。</p>
 <p>当客户端发送广播<strong>DISCOVER</strong>包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的<strong>OFFER</strong>报文。 客户机用一个<strong>REQUEST</strong>包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确认的方式，发送它刚刚从服务器返回的信息。 然后，服务器发送最后的<strong>ACKNOWLEDGEMENT</strong>数据包，同样带有相同的信息，再次确认它。</p>
 <p>这是通常称为<strong>DORA</strong>序列(<strong>发现、提供、请求、确认</strong>)，通常是这样描述的:</p>
-<p><img src="/dhcp%E5%8E%9F%E7%90%86.jpg"></p>
+<p><img src="dhcp原理.jpg" /></p>
 <p>因为这些都是 UDP 数据包，请记住 UDP 协议中没有任何会话信息，那么是什么将这四个数据包绑定到一个“会话”中呢? 因此，最初的 Discover 报文有一个事务 ID，在随后的三个报文中匹配- Wireshark 跟踪如下所示:</p>
-<p><img src="/dhcp%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B1.jpg"></p>
+<p><img src="dhcp报文示例1.jpg" /></p>
 <p>实际上，客户端直到第四个包才有一个地址，所以 Discover 和 Request 包是从 IP 为<code>0.0.0.0</code>的客户端的 MAC 地址到<code>255.255.255.255</code>的广播地址(即到整个局域网)。</p>
-<h2 id="中继DHCP"><a href="#中继DHCP" class="headerlink" title="中继DHCP"></a>中继DHCP</h2><p>在许多公司网络中，服务器在它们自己的子网中——分离服务器和工作站是相当普遍的做法。 这种情况下 DHCP 顺序如何工作? DORA 序列的前三个数据包被发送到广播地址，因此它们只能到达同一 VLAN 上的其他主机。</p>
-<p>我们通过在客户端子网中的主机上放置一个 DHCP“转发器”或“中继”进程来完成这项工作。 该进程接收本地广播，然后将其以单播形式转发给 DHCP 服务器。 当服务器应答时(以单播方式向转发器主机)，转发器将包“转换”为客户机所期望的广播应答。 几乎总是，这个转发器功能是在客户端子网上的路由器或交换机 IP 地址上完成的——换句话说，接口最终将成为客户端的默认网关。 这个函数在技术上不需要在那个接口上，但它是一个我们知道会在那里的接口，而且这个函数几乎总是可供我们使用。 另外，如果我们将其作为一种不成文的惯例，当我们以后需要更改它时，它将更容易找到该命令! 在 Cisco 路由器或交换机上，这个命令看起来像这样:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface VLAN &lt;x&gt;  ip helper-address 10.10.10.10</span><br></pre></td></tr></table></figure>
-
+<h2 id="中继dhcp">中继DHCP</h2>
+<p>在许多公司网络中，服务器在它们自己的子网中——分离服务器和工作站是相当普遍的做法。 这种情况下 DHCP 顺序如何工作? DORA 序列的前三个数据包被发送到广播地址，因此它们只能到达同一 VLAN 上的其他主机。</p>
+<p>我们通过在客户端子网中的主机上放置一个 DHCP“转发器”或“中继”进程来完成这项工作。 该进程接收本地广播，然后将其以单播形式转发给 DHCP 服务器。 当服务器应答时(以单播方式向转发器主机)，转发器将包“转换”为客户机所期望的广播应答。 几乎总是，这个转发器功能是在客户端子网上的路由器或交换机 IP 地址上完成的——换句话说，接口最终将成为客户端的默认网关。 这个函数在技术上不需要在那个接口上，但它是一个我们知道会在那里的接口，而且这个函数几乎总是可供我们使用。 另外，如果我们将其作为一种不成文的惯例，当我们以后需要更改它时，它将更容易找到该命令! 在 Cisco 路由器或交换机上，这个命令看起来像这样: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface VLAN &lt;x&gt;  ip helper-address 10.10.10.10</span><br></pre></td></tr></table></figure></p>
 <p>这里，<code>10.10.10.10</code>是我们 DHCP 服务器的 IP 地址。</p>
-<p>在操作中，这改变了我们在大多数家庭网络上拥有的简单的广播操作：<br><img src="/dhcp%E5%8E%9F%E7%90%862-%E4%B8%AD%E7%BB%A7.jpg"><br>这如何修改我们的 DORA 序列? 简单的回答是，它实际上不会修改任何数据包的 DHCP 内容。 它所做的是修改数据包中的上层“IP 地址”字段-路由器和服务器之间修改的数据包有“真实的”源和目的 IP 地址。 但是，客户端看到的包内容保持不变。 如果你深入研究 DHCP 报文，你会发现不管是否有中继，DHCP 客户端的 MAC 地址和 DHCP 服务器的 IP 地址实际上包含在 7 层 DHCP 协议的数据字段中。</p>
+<p>在操作中，这改变了我们在大多数家庭网络上拥有的简单的广播操作： <img src="dhcp原理2-中继.jpg" /> 这如何修改我们的 DORA 序列? 简单的回答是，它实际上不会修改任何数据包的 DHCP 内容。 它所做的是修改数据包中的上层“IP 地址”字段-路由器和服务器之间修改的数据包有“真实的”源和目的 IP 地址。 但是，客户端看到的包内容保持不变。 如果你深入研究 DHCP 报文，你会发现不管是否有中继，DHCP 客户端的 MAC 地址和 DHCP 服务器的 IP 地址实际上包含在 7 层 DHCP 协议的数据字段中。</p>
 <p>现在我们开始为基本配置 DHCP 服务器工作站操作,但在我们到达之前,我们要考虑我们需要的专用设备,如 iphone,<strong>无线访问点</strong>(<strong>WAP), 或者甚至是</strong>预执行环境(PXE)设备，可以从 DHCP 信息加载其整个操作系统。</p>
-<h2 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h2><h3 id="组网"><a href="#组网" class="headerlink" title="组网"></a>组网</h3><p><img src="/Pastedimage20231215004144.png"></p>
-<h3 id="路由设置"><a href="#路由设置" class="headerlink" title="路由设置"></a>路由设置</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
-<p><img src="/Pastedimage20231215004416.png"></p>
-<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><p><img src="/Pastedimage20231215005008.png"></p>
-<h3 id="dhcp-discover"><a href="#dhcp-discover" class="headerlink" title="dhcp discover"></a>dhcp discover</h3><p><img src="/Pastedimage20231215010535.png"></p>
-<p><img src="/Pastedimage20231215010615.png"></p>
-<h3 id="dhcp-offer"><a href="#dhcp-offer" class="headerlink" title="dhcp offer"></a>dhcp offer</h3>
+<h2 id="仿真">仿真</h2>
+<h3 id="组网">组网</h3>
+<p><img src="Pastedimage20231215004144.png" /></p>
+<h3 id="路由设置">路由设置</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20231215004416.png" /></p>
+<h2 id="抓包">抓包</h2>
+<p><img src="Pastedimage20231215005008.png" /></p>
+<h3 id="dhcp-discover">dhcp discover</h3>
+<p><img src="Pastedimage20231215010535.png" /></p>
+<p><img src="Pastedimage20231215010615.png" /></p>
+<h3 id="dhcp-offer">dhcp offer</h3>
+
       
     </div>
 
@@ -608,36 +610,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>malloc: <a target="_blank" rel="noopener" href="http://blog.codinglabs.org/articles/a-malloc-tutorial.html">http://blog.codinglabs.org/articles/a-malloc-tutorial.html</a></p>
-<p>duartes.org: <a target="_blank" rel="noopener" href="http://duartes.org/gustavo/blog/archives/">http://duartes.org/gustavo/blog/archives/</a></p>
-<p>github mannul: <a target="_blank" rel="noopener" href="http://www.epubit.com.cn/article/844#what">http://www.epubit.com.cn/article/844#what</a> </p>
-<p>liaoxuefeng.com: <a target="_blank" rel="noopener" href="http://www.liaoxuefeng.com/">http://www.liaoxuefeng.com/</a></p>
-<p>TCP&#x2F;IP network: <a target="_blank" rel="noopener" href="http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/">http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</a></p>
-<p>netfilter.org: <a target="_blank" rel="noopener" href="https://people.netfilter.org/pablo/netdev0.1/papers/">https://people.netfilter.org/pablo/netdev0.1/papers/</a></p>
-<p>tuning-linux-sending: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/">https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</a></p>
-<p>tuning-linux-receiving: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/">https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</a></p>
-<p>strace: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/">https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</a></p>
-<p>IBM-Tim: <a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90">https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</a></p>
-<p>yeolar: <a target="_blank" rel="noopener" href="http://www.yeolar.com/">http://www.yeolar.com/</a> </p>
-<p><a target="_blank" rel="noopener" href="http://www.yeolar.com/note/2012/03/29/virtual-memory/">http://www.yeolar.com/note/2012/03/29/virtual-memory/</a></p>
-<p>vxlan: <a target="_blank" rel="noopener" href="https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html">https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767">http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html">http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</a></p>
-<p>ali-kernel: <a target="_blank" rel="noopener" href="http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02">http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</a></p>
-<p>linux-performance: <a target="_blank" rel="noopener" href="http://www.brendangregg.com/linuxperf.html">http://www.brendangregg.com/linuxperf.html</a></p>
-<p>systemTap: <a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/">https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</a></p>
-<p>calico: <a target="_blank" rel="noopener" href="http://docs.projectcalico.org/v2.0/introduction/">http://docs.projectcalico.org/v2.0/introduction/</a></p>
-<p>docker: <a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice">http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</a></p>
-<p>Flannel: <a target="_blank" rel="noopener" href="http://dockone.io/article/618">http://dockone.io/article/618</a></p>
-<p>SDN: <a target="_blank" rel="noopener" href="https://www.opennetworking.org/">https://www.opennetworking.org/</a></p>
-<p>Linux Kernel Networking: <a target="_blank" rel="noopener" href="https://wiki.linuxfoundation.org/networking/start">https://wiki.linuxfoundation.org/networking/start</a></p>
-<p>MacVtap: <a target="_blank" rel="noopener" href="https://blog.kghost.info/2013/03/27/linux-network-tun/">https://blog.kghost.info/2013/03/27/linux-network-tun/</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/45788279">http://blog.csdn.net/dog250/article/details/45788279</a><br>	<br>Neutron: <a target="_blank" rel="noopener" href="http://blog.csdn.net/quqi99/article/details/22853403">http://blog.csdn.net/quqi99/article/details/22853403</a></p>
-<p>Linux Bridge: <a target="_blank" rel="noopener" href="http://blog.csdn.net/yeasy/article/details/50728243">http://blog.csdn.net/yeasy/article/details/50728243</a></p>
-<p>Docker Networking: <a target="_blank" rel="noopener" href="http://edgedef.com/docker-networking.html">http://edgedef.com/docker-networking.html</a></p>
-<p>Tun&#x2F;Tap interface: <a target="_blank" rel="noopener" href="http://backreference.org/2010/03/26/tuntap-interface-tutorial/">http://backreference.org/2010/03/26/tuntap-interface-tutorial/</a></p>
-<p>TC ifb: <a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&utm_medium=referral">http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</a></p>
-<p>汇编: </p>
+          <p>malloc: http://blog.codinglabs.org/articles/a-malloc-tutorial.html</p>
+<p>duartes.org: http://duartes.org/gustavo/blog/archives/</p>
+<p>github mannul: http://www.epubit.com.cn/article/844#what</p>
+<p>liaoxuefeng.com: http://www.liaoxuefeng.com/</p>
+<p>TCP/IP network: http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</p>
+<p>netfilter.org: https://people.netfilter.org/pablo/netdev0.1/papers/</p>
+<p>tuning-linux-sending: https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</p>
+<p>tuning-linux-receiving: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</p>
+<p>strace: https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</p>
+<p>IBM-Tim: https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</p>
+<p>yeolar: http://www.yeolar.com/</p>
+<p>http://www.yeolar.com/note/2012/03/29/virtual-memory/</p>
+<p>vxlan: https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</p>
+<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</p>
+<p>http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</p>
+<p>ali-kernel: http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</p>
+<p>linux-performance: http://www.brendangregg.com/linuxperf.html</p>
+<p>systemTap: https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</p>
+<p>calico: http://docs.projectcalico.org/v2.0/introduction/</p>
+<p>docker: http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</p>
+<p>Flannel: http://dockone.io/article/618</p>
+<p>SDN: https://www.opennetworking.org/</p>
+<p>Linux Kernel Networking: https://wiki.linuxfoundation.org/networking/start</p>
+<p>MacVtap: https://blog.kghost.info/2013/03/27/linux-network-tun/</p>
+<p>http://blog.csdn.net/dog250/article/details/45788279</p>
+<p>Neutron: http://blog.csdn.net/quqi99/article/details/22853403</p>
+<p>Linux Bridge: http://blog.csdn.net/yeasy/article/details/50728243</p>
+<p>Docker Networking: http://edgedef.com/docker-networking.html</p>
+<p>Tun/Tap interface: http://backreference.org/2010/03/26/tuntap-interface-tutorial/</p>
+<p>TC ifb: http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</p>
+<p>汇编:</p>
 
       
     </div>
@@ -706,29 +709,32 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><h3 id="安装crash工具"><a href="#安装crash工具" class="headerlink" title="安装crash工具"></a>安装crash工具</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-
-<h3 id="检查kdump配置"><a href="#检查kdump配置" class="headerlink" title="检查kdump配置"></a>检查kdump配置</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-
-<p>USE_KDUMP&#x3D;1 代表kdump打开</p>
+          <h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
 <p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-
 <p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq"><a href="#手动触发sysrq" class="headerlink" title="手动触发sysrq"></a>手动触发sysrq</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-
-<ol>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
 <li>sysrq值不为0代表工作正常</li>
 <li>echo写主动触发kdump</li>
 </ol>
-<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="安装crash工具-1"><a href="#安装crash工具-1" class="headerlink" title="安装crash工具"></a>安装crash工具</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装内核调试信息包"><a href="#安装内核调试信息包" class="headerlink" title="安装内核调试信息包"></a>安装内核调试信息包</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-
-<h3 id="判断服务正常开启"><a href="#判断服务正常开启" class="headerlink" title="判断服务正常开启"></a>判断服务正常开启</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-
-<h3 id="主动触发分析"><a href="#主动触发分析" class="headerlink" title="主动触发分析"></a>主动触发分析</h3><p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试"><a href="#分析调试" class="headerlink" title="分析调试"></a>分析调试</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -797,32 +803,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><p>设置如下的程序</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以下就是生成了dump文件</p>
-<p><img src="/Pastedimage20240113005115.png"></p>
-<h3 id="查看coredump是否打开"><a href="#查看coredump是否打开" class="headerlink" title="查看coredump是否打开"></a>查看coredump是否打开</h3><p>查看命令：<code>ulimit -c</code></p>
+          <h2 id="ubuntu">Ubuntu</h2>
+<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
+<p><img src="Pastedimage20240113005115.png" /></p>
+<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
+<p>查看命令：<code>ulimit -c</code></p>
 <p>打开命令：<code>ulimit -c unlimited</code></p>
 <p>0：关闭</p>
-<p>unlimited：打开</p>
-<h3 id="配置规则"><a href="#配置规则" class="headerlink" title="配置规则"></a>配置规则</h3><p>主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
 <p>所以修改有两种方法</p>
 <p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e &quot;/root/core/core-%e.%s.%p.%t&quot; &gt; /proc/sys/kernel/core_pattern</code></p>
+<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
 <blockquote>
 <p>%e：进程名称</p>
 <p>%s：崩溃时收到的信号</p>
 <p>%p：进程ID</p>
 <p>%t：时间戳</p>
 </blockquote>
-<h3 id="注意关闭apport服务"><a href="#注意关闭apport服务" class="headerlink" title="注意关闭apport服务"></a>注意关闭apport服务</h3><p>这个服务会读取core文件分析，不会保存源文件</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure>
-
-<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="编辑-etc-security-limits-conf文件"><a href="#编辑-etc-security-limits-conf文件" class="headerlink" title="编辑/etc/security/limits.conf文件"></a>编辑<code>/etc/security/limits.conf</code>文件</h3><p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制</p>
-<h3 id="配置规则-1"><a href="#配置规则-1" class="headerlink" title="配置规则"></a>配置规则</h3><p>和Ubuntu一样</p>
-<h3 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h3><h2 id="分析崩溃"><a href="#分析崩溃" class="headerlink" title="分析崩溃"></a>分析崩溃</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-
-<p><img src="/Pastedimage20240113011447.png"></p>
+<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
+<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
+<h2 id="centos">CentOS</h2>
+<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
+<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20240113011447.png" /></p>
 <p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
 
       
@@ -892,16 +897,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="hexo配置"><a href="#hexo配置" class="headerlink" title="hexo配置"></a>hexo配置</h2><h3 id="node-js配置"><a href="#node-js配置" class="headerlink" title="node.js配置"></a>node.js配置</h3><h3 id="hexo主题配置"><a href="#hexo主题配置" class="headerlink" title="hexo主题配置"></a>hexo主题配置</h3><h2 id="Obsidian配置"><a href="#Obsidian配置" class="headerlink" title="Obsidian配置"></a>Obsidian配置</h2><p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="/img1.png"></p>
+          <h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="img1.png" /></p>
 <p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="/img3.png"></p>
+<p><img src="img3.png" /></p>
 <p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="/img2.png"></p>
+<p><img src="img2.png" /></p>
 <blockquote>
 <p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
 </blockquote>
-<h2 id="github配置"><a href="#github配置" class="headerlink" title="github配置"></a>github配置</h2><h3 id="workflows配置"><a href="#workflows配置" class="headerlink" title="workflows配置"></a>workflows配置</h3><h2 id="dependabot配置"><a href="#dependabot配置" class="headerlink" title="dependabot配置"></a>dependabot配置</h2>
+
       
     </div>
 
@@ -969,9 +981,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Windows运行参数分析"><a href="#Windows运行参数分析" class="headerlink" title="Windows运行参数分析"></a>Windows运行参数分析</h1><p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
+          <h1 id="windows运行参数分析">Windows运行参数分析</h1>
+<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
 <p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
-<p><img src="/%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86.png"></p>
+<p><img src="任务管理.png" /></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
@@ -1047,219 +1060,220 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="正则表达式-一"><a href="#正则表达式-一" class="headerlink" title="正则表达式(一)"></a>正则表达式(一)</h1><h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
-<ol>
-<li><p><code>.</code>匹配所有字符</p>
-</li>
-<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p>
-</li>
-<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p>
-</li>
-<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p>
-</li>
-<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p>
-</li>
+          <h1 id="正则表达式一">正则表达式(一)</h1>
+<h2 id="元字符">元字符</h2>
+<p>元字符（metacharacters）是按照一定规则限制表示的字符。</p>
+<ol type="1">
+<li><p><code>.</code>匹配所有字符</p></li>
+<li><p><code>[]</code>匹配方括号内的所有字符,这个字符按照原样,即使是具有特殊意义的字符,如’,$,&gt;,+’等都是保持字符本意<code>\-</code>除外</p></li>
+<li><p><code>[^c1c2]c3c4</code>不匹配’c1,c2’,即不带有c1,c2的c3c4字符串</p></li>
+<li><p><code>[c1-c2]</code>匹配c1到c2之间的所有字符</p></li>
+<li><p><code>\w</code>匹配任意单个数字，字符串或者下划线，等价于<code>[a-zA-Z_1-9]</code>，<code>\w*</code>匹配多个连续字符<code>\w{N}</code>匹配N个连续字符</p></li>
 </ol>
-  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>  可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,&#39;option&#39;)</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
-  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>  可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
-<ol start="6">
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br><span class="line">PosStr = regexp(OriginStr,<span class="string">&#x27;\w*&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PosStr =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">7</span>    <span class="number">14</span>    <span class="number">22</span>    <span class="number">27</span>    <span class="number">33</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;spain&#x27;</span>&#125;    &#123;<span class="string">&#x27;remain&#x27;</span>&#125;    &#123;<span class="string">&#x27;contain&#x27;</span>&#125;    &#123;<span class="string">&#x27;aint&#x27;</span>&#125;    &#123;<span class="string">&#x27;retain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看出，这个得到的是所有的匹配。而且对于语句<code>regexp(OriginStr,MatchStr,'option')</code>，如果不加<code>option</code>的话，就是得到匹配的一个字符的位置，如果加上<code>option</code>为<code>match</code>的话，就是得到匹配的值。</p>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OriginStr = <span class="string">&#x27;spain remain contain aint retain &#x27;</span>;</span><br><span class="line">AnsStr = regexp(OriginStr,<span class="string">&#x27;\w* ain&#x27;</span>,<span class="string">&#x27;match&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; AnsStr</span><br><span class="line"></span><br><span class="line">AnsStr =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;contain ain&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，AnsStr输出的<code>contain ain</code>，即匹配<code>ain</code>的前缀都包括的一串字符串。</p>
+<ol start="6" type="1">
 <li><code>\W</code>是匹配<code>\w</code>的补集，<code>\W*</code>跟<code>\w*</code>含义一致<code>\W{N}</code>和<code>\w{N}</code>含义一致。</li>
 <li><code>\s</code>等价于<code>[ \f\t\r\n\v]</code>，匹配空白字符</li>
-<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符<br>tips：小写字母和大写字母的含义往往是补集的关系</li>
-<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个<br>tips<code>*</code>匹配多个</li>
+<li><code>\S</code>等价于<code>[^\f\t\r\n\v]</code>匹配非空白字符 tips：小写字母和大写字母的含义往往是补集的关系</li>
+<li><code>\d</code>匹配单个十进制数<code>\d*</code>匹配多个 tips<code>*</code>匹配多个</li>
 <li><code>D</code>是<code>\d</code>的补集，即匹配除了数字以外的所有字符，等价于<code>[^\d]</code></li>
 <li><code>\oN</code> 和<code>\o{N}</code>匹配八进制数N</li>
 <li><code>\xN</code>匹配<code>\x{N}</code>匹配十六进制数N</li>
 </ol>
-<h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>&#x3D;<code>x&amp;p</code>，<code>[xp]</code>&#x3D;<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
-<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p><code>char(10)</code>&#x3D;<code>\n</code>，即回车。</p>
+<h2 id="表达式">表达式</h2>
+<p><code>expr</code>，表达式，这个也就是对于一串字符串，即<code>xp</code>=<code>x&amp;p</code>，<code>[xp]</code>=<code>x|p</code>，即不加<code>[]</code>是且关系，加了<code>[]</code>是或关系，表达式是限定符前面构成的所有字符构成的匹配字符串。</p>
+<h2 id="转义字符">转义字符</h2>
+<p><code>char(10)</code>=<code>\n</code>，即回车。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str = [<span class="string">&#x27;some&#x27;</span>,char(<span class="number">10</span>),<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">regexp(str,<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出为</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str =</span><br><span class="line"> <span class="string">&#x27;some</span></span><br><span class="line"><span class="string">  text&#x27;</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">5</span></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"> &#123;<span class="string">&#x27;?&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-
 <table>
 <thead>
-<tr>
-<th align="center">转义字符</th>
-<th align="center">描述</th>
-<th align="center">示例</th>
+<tr class="header">
+<th style="text-align: center;">转义字符</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>\a</code></td>
-<td align="center">警告</td>
-<td align="center"><code>char(7)</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>\a</code></td>
+<td style="text-align: center;">警告</td>
+<td style="text-align: center;"><code>char(7)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\b</code></td>
-<td align="center">退格</td>
-<td align="center"><code>char(8)</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>\b</code></td>
+<td style="text-align: center;">退格</td>
+<td style="text-align: center;"><code>char(8)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\f</code></td>
-<td align="center">换页符</td>
-<td align="center"><code>char(12)</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>\f</code></td>
+<td style="text-align: center;">换页符</td>
+<td style="text-align: center;"><code>char(12)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\n</code></td>
-<td align="center">换行符</td>
-<td align="center"><code>char(10)</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>\n</code></td>
+<td style="text-align: center;">换行符</td>
+<td style="text-align: center;"><code>char(10)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\r</code></td>
-<td align="center">回车</td>
-<td align="center"><code>char(13)</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>\r</code></td>
+<td style="text-align: center;">回车</td>
+<td style="text-align: center;"><code>char(13)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\t</code></td>
-<td align="center">水平制表符</td>
-<td align="center"><code>char(9)</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>\t</code></td>
+<td style="text-align: center;">水平制表符</td>
+<td style="text-align: center;"><code>char(9)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\v</code></td>
-<td align="center">垂直制表符</td>
-<td align="center"><code>char(11)</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>\v</code></td>
+<td style="text-align: center;">垂直制表符</td>
+<td style="text-align: center;"><code>char(11)</code></td>
 </tr>
-<tr>
-<td align="center"><code>\char</code></td>
-<td align="center">任意特殊字符</td>
-<td align="center">-</td>
+<tr class="even">
+<td style="text-align: center;"><code>\char</code></td>
+<td style="text-align: center;">任意特殊字符</td>
+<td style="text-align: center;">-</td>
 </tr>
-</tbody></table>
-<h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><table>
+</tbody>
+</table>
+<h2 id="限定符">限定符</h2>
+<table>
 <thead>
-<tr>
-<th align="center">限定符</th>
-<th align="center">含义</th>
+<tr class="header">
+<th style="text-align: center;">限定符</th>
+<th style="text-align: center;">含义</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">expr *</td>
-<td align="center">多次expr：0~∞</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr *</td>
+<td style="text-align: center;">多次expr：0~∞</td>
 </tr>
-<tr>
-<td align="center">expr ?</td>
-<td align="center">一次expr：0~1</td>
+<tr class="even">
+<td style="text-align: center;">expr ?</td>
+<td style="text-align: center;">一次expr：0~1</td>
 </tr>
-<tr>
-<td align="center">expr +</td>
-<td align="center">一次到多次expr：1~∞</td>
+<tr class="odd">
+<td style="text-align: center;">expr +</td>
+<td style="text-align: center;">一次到多次expr：1~∞</td>
 </tr>
-<tr>
-<td align="center">expr{m,n}</td>
-<td align="center">m到n次expr：m~n</td>
+<tr class="even">
+<td style="text-align: center;">expr{m,n}</td>
+<td style="text-align: center;">m到n次expr：m~n</td>
 </tr>
-<tr>
-<td align="center">expr{m,}</td>
-<td align="center">大于等于m次expr：m~∞</td>
+<tr class="odd">
+<td style="text-align: center;">expr{m,}</td>
+<td style="text-align: center;">大于等于m次expr：m~∞</td>
 </tr>
-<tr>
-<td align="center">expr{m}</td>
-<td align="center">m次expr：&#x3D;m</td>
+<tr class="even">
+<td style="text-align: center;">expr{m}</td>
+<td style="text-align: center;">m次expr：=m</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
 <li><p><code>expr*</code>代表匹配0次或者多次，与任意多个字符匹配</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w*&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p><code>expr?</code>代表至多匹配1次</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w?&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">11</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;1&#x27;</span>&#125;    &#123;<span class="string">&#x27;2&#x27;</span>&#125;    &#123;<span class="string">&#x27;a&#x27;</span>&#125;    &#123;<span class="string">&#x27;s&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;4&#x27;</span>&#125;    &#123;<span class="string">&#x27;5&#x27;</span>&#125;    &#123;<span class="string">&#x27;d&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p><code>expr+</code>匹配一次或者连续多次</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>&#x3D;<code>&#39;?&#39;</code></p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>&#x3D;<code>&#39;*&#39;</code>;<code>{1,}</code>&#x3D;<code>&#39;+&#39;</code></p>
-</li>
-<li><p><code>expr{n}</code>匹配n次，<code>n</code>&#x3D;<code>{n,n}</code></p>
-</li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w+&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asdf&#x27;</span>&#125;    &#123;<span class="string">&#x27;45dfg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr{m,n}</code>匹配m~n次，<code>{0,1}</code>=<code>'?'</code></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;12--asdf--45dfg&#x27;</span>,<span class="string">&#x27;\w&#123;1,3&#125;&#x27;</span>,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">5</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;12&#x27;</span>&#125;    &#123;<span class="string">&#x27;asd&#x27;</span>&#125;    &#123;<span class="string">&#x27;f&#x27;</span>&#125;    &#123;<span class="string">&#x27;45d&#x27;</span>&#125;    &#123;<span class="string">&#x27;fg&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>expr{m,}</code>匹配≥m次，<code>{0,}</code>=<code>'*'</code>;<code>{1,}</code>=<code>'+'</code></p></li>
+<li><p><code>expr{n}</code>匹配n次，<code>n</code>=<code>{n,n}</code></p></li>
 </ul>
-<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>表达式+限定词&#x3D;模式</p>
+<h2 id="模式">模式</h2>
+<p>表达式+限定词=模式</p>
 <table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 33%" />
+<col style="width: 55%" />
+</colgroup>
 <thead>
-<tr>
-<th align="center">表达式+限定词</th>
-<th align="center">描述</th>
-<th align="center">示例</th>
+<tr class="header">
+<th style="text-align: center;">表达式+限定词</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: center;">示例</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">expr q</td>
-<td align="center">积极表达式：与尽可能多的expr匹配</td>
-<td align="center">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">expr q</td>
+<td style="text-align: center;">积极表达式：与尽可能多的expr匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*&gt;</code>与介于 <code>&lt;tr</code> 和 <code>/td&gt;</code> 之间的所有字符匹配：</td>
 </tr>
-<tr>
-<td align="center"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
-<td align="center"></td>
-<td align="center"></td>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
-<tr>
-<td align="center">expr q？</td>
-<td align="center">消极表达式：与所需尽可能少的expr匹配</td>
-<td align="center">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
+<tr class="odd">
+<td style="text-align: center;">expr q？</td>
+<td style="text-align: center;">消极表达式：与所需尽可能少的expr匹配</td>
+<td style="text-align: center;">给定文本<code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*?&gt;</code> 在第一次出现右尖括号 (&gt;) 时结束每个匹配项：</td>
 </tr>
-<tr>
-<td align="center"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
-<td align="center"></td>
-<td align="center"></td>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;tr&gt;</code> <code>&lt;td&gt;</code> <code>&lt;/td&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
-<tr>
-<td align="center">expr q+</td>
-<td align="center">主动表达式：最大程度的匹配</td>
-<td align="center">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
+<tr class="odd">
+<td style="text-align: center;">expr q+</td>
+<td style="text-align: center;">主动表达式：最大程度的匹配</td>
+<td style="text-align: center;">给定文本 <code>&lt;tr&gt;&lt;td&gt;&lt;p&gt;text&lt;/p&gt;&lt;/td&gt;</code>，表达式 <code>&lt;/?t.*+&gt;</code> 不返回任何匹配项，这是因为右尖括号是使用 <code>.*</code> 捕获的且不进行重新扫描。<br />空<code>{}</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
 <li><p>积极表达式：碰到符合条件的，就从开始处匹配到结尾，格式为<code>expr q</code>，q为任意限定符。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>消极模式：只要匹配就立即停止搜索，进行下一次匹配，格式为<code>expr q?</code>如</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*?&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">3</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;txd&gt;&#x27;</span>&#125;    &#123;<span class="string">&#x27;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>主动模式：最大程度的匹配，格式为<code>expr q+</code>，如</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;/?t.*+&gt;&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  空的 <span class="number">0</span>×<span class="number">0</span> cell 数组</span><br><span class="line">  </span><br><span class="line">&gt;&gt; regexp(<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>, <span class="string">&#x27;&lt;t.*+&#x27;</span> ,<span class="string">&#x27;match&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">ans</span> =</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>×<span class="number">1</span> cell 数组</span><br><span class="line"></span><br><span class="line">    &#123;<span class="string">&#x27;&lt;txr&gt;&lt;txd&gt;&lt;p&gt;text&lt;/p&gt;&lt;/tpd&gt;&#x27;</span>&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>主动模式较难理解，我觉得可以这样看，他就就是直接把检测到开头的<code>&lt;</code>字符就开始匹配，知道匹配到无可匹配也就是<code>&gt;</code>为止，这时候才到达匹配模式里面的<code>?</code>部分，所以如果<code>?</code>后面有任何的字符，这个匹配出来的都是空字符串。</p>
 <p>这个匹配模式跟匹配出来的结果就是两个，一个是最后一位是<code>？</code>,这时候等价于<code>expr *</code>，最后一位不是<code>?</code>，这时候结果是空字符串。</p>
-<h2 id="操作符的优先级"><a href="#操作符的优先级" class="headerlink" title="操作符的优先级"></a>操作符的优先级</h2><table>
+<h2 id="操作符的优先级">操作符的优先级</h2>
+<table>
 <thead>
-<tr>
-<th align="center">操作符</th>
-<th align="center">描述</th>
+<tr class="header">
+<th style="text-align: center;">操作符</th>
+<th style="text-align: center;">描述</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">\</td>
-<td align="center">转义符</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">转义符</td>
 </tr>
-<tr>
-<td align="center">(), (?:), (?&#x3D;), []</td>
-<td align="center">圆括号和方括号</td>
+<tr class="even">
+<td style="text-align: center;">(), (?:), (?=), []</td>
+<td style="text-align: center;">圆括号和方括号</td>
 </tr>
-<tr>
-<td align="center">*, +, ?, {n}, {n,}, {n,m}</td>
-<td align="center">限定符</td>
+<tr class="odd">
+<td style="text-align: center;">*, +, ?, {n}, {n,}, {n,m}</td>
+<td style="text-align: center;">限定符</td>
 </tr>
-<tr>
-<td align="center">^, $, \anymetacharacter</td>
-<td align="center">位置和顺序</td>
+<tr class="even">
+<td style="text-align: center;">^, $, </td>
+<td style="text-align: center;">位置和顺序</td>
 </tr>
-<tr>
-<td align="center">|</td>
-<td align="center">“或”操作</td>
+<tr class="odd">
+<td style="text-align: center;">|</td>
+<td style="text-align: center;">“或”操作</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
       
     </div>
