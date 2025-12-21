@@ -1792,21 +1792,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <pre class="mermaid">flowchart TD
-    A[开始配置Mermaid] --> B[安装插件]
-    B --> C[修改Hexo配置文件]
-    C --> D{主题是否内置<br>Mermaid支持?}
-    D -- 是 --> E[启用主题配置]
-    D -- 否 --> F[手动添加JS引用]
-    E --> G[清理并重新生成]
-    F --> G
-    G --> H[在博文中使用Mermaid]</pre>
-<pre class="mermaid">sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
-    Alice-)John: See you later!</pre>
-<pre class="mermaid">flowchart TD
-Start --> Stop</pre>
+          <pre><code class="highlight mermaid">flowchart TD
+    A[开始配置Mermaid] --&gt; B[安装插件]
+    B --&gt; C[修改Hexo配置文件]
+    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;
+    D -- 是 --&gt; E[启用主题配置]
+    D -- 否 --&gt; F[手动添加JS引用]
+    E --&gt; G[清理并重新生成]
+    F --&gt; G
+    G --&gt; H[在博文中使用Mermaid]</code></pre>
+<pre><code class="highlight mermaid">sequenceDiagram
+	Alice-&gt;&gt;John: Hello John, how are you?
+	John--&gt;&gt;Alice: Great!
+	Alice-)John: See you later!</code></pre>
+<pre><code class="highlight mermaid">flowchart TD
+Start --&gt; Stop</code></pre>
 
       
     </div>
