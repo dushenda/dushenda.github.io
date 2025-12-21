@@ -116,4 +116,4 @@ mermaid:
   enable: true
   version: "10.6.0"
   options:
-    theme: forest
+    theme: default
