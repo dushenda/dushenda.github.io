@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="123456789flowchart TD    A[开始配置Mermaid] --&gt; B[安装插件]    B --&gt; C[修改Hexo配置文件]    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;    D -- 是 --&gt; E[启用主题配置]    D -- 否 --&gt; F[手动添加JS引用]    E --&gt;">
+    <meta name="description" content="flowchart TD     A[开始配置Mermaid] --&gt; B[安装插件]     B --&gt; C[修改Hexo配置文件]     C --&gt; D{主题是否内置Mermaid支持?}     D -- 是 --&gt; E[启用主题配置]     D -- 否 --&gt; F[手动添加JS引用]     E --&gt; G[清理并重新生成]     F --&gt; G     G --&gt; H[在博文中使">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo增加mermaid">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/21/%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/hexo%E5%A2%9E%E5%8A%A0mermaid/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="123456789flowchart TD    A[开始配置Mermaid] --&gt; B[安装插件]    B --&gt; C[修改Hexo配置文件]    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;    D -- 是 --&gt; E[启用主题配置]    D -- 否 --&gt; F[手动添加JS引用]    E --&gt;">
+<meta property="og:description" content="flowchart TD     A[开始配置Mermaid] --&gt; B[安装插件]     B --&gt; C[修改Hexo配置文件]     C --&gt; D{主题是否内置Mermaid支持?}     D -- 是 --&gt; E[启用主题配置]     D -- 否 --&gt; F[手动添加JS引用]     E --&gt; G[清理并重新生成]     F --&gt; G     G --&gt; H[在博文中使">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-21T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-21T15:12:45.860Z">
+<meta property="article:modified_time" content="2025-12-21T15:13:34.624Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -269,7 +269,15 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[开始配置Mermaid] --&gt; B[安装插件]</span><br><span class="line">    B --&gt; C[修改Hexo配置文件]</span><br><span class="line">    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;</span><br><span class="line">    D -- 是 --&gt; E[启用主题配置]</span><br><span class="line">    D -- 否 --&gt; F[手动添加JS引用]</span><br><span class="line">    E --&gt; G[清理并重新生成]</span><br><span class="line">    F --&gt; G</span><br><span class="line">    G --&gt; H[在博文中使用Mermaid]</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><pre class="mermaid">flowchart TD
+    A[开始配置Mermaid] --> B[安装插件]
+    B --> C[修改Hexo配置文件]
+    C --> D{主题是否内置<br>Mermaid支持?}
+    D -- 是 --> E[启用主题配置]
+    D -- 否 --> F[手动添加JS引用]
+    E --> G[清理并重新生成]
+    F --> G
+    G --> H[在博文中使用Mermaid]</pre>
 <p>sequenceDiagram Alice-&gt;&gt;John: Hello John, how are you? John–&gt;&gt;Alice: Great! Alice-)John: See you later! flowchart TD Start –&gt; Stop id1(Some text) id1[(Database)] id1((Some text))</p>
 <p>flowchart TD Start –&gt; Stop</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">```mehrmaid</span><br><span class="line">graph LR</span><br><span class="line">T1 --&gt; T2 &amp; T3 --&gt; T4 &amp; T5 --&gt; T6</span><br><span class="line"></span><br><span class="line">T1(&quot;![|100x100](https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/2023_Obsidian_logo.svg/1024px-2023_Obsidian_logo.svg.png)&quot;)</span><br><span class="line">T2(&quot;$\nabla_\theta \mathbb&#123;E&#125;_&#123;\tau\sim p_\theta&#125;[R(\tau)]x$&quot;)</span><br><span class="line">T3(&quot;| First Name | Last Name |</span><br><span class="line">| ---------- | --------- |</span><br><span class="line">| Doug       | Engelbart |&quot;)</span><br><span class="line">T4(&quot;#plugins/mehrmaid&quot;)</span><br><span class="line">T5(&quot;[[mehrmaid]]&quot;)</span><br><span class="line">T6(&quot;![|80](https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Obsidian_software_logo.svg/1297px-Obsidian_software_logo.svg.png)&quot;)</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
@@ -294,8 +302,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/12/21/shells/Linux%20Troubleshooting/" rel="next" title="Linux Trouble Shooting">
-                  Linux Trouble Shooting <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/" rel="next" title="常用shell命令">
+                  常用shell命令 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
