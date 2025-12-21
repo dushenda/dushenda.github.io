@@ -1,5 +1,5 @@
 ---
-title: Linux TroubleShooting
+title: Linux Trouble Shooting
 date: 2025-12-21
 tags:
 ---
