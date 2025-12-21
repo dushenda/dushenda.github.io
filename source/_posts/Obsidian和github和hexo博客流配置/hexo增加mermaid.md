@@ -4,7 +4,8 @@ date: 2025-12-21
 tags:
   - hexo
 ---
-```flowchart TD
+```mehrmaid
+flowchart TD
     A[开始配置Mermaid] --> B[安装插件]
     B --> C[修改Hexo配置文件]
     C --> D{主题是否内置<br>Mermaid支持?}
