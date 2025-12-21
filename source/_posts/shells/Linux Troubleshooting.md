@@ -3,7 +3,6 @@ title: Linux TroubleShooting
 date: 2025-12-21
 tags:
 ---
-# Linux Commands
 
 > 转载：https://github.com/rahulrajaram/linux_troubleshooting
 
@@ -28,8 +27,7 @@ List shared library dependencies of executables and shared objects.
 - Security caveat: may execute code in rare cases; avoid on untrusted binaries.
 - Alternative: `LD_TRACE_LOADED_OBJECTS=1 /lib64/ld-linux-x86-64.so.2 /path/to/bin` (still uses loader)
 
-## Text & Data Utilities
-
+### Text & Data Utilities
 
 Cheat Card
 
@@ -724,7 +722,7 @@ Interpretation tips
     - of interrupts per CPU
     - of times a particular interrupt occurred
 
-## Memory
+### Memory
 
 Cheat Card
 
@@ -1174,7 +1172,8 @@ Cheat Card
 - Hot errors: `journalctl -xeu <unit>`; follow: `journalctl -fu <unit>`
 - Boot scoping: `journalctl -b` and `-b -1`; size: `journalctl --disk-usage`
 
-Systemd basics
+## Systemd basics
+
 ```shell
 # Unit status and enablement
 systemctl status <unit>
@@ -1189,7 +1188,8 @@ journalctl -xe  # recent critical logs
 systemctl restart <unit>
 journalctl -u <unit> -b -n 50
 ```
-Journal essentials
+## Journal essentials
+
 ```shell
 # Recent errors for a unit and live follow
 journalctl -xeu <unit>
@@ -1205,7 +1205,8 @@ journalctl -b -1
 # JSON output piped to jq (Requires: jq)
 journalctl -u <unit> -o json | jq -r '.MESSAGE'
 ```
-Journal management
+## Journal management
+
 ```shell
 # Disk usage and vacuum
 journalctl --disk-usage
@@ -1218,7 +1219,8 @@ systemctl restart systemd-journald
 
 # Tip: tune RateLimitIntervalSec/RateLimitBurst to manage log storms
 ```
-Resolved (DNS)
+## Resolved (DNS)
+
 ```shell
 # Overall resolver status
 resolvectl status
