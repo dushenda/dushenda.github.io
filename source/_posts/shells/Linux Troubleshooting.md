@@ -6,7 +6,9 @@ tags:
 
 > 转载：https://github.com/rahulrajaram/linux_troubleshooting
 
-Purpose: a single-page, production-ready cheatsheet for Linux/SRE triage. Optimized for fast on-call use: concise flags, copy-paste recipes, brief notes, and clear risk callouts.
+Purpose: a single-page, production-ready cheatsheet for Linux/SRE triage. Optimized for fast on-call 
+
+use: concise flags, copy-paste recipes, brief notes, and clear risk callouts.
 
 # Binaries & ELF
 
