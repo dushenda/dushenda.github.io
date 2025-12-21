@@ -19,27 +19,40 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="malloc: http:&#x2F;&#x2F;blog.codinglabs.org&#x2F;articles&#x2F;a-malloc-tutorial.html duartes.org: http:&#x2F;&#x2F;duartes.org&#x2F;gustavo&#x2F;blog&#x2F;archives&#x2F; github mannul: http:&#x2F;&#x2F;www.epubit.com.cn&#x2F;article&#x2F;844#what  liaoxuefeng.com: htt">
+    <meta name="description" content="编译内核 下载 kernel：https:&#x2F;&#x2F;mirrors.edge.kernel.org&#x2F;pub&#x2F;linux&#x2F;kernel&#x2F; 镜像：https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;kernel.org&#x2F;linux&#x2F;kernel&#x2F; 编译 12root@dushenda:&#x2F;home&#x2F;dsd&#x2F;Code&#x2F;linux-5.18.10# make menuconfigroot@dushenda:&#x2F;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="资源收集">
-<meta property="og:url" content="https://dushenda.github.io/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/index.html">
+<meta property="og:title" content="qemu调试linux（一）">
+<meta property="og:url" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="malloc: http:&#x2F;&#x2F;blog.codinglabs.org&#x2F;articles&#x2F;a-malloc-tutorial.html duartes.org: http:&#x2F;&#x2F;duartes.org&#x2F;gustavo&#x2F;blog&#x2F;archives&#x2F; github mannul: http:&#x2F;&#x2F;www.epubit.com.cn&#x2F;article&#x2F;844#what  liaoxuefeng.com: htt">
+<meta property="og:description" content="编译内核 下载 kernel：https:&#x2F;&#x2F;mirrors.edge.kernel.org&#x2F;pub&#x2F;linux&#x2F;kernel&#x2F; 镜像：https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;kernel.org&#x2F;linux&#x2F;kernel&#x2F; 编译 12root@dushenda:&#x2F;home&#x2F;dsd&#x2F;Code&#x2F;linux-5.18.10# make menuconfigroot@dushenda:&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-13T23:33:00.000Z">
-<meta property="article:modified_time" content="2025-12-21T13:49:04.962Z">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_1.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_2.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_3.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_4.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_5.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_6.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_10.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_7.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_9.png">
+<meta property="og:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_8.png">
+<meta property="article:published_time" content="2024-01-24T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-21T14:22:02.024Z">
 <meta property="article:author" content="dushenda">
-<meta property="article:tag" content="资源">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="qemu">
+<meta property="article:tag" content="环境搭建">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89_20240124_1.png">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/">
+<link rel="canonical" href="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/","path":"2024/01/13/资源收集/","title":"资源收集"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/","path":"2024/01/24/qemu/qemu调试linux（一）/","title":"qemu调试linux（一）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>资源收集 | dushenda</title>
+<title>qemu调试linux（一） | dushenda</title>
   
 
 
@@ -154,7 +167,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -167,6 +180,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="nav-number">1.</span> <span class="nav-text">编译内核</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">1.2.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B6%E4%BD%9Cinitramfs"><span class="nav-number">2.</span> <span class="nav-text">制作initramfs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8busybox"><span class="nav-number">2.1.</span> <span class="nav-text">使用busybox</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text">注意</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -181,12 +195,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -228,7 +242,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/01/13/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -241,12 +255,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="资源收集 | dushenda">
+      <meta itemprop="name" content="qemu调试linux（一） | dushenda">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          资源收集
+          qemu调试linux（一）
         </h1>
 
         <div class="post-meta-container">
@@ -257,7 +271,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-01-13 23:33:00" itemprop="dateCreated datePublished" datetime="2024-01-13T23:33:00+00:00">2024-01-13</time>
+      <time title="创建时间：2024-01-24 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-24T00:00:00+00:00">2024-01-24</time>
     </span>
 
   
@@ -269,36 +283,20 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>malloc: <a target="_blank" rel="noopener" href="http://blog.codinglabs.org/articles/a-malloc-tutorial.html">http://blog.codinglabs.org/articles/a-malloc-tutorial.html</a></p>
-<p>duartes.org: <a target="_blank" rel="noopener" href="http://duartes.org/gustavo/blog/archives/">http://duartes.org/gustavo/blog/archives/</a></p>
-<p>github mannul: <a target="_blank" rel="noopener" href="http://www.epubit.com.cn/article/844#what">http://www.epubit.com.cn/article/844#what</a> </p>
-<p>liaoxuefeng.com: <a target="_blank" rel="noopener" href="http://www.liaoxuefeng.com/">http://www.liaoxuefeng.com/</a></p>
-<p>TCP&#x2F;IP network: <a target="_blank" rel="noopener" href="http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/">http://blog.packagecloud.io/eng/2016/10/11/monitoring-tuning-linux-networking-stack-receiving-data-illustrated/</a></p>
-<p>netfilter.org: <a target="_blank" rel="noopener" href="https://people.netfilter.org/pablo/netdev0.1/papers/">https://people.netfilter.org/pablo/netdev0.1/papers/</a></p>
-<p>tuning-linux-sending: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/">https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/</a></p>
-<p>tuning-linux-receiving: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/">https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/</a></p>
-<p>strace: <a target="_blank" rel="noopener" href="https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/">https://blog.packagecloud.io/eng/2016/02/29/how-does-strace-work/</a></p>
-<p>IBM-Tim: <a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90">https://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E5%89%96%E6%9E%90</a></p>
-<p>yeolar: <a target="_blank" rel="noopener" href="http://www.yeolar.com/">http://www.yeolar.com/</a> </p>
-<p><a target="_blank" rel="noopener" href="http://www.yeolar.com/note/2012/03/29/virtual-memory/">http://www.yeolar.com/note/2012/03/29/virtual-memory/</a></p>
-<p>vxlan: <a target="_blank" rel="noopener" href="https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html">https://blogs.vmware.com/vsphere/2013/07/vxlan-series-how-vmotion-impacts-the-forwarding-table-part-6.html</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767">http://www.cisco.com/c/en/us/products/collateral/switches/nexus-5000-series-switches/white-paper-c11-733618.html#_Toc439799767</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html">http://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-729383.html</a></p>
-<p>ali-kernel: <a target="_blank" rel="noopener" href="http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02">http://kernel.taobao.org/index.php?title=%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52017-02</a></p>
-<p>linux-performance: <a target="_blank" rel="noopener" href="http://www.brendangregg.com/linuxperf.html">http://www.brendangregg.com/linuxperf.html</a></p>
-<p>systemTap: <a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/">https://sourceware.org/systemtap/SystemTap_Beginners_Guide/</a></p>
-<p>calico: <a target="_blank" rel="noopener" href="http://docs.projectcalico.org/v2.0/introduction/">http://docs.projectcalico.org/v2.0/introduction/</a></p>
-<p>docker: <a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice">http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice</a></p>
-<p>Flannel: <a target="_blank" rel="noopener" href="http://dockone.io/article/618">http://dockone.io/article/618</a></p>
-<p>SDN: <a target="_blank" rel="noopener" href="https://www.opennetworking.org/">https://www.opennetworking.org/</a></p>
-<p>Linux Kernel Networking: <a target="_blank" rel="noopener" href="https://wiki.linuxfoundation.org/networking/start">https://wiki.linuxfoundation.org/networking/start</a></p>
-<p>MacVtap: <a target="_blank" rel="noopener" href="https://blog.kghost.info/2013/03/27/linux-network-tun/">https://blog.kghost.info/2013/03/27/linux-network-tun/</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/45788279">http://blog.csdn.net/dog250/article/details/45788279</a><br>	<br>Neutron: <a target="_blank" rel="noopener" href="http://blog.csdn.net/quqi99/article/details/22853403">http://blog.csdn.net/quqi99/article/details/22853403</a></p>
-<p>Linux Bridge: <a target="_blank" rel="noopener" href="http://blog.csdn.net/yeasy/article/details/50728243">http://blog.csdn.net/yeasy/article/details/50728243</a></p>
-<p>Docker Networking: <a target="_blank" rel="noopener" href="http://edgedef.com/docker-networking.html">http://edgedef.com/docker-networking.html</a></p>
-<p>Tun&#x2F;Tap interface: <a target="_blank" rel="noopener" href="http://backreference.org/2010/03/26/tuntap-interface-tutorial/">http://backreference.org/2010/03/26/tuntap-interface-tutorial/</a></p>
-<p>TC ifb: <a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&utm_medium=referral">http://blog.csdn.net/dog250/article/details/40680765?utm_source=tuicool&amp;utm_medium=referral</a></p>
-<p>汇编: </p>
+    <div class="post-body" itemprop="articleBody"><h2 id="编译内核">编译内核</h2>
+<h3 id="下载">下载</h3>
+<p>kernel：https://mirrors.edge.kernel.org/pub/linux/kernel/</p>
+<p>镜像：https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/</p>
+<h3 id="编译">编译</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/linux-5.18.10# make -j`nproc`</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_1.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_2.png" /></p>
+<h2 id="制作initramfs">制作initramfs</h2>
+<h3 id="使用busybox">使用busybox</h3>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make menuconfig</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make -j`nproc`</span><br><span class="line">root@dushenda:/home/dsd/Code/busybox-1.36.1# make install</span><br></pre></td></tr></table></figure>
+<p><img src="qemu调试linux（一）_20240124_3.png" /> 编译完成得到 <img src="qemu调试linux（一）_20240124_4.png" /> <img src="qemu调试linux（一）_20240124_5.png" /> 制作initramfs.img，首先构造如下的目录结构 <img src="qemu调试linux（一）_20240124_6.png" /> init文件内容如下： <img src="qemu调试linux（一）_20240124_10.png" /> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img</span><br></pre></td></tr></table></figure> 最后生成文件 <img src="qemu调试linux（一）_20240124_7.png" /> qemu运行新内核 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@dushenda:/home/dsd/Code/initramfs_dir# qemu-system-x86_64 \  </span><br><span class="line">											-kernel bzImage \  </span><br><span class="line">											-initrd initramfs.img \  </span><br><span class="line">											-m 1G \  </span><br><span class="line">											-nographic \  </span><br><span class="line">											-append &quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span><br></pre></td></tr></table></figure> 运行结果如下 <img src="qemu调试linux（一）_20240124_9.png" /> <img src="qemu调试linux（一）_20240124_8.png" /></p>
+<h2 id="注意">注意</h2>
+<p><code>init</code>需要设置为可执行权限</p>
+<p>qemu退出快捷键ctrl+a按下后释放，再按x</p>
 
     </div>
 
@@ -308,20 +306,22 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E8%B5%84%E6%BA%90/" rel="tag"># 资源</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag"># 环境搭建</a>
+              <a href="/tags/qemu/" rel="tag"># qemu</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/" rel="prev" title="内核转储文件--内核崩溃">
-                  <i class="fa fa-angle-left"></i> 内核转储文件--内核崩溃
+                <a href="/2024/01/22/Linux%20Debug/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/" rel="prev" title="bcc初体验">
+                  <i class="fa fa-angle-left"></i> bcc初体验
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" rel="next" title="DHCP协议分析">
-                  DHCP协议分析 <i class="fa fa-angle-right"></i>
+                <a href="/2024/03/19/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="qemu调试linux（二）">
+                  qemu调试linux（二） <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
