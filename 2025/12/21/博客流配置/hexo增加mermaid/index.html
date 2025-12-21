@@ -19,34 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Overview介绍几款Windows下的性能分析工具。 工具介绍 Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。 Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMo">
+    <meta name="description" content="123456789flowchart TD    A[开始配置Mermaid] --&gt; B[安装插件]    B --&gt; C[修改Hexo配置文件]    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;    D -- 是 --&gt; E[启用主题配置]    D -- 否 --&gt; F[手动添加JS引用]    E --&gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="性能分析-Windows（二）">
-<meta property="og:url" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:title" content="hexo增加mermaid">
+<meta property="og:url" content="https://dushenda.github.io/2025/12/21/%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/hexo%E5%A2%9E%E5%8A%A0mermaid/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="Overview介绍几款Windows下的性能分析工具。 工具介绍 Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。 Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMo">
+<meta property="og:description" content="123456789flowchart TD    A[开始配置Mermaid] --&gt; B[安装插件]    B --&gt; C[修改Hexo配置文件]    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;    D -- 是 --&gt; E[启用主题配置]    D -- 否 --&gt; F[手动添加JS引用]    E --&gt;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/perfmon.png">
-<meta property="og:image" content="https://dushenda.github.io/sysinternal.png">
-<meta property="og:image" content="https://dushenda.github.io/wpa.png">
-<meta property="og:image" content="https://dushenda.github.io/perfview.png">
-<meta property="og:image" content="https://dushenda.github.io/sysinformer.png">
-<meta property="article:published_time" content="2025-12-17T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-21T14:47:45.751Z">
+<meta property="article:published_time" content="2025-12-21T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-21T14:47:45.800Z">
 <meta property="article:author" content="dushenda">
-<meta property="article:tag" content="windows">
-<meta property="article:tag" content="性能">
+<meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/perfmon.png">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/">
+<link rel="canonical" href="https://dushenda.github.io/2025/12/21/%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/hexo%E5%A2%9E%E5%8A%A0mermaid/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/","path":"2025/12/17/Windows性能分析/性能分析-Windows（二）/","title":"性能分析-Windows（二）"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/21/%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/hexo%E5%A2%9E%E5%8A%A0mermaid/","path":"2025/12/21/博客流配置/hexo增加mermaid/","title":"hexo增加mermaid"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>性能分析-Windows（二） | dushenda</title>
+<title>hexo增加mermaid | dushenda</title>
   
 
 
@@ -161,7 +154,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -174,7 +167,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">工具介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%A6%82%E8%A7%88"><span class="nav-number">3.</span> <span class="nav-text">工具概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perfmon"><span class="nav-number">3.1.</span> <span class="nav-text">Perfmon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sysinternals"><span class="nav-number">3.2.</span> <span class="nav-text">Sysinternals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-Performance-Toolkit"><span class="nav-number">3.3.</span> <span class="nav-text">Windows Performance Toolkit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perfview"><span class="nav-number">3.4.</span> <span class="nav-text">perfview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Informer"><span class="nav-number">3.5.</span> <span class="nav-text">System Informer</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -236,7 +228,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/21/%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/hexo%E5%A2%9E%E5%8A%A0mermaid/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -249,12 +241,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="性能分析-Windows（二） | dushenda">
+      <meta itemprop="name" content="hexo增加mermaid | dushenda">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          性能分析-Windows（二）
+          hexo增加mermaid
         </h1>
 
         <div class="post-meta-container">
@@ -265,7 +257,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-17T00:00:00+00:00">2025-12-17</time>
+      <time title="创建时间：2025-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-21T00:00:00+00:00">2025-12-21</time>
     </span>
 
   
@@ -277,20 +269,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>介绍几款Windows下的性能分析工具。</p>
-<h1 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h1><ul>
-<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
-<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
-<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
-<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
-<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
-</ul>
-<h1 id="工具概览"><a href="#工具概览" class="headerlink" title="工具概览"></a>工具概览</h1><h2 id="Perfmon"><a href="#Perfmon" class="headerlink" title="Perfmon"></a>Perfmon</h2><p>Windows自带的，详细使用方法，参考官方<a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a><br><img src="/perfmon.png"></p>
-<h2 id="Sysinternals"><a href="#Sysinternals" class="headerlink" title="Sysinternals"></a>Sysinternals</h2><p>下载后即可使用的工具集，官方下链接<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内<br><img src="/sysinternal.png"></p>
-<h2 id="Windows-Performance-Toolkit"><a href="#Windows-Performance-Toolkit" class="headerlink" title="Windows Performance Toolkit"></a>Windows Performance Toolkit</h2><p>这个是Windows下的性能工具合集，见<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
-<p>需要使用WPR收集数据，再使用WPA分析数据。<br><img src="/wpa.png"></p>
-<h2 id="perfview"><a href="#perfview" class="headerlink" title="perfview"></a>perfview</h2><p>perfview<a target="_blank" rel="noopener" href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。<br><img src="/perfview.png">  </p>
-<h2 id="System-Informer"><a href="#System-Informer" class="headerlink" title="System Informer"></a>System Informer</h2><p>系统资源监控工具，支持windows10、windows11，官网<a target="_blank" rel="noopener" href="https://systeminformer.sourceforge.io/">地址</a>。<br><img src="/sysinformer.png"></p>
+    <div class="post-body" itemprop="articleBody"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[开始配置Mermaid] --&gt; B[安装插件]</span><br><span class="line">    B --&gt; C[修改Hexo配置文件]</span><br><span class="line">    C --&gt; D&#123;主题是否内置&lt;br&gt;Mermaid支持?&#125;</span><br><span class="line">    D -- 是 --&gt; E[启用主题配置]</span><br><span class="line">    D -- 否 --&gt; F[手动添加JS引用]</span><br><span class="line">    E --&gt; G[清理并重新生成]</span><br><span class="line">    F --&gt; G</span><br><span class="line">    G --&gt; H[在博文中使用Mermaid]</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -300,21 +279,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%80%A7%E8%83%BD/" rel="tag"># 性能</a>
-              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="prev" title="TCP学习-NS3模拟环境搭建">
-                  <i class="fa fa-angle-left"></i> TCP学习-NS3模拟环境搭建
+                <a href="/2025/12/21/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%B8%BB%E6%9C%BA%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%8Cip%E9%97%AE%E9%A2%98/" rel="prev" title="主机同网段双ip问题">
+                  <i class="fa fa-angle-left"></i> 主机同网段双ip问题
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/12/20/ARM%E7%9B%B8%E5%85%B3/ARM%E7%9B%B8%E5%85%B3%E7%BC%A9%E7%95%A5%E8%AF%AD/" rel="next" title="ARM相关缩略语">
-                  ARM相关缩略语 <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/21/shells/Linux%20Troubleshooting/" rel="next" title="Linux Trouble Shooting">
+                  Linux Trouble Shooting <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
