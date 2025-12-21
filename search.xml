@@ -1864,258 +1864,6 @@ AMBA 总线协议</p>
       </tags>
   </entry>
   <entry>
-    <title>bpftrace技术2-map变量和map函数</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
-<p>在 bpftrace 中，符号 <code>@</code>用于定义和操作 <strong>Map 变量</strong>（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的<strong>迷你数据库</strong></p>
-<p>Map 的主要作用是在不同的事件探针（probe）之间<strong>存储、共享和聚合数据</strong>。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂的追踪逻辑成为可能。</p>
-<table>
-<colgroup>
-<col style="width: 9%" />
-<col style="width: 90%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>特性</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>数据持久化</strong>​</td>
-<td>Map 中的数据在多个探针事件之间保持存在，不像普通变量那样每次事件触发后就被重置。（全局变量）</td>
-</tr>
-<tr class="even">
-<td><strong>键值对结构</strong>​</td>
-<td>Map 使用键（key）来索引值（value），格式为 <code>@map_name[key] = value</code>。键可以是单一值，也可以是多个值的组合（如 <code>@a[pid, comm]</code>）。kv结构</td>
-</tr>
-<tr class="odd">
-<td><strong>自动输出</strong>​</td>
-<td>默认情况下，当 bpftrace 程序退出时（例如你按下 <code>Ctrl-C</code>），所有非空的 Map 内容会自动打印到屏幕上。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="map-的常见操作与示例"> Map 的常见操作与示例</h1>
-<table>
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 24%" />
-<col style="width: 47%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>操作/函数</th>
-<th>说明</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>赋值</strong>​</td>
-<td>直接给 Map 赋值。</td>
-<td><code>@start_time[tid] = nsecs</code>(记录线程的开始时间)</td>
-</tr>
-<tr class="even">
-<td><strong>计数 (<code>count()</code>)</strong>​</td>
-<td>统计事件发生的次数。</td>
-<td><code>@syscall_count[comm] = count()</code>(统计每个进程名的系统调用次数)</td>
-</tr>
-<tr class="odd">
-<td><strong>求和 (<code>sum()</code>)</strong>​</td>
-<td>对数值进行累加。</td>
-<td><code>@total_bytes[pid] = sum(args-&gt;ret)</code>(累计每个进程读取的总字节数)</td>
-</tr>
-<tr class="even">
-<td><strong>统计 (<code>avg()</code>, <code>min()</code>, <code>max()</code>)</strong>​</td>
-<td>计算平均值、最小值、最大值。</td>
-<td><code>@response_time = avg($latency)</code></td>
-</tr>
-<tr class="odd">
-<td><strong>直方图 (<code>hist()</code>)</strong>​</td>
-<td><strong>非常实用</strong>，生成2的幂次方的直方图，直观展示数据分布。</td>
-<td><code>@latency_ns = hist(nsecs - @start[tid])</code>(可视化读操作的延迟分布)</td>
-</tr>
-<tr class="even">
-<td><strong>线性直方图 (<code>lhist()</code>)</strong>​</td>
-<td>生成自定义区间的线性直方图。</td>
-<td><code>@read_sizes = lhist(args-&gt;ret, 0, 10000, 1000)</code>(统计读取大小的分布)</td>
-</tr>
-<tr class="odd">
-<td><strong>数据清理 (<code>delete()</code>)</strong>​</td>
-<td>从 Map 中删除特定的键值对，防止内存无限增长。</td>
-<td><code>delete(@start_time[tid])</code>(在处理完一个事件后清理对应的开始时间)</td>
-</tr>
-</tbody>
-</table>
-<h1 id="与其他变量的区别"> 与其他变量的区别</h1>
-<table>
-<thead>
-<tr class="header">
-<th>变量类型</th>
-<th>前缀</th>
-<th>作用域与用途</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Map 变量</strong>​</td>
-<td><code>@</code></td>
-<td><strong>全局</strong>。用于在探针之间持久化存储和聚合数据。</td>
-</tr>
-<tr class="even">
-<td><strong>内置变量</strong>​</td>
-<td>无</td>
-<td><strong>只读</strong>。提供事件上下文信息，如 <code>pid</code>(进程ID)、<code>comm</code>(命令名)、<code>retval</code>(函数返回值)等。</td>
-</tr>
-<tr class="odd">
-<td><strong>暂存变量</strong>​</td>
-<td><code>$</code></td>
-<td><strong>局部临时</strong>。用于单次探针触发过程中的中间计算，例如 <code>$duration = nsecs - @start[tid]</code>。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="map函数参考表">map函数参考表</h1>
-<table>
-<colgroup>
-<col style="width: 31%" />
-<col style="width: 36%" />
-<col style="width: 31%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>函数原型</th>
-<th>核心作用与参数说明</th>
-<th>典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>count()</code></strong>​</td>
-<td><strong>计数</strong>。统计事件被触发的次数。无参数。</td>
-<td>统计系统调用次数、函数调用次数等。</td>
-</tr>
-<tr class="even">
-<td><strong><code>sum(int n)</code></strong>​</td>
-<td><strong>求和</strong>。对参数 <code>n</code>的值进行累加。</td>
-<td>计算总的字节读写量、总耗时等。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>avg(int n)</code></strong>​</td>
-<td><strong>求平均值</strong>。计算参数 <code>n</code>的平均值。</td>
-<td>计算平均延迟、平均数据包大小等。</td>
-</tr>
-<tr class="even">
-<td><strong><code>min(int n)</code></strong>​</td>
-<td><strong>求最小值</strong>。记录参数 <code>n</code>的最小值。</td>
-<td>追踪最小延迟、最小数据块大小。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>max(int n)</code></strong>​</td>
-<td><strong>求最大值</strong>。记录参数 <code>n</code>的最大值。</td>
-<td>追踪最大延迟、最大数据块大小。</td>
-</tr>
-<tr class="even">
-<td><strong><code>stats(int n)</code></strong>​</td>
-<td><strong>统计摘要</strong>。返回参数 <code>n</code>的计数、平均值、总和、最小值、最大值。</td>
-<td>获取一个指标的全面统计信息。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>hist(int n)</code></strong>​</td>
-<td><strong>对数直方图</strong>。按2的幂次方区间（如 <code>[4-8)</code>, <code>[8-16)</code>）展示参数 <code>n</code>的分布。</td>
-<td>直观展示延迟、数据大小的分布情况，易于发现模式。</td>
-</tr>
-<tr class="even">
-<td><strong><code>lhist(int n, int min, int max, int step)</code></strong>​</td>
-<td><strong>线性直方图</strong>。在指定的线性区间（<code>min</code>到<code>max</code>，步长为<code>step</code>）内展示参数 <code>n</code>的分布。</td>
-<td>当需要自定义固定区间进行分析时使用。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>delete(@m[key])</code></strong>​</td>
-<td><strong>删除键值对</strong>。从 Map <code>@m</code>中删除指定的 <code>key</code>及其对应的值。</td>
-<td>清理临时数据，防止 Map 无限增长，常用于配对探针（如 kprobe/kretprobe）。</td>
-</tr>
-<tr class="even">
-<td><strong><code>clear(@m)</code></strong>​</td>
-<td><strong>清空 Map</strong>。清除 Map <code>@m</code>中的所有键值对。</td>
-<td>在定时器（如 <code>interval</code>）中定期重置统计。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>zero(@m)</code></strong>​</td>
-<td><strong>归零 Map</strong>。将 Map <code>@m</code>中所有键的值重置为 0。</td>
-<td>重置计数或求和等数据，但保留键的结构。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="count--统计系统调用次数">count()- 统计系统调用次数</h2>
-<p>统计每个进程调用的系统调用次数</p>
-<p><code>bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@count[bash]: 15</span><br><span class="line">@count[sshd]: 28</span><br><span class="line">@count[snmpd]: 102</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>@[comm]：以进程名 comm为键（key）。</li>
-<li>count()：每次事件触发，对应键的值加 1</li>
-</ul>
-<h2 id="sumint-n--计算读取的总字节数">sum(int n)- 计算读取的总字节数</h2>
-<p>累计所有进程通过 read 系统调用成功读取的字节数</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @bytes = sum(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes: 1048576</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
-<li>sum(args-&gt;ret)：对返回值（读取的字节数）进行累加</li>
-</ul>
-<h2 id="avgint-n--计算平均读取大小">avg(int n)- 计算平均读取大小</h2>
-<p>计算每次 <code>read</code>系统调用成功读取的平均字节数。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @avg_size = avg(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@avg_size: 512</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
-<li>avg(args-&gt;ret)：对返回值（读取的字节数）求平均</li>
-</ul>
-<h2 id="statsint-n--获取完整的统计摘要">stats(int n)- 获取完整的统计摘要</h2>
-<p>对 <code>read</code>系统调用的返回值进行全面的统计。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @s = stats(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@s: count 100, average 4096, total 409600, min 1, max 8192</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
-<li>stats(args-&gt;ret)：求调用次数，对返回值（读取的字节数）求平均，求总数，求最大最小值</li>
-</ul>
-<h2 id="histint-n--分析读取字节数的对数分布">hist(int n)- 分析读取字节数的对数分布</h2>
-<p>显示 <code>read</code>系统调用返回值的分布，区间按2的幂次方划分。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = hist(args-&gt;ret); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">[0, 1]                12 |@@@@@@@@@@@@@@@@@@@@                                |</span><br><span class="line">[2, 4)                18 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |</span><br><span class="line">[4, 8)                 0 |                                                    |</span><br><span class="line">...</span><br><span class="line">[128, 256)             1 |@</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>hist(args-&gt;ret)：分为2^x ~2^y 大小的桶，统计每个桶的里面的数目个数</li>
-</ul>
-<h2 id="lhistint-n-int-min-int-max-int-step--分析读取字节数的线性分布">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</h2>
-<p>使用线性直方图统计 <code>read</code>返回值，范围从0到2000，步长为200。</p>
-<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = lhist(args-&gt;ret, 0, 2000, 200); }'</code></p>
-<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">(..., 0)                0 |                                                    |</span><br><span class="line">[0, 200)              66 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[200, 400)             2 |@                                                   |</span><br><span class="line">...</span><br><span class="line">[2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>hist(args-&gt;ret)：分为0-200区间桶，统计每个桶的里面的数目个数</li>
-</ul>
-<h2 id="deletemkey--清理临时数据">delete(<span class="citation" data-cites="m">@m</span>[key])- 清理临时数据</h2>
-<p>在计算函数耗时后，删除用于存储开始时间的临时键，避免 Map 无限增长。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read </span></span><br><span class="line"><span class="string">			&#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">			   kretprobe:vfs_read /@start[tid]/ </span></span><br><span class="line"><span class="string">			   &#123; $duration_ns = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">				 @us = hist($duration_ns); </span></span><br><span class="line"><span class="string">			     delete(@start[tid]); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>此函数通常用于配对操作的探针（如 <code>kprobe</code>和 <code>kretprobe</code>），在操作完成后及时清理资源</li>
-</ul>
-<h2 id="clearm和-zerom--重置-map">clear(<span class="citation" data-cites="m">@m</span>)和 zero(<span class="citation" data-cites="m">@m</span>)- 重置 Map</h2>
-<p>每5秒打印并清空一次系统调用计数 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); clear(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[Relay(89295)]: 3</span><br><span class="line">@[mini_init]: 4</span><br><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[systemd-udevd]: 37</span><br><span class="line">@[chronyd]: 40</span><br><span class="line">@[bpftrace]: 118</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><code>clear(@m)</code>会删除 Map 中的所有键值对。而 <code>zero(@m)</code>则将所有键的值重置为0，但保留键的结构 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); zero(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 9</span><br><span class="line">@[mini_init]: 12</span><br><span class="line">@[chronyd]: 44</span><br><span class="line">@[init]: 103</span><br><span class="line">@[bpftrace]: 114</span><br><span class="line">@[GnsPortTracker]: 242</span><br><span class="line">@[top]: 350</span><br><span class="line">@[grep]: 664</span><br><span class="line">@[sh]: 923</span><br><span class="line">@[Xwayland]: 1978</span><br><span class="line">@[ps]: 2778</span><br><span class="line">@[libuv-worker]: 4028</span><br><span class="line">@[ls]: 4256</span><br><span class="line">@[node]: 4722</span><br><span class="line">@[mini_init]: 0   &lt;---------主要看这个，明显没有调用，但是结构被保留下来了</span><br><span class="line">@[Relay(109)]: 3</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="map特点">map特点</h1>
-<ul>
-<li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
-<li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
-<li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>bpftrace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bpftrace技术1-常用命令</title>
     <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
@@ -2332,79 +2080,174 @@ AMBA 总线协议</p>
       </tags>
   </entry>
   <entry>
-    <title>Obsidian和github和hexo博客流配置</title>
-    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
-<h3 id="node.js配置">node.js配置</h3>
-<h3 id="hexo主题配置">hexo主题配置</h3>
-<h2 id="obsidian配置">Obsidian配置</h2>
-<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
-<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
-<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
-<p><img src="img3.png" /></p>
-<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
-<p><img src="img2.png" /></p>
+    <title>Linux性能IO-blktrace工具</title>
+    <url>/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<h1 id="快速分析">快速分析</h1>
+<p>使用命令组合 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装工具</span></span><br><span class="line">yum install blktrace -y</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">采集数据：（监控30秒）</span></span><br><span class="line">blktrace -d /dev/nvme0n1 -w 30</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">合并数据：</span></span><br><span class="line">blkparse -i nvme0n1 -d nvme_trace.bin。</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解析分析：，重点查看 <span class="string">&quot;ALL&quot;</span> 统计区和 <span class="string">&quot;Device Overhead&quot;</span> 分布</span></span><br><span class="line">btt -i nvme_trace.bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">组合命令</span></span><br><span class="line">blktrace -d /dev/sdf -w 5 -o - | blkparse -i - -d btt.bin &gt; blkparse.txt</span><br><span class="line">btt -i btt.bin</span><br></pre></td></tr></table></figure> btrace组合 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">追踪设备/dev/sda并输出blkparse数据</span></span><br><span class="line">btrace /dev/sda</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
-<h2 id="github配置">github配置</h2>
-<h3 id="workflows配置">workflows配置</h3>
-<h2 id="dependabot配置">dependabot配置</h2>
+<p>实际上btrace是调用了blktarce和blkparse组合出来的脚本文件，位于/usr/bin/btrace</p>
 </blockquote>
+<h1 id="理论分析">理论分析</h1>
+<p>一个I/O请求，从应用层到底层块设备，路径如下图所示： <img src="Linux-storage-stack-diagram_v4.0.png" /> 我们将IO路径简化一下： <img src="io_path_simple.png" /> 一个I/O请求进入block layer之后，可能会经历下面的过程：</p>
+<ul>
+<li>Remap: 可能被DM(Device Mapper)或MD(Multiple Device, Software RAID) remap到其它设备</li>
+<li>Split: 可能会因为I/O请求与扇区边界未对齐、或者size太大而被分拆(split)成多个物理I/O</li>
+<li>Merge: 可能会因为与其它I/O请求的物理位置相邻而合并(merge)成一个I/O</li>
+<li>被IO Scheduler依照调度策略发送给driver</li>
+<li>被driver提交给硬件，经过HBA、电缆（光纤、网线等）、交换机（SAN或网络）、最后到达存储设备，设备完成IO请求之后再把结果发回。</li>
+</ul>
+<p>blktrace 能够记录下IO所经历的各个步骤: <img src="blktrace_architecture.png" /> 我们一起看下blktrace的输出长什么样子： <img src="blktrace_out.png" /></p>
+<ul>
+<li>第一个字段：8,0 这个字段是设备号 major device ID和minor device ID。</li>
+<li>第二个字段：3 表示CPU</li>
+<li>第三个字段：11 序列号</li>
+<li>第四个字段：0.009507758 Time Stamp是时间偏移</li>
+<li>第五个字段：PID 本次IO对应的进程ID</li>
+<li>第六个字段：Event，这个字段非常重要，反映了IO进行到了那一步</li>
+<li>第七个字段：R表示 Read， W是Write，D表示block，B表示Barrier Operation</li>
+<li>第八个字段：223490+56，表示的是起始block number 和 number of blocks，即我们常说的Offset 和 Size</li>
+<li>第九个字段： 进程名</li>
+</ul>
+<p><code>blkparse</code>的输出包含了每个 I/O 请求事件的详细信息，理解这些字段是分析的关键：</p>
+<table>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>含义说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>设备号 (Major, Minor)</strong>​</td>
+<td>如 <code>8,0</code>通常指 <code>/dev/sda</code></td>
+</tr>
+<tr class="even">
+<td><strong>CPU ID</strong>​</td>
+<td>处理此事件的 CPU 核心编号</td>
+</tr>
+<tr class="odd">
+<td><strong>序列号</strong>​</td>
+<td>事件的序列号</td>
+</tr>
+<tr class="even">
+<td><strong>时间戳</strong>​</td>
+<td>事件发生的时间（通常为相对时间）</td>
+</tr>
+<tr class="odd">
+<td><strong>进程ID (PID)</strong>​</td>
+<td>发起 I/O 操作的进程 ID</td>
+</tr>
+<tr class="even">
+<td><strong>事件类型 (Action)</strong>​</td>
+<td><strong>核心字段</strong>，表示 I/O 请求所处的阶段</td>
+</tr>
+<tr class="odd">
+<td><strong>RWBS 描述符</strong>​</td>
+<td>描述 I/O 类型：R(读)/W(写)/B(屏障)/S(同步)</td>
+</tr>
+<tr class="even">
+<td><strong>扇区信息</strong>​</td>
+<td>如 <code>2048 + 8</code>，表示起始扇区号及连续扇区数</td>
+</tr>
+<tr class="odd">
+<td><strong>进程名</strong>​</td>
+<td>发起 I/O 的进程名称</td>
+</tr>
+</tbody>
+</table>
+<p>其中，<strong>事件类型 (Action)</strong>​ 是理解 I/O 路径的关键，它记录了请求从产生到完成的各个阶段：</p>
+<ul>
+<li><strong>Q</strong>​ (Queued): I/O 请求进入块层。</li>
+<li><strong>G</strong>​ (Get request): 分配请求结构。</li>
+<li><strong>I</strong>​ (Inserted): 请求插入 I/O 调度器队列。</li>
+<li><strong>D</strong>​ (Issued): 请求提交给设备驱动。</li>
+<li><strong>C</strong>​ (Completed): 请求完成。</li>
+</ul>
+<p>根据这些事件的时间戳，可以计算出 I/O 路径各阶段的耗时，例如：</p>
+<ul>
+<li><strong>D2C</strong>: 请求在驱动和硬件上消耗的时间，是评估<strong>硬件性能</strong>的关键指标。</li>
+<li><strong>I2D</strong>: 请求在 I/O 调度队列中等待的时间，反映<strong>调度器性能</strong>。</li>
+<li><strong>Q2C</strong>: 整个 I/O 请求的总时间，近似于 <code>iostat</code>中的 <code>await</code>。</li>
+</ul>
+<p>其中第六个字段非常有用：每一个字母都代表了IO请求所经历的某个阶段。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Q – 即将生成IO请求</span><br><span class="line">|</span><br><span class="line">G – IO请求生成</span><br><span class="line">|</span><br><span class="line">I – IO请求进入IO Scheduler队列</span><br><span class="line">|</span><br><span class="line">D – IO请求进入driver</span><br><span class="line">|</span><br><span class="line">C – IO请求执行完毕</span><br></pre></td></tr></table></figure> 注意，整个IO路径，分成很多段，每一段开始的时候，都会有一个时间戳，根据上一段开始的时间和下一段开始的时间，就可以得到IO 路径各段花费的时间。</p>
+<p>注意，我们心心念念的service time，也就是反应块设备处理能力的指标，就是从D到C所花费的时间，简称D2C。</p>
+<p>而iostat输出中的await，即整个IO从生成请求到IO请求执行完毕，即从Q到C所花费的时间，我们简称Q2C。</p>
+<p>我们知道Linux 有I/O scheduler，调度器的效率如何，I2D是重要的指标。</p>
+<p>注意，这只是blktrace输出的一个部分，很明显，我们还能拿到offset和size，根据offset，我们能拿到某一段时间里，应用程序都访问了整个块设备的那些block，从而绘制出块设备访问轨迹图。</p>
+<p>另外还有size和第七个字段（Read or Write），我们可以知道IO size的分布直方图。对于本文来讲，我们就是要根据blktrace来获取这些信息。 # 工具使用</p>
+<p>我们接下来简单介绍这些工具的使用，其中这三个命令都是属于blktrace这个包的，他们是一家人。</p>
+<p>首先通过如下命令，可以查看磁盘上的实时信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blktrace -d /dev/sdb -o – | blkparse -i –</span><br></pre></td></tr></table></figure>
+<p>这个命令会连绵不绝地出现很多输出，当你输入ctrl＋C的时候，会停止。</p>
+<p>当然了，你也可以先用如下命令采集信息，待所有信息采集完毕后，统一分析所有采集到的数据。搜集信息的命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blktrace -d /dev/sdb</span><br></pre></td></tr></table></figure>
+<p>注意，这个命令并不是只输出一个文件，他会根据CPU的个数上，每一个CPU都会输出一个文件，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-rw-r--r-- 1 manu manu  1.3M Jul  6 19:58 sdb.blktrace.0</span><br><span class="line">-rw-r--r-- 1 manu manu  823K Jul  6 19:58 sdb.blktrace.1</span><br><span class="line">-rw-r--r-- 1 manu manu  2.8M Jul  6 19:58 sdb.blktrace.10</span><br><span class="line">-rw-r--r-- 1 manu manu  1.9M Jul  6 19:58 sdb.blktrace.11</span><br><span class="line">-rw-r--r-- 1 manu manu  474K Jul  6 19:58 sdb.blktrace.12</span><br><span class="line">-rw-r--r-- 1 manu manu  271K Jul  6 19:58 sdb.blktrace.13</span><br><span class="line">-rw-r--r-- 1 manu manu  578K Jul  6 19:58 sdb.blktrace.14</span><br><span class="line">-rw-r--r-- 1 manu manu  375K Jul  6 19:58 sdb.blktrace.15</span><br><span class="line">-rw-r--r-- 1 manu manu  382K Jul  6 19:58 sdb.blktrace.16</span><br><span class="line">-rw-r--r-- 1 manu manu  478K Jul  6 19:58 sdb.blktrace.17</span><br><span class="line">-rw-r--r-- 1 manu manu  839K Jul  6 19:58 sdb.blktrace.18</span><br><span class="line">-rw-r--r-- 1 manu manu  848K Jul  6 19:58 sdb.blktrace.19</span><br><span class="line">-rw-r--r-- 1 manu manu  1.6M Jul  6 19:58 sdb.blktrace.2</span><br><span class="line">-rw-r--r-- 1 manu manu  652K Jul  6 19:58 sdb.blktrace.20</span><br><span class="line">-rw-r--r-- 1 manu manu  738K Jul  6 19:58 sdb.blktrace.21</span><br><span class="line">-rw-r--r-- 1 manu manu  594K Jul  6 19:58 sdb.blktrace.22</span><br><span class="line">-rw-r--r-- 1 manu manu  527K Jul  6 19:58 sdb.blktrace.23</span><br><span class="line">-rw-r--r-- 1 manu manu 1005K Jul  6 19:58 sdb.blktrace.3</span><br><span class="line">-rw-r--r-- 1 manu manu  1.2M Jul  6 19:58 sdb.blktrace.4</span><br><span class="line">-rw-r--r-- 1 manu manu  511K Jul  6 19:58 sdb.blktrace.5</span><br><span class="line">-rw-r--r-- 1 manu manu  2.3M Jul  6 19:58 sdb.blktrace.6</span><br><span class="line">-rw-r--r-- 1 manu manu  1.3M Jul  6 19:58 sdb.blktrace.7</span><br><span class="line">-rw-r--r-- 1 manu manu  2.1M Jul  6 19:58 sdb.blktrace.8</span><br><span class="line">-rw-r--r-- 1 manu manu  1.1M Jul  6 19:58 sdb.blktrace.9</span><br></pre></td></tr></table></figure>
+<p>有了输出，我们可以通过blkparse -i sdb来分析采集的数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8,16   7     2147     0.999400390 630169  I   W 447379872 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2148     0.999400653 630169  I   W 447380040 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2149     0.999401057 630169  I   W 447380088 + 16 [kworker/u482:0]</span><br><span class="line">8,16   7     2150     0.999401364 630169  I   W 447380176 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2151     0.999401521 630169  I   W 453543312 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2152     0.999401843 630169  I   W 453543328 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2153     0.999402195 630169  U   N [kworker/u482:0] 14</span><br><span class="line">8,16   6     5648     0.999403047 16921  C   W 347875880 + 8 [0]</span><br><span class="line">8,16   6     5649     0.999406293 16921  D   W 301856632 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5650     0.999421040 16921  C   W 354834456 + 8 [0]</span><br><span class="line">8,16   6     5651     0.999423900 16921  D   W 301857280 + 8 [ceph-osd]</span><br><span class="line">8,16   7     2154     0.999442195 630169  A   W 425409840 + 8 &lt;- (8,22) 131806512</span><br><span class="line">8,16   7     2155     0.999442601 630169  Q   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2156     0.999444277 630169  G   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2157     0.999445177 630169  P   N [kworker/u482:0]</span><br><span class="line">8,16   7     2158     0.999446341 630169  I   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2159     0.999446773 630169 UT   N [kworker/u482:0] 1</span><br><span class="line">8,16   6     5652     0.999452685 16921  C   W 354834520 + 8 [0]</span><br><span class="line">8,16   6     5653     0.999455613 16921  D   W 301857336 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5654     0.999470425 16921  C   W 393228176 + 8 [0]</span><br><span class="line">8,16   6     5655     0.999474127 16921  D   W 411554968 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5656     0.999488551 16921  C   W 393228560 + 8 [0]</span><br><span class="line">8,16   6     5657     0.999491549 16921  D   W 411556112 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5658     0.999594849 16923  C   W 393230152 + 16 [0]</span><br><span class="line">8,16   6     5659     0.999604038 16923  D   W 432877368 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5660     0.999610322 16923  C   W 487390128 + 8 [0]</span><br><span class="line">8,16   6     5661     0.999614654 16923  D   W 432879632 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5662     0.999628284 16923  C   W 487391344 + 8 [0]</span><br><span class="line">8,16   6     5663     0.999632014 16923  D   W 432879680 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5664     0.999646122 16923  C   W 293759504 + 8 [0]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>注意，blkparse仅仅是将blktrace输出的信息转化成人可以阅读和理解的输出，但是，信息太多，太杂，人完全没法得到关键信息。 这时候btt就横空出世了，这个工具可以将blktrace采集回来的数据，进行分析，得到对人更有用的信息。事实上，btt也是我们的终点。</p>
+<h1 id="获取个阶段的延迟信息">获取个阶段的延迟信息</h1>
+<p>注意，btt已经可以很自如地生成这部分统计信息，我们可以很容易得到如下的表格： <img src="latency_distribution_table.png" /> <img src="ioflow.png" /></p>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 50%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>阶段缩写</th>
+<th>全称与含义</th>
+<th>性能指标解读</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Q2Q</strong>​</td>
+<td><strong>Queue to Queue</strong> <br>衡量上一个I/O完成到当前I/O抵达块层的<strong>时间间隔</strong>，反映了I/O请求的<strong>到达速率</strong>。</td>
+<td>间隔时间短表示I/O负载很重，请求密集；间隔时间长则表示I/O负载较轻<br><br>。</td>
+</tr>
+<tr class="even">
+<td><strong>Q2G</strong>​</td>
+<td><strong>Queue to Get</strong> <br>I/O请求进入块层后，等待系统为其分配一个<code>request</code>结构体的时间。</td>
+<td>此阶段通常极短。如果时间较长，可能表示系统内存紧张或内核在分配数据结构时遇到瓶颈。</td>
+</tr>
+<tr class="odd">
+<td><strong>G2I</strong>​</td>
+<td><strong>Get to Insert</strong> <br>获取<code>request</code>结构体后，准备并将其插入到I/O调度器队列所花费的时间。</td>
+<td>此阶段也非常短暂。它反映了I/O调度器处理请求的初始开销。</td>
+</tr>
+<tr class="even">
+<td><strong>I2D</strong>​</td>
+<td><strong>Insert to Issue</strong> <br>请求在<strong>I/O调度器队列</strong>中等待以及被调度（合并、排序）后，派发（Issue）到设备驱动程序的时间。这是分析<strong>操作系统层面瓶颈</strong>的关键指标<br><br>。</td>
+<td><strong>这是判断I/O调度器和系统负载的关键指标</strong>。如果I2D时间很长，说明： <br>1. 存储设备速度跟不上请求速率，队列中有大量请求在排队。 <br>2. I/O调度策略可能不适合当前负载。</td>
+</tr>
+<tr class="odd">
+<td><strong>D2C</strong>​</td>
+<td><strong>Issue to Complete</strong> <br>请求被提交给设备驱动后，在<strong>物理硬件上真正执行</strong>所花费的时间（包括在设备自身的缓存和介质上的读写时间）。这是评估<strong>硬件性能</strong>最直接的指标<br><br>。</td>
+<td><strong>这是判断硬件瓶颈的核心指标</strong>。如果D2C时间很长，通常意味着： <br>1. <strong>存储设备本身性能不足</strong>（如机械硬盘随机读写慢）。 <br>2. 设备可能处于高负载或存在故障。</td>
+</tr>
+<tr class="even">
+<td><strong>Q2C</strong>​</td>
+<td><strong>Queue to Complete</strong> <br>一个I/O请求在块层处理的<strong>总时间</strong>。它近似等于 <code>Q2I + I2D + D2C</code>（Q2I可再细分为Q2G+G2I）<br><br>。</td>
+<td>这大致相当于 <code>iostat</code>命令输出的 <code>await</code>值。反映了一个I/O请求从进入系统到完成的总延迟<br><br>。</td>
+</tr>
+</tbody>
+</table>
+<p>方法如下：</p>
+<p>首先blkparse可以将对应不同cpu的多个文件聚合成一个文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blkparse -i sdb -d sdb.blktrace.bin</span><br></pre></td></tr></table></figure>
+<p>然后btt就可以分析这个sdb.blktrace.bin了：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">==================== All Devices ====================</span><br><span class="line"></span><br><span class="line">            ALL           MIN           AVG           MAX           N</span><br><span class="line">--------------- ------------- ------------- ------------- -----------</span><br><span class="line"></span><br><span class="line">Q2Q               0.000000001   0.000159747   0.025292639       62150</span><br><span class="line">Q2G               0.000000233   0.000001380   0.000056343       52423</span><br><span class="line">G2I               0.000000146   0.000027084   0.005031317       48516</span><br><span class="line">Q2M               0.000000142   0.000000751   0.000021613        9728</span><br><span class="line">I2D               0.000000096   0.001534463   0.022469688       52423</span><br><span class="line">M2D               0.000000647   0.002617691   0.022445412        5821</span><br><span class="line">D2C               0.000046189   0.000779355   0.007860766       62151</span><br><span class="line">Q2C               0.000051089   0.002522832   0.026096657       62151</span><br><span class="line"></span><br><span class="line">==================== Device Overhead ====================</span><br><span class="line"></span><br><span class="line">       DEV |       Q2G       G2I       Q2M       I2D       D2C</span><br><span class="line">---------- | --------- --------- --------- --------- ---------</span><br><span class="line"> (  8, 16) |   0.0461%   0.8380%   0.0047%  51.3029%  30.8921%</span><br><span class="line">---------- | --------- --------- --------- --------- ---------</span><br><span class="line">   Overall |   0.0461%   0.8380%   0.0047%  51.3029%  30.8921%</span><br><span class="line"></span><br><span class="line">==================== Device Merge Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |       #Q       #D   Ratio |   BLKmin   BLKavg   BLKmax    Total</span><br><span class="line">---------- | -------- -------- ------- | -------- -------- -------- --------</span><br><span class="line"> (  8, 16) |    62151    52246     1.2 |        1       20      664  1051700</span><br><span class="line"></span><br><span class="line">==================== Device Q2Q Seek Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line"> (  8, 16) |           62151      42079658.0               0 | 0(17159)</span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line">   Overall |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">   Average |           62151      42079658.0               0 | 0(17159)</span><br><span class="line"></span><br><span class="line">==================== Device D2D Seek Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line"> (  8, 16) |           52246      39892356.2               0 | 0(9249)</span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line">   Overall |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">   Average |           52246      39892356.2               0 | 0(9249)</span><br></pre></td></tr></table></figure>
+<p>注意： D2C和Q2C，一个是表征块设备性能的关键指标，另一个是客户发起请求到收到响应的时间，我们可以看出，</p>
+<p>D2C 平均在0.000779355 秒，即0.7毫秒 Q2C 平均在0.002522832 秒，即2.5毫秒，</p>
+<p>无论是service time 还是客户感知到的await time，都是非常短的，表现非常不俗。但是D2C花费的时间只占整个Q2C的30%， 51%以上的时间花费在I2D。</p>
+<h1 id="参考搬运">参考/搬运</h1>
+<p>https://bean-li.github.io/blktrace-to-report/</p>
 ]]></content>
       <tags>
-        <tag>工作流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TCP学习-NS3模拟环境搭建</title>
-    <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<blockquote>
-<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
-</blockquote>
-<h1 id="前置工具下载">前置工具下载</h1>
-<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
-<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
-<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
-<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
-<h2 id="powershell">Powershell</h2>
-<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
-<h2 id="x-server">X server</h2>
-<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
-<ol type="1">
-<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
-<li>下载并安装 VcXsrv Windows X Server</li>
-</ol>
-<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
-<ol type="1">
-<li>启动 “XLaunch”</li>
-<li>选择 “Multiple windows”</li>
-<li>Display number 设为 “0” 或 “-1”（自动）</li>
-<li>选择 “Start no client”</li>
-<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
-<li>完成设置，VcXsrv 会在系统托盘运行</li>
-</ol>
-<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
-<h2 id="配置环境">配置环境</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
-<h2 id="登录虚拟机">登录虚拟机</h2>
-<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
-<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
-<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
-<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
-<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
-<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
-]]></content>
-      <tags>
-        <tag>TCP</tag>
-        <tag>NS3</tag>
-        <tag>仿真器</tag>
-        <tag>环境搭建</tag>
+        <tag>Linux</tag>
+        <tag>性能</tag>
       </tags>
   </entry>
   <entry>
@@ -3330,6 +3173,144 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
+    <title>Obsidian和github和hexo博客流配置</title>
+    <url>/2024/01/14/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/Obsidian%E5%92%8Cgithub%E5%92%8Chexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="hexo配置">hexo配置</h2>
+<h3 id="node.js配置">node.js配置</h3>
+<h3 id="hexo主题配置">hexo主题配置</h3>
+<h2 id="obsidian配置">Obsidian配置</h2>
+<p>下载<code>Obsidian Git</code>插件，需要打开第三方插件按钮，下载插件。</p>
+<p><img src="Obsidian和github和hexo博客流配置/img1.png" /></p>
+<p>在对应的.git目录下打开仓库，下图的打开本地仓库，生成本地目录。</p>
+<p><img src="img3.png" /></p>
+<p>配置Git设置地址等，这样就可以调用后台的git自动推送了</p>
+<p><img src="img2.png" /></p>
+<blockquote>
+<p>需要注意的是：git需要首先被安装，并且配置到环境变量</p>
+<h2 id="github配置">github配置</h2>
+<h3 id="workflows配置">workflows配置</h3>
+<h2 id="dependabot配置">dependabot配置</h2>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>工作流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TCP学习-NS3模拟环境搭建</title>
+    <url>/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
+</blockquote>
+<h1 id="前置工具下载">前置工具下载</h1>
+<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
+<p><a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
+<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
+<p><a href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
+<h2 id="powershell">Powershell</h2>
+<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
+<h2 id="x-server">X server</h2>
+<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
+<ol type="1">
+<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
+<li>下载并安装 VcXsrv Windows X Server</li>
+</ol>
+<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
+<ol type="1">
+<li>启动 “XLaunch”</li>
+<li>选择 “Multiple windows”</li>
+<li>Display number 设为 “0” 或 “-1”（自动）</li>
+<li>选择 “Start no client”</li>
+<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
+<li>完成设置，VcXsrv 会在系统托盘运行</li>
+</ol>
+<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
+<h2 id="配置环境">配置环境</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<h2 id="登录虚拟机">登录虚拟机</h2>
+<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
+<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
+<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
+<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
+<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
+]]></content>
+      <tags>
+        <tag>TCP</tag>
+        <tag>NS3</tag>
+        <tag>仿真器</tag>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>性能分析-Windows（一）</title>
+    <url>/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="windows运行参数分析">Windows运行参数分析</h1>
+<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
+<p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
+<p><img src="任务管理.png" /></p>
+<span id="more"></span>
+<blockquote>
+<p>Windows Hardware Lab Kit (Windows HLK) 是一个测试框架，用于测试 Windows 10 以及从 Windows Server 2016 开始的所有 Windows Server 版本的硬件设备。 你的产品必须通过使用 Windows HLK 进行的某些测试，才有资格加入 <a href="https://docs.microsoft.com/en-us/windows-hardware/design/compatibility/">Windows 硬件兼容性计划</a>。</p>
+<p>Windows 性能工具包位于 <a href="https://aka.ms/adk">Windows 评估和部署工具包</a>中，其中包含各种性能监控工具，这些工具可生成有关 Windows 操作系统和应用程序的详细性能概况。 本文档同时讨论了 Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA)。</p>
+<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows 性能记录器 (WPR) 是一种性能录制工具为基础上事件跟踪 Windows (ETW)。 它记录系统事件，然后可以通过使用 Windows Performance Analyzer (WPA) 进行分析。</p>
+<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows Performance Analyzer (WPA) 是一种工具，创建的事件跟踪 Windows (ETW) 事件所记录的 Windows 性能的关系图和数据表记录器 (WPR)、 Xperf 或评估运行评估平台中。 WPA 可以打开任何事件跟踪日志 (ETL) 文件进行分析。</p>
+</blockquote>
+<h2 id="windows-performance-record">Windows Performance Record</h2>
+<ol type="1">
+<li><p>在程序中搜索到 Windows Performance Record 并且打开， <img src="wpr_start.png" /></p></li>
+<li><p>从当前时刻开始记录，记录完成后保存文件 <img src="wpr_save.png" /> <img src="wpr_save_finish.png" /></p></li>
+<li><p>记下文件保存位置</p></li>
+</ol>
+<h2 id="windows-performance-analysis">Windows Performance Analysis</h2>
+<ol type="1">
+<li><p>在程序中找到 Windows Performance Analysis 并且打开 <img src="wpa_open.png" /></p></li>
+<li><p>File-&gt;Open，打开前面保存的文件 <img src="wpa_file_in1.png" /> <img src="wpafileincpu.png" /> <img src="wpafileincpumem.png" /></p></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>性能</tag>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>性能分析-Windows（二）</title>
+    <url>/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="overview">Overview</h1>
+<p>介绍几款Windows下的性能分析工具。</p>
+<h1 id="工具介绍">工具介绍</h1>
+<ul>
+<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
+<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
+<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
+<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
+<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
+</ul>
+<h1 id="工具概览">工具概览</h1>
+<h2 id="perfmon">Perfmon</h2>
+<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
+<h2 id="sysinternals">Sysinternals</h2>
+<p>下载后即可使用的工具集，官方下链接<a href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
+<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
+<p>这个是Windows下的性能工具合集，见<a href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
+<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
+<h2 id="perfview">perfview</h2>
+<p>perfview<a href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
+<h2 id="system-informer">System Informer</h2>
+<p>系统资源监控工具，支持windows10、windows11，官网<a href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
+]]></content>
+      <tags>
+        <tag>性能</tag>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu下EDK2开发环境搭建</title>
     <url>/2024/01/22/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Ubuntu%E4%B8%8BEDK2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h2 id="背景介绍">背景介绍</h2>
@@ -3366,68 +3347,6 @@ Field reference (click to expand)
         <tag>环境搭建</tag>
         <tag>EDK2</tag>
         <tag>UEFI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>性能分析-Windows（一）</title>
-    <url>/2020/10/20/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="windows运行参数分析">Windows运行参数分析</h1>
-<p>这篇文章较为简单，主要是使用 Windows Performance Record 和 Windows Performance Analysis 来分析在运行一段时间内的各个参数的变化，记录详细的信息。</p>
-<p>一般大家都是从任务管理器上面来看机器当前的运行状态，但是，如果我想要了解的更详细一些，并且需要一段特定时间的运行参数，任务管理器仿佛就无能为力了，这时候，可以使用 Windows 测试框架里面的两个小工具来记录分析机器的运行状态。</p>
-<p><img src="任务管理.png" /></p>
-<span id="more"></span>
-<blockquote>
-<p>Windows Hardware Lab Kit (Windows HLK) 是一个测试框架，用于测试 Windows 10 以及从 Windows Server 2016 开始的所有 Windows Server 版本的硬件设备。 你的产品必须通过使用 Windows HLK 进行的某些测试，才有资格加入 <a href="https://docs.microsoft.com/en-us/windows-hardware/design/compatibility/">Windows 硬件兼容性计划</a>。</p>
-<p>Windows 性能工具包位于 <a href="https://aka.ms/adk">Windows 评估和部署工具包</a>中，其中包含各种性能监控工具，这些工具可生成有关 Windows 操作系统和应用程序的详细性能概况。 本文档同时讨论了 Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA)。</p>
-<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows 性能记录器 (WPR) 是一种性能录制工具为基础上事件跟踪 Windows (ETW)。 它记录系统事件，然后可以通过使用 Windows Performance Analyzer (WPA) 进行分析。</p>
-<p>包含在<a href="https://go.microsoft.com/fwlink/p/?LinkId=526740">Windows 评估和部署工具包 (Windows ADK)</a>，Windows Performance Analyzer (WPA) 是一种工具，创建的事件跟踪 Windows (ETW) 事件所记录的 Windows 性能的关系图和数据表记录器 (WPR)、 Xperf 或评估运行评估平台中。 WPA 可以打开任何事件跟踪日志 (ETL) 文件进行分析。</p>
-</blockquote>
-<h2 id="windows-performance-record">Windows Performance Record</h2>
-<ol type="1">
-<li><p>在程序中搜索到 Windows Performance Record 并且打开， <img src="wpr_start.png" /></p></li>
-<li><p>从当前时刻开始记录，记录完成后保存文件 <img src="wpr_save.png" /> <img src="wpr_save_finish.png" /></p></li>
-<li><p>记下文件保存位置</p></li>
-</ol>
-<h2 id="windows-performance-analysis">Windows Performance Analysis</h2>
-<ol type="1">
-<li><p>在程序中找到 Windows Performance Analysis 并且打开 <img src="wpa_open.png" /></p></li>
-<li><p>File-&gt;Open，打开前面保存的文件 <img src="wpa_file_in1.png" /> <img src="wpafileincpu.png" /> <img src="wpafileincpumem.png" /></p></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>windows</tag>
-        <tag>性能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>性能分析-Windows（二）</title>
-    <url>/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="overview">Overview</h1>
-<p>介绍几款Windows下的性能分析工具。</p>
-<h1 id="工具介绍">工具介绍</h1>
-<ul>
-<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
-<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
-<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
-<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
-<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
-</ul>
-<h1 id="工具概览">工具概览</h1>
-<h2 id="perfmon">Perfmon</h2>
-<p>Windows自带的，详细使用方法，参考官方<a href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
-<h2 id="sysinternals">Sysinternals</h2>
-<p>下载后即可使用的工具集，官方下链接<a href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
-<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
-<p>这个是Windows下的性能工具合集，见<a href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
-<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
-<h2 id="perfview">perfview</h2>
-<p>perfview<a href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
-<h2 id="system-informer">System Informer</h2>
-<p>系统资源监控工具，支持windows10、windows11，官网<a href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
-]]></content>
-      <tags>
-        <tag>windows</tag>
-        <tag>性能</tag>
       </tags>
   </entry>
   <entry>
@@ -3492,10 +3411,27 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
+    <title>qemu调试linux（二）</title>
+    <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
+<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
+<h2 id="vscode调试">vscode调试</h2>
+<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
+<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>环境搭建</tag>
+        <tag>qemu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用shell命令</title>
     <url>/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="bash快捷键">Bash快捷键</h1>
-<p><img src="moving_cli.png" /> ## Moving</p>
+<p><img src="moving_cli.png" /></p>
+<h2 id="moving">Moving</h2>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -3796,13 +3732,8 @@ Field reference (click to expand)
 <ul>
 <li><code>wc</code> 去计算新行数（<code>-l</code>），字符数（<code>-m</code>），单词数（<code>-w</code>）以及字节数（<code>-c</code>）。</li>
 <li>使用 <code>tee</code> 将标准输入复制到文件甚至标准输出，例如 <code>ls -al | tee file.txt</code>。</li>
-<li><ul>
 <li>替换一个或多个文件中出现的字符串： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">perl -pi.bak -e &#x27;s/old-string/new-string/g&#x27; my-files-*.txt</span><br></pre></td></tr></table></figure></li>
-</ul></li>
-<li><code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快方法</a>之一：</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure>
-<ul>
+<li><code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快方法</a>之一： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure></li>
 <li>标准的源代码对比及合并工具是 <code>diff</code> 和 <code>patch</code>。使用 <code>diffstat</code> 查看变更总览数据。注意到 <code>diff -r</code> 对整个文件夹有效。使用 <code>diff -r tree1 tree2 | diffstat</code> 查看变更的统计数据。<code>vimdiff</code> 用于比对并编辑文件。 <img src="diff.png" /></li>
 <li>对于二进制文件，使用 <code>hd</code>，<code>hexdump</code> 或者 <code>xxd</code> 使其以十六进制显示，使用 <code>bvi</code>，<code>hexedit</code> 或者 <code>biew</code> 来进行二进制编辑。</li>
 <li>同样对于二进制文件，<code>strings</code>（包括 <code>grep</code> 等工具）可以帮助在二进制文件中查找特定比特。</li>
@@ -3962,263 +3893,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>Linux性能IO-blktrace工具</title>
-    <url>/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/</url>
-    <content><![CDATA[<h1 id="快速分析">快速分析</h1>
-<p>使用命令组合 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装工具</span></span><br><span class="line">yum install blktrace -y</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">采集数据：（监控30秒）</span></span><br><span class="line">blktrace -d /dev/nvme0n1 -w 30</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">合并数据：</span></span><br><span class="line">blkparse -i nvme0n1 -d nvme_trace.bin。</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解析分析：，重点查看 <span class="string">&quot;ALL&quot;</span> 统计区和 <span class="string">&quot;Device Overhead&quot;</span> 分布</span></span><br><span class="line">btt -i nvme_trace.bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">组合命令</span></span><br><span class="line">blktrace -d /dev/sdf -w 5 -o - | blkparse -i - -d btt.bin &gt; blkparse.txt</span><br><span class="line">btt -i btt.bin</span><br></pre></td></tr></table></figure> btrace组合 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">追踪设备/dev/sda并输出blkparse数据</span></span><br><span class="line">btrace /dev/sda</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>实际上btrace是调用了blktarce和blkparse组合出来的脚本文件，位于/usr/bin/btrace</p>
-</blockquote>
-<h1 id="理论分析">理论分析</h1>
-<p>一个I/O请求，从应用层到底层块设备，路径如下图所示： <img src="Linux-storage-stack-diagram_v4.0.png" /> 我们将IO路径简化一下： <img src="io_path_simple.png" /> 一个I/O请求进入block layer之后，可能会经历下面的过程：</p>
-<ul>
-<li>Remap: 可能被DM(Device Mapper)或MD(Multiple Device, Software RAID) remap到其它设备</li>
-<li>Split: 可能会因为I/O请求与扇区边界未对齐、或者size太大而被分拆(split)成多个物理I/O</li>
-<li>Merge: 可能会因为与其它I/O请求的物理位置相邻而合并(merge)成一个I/O</li>
-<li>被IO Scheduler依照调度策略发送给driver</li>
-<li>被driver提交给硬件，经过HBA、电缆（光纤、网线等）、交换机（SAN或网络）、最后到达存储设备，设备完成IO请求之后再把结果发回。</li>
-</ul>
-<p>blktrace 能够记录下IO所经历的各个步骤: <img src="blktrace_architecture.png" /> 我们一起看下blktrace的输出长什么样子： <img src="blktrace_out.png" /></p>
-<ul>
-<li>第一个字段：8,0 这个字段是设备号 major device ID和minor device ID。</li>
-<li>第二个字段：3 表示CPU</li>
-<li>第三个字段：11 序列号</li>
-<li>第四个字段：0.009507758 Time Stamp是时间偏移</li>
-<li>第五个字段：PID 本次IO对应的进程ID</li>
-<li>第六个字段：Event，这个字段非常重要，反映了IO进行到了那一步</li>
-<li>第七个字段：R表示 Read， W是Write，D表示block，B表示Barrier Operation</li>
-<li>第八个字段：223490+56，表示的是起始block number 和 number of blocks，即我们常说的Offset 和 Size</li>
-<li>第九个字段： 进程名</li>
-</ul>
-<p><code>blkparse</code>的输出包含了每个 I/O 请求事件的详细信息，理解这些字段是分析的关键：</p>
-<table>
-<thead>
-<tr class="header">
-<th>字段</th>
-<th>含义说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>设备号 (Major, Minor)</strong>​</td>
-<td>如 <code>8,0</code>通常指 <code>/dev/sda</code></td>
-</tr>
-<tr class="even">
-<td><strong>CPU ID</strong>​</td>
-<td>处理此事件的 CPU 核心编号</td>
-</tr>
-<tr class="odd">
-<td><strong>序列号</strong>​</td>
-<td>事件的序列号</td>
-</tr>
-<tr class="even">
-<td><strong>时间戳</strong>​</td>
-<td>事件发生的时间（通常为相对时间）</td>
-</tr>
-<tr class="odd">
-<td><strong>进程ID (PID)</strong>​</td>
-<td>发起 I/O 操作的进程 ID</td>
-</tr>
-<tr class="even">
-<td><strong>事件类型 (Action)</strong>​</td>
-<td><strong>核心字段</strong>，表示 I/O 请求所处的阶段</td>
-</tr>
-<tr class="odd">
-<td><strong>RWBS 描述符</strong>​</td>
-<td>描述 I/O 类型：R(读)/W(写)/B(屏障)/S(同步)</td>
-</tr>
-<tr class="even">
-<td><strong>扇区信息</strong>​</td>
-<td>如 <code>2048 + 8</code>，表示起始扇区号及连续扇区数</td>
-</tr>
-<tr class="odd">
-<td><strong>进程名</strong>​</td>
-<td>发起 I/O 的进程名称</td>
-</tr>
-</tbody>
-</table>
-<p>其中，<strong>事件类型 (Action)</strong>​ 是理解 I/O 路径的关键，它记录了请求从产生到完成的各个阶段：</p>
-<ul>
-<li><strong>Q</strong>​ (Queued): I/O 请求进入块层。</li>
-<li><strong>G</strong>​ (Get request): 分配请求结构。</li>
-<li><strong>I</strong>​ (Inserted): 请求插入 I/O 调度器队列。</li>
-<li><strong>D</strong>​ (Issued): 请求提交给设备驱动。</li>
-<li><strong>C</strong>​ (Completed): 请求完成。</li>
-</ul>
-<p>根据这些事件的时间戳，可以计算出 I/O 路径各阶段的耗时，例如：</p>
-<ul>
-<li><strong>D2C</strong>: 请求在驱动和硬件上消耗的时间，是评估<strong>硬件性能</strong>的关键指标。</li>
-<li><strong>I2D</strong>: 请求在 I/O 调度队列中等待的时间，反映<strong>调度器性能</strong>。</li>
-<li><strong>Q2C</strong>: 整个 I/O 请求的总时间，近似于 <code>iostat</code>中的 <code>await</code>。</li>
-</ul>
-<p>其中第六个字段非常有用：每一个字母都代表了IO请求所经历的某个阶段。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Q – 即将生成IO请求</span><br><span class="line">|</span><br><span class="line">G – IO请求生成</span><br><span class="line">|</span><br><span class="line">I – IO请求进入IO Scheduler队列</span><br><span class="line">|</span><br><span class="line">D – IO请求进入driver</span><br><span class="line">|</span><br><span class="line">C – IO请求执行完毕</span><br></pre></td></tr></table></figure> 注意，整个IO路径，分成很多段，每一段开始的时候，都会有一个时间戳，根据上一段开始的时间和下一段开始的时间，就可以得到IO 路径各段花费的时间。</p>
-<p>注意，我们心心念念的service time，也就是反应块设备处理能力的指标，就是从D到C所花费的时间，简称D2C。</p>
-<p>而iostat输出中的await，即整个IO从生成请求到IO请求执行完毕，即从Q到C所花费的时间，我们简称Q2C。</p>
-<p>我们知道Linux 有I/O scheduler，调度器的效率如何，I2D是重要的指标。</p>
-<p>注意，这只是blktrace输出的一个部分，很明显，我们还能拿到offset和size，根据offset，我们能拿到某一段时间里，应用程序都访问了整个块设备的那些block，从而绘制出块设备访问轨迹图。</p>
-<p>另外还有size和第七个字段（Read or Write），我们可以知道IO size的分布直方图。对于本文来讲，我们就是要根据blktrace来获取这些信息。 # 工具使用</p>
-<p>我们接下来简单介绍这些工具的使用，其中这三个命令都是属于blktrace这个包的，他们是一家人。</p>
-<p>首先通过如下命令，可以查看磁盘上的实时信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blktrace -d /dev/sdb -o – | blkparse -i –</span><br></pre></td></tr></table></figure>
-<p>这个命令会连绵不绝地出现很多输出，当你输入ctrl＋C的时候，会停止。</p>
-<p>当然了，你也可以先用如下命令采集信息，待所有信息采集完毕后，统一分析所有采集到的数据。搜集信息的命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blktrace -d /dev/sdb</span><br></pre></td></tr></table></figure>
-<p>注意，这个命令并不是只输出一个文件，他会根据CPU的个数上，每一个CPU都会输出一个文件，如下所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-rw-r--r-- 1 manu manu  1.3M Jul  6 19:58 sdb.blktrace.0</span><br><span class="line">-rw-r--r-- 1 manu manu  823K Jul  6 19:58 sdb.blktrace.1</span><br><span class="line">-rw-r--r-- 1 manu manu  2.8M Jul  6 19:58 sdb.blktrace.10</span><br><span class="line">-rw-r--r-- 1 manu manu  1.9M Jul  6 19:58 sdb.blktrace.11</span><br><span class="line">-rw-r--r-- 1 manu manu  474K Jul  6 19:58 sdb.blktrace.12</span><br><span class="line">-rw-r--r-- 1 manu manu  271K Jul  6 19:58 sdb.blktrace.13</span><br><span class="line">-rw-r--r-- 1 manu manu  578K Jul  6 19:58 sdb.blktrace.14</span><br><span class="line">-rw-r--r-- 1 manu manu  375K Jul  6 19:58 sdb.blktrace.15</span><br><span class="line">-rw-r--r-- 1 manu manu  382K Jul  6 19:58 sdb.blktrace.16</span><br><span class="line">-rw-r--r-- 1 manu manu  478K Jul  6 19:58 sdb.blktrace.17</span><br><span class="line">-rw-r--r-- 1 manu manu  839K Jul  6 19:58 sdb.blktrace.18</span><br><span class="line">-rw-r--r-- 1 manu manu  848K Jul  6 19:58 sdb.blktrace.19</span><br><span class="line">-rw-r--r-- 1 manu manu  1.6M Jul  6 19:58 sdb.blktrace.2</span><br><span class="line">-rw-r--r-- 1 manu manu  652K Jul  6 19:58 sdb.blktrace.20</span><br><span class="line">-rw-r--r-- 1 manu manu  738K Jul  6 19:58 sdb.blktrace.21</span><br><span class="line">-rw-r--r-- 1 manu manu  594K Jul  6 19:58 sdb.blktrace.22</span><br><span class="line">-rw-r--r-- 1 manu manu  527K Jul  6 19:58 sdb.blktrace.23</span><br><span class="line">-rw-r--r-- 1 manu manu 1005K Jul  6 19:58 sdb.blktrace.3</span><br><span class="line">-rw-r--r-- 1 manu manu  1.2M Jul  6 19:58 sdb.blktrace.4</span><br><span class="line">-rw-r--r-- 1 manu manu  511K Jul  6 19:58 sdb.blktrace.5</span><br><span class="line">-rw-r--r-- 1 manu manu  2.3M Jul  6 19:58 sdb.blktrace.6</span><br><span class="line">-rw-r--r-- 1 manu manu  1.3M Jul  6 19:58 sdb.blktrace.7</span><br><span class="line">-rw-r--r-- 1 manu manu  2.1M Jul  6 19:58 sdb.blktrace.8</span><br><span class="line">-rw-r--r-- 1 manu manu  1.1M Jul  6 19:58 sdb.blktrace.9</span><br></pre></td></tr></table></figure>
-<p>有了输出，我们可以通过blkparse -i sdb来分析采集的数据：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8,16   7     2147     0.999400390 630169  I   W 447379872 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2148     0.999400653 630169  I   W 447380040 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2149     0.999401057 630169  I   W 447380088 + 16 [kworker/u482:0]</span><br><span class="line">8,16   7     2150     0.999401364 630169  I   W 447380176 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2151     0.999401521 630169  I   W 453543312 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2152     0.999401843 630169  I   W 453543328 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2153     0.999402195 630169  U   N [kworker/u482:0] 14</span><br><span class="line">8,16   6     5648     0.999403047 16921  C   W 347875880 + 8 [0]</span><br><span class="line">8,16   6     5649     0.999406293 16921  D   W 301856632 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5650     0.999421040 16921  C   W 354834456 + 8 [0]</span><br><span class="line">8,16   6     5651     0.999423900 16921  D   W 301857280 + 8 [ceph-osd]</span><br><span class="line">8,16   7     2154     0.999442195 630169  A   W 425409840 + 8 &lt;- (8,22) 131806512</span><br><span class="line">8,16   7     2155     0.999442601 630169  Q   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2156     0.999444277 630169  G   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2157     0.999445177 630169  P   N [kworker/u482:0]</span><br><span class="line">8,16   7     2158     0.999446341 630169  I   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2159     0.999446773 630169 UT   N [kworker/u482:0] 1</span><br><span class="line">8,16   6     5652     0.999452685 16921  C   W 354834520 + 8 [0]</span><br><span class="line">8,16   6     5653     0.999455613 16921  D   W 301857336 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5654     0.999470425 16921  C   W 393228176 + 8 [0]</span><br><span class="line">8,16   6     5655     0.999474127 16921  D   W 411554968 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5656     0.999488551 16921  C   W 393228560 + 8 [0]</span><br><span class="line">8,16   6     5657     0.999491549 16921  D   W 411556112 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5658     0.999594849 16923  C   W 393230152 + 16 [0]</span><br><span class="line">8,16   6     5659     0.999604038 16923  D   W 432877368 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5660     0.999610322 16923  C   W 487390128 + 8 [0]</span><br><span class="line">8,16   6     5661     0.999614654 16923  D   W 432879632 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5662     0.999628284 16923  C   W 487391344 + 8 [0]</span><br><span class="line">8,16   6     5663     0.999632014 16923  D   W 432879680 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5664     0.999646122 16923  C   W 293759504 + 8 [0]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>注意，blkparse仅仅是将blktrace输出的信息转化成人可以阅读和理解的输出，但是，信息太多，太杂，人完全没法得到关键信息。 这时候btt就横空出世了，这个工具可以将blktrace采集回来的数据，进行分析，得到对人更有用的信息。事实上，btt也是我们的终点。</p>
-<h1 id="获取个阶段的延迟信息">获取个阶段的延迟信息</h1>
-<p>注意，btt已经可以很自如地生成这部分统计信息，我们可以很容易得到如下的表格： <img src="latency_distribution_table.png" /> <img src="ioflow.png" /></p>
-<table>
-<colgroup>
-<col style="width: 3%" />
-<col style="width: 50%" />
-<col style="width: 46%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>阶段缩写</th>
-<th>全称与含义</th>
-<th>性能指标解读</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Q2Q</strong>​</td>
-<td><strong>Queue to Queue</strong> <br>衡量上一个I/O完成到当前I/O抵达块层的<strong>时间间隔</strong>，反映了I/O请求的<strong>到达速率</strong>。</td>
-<td>间隔时间短表示I/O负载很重，请求密集；间隔时间长则表示I/O负载较轻<br><br>。</td>
-</tr>
-<tr class="even">
-<td><strong>Q2G</strong>​</td>
-<td><strong>Queue to Get</strong> <br>I/O请求进入块层后，等待系统为其分配一个<code>request</code>结构体的时间。</td>
-<td>此阶段通常极短。如果时间较长，可能表示系统内存紧张或内核在分配数据结构时遇到瓶颈。</td>
-</tr>
-<tr class="odd">
-<td><strong>G2I</strong>​</td>
-<td><strong>Get to Insert</strong> <br>获取<code>request</code>结构体后，准备并将其插入到I/O调度器队列所花费的时间。</td>
-<td>此阶段也非常短暂。它反映了I/O调度器处理请求的初始开销。</td>
-</tr>
-<tr class="even">
-<td><strong>I2D</strong>​</td>
-<td><strong>Insert to Issue</strong> <br>请求在<strong>I/O调度器队列</strong>中等待以及被调度（合并、排序）后，派发（Issue）到设备驱动程序的时间。这是分析<strong>操作系统层面瓶颈</strong>的关键指标<br><br>。</td>
-<td><strong>这是判断I/O调度器和系统负载的关键指标</strong>。如果I2D时间很长，说明： <br>1. 存储设备速度跟不上请求速率，队列中有大量请求在排队。 <br>2. I/O调度策略可能不适合当前负载。</td>
-</tr>
-<tr class="odd">
-<td><strong>D2C</strong>​</td>
-<td><strong>Issue to Complete</strong> <br>请求被提交给设备驱动后，在<strong>物理硬件上真正执行</strong>所花费的时间（包括在设备自身的缓存和介质上的读写时间）。这是评估<strong>硬件性能</strong>最直接的指标<br><br>。</td>
-<td><strong>这是判断硬件瓶颈的核心指标</strong>。如果D2C时间很长，通常意味着： <br>1. <strong>存储设备本身性能不足</strong>（如机械硬盘随机读写慢）。 <br>2. 设备可能处于高负载或存在故障。</td>
-</tr>
-<tr class="even">
-<td><strong>Q2C</strong>​</td>
-<td><strong>Queue to Complete</strong> <br>一个I/O请求在块层处理的<strong>总时间</strong>。它近似等于 <code>Q2I + I2D + D2C</code>（Q2I可再细分为Q2G+G2I）<br><br>。</td>
-<td>这大致相当于 <code>iostat</code>命令输出的 <code>await</code>值。反映了一个I/O请求从进入系统到完成的总延迟<br><br>。</td>
-</tr>
-</tbody>
-</table>
-<p>方法如下：</p>
-<p>首先blkparse可以将对应不同cpu的多个文件聚合成一个文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blkparse -i sdb -d sdb.blktrace.bin</span><br></pre></td></tr></table></figure>
-<p>然后btt就可以分析这个sdb.blktrace.bin了：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">==================== All Devices ====================</span><br><span class="line"></span><br><span class="line">            ALL           MIN           AVG           MAX           N</span><br><span class="line">--------------- ------------- ------------- ------------- -----------</span><br><span class="line"></span><br><span class="line">Q2Q               0.000000001   0.000159747   0.025292639       62150</span><br><span class="line">Q2G               0.000000233   0.000001380   0.000056343       52423</span><br><span class="line">G2I               0.000000146   0.000027084   0.005031317       48516</span><br><span class="line">Q2M               0.000000142   0.000000751   0.000021613        9728</span><br><span class="line">I2D               0.000000096   0.001534463   0.022469688       52423</span><br><span class="line">M2D               0.000000647   0.002617691   0.022445412        5821</span><br><span class="line">D2C               0.000046189   0.000779355   0.007860766       62151</span><br><span class="line">Q2C               0.000051089   0.002522832   0.026096657       62151</span><br><span class="line"></span><br><span class="line">==================== Device Overhead ====================</span><br><span class="line"></span><br><span class="line">       DEV |       Q2G       G2I       Q2M       I2D       D2C</span><br><span class="line">---------- | --------- --------- --------- --------- ---------</span><br><span class="line"> (  8, 16) |   0.0461%   0.8380%   0.0047%  51.3029%  30.8921%</span><br><span class="line">---------- | --------- --------- --------- --------- ---------</span><br><span class="line">   Overall |   0.0461%   0.8380%   0.0047%  51.3029%  30.8921%</span><br><span class="line"></span><br><span class="line">==================== Device Merge Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |       #Q       #D   Ratio |   BLKmin   BLKavg   BLKmax    Total</span><br><span class="line">---------- | -------- -------- ------- | -------- -------- -------- --------</span><br><span class="line"> (  8, 16) |    62151    52246     1.2 |        1       20      664  1051700</span><br><span class="line"></span><br><span class="line">==================== Device Q2Q Seek Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line"> (  8, 16) |           62151      42079658.0               0 | 0(17159)</span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line">   Overall |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">   Average |           62151      42079658.0               0 | 0(17159)</span><br><span class="line"></span><br><span class="line">==================== Device D2D Seek Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line"> (  8, 16) |           52246      39892356.2               0 | 0(9249)</span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line">   Overall |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">   Average |           52246      39892356.2               0 | 0(9249)</span><br></pre></td></tr></table></figure>
-<p>注意： D2C和Q2C，一个是表征块设备性能的关键指标，另一个是客户发起请求到收到响应的时间，我们可以看出，</p>
-<p>D2C 平均在0.000779355 秒，即0.7毫秒 Q2C 平均在0.002522832 秒，即2.5毫秒，</p>
-<p>无论是service time 还是客户感知到的await time，都是非常短的，表现非常不俗。但是D2C花费的时间只占整个Q2C的30%， 51%以上的时间花费在I2D。</p>
-<h1 id="参考搬运">参考/搬运</h1>
-<p>https://bean-li.github.io/blktrace-to-report/</p>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>性能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内核转储文件--内核崩溃</title>
-    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<h3 id="安装crash工具">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
-<h3 id="检查kdump配置">检查kdump配置</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
-<p>USE_KDUMP=1 代表kdump打开</p>
-<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
-<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
-<h3 id="手动触发sysrq">手动触发sysrq</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>sysrq值不为0代表工作正常</li>
-<li>echo写主动触发kdump</li>
-</ol>
-<h2 id="centos">CentOS</h2>
-<h3 id="安装crash工具-1">安装crash工具</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
-<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
-<h3 id="判断服务正常开启">判断服务正常开启</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
-<h3 id="主动触发分析">主动触发分析</h3>
-<p>这一步跟Ubuntu的一致</p>
-<h2 id="分析调试">分析调试</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>内核转储文件--应用程序崩溃分析</title>
-    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
-<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
-<p><img src="Pastedimage20240113005115.png" /></p>
-<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
-<p>查看命令：<code>ulimit -c</code></p>
-<p>打开命令：<code>ulimit -c unlimited</code></p>
-<p>0：关闭</p>
-<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
-<p>所以修改有两种方法</p>
-<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
-<blockquote>
-<p>%e：进程名称</p>
-<p>%s：崩溃时收到的信号</p>
-<p>%p：进程ID</p>
-<p>%t：时间戳</p>
-</blockquote>
-<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
-<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
-<h2 id="centos">CentOS</h2>
-<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
-<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
-<h2 id="分析崩溃">分析崩溃</h2>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20240113011447.png" /></p>
-<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>qemu调试linux（二）</title>
-    <url>/2024/03/19/qemu%E8%B0%83%E8%AF%95linux/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
-<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
-<h2 id="vscode调试">vscode调试</h2>
-<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
-<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>环境搭建</tag>
-        <tag>qemu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>三种大气质量和一个公式的计算方法</title>
     <url>/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h1 id="三种大气质量和一个公式的计算方法">三种大气质量和一个公式的计算方法</h1>
@@ -4295,6 +3969,76 @@ $$</span></p>
 ]]></content>
       <tags>
         <tag>光学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内核转储文件--内核崩溃</title>
+    <url>/2024/01/13/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%86%85%E6%A0%B8%E5%B4%A9%E6%BA%83/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<h3 id="安装crash工具">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">apt-get install linux-crashdump</span><br></pre></td></tr></table></figure>
+<h3 id="检查kdump配置">检查kdump配置</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">kdump-config show</span><br><span class="line"></span><br><span class="line">DUMP_MODE:              kdump</span><br><span class="line">USE_KDUMP:              1</span><br><span class="line">KDUMP_COREDIR:          /var/crash</span><br><span class="line">crashkernel addr: 0x73000000</span><br><span class="line">   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-5.15.0-89-generic</span><br><span class="line">kdump initrd:</span><br><span class="line">   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-5.15.0-89-generic</span><br><span class="line">current state:    ready to kdump</span><br><span class="line"></span><br><span class="line">kexec command:</span><br><span class="line">  /sbin/kexec -p --command-line=&quot;BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs reset_devices systemd.unit=kdump-tools-dump.service nr_cpus=1 irqpoll nousb&quot; --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz</span><br></pre></td></tr></table></figure>
+<p>USE_KDUMP=1 代表kdump打开</p>
+<p>KDUMP_COREDIR 代表生成的core文件在<code>/var/crash</code>下面</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash"><span class="comment"># dmesg | grep -i crash</span></span></span><br><span class="line">[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br><span class="line">[    0.005698] Reserving 192MB of memory at 1840MB for crashkernel (System RAM: 2047MB)</span><br><span class="line">[    0.013125] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-89-generic root=UUID=92414257-97c5-46a0-9154-66c415ee7358 ro net.ifnames=0 consoleblank=600 console=tty0 console=ttyS0,115200n8 noibrs crashkernel=512M-:192M</span><br></pre></td></tr></table></figure>
+<p>dmesg 显示了crashkernel保留了192M内存，kexec命令。</p>
+<h3 id="手动触发sysrq">手动触发sysrq</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">cat /proc/sys/kernel/sysrq</span><br><span class="line">echo c &gt; /proc/sysrq-trigger</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>sysrq值不为0代表工作正常</li>
+<li>echo写主动触发kdump</li>
+</ol>
+<h2 id="centos">CentOS</h2>
+<h3 id="安装crash工具-1">安装crash工具</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kexec-tools</span><br><span class="line">yum install crash</span><br></pre></td></tr></table></figure>
+<h3 id="安装内核调试信息包">安装内核调试信息包</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install kernel-debuginfo-$(uname -r)</span><br><span class="line">yum install kernel-debuginfo-common-$(uname -r)</span><br></pre></td></tr></table></figure>
+<h3 id="判断服务正常开启">判断服务正常开启</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl status kdump</span><br></pre></td></tr></table></figure>
+<h3 id="主动触发分析">主动触发分析</h3>
+<p>这一步跟Ubuntu的一致</p>
+<h2 id="分析调试">分析调试</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">crash /usr/lib/debug/lib/modules/$(uname -r)/vmlinux /var/crash/XX/vmcore</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内核转储文件--应用程序崩溃分析</title>
+    <url>/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="ubuntu">Ubuntu</h2>
+<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
+<p><img src="Pastedimage20240113005115.png" /></p>
+<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
+<p>查看命令：<code>ulimit -c</code></p>
+<p>打开命令：<code>ulimit -c unlimited</code></p>
+<p>0：关闭</p>
+<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>所以修改有两种方法</p>
+<p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
+<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<blockquote>
+<p>%e：进程名称</p>
+<p>%s：崩溃时收到的信号</p>
+<p>%p：进程ID</p>
+<p>%t：时间戳</p>
+</blockquote>
+<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
+<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
+<h2 id="centos">CentOS</h2>
+<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
+<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
+<h2 id="分析崩溃">分析崩溃</h2>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+<p><img src="Pastedimage20240113011447.png" /></p>
+<p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -4505,26 +4249,255 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>判断磁盘是ssd还是hdd</title>
-    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
-    <content><![CDATA[<h2 id="linux">Linux</h2>
-<h3 id="通过文件系统">通过文件系统</h3>
-<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
-<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
-<h3 id="lsblk">lsblk</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
-<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="判断磁盘是ssd还是hdd_20240121.png" /></p>
-<h3 id="smartctl">smartctl</h3>
-<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
-<h2 id="windows">Windows</h2>
-<h3 id="powershell">powershell</h3>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
-<h3 id="gui">GUI</h3>
-<p>在任务管理器下查看 <img src="判断磁盘是ssd还是hdd_20240121_1.png" /></p>
+    <title>bpftrace技术2-map变量和map函数</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
+<p>在 bpftrace 中，符号 <code>@</code>用于定义和操作 <strong>Map 变量</strong>（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的<strong>迷你数据库</strong></p>
+<p>Map 的主要作用是在不同的事件探针（probe）之间<strong>存储、共享和聚合数据</strong>。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂的追踪逻辑成为可能。</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>数据持久化</strong>​</td>
+<td>Map 中的数据在多个探针事件之间保持存在，不像普通变量那样每次事件触发后就被重置。（全局变量）</td>
+</tr>
+<tr class="even">
+<td><strong>键值对结构</strong>​</td>
+<td>Map 使用键（key）来索引值（value），格式为 <code>@map_name[key] = value</code>。键可以是单一值，也可以是多个值的组合（如 <code>@a[pid, comm]</code>）。kv结构</td>
+</tr>
+<tr class="odd">
+<td><strong>自动输出</strong>​</td>
+<td>默认情况下，当 bpftrace 程序退出时（例如你按下 <code>Ctrl-C</code>），所有非空的 Map 内容会自动打印到屏幕上。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="map-的常见操作与示例"> Map 的常见操作与示例</h1>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 24%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>操作/函数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>赋值</strong>​</td>
+<td>直接给 Map 赋值。</td>
+<td><code>@start_time[tid] = nsecs</code>(记录线程的开始时间)</td>
+</tr>
+<tr class="even">
+<td><strong>计数 (<code>count()</code>)</strong>​</td>
+<td>统计事件发生的次数。</td>
+<td><code>@syscall_count[comm] = count()</code>(统计每个进程名的系统调用次数)</td>
+</tr>
+<tr class="odd">
+<td><strong>求和 (<code>sum()</code>)</strong>​</td>
+<td>对数值进行累加。</td>
+<td><code>@total_bytes[pid] = sum(args-&gt;ret)</code>(累计每个进程读取的总字节数)</td>
+</tr>
+<tr class="even">
+<td><strong>统计 (<code>avg()</code>, <code>min()</code>, <code>max()</code>)</strong>​</td>
+<td>计算平均值、最小值、最大值。</td>
+<td><code>@response_time = avg($latency)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>直方图 (<code>hist()</code>)</strong>​</td>
+<td><strong>非常实用</strong>，生成2的幂次方的直方图，直观展示数据分布。</td>
+<td><code>@latency_ns = hist(nsecs - @start[tid])</code>(可视化读操作的延迟分布)</td>
+</tr>
+<tr class="even">
+<td><strong>线性直方图 (<code>lhist()</code>)</strong>​</td>
+<td>生成自定义区间的线性直方图。</td>
+<td><code>@read_sizes = lhist(args-&gt;ret, 0, 10000, 1000)</code>(统计读取大小的分布)</td>
+</tr>
+<tr class="odd">
+<td><strong>数据清理 (<code>delete()</code>)</strong>​</td>
+<td>从 Map 中删除特定的键值对，防止内存无限增长。</td>
+<td><code>delete(@start_time[tid])</code>(在处理完一个事件后清理对应的开始时间)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="与其他变量的区别"> 与其他变量的区别</h1>
+<table>
+<thead>
+<tr class="header">
+<th>变量类型</th>
+<th>前缀</th>
+<th>作用域与用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Map 变量</strong>​</td>
+<td><code>@</code></td>
+<td><strong>全局</strong>。用于在探针之间持久化存储和聚合数据。</td>
+</tr>
+<tr class="even">
+<td><strong>内置变量</strong>​</td>
+<td>无</td>
+<td><strong>只读</strong>。提供事件上下文信息，如 <code>pid</code>(进程ID)、<code>comm</code>(命令名)、<code>retval</code>(函数返回值)等。</td>
+</tr>
+<tr class="odd">
+<td><strong>暂存变量</strong>​</td>
+<td><code>$</code></td>
+<td><strong>局部临时</strong>。用于单次探针触发过程中的中间计算，例如 <code>$duration = nsecs - @start[tid]</code>。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="map函数参考表">map函数参考表</h1>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 36%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数原型</th>
+<th>核心作用与参数说明</th>
+<th>典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>count()</code></strong>​</td>
+<td><strong>计数</strong>。统计事件被触发的次数。无参数。</td>
+<td>统计系统调用次数、函数调用次数等。</td>
+</tr>
+<tr class="even">
+<td><strong><code>sum(int n)</code></strong>​</td>
+<td><strong>求和</strong>。对参数 <code>n</code>的值进行累加。</td>
+<td>计算总的字节读写量、总耗时等。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>avg(int n)</code></strong>​</td>
+<td><strong>求平均值</strong>。计算参数 <code>n</code>的平均值。</td>
+<td>计算平均延迟、平均数据包大小等。</td>
+</tr>
+<tr class="even">
+<td><strong><code>min(int n)</code></strong>​</td>
+<td><strong>求最小值</strong>。记录参数 <code>n</code>的最小值。</td>
+<td>追踪最小延迟、最小数据块大小。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>max(int n)</code></strong>​</td>
+<td><strong>求最大值</strong>。记录参数 <code>n</code>的最大值。</td>
+<td>追踪最大延迟、最大数据块大小。</td>
+</tr>
+<tr class="even">
+<td><strong><code>stats(int n)</code></strong>​</td>
+<td><strong>统计摘要</strong>。返回参数 <code>n</code>的计数、平均值、总和、最小值、最大值。</td>
+<td>获取一个指标的全面统计信息。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>hist(int n)</code></strong>​</td>
+<td><strong>对数直方图</strong>。按2的幂次方区间（如 <code>[4-8)</code>, <code>[8-16)</code>）展示参数 <code>n</code>的分布。</td>
+<td>直观展示延迟、数据大小的分布情况，易于发现模式。</td>
+</tr>
+<tr class="even">
+<td><strong><code>lhist(int n, int min, int max, int step)</code></strong>​</td>
+<td><strong>线性直方图</strong>。在指定的线性区间（<code>min</code>到<code>max</code>，步长为<code>step</code>）内展示参数 <code>n</code>的分布。</td>
+<td>当需要自定义固定区间进行分析时使用。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>delete(@m[key])</code></strong>​</td>
+<td><strong>删除键值对</strong>。从 Map <code>@m</code>中删除指定的 <code>key</code>及其对应的值。</td>
+<td>清理临时数据，防止 Map 无限增长，常用于配对探针（如 kprobe/kretprobe）。</td>
+</tr>
+<tr class="even">
+<td><strong><code>clear(@m)</code></strong>​</td>
+<td><strong>清空 Map</strong>。清除 Map <code>@m</code>中的所有键值对。</td>
+<td>在定时器（如 <code>interval</code>）中定期重置统计。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>zero(@m)</code></strong>​</td>
+<td><strong>归零 Map</strong>。将 Map <code>@m</code>中所有键的值重置为 0。</td>
+<td>重置计数或求和等数据，但保留键的结构。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="count--统计系统调用次数">count()- 统计系统调用次数</h2>
+<p>统计每个进程调用的系统调用次数</p>
+<p><code>bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@count[bash]: 15</span><br><span class="line">@count[sshd]: 28</span><br><span class="line">@count[snmpd]: 102</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>@[comm]：以进程名 comm为键（key）。</li>
+<li>count()：每次事件触发，对应键的值加 1</li>
+</ul>
+<h2 id="sumint-n--计算读取的总字节数">sum(int n)- 计算读取的总字节数</h2>
+<p>累计所有进程通过 read 系统调用成功读取的字节数</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @bytes = sum(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes: 1048576</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>sum(args-&gt;ret)：对返回值（读取的字节数）进行累加</li>
+</ul>
+<h2 id="avgint-n--计算平均读取大小">avg(int n)- 计算平均读取大小</h2>
+<p>计算每次 <code>read</code>系统调用成功读取的平均字节数。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @avg_size = avg(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@avg_size: 512</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>avg(args-&gt;ret)：对返回值（读取的字节数）求平均</li>
+</ul>
+<h2 id="statsint-n--获取完整的统计摘要">stats(int n)- 获取完整的统计摘要</h2>
+<p>对 <code>read</code>系统调用的返回值进行全面的统计。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @s = stats(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@s: count 100, average 4096, total 409600, min 1, max 8192</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>stats(args-&gt;ret)：求调用次数，对返回值（读取的字节数）求平均，求总数，求最大最小值</li>
+</ul>
+<h2 id="histint-n--分析读取字节数的对数分布">hist(int n)- 分析读取字节数的对数分布</h2>
+<p>显示 <code>read</code>系统调用返回值的分布，区间按2的幂次方划分。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = hist(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">[0, 1]                12 |@@@@@@@@@@@@@@@@@@@@                                |</span><br><span class="line">[2, 4)                18 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |</span><br><span class="line">[4, 8)                 0 |                                                    |</span><br><span class="line">...</span><br><span class="line">[128, 256)             1 |@</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>hist(args-&gt;ret)：分为2^x ~2^y 大小的桶，统计每个桶的里面的数目个数</li>
+</ul>
+<h2 id="lhistint-n-int-min-int-max-int-step--分析读取字节数的线性分布">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</h2>
+<p>使用线性直方图统计 <code>read</code>返回值，范围从0到2000，步长为200。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = lhist(args-&gt;ret, 0, 2000, 200); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">(..., 0)                0 |                                                    |</span><br><span class="line">[0, 200)              66 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[200, 400)             2 |@                                                   |</span><br><span class="line">...</span><br><span class="line">[2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>hist(args-&gt;ret)：分为0-200区间桶，统计每个桶的里面的数目个数</li>
+</ul>
+<h2 id="deletemkey--清理临时数据">delete(<span class="citation" data-cites="m">@m</span>[key])- 清理临时数据</h2>
+<p>在计算函数耗时后，删除用于存储开始时间的临时键，避免 Map 无限增长。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read </span></span><br><span class="line"><span class="string">			&#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">			   kretprobe:vfs_read /@start[tid]/ </span></span><br><span class="line"><span class="string">			   &#123; $duration_ns = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">				 @us = hist($duration_ns); </span></span><br><span class="line"><span class="string">			     delete(@start[tid]); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>此函数通常用于配对操作的探针（如 <code>kprobe</code>和 <code>kretprobe</code>），在操作完成后及时清理资源</li>
+</ul>
+<h2 id="clearm和-zerom--重置-map">clear(<span class="citation" data-cites="m">@m</span>)和 zero(<span class="citation" data-cites="m">@m</span>)- 重置 Map</h2>
+<p>每5秒打印并清空一次系统调用计数 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); clear(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[Relay(89295)]: 3</span><br><span class="line">@[mini_init]: 4</span><br><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[systemd-udevd]: 37</span><br><span class="line">@[chronyd]: 40</span><br><span class="line">@[bpftrace]: 118</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>clear(@m)</code>会删除 Map 中的所有键值对。而 <code>zero(@m)</code>则将所有键的值重置为0，但保留键的结构 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); zero(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 9</span><br><span class="line">@[mini_init]: 12</span><br><span class="line">@[chronyd]: 44</span><br><span class="line">@[init]: 103</span><br><span class="line">@[bpftrace]: 114</span><br><span class="line">@[GnsPortTracker]: 242</span><br><span class="line">@[top]: 350</span><br><span class="line">@[grep]: 664</span><br><span class="line">@[sh]: 923</span><br><span class="line">@[Xwayland]: 1978</span><br><span class="line">@[ps]: 2778</span><br><span class="line">@[libuv-worker]: 4028</span><br><span class="line">@[ls]: 4256</span><br><span class="line">@[node]: 4722</span><br><span class="line">@[mini_init]: 0   &lt;---------主要看这个，明显没有调用，但是结构被保留下来了</span><br><span class="line">@[Relay(109)]: 3</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="map特点">map特点</h1>
+<ul>
+<li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
+<li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
+<li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
+</ul>
 ]]></content>
       <tags>
-        <tag>存储</tag>
-        <tag>磁盘</tag>
+        <tag>linux</tag>
+        <tag>bpftrace</tag>
       </tags>
   </entry>
   <entry>
@@ -4566,6 +4539,84 @@ $$</span> 数组<span class="math inline"><em>s</em><em>e</em><em>g</em>[<em>i</
 ]]></content>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代操作系统-内存管理1</title>
+    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
+    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
+<h2 id="空闲内存的管理">空闲内存的管理</h2>
+<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
+<p><img src="内存存储管理1.jpg" /></p>
+<ul>
+<li><p>使用位图的存储器管理</p>
+<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
+<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
+</ul>
+<h2 id="覆盖与交换">覆盖与交换</h2>
+<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">技术</th>
+<th style="text-align: center;">优点</th>
+<th style="text-align: center;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">交换技术</td>
+<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
+<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">覆盖技术</td>
+<td style="text-align: center;">交换力度小，产生的开销小</td>
+<td style="text-align: center;">由程序员完成，不方便且易出错</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交换技术">交换技术</h3>
+<h4 id="交换过程">交换过程</h4>
+<p><img src="操作系统内存交换技术.png" /></p>
+<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
+<ol type="1">
+<li>运行进程A，进程A的程序和数据从头开始放</li>
+<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
+<li>加载C进程，和前面的方法类似</li>
+<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
+<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
+<li>杀死进程B</li>
+<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
+</ol>
+<h4 id="内存紧缩">内存紧缩</h4>
+<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
+<p><img src="操作系统内存紧缩.png" /></p>
+<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
+<p><img src="操作系统内存紧缩2.png" /></p>
+<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
+<blockquote>
+<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
+</blockquote>
+<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
+<h4 id="动态分配">动态分配</h4>
+<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
+<h3 id="覆盖技术">覆盖技术</h3>
+<blockquote>
+<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
+</blockquote>
+<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
+<h2 id="虚拟内存">虚拟内存</h2>
+<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
+<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
+<blockquote>
+<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
+</blockquote>
+<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -4785,84 +4836,6 @@ $$</span></p>
       <tags>
         <tag>光学</tag>
         <tag>几何</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>现代操作系统-内存管理1</title>
-    <url>/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/</url>
-    <content><![CDATA[<h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
-<h2 id="空闲内存的管理">空闲内存的管理</h2>
-<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
-<p><img src="内存存储管理1.jpg" /></p>
-<ul>
-<li><p>使用位图的存储器管理</p>
-<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
-<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
-</ul>
-<h2 id="覆盖与交换">覆盖与交换</h2>
-<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">技术</th>
-<th style="text-align: center;">优点</th>
-<th style="text-align: center;">缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">交换技术</td>
-<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
-<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">覆盖技术</td>
-<td style="text-align: center;">交换力度小，产生的开销小</td>
-<td style="text-align: center;">由程序员完成，不方便且易出错</td>
-</tr>
-</tbody>
-</table>
-<h3 id="交换技术">交换技术</h3>
-<h4 id="交换过程">交换过程</h4>
-<p><img src="操作系统内存交换技术.png" /></p>
-<p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
-<ol type="1">
-<li>运行进程A，进程A的程序和数据从头开始放</li>
-<li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
-<li>加载C进程，和前面的方法类似</li>
-<li>将进程A导出到外存，留下A部分的空闲区，也叫做洞</li>
-<li>加载D进程，这时候还是从头开始检测，发现空闲区可以容纳进程D</li>
-<li>杀死进程B</li>
-<li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
-</ol>
-<h4 id="内存紧缩">内存紧缩</h4>
-<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
-<p><img src="操作系统内存紧缩.png" /></p>
-<p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
-<p><img src="操作系统内存紧缩2.png" /></p>
-<p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
-<blockquote>
-<p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
-</blockquote>
-<p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
-<h4 id="动态分配">动态分配</h4>
-<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
-<h3 id="覆盖技术">覆盖技术</h3>
-<blockquote>
-<p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
-</blockquote>
-<p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
-<p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
-<blockquote>
-<p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
-</blockquote>
-<p>由于涉及操作系统对页的自动操作，所以对于页的讨论还很多，留在下一篇再说。</p>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -5270,6 +5243,29 @@ $$</span></p>
       <tags>
         <tag>光学</tag>
         <tag>遥感</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>判断磁盘是ssd还是hdd</title>
+    <url>/2024/01/21/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/%E5%88%A4%E6%96%AD%E7%A3%81%E7%9B%98%E6%98%AFssd%E8%BF%98%E6%98%AFhdd/</url>
+    <content><![CDATA[<h2 id="linux">Linux</h2>
+<h3 id="通过文件系统">通过文件系统</h3>
+<p><code>rotational</code>为1代表可以旋转，为hdd，为0代表不能旋转，为ssd</p>
+<p>查看位置在<code>/sys/block/sd*/queue/rotational</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# grep ^ /sys/block/sd*/queue/rotational  </span><br><span class="line">/sys/block/sda/queue/rotational:1  </span><br><span class="line">/sys/block/sdb/queue/rotational:1  </span><br><span class="line">/sys/block/sdc/queue/rotational:1</span><br></pre></td></tr></table></figure></p>
+<h3 id="lsblk">lsblk</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# lsblk -o name,rota,VENDOR  </span><br><span class="line">NAME ROTA VENDOR  </span><br><span class="line">sda 1 Msft  </span><br><span class="line">sdb 1 Msft  </span><br><span class="line">sdc 1 Msft</span><br></pre></td></tr></table></figure>
+<p><code>lsblk</code>可选行信息如下等，通过<code>lsblk --help</code>查看 <img src="判断磁盘是ssd还是hdd_20240121.png" /></p>
+<h3 id="smartctl">smartctl</h3>
+<p>该工具需要自行安装Ubuntu和CentOS安装包名称均为<code>smartmontools</code>。 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@dushenda home]# smartctl -a /dev/sdc  </span><br><span class="line">smartctl 7.1 2019-12-30 r5022 [x86_64-linux-5.15.133.1-microsoft-standard-WSL2] (local build)  </span><br><span class="line">Copyright (C) 2002-19, Bruce Allen, Christian Franke, www.smartmontools.org  </span><br><span class="line">  </span><br><span class="line">=== START OF INFORMATION SECTION ===  </span><br><span class="line">Vendor: Msft  </span><br><span class="line">Product: Virtual Disk  </span><br><span class="line">Revision: 1.0  </span><br><span class="line">Compliance: SPC-3  </span><br><span class="line">User Capacity: 1,099,511,627,776 bytes [1.09 TB]  </span><br><span class="line">Logical block size: 512 bytes  </span><br><span class="line">Physical block size: 4096 bytes  </span><br><span class="line">LU is thin provisioned, LBPRZ=0</span><br></pre></td></tr></table></figure></p>
+<h2 id="windows">Windows</h2>
+<h3 id="powershell">powershell</h3>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">(base) PS C:\Users\dushenda&gt; Get-PhysicalDisk</span><br><span class="line"></span><br><span class="line">Number FriendlyName                  SerialNumber    MediaType CanPool OperationalStatus HealthStatus Usage            Size</span><br><span class="line">------ ------------                  ------------    --------- ------- ----------------- ------------ -----            ----</span><br><span class="line">1      Samsung SSD 860 EVO M.2 500GB S414NB0K722943N SSD       False   OK                Healthy      Auto-Select 465.76 GB</span><br><span class="line">0      WDC WD10SPCX-24HWST1          WD-WXB1AC41L2P1 HDD       False   OK                Healthy      Auto-Select 931.51 GB</span><br></pre></td></tr></table></figure>
+<h3 id="gui">GUI</h3>
+<p>在任务管理器下查看 <img src="判断磁盘是ssd还是hdd_20240121_1.png" /></p>
+]]></content>
+      <tags>
+        <tag>存储</tag>
+        <tag>磁盘</tag>
       </tags>
   </entry>
 </search>
