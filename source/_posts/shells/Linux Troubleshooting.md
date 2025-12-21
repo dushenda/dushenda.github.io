@@ -9,24 +9,7 @@ tags:
 
 Purpose: a single-page, production-ready cheatsheet for Linux/SRE triage. Optimized for fast on-call use: concise flags, copy-paste recipes, brief notes, and clear risk callouts.
 
-Quick Navigation
-
-- [Binaries & ELF](https://github.com/rahulrajaram/linux_troubleshooting#binaries--elf)
-- [Text & Data Utilities](https://github.com/rahulrajaram/linux_troubleshooting#text--data-utilities)
-- [Networking](https://github.com/rahulrajaram/linux_troubleshooting#networking)
-- [Kernel & Tracing](https://github.com/rahulrajaram/linux_troubleshooting#kernel--tracing)
-- [Disk & Filesystems](https://github.com/rahulrajaram/linux_troubleshooting#disk--filesystems)
-- [Processes & Scheduling](https://github.com/rahulrajaram/linux_troubleshooting#processes--scheduling)
-- [CPU](https://github.com/rahulrajaram/linux_troubleshooting#cpu)
-- [Memory](https://github.com/rahulrajaram/linux_troubleshooting#memory)
-- [Logs & Systemd](https://github.com/rahulrajaram/linux_troubleshooting#logs--systemd)
-- [Security & Audit](https://github.com/rahulrajaram/linux_troubleshooting#security--audit)
-- [Containers & Namespaces](https://github.com/rahulrajaram/linux_troubleshooting#containers--namespaces)
-- [Incident Playbooks](https://github.com/rahulrajaram/linux_troubleshooting#incident-playbooks)
-
-Tip: Use your editor/browser search to jump to any command by its number, e.g., "## 41. lsof".
-
-## Binaries & ELF
+# Binaries & ELF
 
 Cheat Card
 
@@ -99,7 +82,7 @@ What it does: text processing and quick data summarization using fields and expr
 - Pretty print: `awk '{printf "%-20s %10d\n", $1, $2}' file`
 - Count unique values: `awk '{c[$1]++} END{for (k in c) print k, c[k]}' file`
 
-## Networking
+# Networking
 
 
 Cheat Card
@@ -126,7 +109,6 @@ Cheat Card
 - `ping 224.0.0.1`: ping multicast address
 
 Notes:
-
 - Using average `rtt` values, you can determine whether there are huge variations causing jitter, especially in RT applications
 - ping will report duplications, however, duplicate packets should never occur, and seem to be caused by inappropriate link-level retransmissions
 - ping will report damaged packets, suggesting broken hardware in the network Requires: iputils-ping.
@@ -152,6 +134,7 @@ Example
 ip route get 8.8.8.8
 # Expect: 8.8.8.8 via 192.168.1.1 dev wlo1 src 192.168.1.23
 ```
+
 - `ip route`: List all of the route entries in the kernel
 - `ip route add`: Add a route entry to the kernel routing table
 - `ip route replace`: Replace an existing route (add if not present)
@@ -221,6 +204,7 @@ ip route get 8.8.8.8
 
 
 Compat: Linux; Root/CAP_NET_RAW required for captures; Requires: tcpdump. What it does: capture packets for inspection and troubleshooting. Requires: tcpdump.
+
 - Interface and no name resolution: `tcpdump -ni <iface>`
 - Host or subnet: `tcpdump -ni <iface> host <ip>`; `tcpdump -ni <iface> net 10.0.0.0/8`
 - Ports/protocols: `tcpdump -ni <iface> tcp port 443` or `udp port 53`
@@ -229,6 +213,7 @@ Compat: Linux; Root/CAP_NET_RAW required for captures; Requires: tcpdump. What i
 # New TCP handshakes only (SYN without ACK)
 tcpdump -ni <iface> 'tcp[tcpflags] & (tcp-syn) != 0 and tcp[tcpflags] & (tcp-ack) == 0'
 ```
+
 - DNS queries: `tcpdump -ni <iface> port 53`
 - ICMP reachability: `tcpdump -ni <iface> icmp`
 ```shell
@@ -244,6 +229,7 @@ tcpdump -ni <iface> -s 0 -G 300 -W 6 -w 'cap-%Y%m%d%H%M%S.pcap'
 
 
 Compat: Linux; May need root/CAP_NET_RAW for certain probe types; Requires: mtr. What it does: combines ping and traceroute to visualize latency and loss per hop.
+
 - Run with extra info: `mtr -ezbw <dest>`
 - Report mode (one-off): `mtr -ezbwrc 10 <dest>` Requires: mtr.
 
@@ -328,7 +314,7 @@ wlo1      IEEE 802.11  ESSID:"NETGEAR97"
 - Compat: Legacy; prefer `ip link` and `bridge`; Requires: bridge-utils.
 - brctl is used to set up, maintain, and inspect the ethernet bridge configuration in the linux kernel. Legacy: prefer `ip link add name br0 type bridge` and `bridge` (iproute2) tooling. Requires: bridge-utils.
 
-## Kernel & Tracing
+# Kernel & Tracing
 
 Cheat Card
 
@@ -388,21 +374,25 @@ bpftrace -e 'tracepoint:syscalls:sys_enter_openat { @[comm] = count(); }'
 - Unload: `modprobe -r <module>` (fails if in use)
 - Caution: loading/unloading modules can destabilize systems; prefer persistent config and ensure module compatibility.
 
-## Disk & Filesystems
+# Disk & Filesystems
 
 
 Cheat Card
+
 - Space/inodes: `df -h` and `df -i`; biggest dirs: `du -xhd1 /path | sort -h`
 - IO saturation: `iostat -xz 1`; per-proc IO: `pidstat -d 1`, `iotop -oPa`
 - Devices/FS: `lsblk -o NAME,TYPE,SIZE,ROTA,MOUNTPOINT,MODEL`; mounts: `findmnt`
 - Mount ops: `mount --bind olddir newdir`; remount ro: `mount -o remount,ro /mnt`
 
 Inventory and health
+
 - Device tree: `lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,MODEL`
 - Identify filesystem UUID/TYPE: `blkid`
 - SMART check (if supported): `smartctl -H /dev/sdX` and `smartctl -a /dev/sdX` (Requires: smartmontools)
 - NVMe info: `nvme list`; `nvme smart-log /dev/nvme0` (Requires: nvme-cli)
-Notes
+
+**Notes**
+
 - iostat quick view (Requires: sysstat): `iostat -xz 1` (watch `await`, `%util`, `r/s`, `w/s`)
 - findmnt: show mount hierarchy or lookup by target: `findmnt /mount/point`
 - adds or removes modules from the Linux Kernel
@@ -462,6 +452,7 @@ What it does: parse/query/transform JSON on the command line. Requires: jq.
 # Requires: jq — show high-priority messages from journald
 journalctl -o json | jq -r 'select(.PRIORITY<=3) | .MESSAGE'
 ```
+
 - Keys and length: `jq 'keys, length' file.json`
 
 ## 16. diff
@@ -514,8 +505,10 @@ journalctl -o json | jq -r 'select(.PRIORITY<=3) | .MESSAGE'
 - Caution: avoid running fsck on a mounted filesystem (except with specific fs support); prefer read-only mounts or maintenance windows.
 
 Extended notes
+
 - ext* specifics: `e2fsck` checks ext2/3/4; use `-f` to force, `-n` for read-only, `-p` for preen (auto-fix safe issues). Requires: e2fsprogs.
 - Bad blocks (DANGER): `badblocks` scans devices for bad sectors; write-mode is destructive. Prefer read-only first.
+
 Examples
 ```shell
 # Read-only badblocks scan (non-destructive)
@@ -543,6 +536,7 @@ sudo e2fsck -fn /dev/sdXN
 - unmount from a mountpoint
 
 ## 23. chown
+
 - `chown root:staff /u`: change owner and group
 
 ## 24. sysctl
@@ -566,7 +560,7 @@ sudo e2fsck -fn /dev/sdXN
 
 - Compat: Legacy; prefer `ss`; Requires: net-tools.
 
-## Processes & Scheduling
+# Processes & Scheduling
 
 
 Cheat Card
@@ -581,6 +575,7 @@ pgrep -a <name>
 # Then send a scoped, safe signal (example: TERM)
 pkill -TERM -u <user> -f '<exact-pattern>'
 ```
+
 - Over time: `pidstat -u 1 -p <pid>` (CPU) and `pidstat -d 1` (IO)
 - Find PIDs: `pidof <proc>`; list threads: `ps -Lp <pid>`
 - Niceness: start `nice -n 10 cmd`; adjust: `renice -n 10 -p <pid>`
@@ -695,7 +690,7 @@ process states:
 
 see STANDARD FORMAT SPECIFIERS in `man ps`
 
-## CPU
+# CPU
 
 Cheat Card
 
@@ -732,12 +727,12 @@ Interpretation tips
 ## Memory
 
 Cheat Card
+
 - Snapshot: `free -h --wide`; paging: `vmstat -a 1` (si/so)
 - Per-proc memory: `ps -eo pid,user,rss,cmd --sort=-rss | head`; deep dive: `pmap -x <pid>`
 - OOM evidence: `dmesg -T | grep -i oom` or `journalctl -k -g OOM`
 
 ## 35. free
-
 
 - Compat: Linux; Requires: procps.
 - `used` - Used memory (calculated as total - free - buffers - cache)
@@ -828,7 +823,6 @@ Field reference (click to expand)
     - `manufact` - Manufacturer name.
     - `product` - Product name.
 - `sar -n DEV`:
-    
     - `IFACE` - Name of the network interface for which statistics are reported.
     - `rxpck/s` - Total number of packets received per second.
     - `txpck/s` - Total number of packets transmitted per second.
@@ -839,7 +833,6 @@ Field reference (click to expand)
     - `rxmcst/s` - Number of multicast packets received per second.
     - `%ifutil` - Utilization percentage of the network interface. For half-duplex interfaces, utilization is calculated using the sum of rxkB/s and txkB/s as a percentage of the interface speed. For full-duplex, this is the greater of rxkB/S or txkB/s.
 - `sar -n EDEV`:
-    
     - `IFACE` - Name of the network interface for which statistics are reported.
     - `rxerr/s` - Total number of bad packets received per second.
     - `txerr/s` - Total number of errors that happened per second while transmitting packets.
@@ -1173,12 +1166,14 @@ Build and run argument lists; combine with `find` and null-terminated records 
 - interactive confirm: `xargs -p rm` (ask before each batch)
 - do nothing on empty input: `xargs -r cmd` (GNU)
 
-## Logs & Systemd
+# Logs & Systemd
 
 Cheat Card
+
 - Unit status: `systemctl status <unit>`; failed: `systemctl list-units --failed`
 - Hot errors: `journalctl -xeu <unit>`; follow: `journalctl -fu <unit>`
 - Boot scoping: `journalctl -b` and `-b -1`; size: `journalctl --disk-usage`
+
 Systemd basics
 ```shell
 # Unit status and enablement
@@ -1235,9 +1230,10 @@ resolvectl query example.com
 resolvectl flush-caches
 ```
 
-## Security & Audit
+# Security & Audit
 
 Cheat Card
+
 - SELinux mode: `getenforce`; recent denials: `ausearch -m AVC -ts recent`
 - AppArmor status: `aa-status`; set complain/enforce on a profile
 - Audit rule example: `auditctl -w /etc/ssh/sshd_config -p wa -k sshcfg`
@@ -1287,9 +1283,10 @@ aureport --summary -ts today
 # Requires: auditd (auditd, auditctl, ausearch, aureport)
 ```
 
-## Containers & Namespaces
+# Containers & Namespaces
 
 Cheat Card
+
 - Enter container namespace: `nsenter --target <pid> --mount --uts --ipc --net --pid -- bash`
 - Docker triage: `docker ps`, `docker logs --tail=200 -f <id>`, `docker exec -it <id> sh`
 - K8s triage: `kubectl get pods -A`, `kubectl describe pod <pod> -n <ns>`, `kubectl logs <pod> -n <ns> --previous`
@@ -1333,11 +1330,12 @@ crictl inspect <id>
 crictl logs <id>
 ```
 Notes
+
 - Without runtime CLIs, use `nsenter` by PID from `ps`/`systemctl`.
 - Requires: docker or podman for Docker-like commands; kubectl; crictl for containerd/CRI.
-## Incident Playbooks
+# Incident Playbooks
 
-High CPU
+## High CPU
 ```shell
 # Top CPU processes and hot threads
 ps -eo pid,ppid,user,%cpu,%mem,cmd --sort=-%cpu | head
@@ -1348,7 +1346,7 @@ ps -Lp <pid> -o pid,tid,pcpu,comm
 pidstat -u 1 -p <pid>
 perf top  # if installed
 ```
-High IO wait / Disk latency
+## High IO wait / Disk latency
 ```shell
 # Device saturation and per-process IO
 iostat -xz 1   # watch await, %util, r/s, w/s
@@ -1362,7 +1360,7 @@ dmesg -T | egrep -i 'error|reset|blk|nvme'
 # Optional deep dive
 blktrace -d /dev/sdX -o - | blkparse -i -
 ```
-Memory leak / OOM
+## Memory leak / OOM
 ```shell
 # Snapshot and top RSS processes
 free -h
@@ -1376,7 +1374,7 @@ smem -r  # if installed
 # OOM evidence
 dmesg -T | grep -i oom || journalctl -k -g OOM
 ```
-Packet loss / High latency
+## Packet loss / High latency
 ```shell
 # Path and end-to-end latency
 ip route get <dest>
@@ -1391,7 +1389,7 @@ ss -i dst <dest>
 tcpdump -ni <iface> host <dest> and icmp
 tcpdump -ni <iface> tcp port 443 and 'tcp[tcpflags] & tcp-syn != 0'
 ```
-DNS failures
+## DNS failures
 ```shell
 # Resolve via systemd-resolved (or dig if available)
 resolvectl query example.com
@@ -1407,7 +1405,7 @@ ls -l /etc/resolv.conf
 resolvectl flush-caches
 # Check firewall rules as appropriate
 ```
-TLS handshake issues
+## TLS handshake issues
 ```shell
 # Inspect handshake/cert chain (TLS1.2 example)
 openssl s_client -connect host:443 -servername host -tls1_2 -showcerts
@@ -1422,7 +1420,7 @@ curl -v https://host/
 # If proxy/MTLS: verify CA path and client certs; check time skew
 timedatectl
 ```
-Disk full / Inode exhaustion
+## Disk full / Inode exhaustion
 ```shell
 # Space vs inodes
 df -h
@@ -1438,7 +1436,7 @@ journalctl --vacuum-size=1G  # cull journal size
 # Many small files
 find /path -xdev -type f | wc -l
 ```
-Syscall slowness
+## Syscall slowness
 ```shell
 # Trace syscalls and timings
 strace -ttT -p <pid> -f -e trace=network,file,fsync,clock,nanosleep
@@ -1446,7 +1444,7 @@ strace -ttT -p <pid> -f -e trace=network,file,fsync,clock,nanosleep
 # Optional CPU hotspot profiling
 perf record -g -p <pid>; perf report
 ```
-Container restart loops
+## Container restart loops
 ```shell
 # Docker restart loops
 docker ps --filter 'status=restarting'
@@ -1460,4 +1458,3 @@ kubectl logs <pod> -n <ns> --previous
 # Node/agent issues
 journalctl -u kubelet
 ```
-- modify priority of running process
