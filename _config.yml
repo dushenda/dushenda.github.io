@@ -104,9 +104,20 @@ theme: next
 deploy:
   type: ''
 
-#search
+# search
 search:
   path: search.xml
   field: post
   content: true
   format: html
+
+# Mermaid
+mermaid:
+  enable: true
+  version: "latest"
+  options:
+    theme: default
+
+markdown:
+    render:
+        html: true
