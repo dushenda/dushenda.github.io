@@ -57,7 +57,7 @@
   <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
   <script src="/js/third-party/tags/pdf.js" defer></script>
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"forest","dark":"dark","cdn":"//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"forest","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
   <script src="/js/third-party/tags/mermaid.js" defer></script>
 
 
@@ -841,6 +841,82 @@
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="tasks.json">tasks.json</h2>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">xv6-增加系统调用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-09T00:00:00+00:00">2025-12-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="panic">panic</h1>
+<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
+<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
+<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -1821,82 +1897,6 @@ Field reference (click to expand)
 <p>Container restart loops <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Docker restart loops</span></span><br><span class="line">docker ps --filter <span class="string">&#x27;status=restarting&#x27;</span></span><br><span class="line">docker logs &lt;<span class="built_in">id</span>&gt; --<span class="built_in">tail</span>=200</span><br><span class="line"></span><br><span class="line"><span class="comment"># Kubernetes restart loops</span></span><br><span class="line">kubectl get pods -A</span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line"></span><br><span class="line"><span class="comment"># Node/agent issues</span></span><br><span class="line">journalctl -u kubelet</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>modify priority of running process</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">xv6-增加系统调用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-09T00:00:00+00:00">2025-12-09</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
