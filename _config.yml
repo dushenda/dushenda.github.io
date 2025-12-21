@@ -111,9 +111,3 @@ search:
   content: true
   format: html
 
-# Mermaid
-mermaid:
-  enable: true
-  version: "10.6.0"
-  options:
-    theme: default
