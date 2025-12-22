@@ -204,12 +204,12 @@ language_switcher: false
 
 footer:
   # Specify the year when the site was setup. If not defined, current year will be used.
-  #since: 2021
+  since: 2021
 
   # Icon between year and copyright info.
   icon:
     # Icon name in Font Awesome. See: https://fontawesome.com/icons
-    name: fa fa-heart
+    name: fa-thin fa-abacus
     # If you want to animate the icon, set it to true.
     animated: false
     # Change the color of icon, using Hex Code.

@@ -4,31 +4,25 @@ date: 2025-12-21
 tags:
   - hexo
 ---
+# \_config.next.yml文件
+```
+# Mermaid tag
+mermaid:
+  enable: true
+  # Available themes: default | dark | forest | neutral
+  theme:
+    light: forest
+    dark: dark
+```
+![](image.png)
+
+# 例子
 ```mermaid
-flowchart TD
-    A[开始配置Mermaid] --> B[安装插件]
-    B --> C[修改Hexo配置文件]
-    C --> D{主题是否内置<br>Mermaid支持?}
-    D -- 是 --> E[启用主题配置]
-    D -- 否 --> F[手动添加JS引用]
-    E --> G[清理并重新生成]
-    F --> G
-    G --> H[在博文中使用Mermaid]
+flowchart
+
+A-- This is the text! ---B
 ```
 
-```mermaid
-sequenceDiagram
-	Alice->>John: Hello John, how are you?
-	John-->>Alice: Great!
-	Alice-)John: See you later!
-```
-
-
-
-```mermaid
-flowchart TD
-Start --> Stop
-```
 
 
 
