@@ -11,16 +11,28 @@ tags:
 > 
 > https://linux-audit.com/cheat-sheets/ip/#subcommands
 
+
 # ip和ifconfig比较
+
 ![](compare.png)
+
 # 修改ip地址
+
 ![](modifyaddr.png)
+
 # 管理路由表
+
 ![](routemanager.png)
+
 # 管理ARP表
+
 ![](arpmanager.png)
+
 # 查询ip地址
+
 ![](query.png)
+
 # 多播管理
+
 ![](multicast.png)
 
