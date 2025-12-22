@@ -6,7 +6,10 @@ tags:
   - Linux
 ---
 > https://paulgorman.org/technical/linux-iproute2-cheatsheet.html
+> 
 > https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf
+> 
+> https://linux-audit.com/cheat-sheets/ip/#subcommands
 
 # ip和ifconfig比较
 ![](compare.png)
