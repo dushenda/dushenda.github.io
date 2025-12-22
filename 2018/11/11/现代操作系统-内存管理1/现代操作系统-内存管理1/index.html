@@ -19,24 +19,24 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="现代操作系统-内存管理1 空闲内存的管理 动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图">
+    <meta name="description" content="现代操作系统-内存管理1空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。使用位图存储器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="现代操作系统-内存管理1">
 <meta property="og:url" content="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="现代操作系统-内存管理1 空闲内存的管理 动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图">
+<meta property="og:description" content="现代操作系统-内存管理1空闲内存的管理动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。   使用位图的存储器管理 从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。使用位图存储器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E5%86%85%E5%AD%98%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%861.jpg">
-<meta property="og:image" content="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF.png">
-<meta property="og:image" content="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%B4%A7%E7%BC%A9.png">
-<meta property="og:image" content="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%B4%A7%E7%BC%A92.png">
+<meta property="og:image" content="https://dushenda.github.io/%E5%86%85%E5%AD%98%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%861.jpg">
+<meta property="og:image" content="https://dushenda.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF.png">
+<meta property="og:image" content="https://dushenda.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%B4%A7%E7%BC%A9.png">
+<meta property="og:image" content="https://dushenda.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%B4%A7%E7%BC%A92.png">
 <meta property="article:published_time" content="2018-11-11T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-22T15:35:30.782Z">
+<meta property="article:modified_time" content="2025-12-22T15:39:46.508Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E5%86%85%E5%AD%98%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%861.jpg">
+<meta name="twitter:image" content="https://dushenda.github.io/%E5%86%85%E5%AD%98%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%861.jpg">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/">
@@ -278,43 +278,38 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="现代操作系统-内存管理1">现代操作系统-内存管理1</h1>
-<h2 id="空闲内存的管理">空闲内存的管理</h2>
-<p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
-<p><img src="内存存储管理1.jpg" /></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="现代操作系统-内存管理1"><a href="#现代操作系统-内存管理1" class="headerlink" title="现代操作系统-内存管理1"></a>现代操作系统-内存管理1</h1><h2 id="空闲内存的管理"><a href="#空闲内存的管理" class="headerlink" title="空闲内存的管理"></a>空闲内存的管理</h2><p>动态分配内存的时候（在进程需要动态扩张的时候），需要操作系统对其进行管理。</p>
+<p><img src="/%E5%86%85%E5%AD%98%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%861.jpg"></p>
 <ul>
 <li><p>使用位图的存储器管理</p>
-<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。 使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p></li>
-<li><p>使用链表的存储器管理 如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p></li>
+<p>从上图可以看出，在内存中运行有A，B，C，D，E五个进程，阴影部分为空闲区。b)是对应的位图，首先堆内存进行分段，1表示有进程在运行，0表示处于空闲区。c)是空闲区链表的存储方式，其中P表示有进程在运行，0，5这样的数字说的是运行的段是从0到5。<br>使用位图存储器就需要合适的选取刻度值，即对于整个内存的存储，如果刻度选的过小，就会导致位存储器过大，那么在查找和存储就会造成困扰。</p>
+</li>
+<li><p>使用链表的存储器管理<br>如果使用一种链表式的存储，如c)所示，那么会显著减小存储，不这是一个单向链表，在查找的时候会比较慢。在进程状态改变的时候（如从内存中被导出等）就需要进行相应的链表操作。</p>
+</li>
 </ul>
-<h2 id="覆盖与交换">覆盖与交换</h2>
-<p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
+<h2 id="覆盖与交换"><a href="#覆盖与交换" class="headerlink" title="覆盖与交换"></a>覆盖与交换</h2><p>覆盖与交换技术都是因为程序实际的需求的内存大小大于物理内存的大小产生的解决方案。他们都是与外存（如磁盘、硬盘等）进行程序与数据的交换。但是区别是交换是由操作系统完成的，交换的最小单元是程序，覆盖是由编程语言或者程序员完成的，导入导出的最小单元是程序中的模块，需要有相应的运行时支持。所以可以发现，交换的单个容量相对较大，并且不需要程序员过多的操心，覆盖的单个的容量相对较小，以程序的模块为单位。</p>
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">技术</th>
-<th style="text-align: center;">优点</th>
-<th style="text-align: center;">缺点</th>
+<tr>
+<th align="center">技术</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">交换技术</td>
-<td style="text-align: center;">由操作系统完成，不需要程序员操心，自动化</td>
-<td style="text-align: center;">交换力度过大，可能导致交换产生的开销过大</td>
+<tbody><tr>
+<td align="center">交换技术</td>
+<td align="center">由操作系统完成，不需要程序员操心，自动化</td>
+<td align="center">交换力度过大，可能导致交换产生的开销过大</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">覆盖技术</td>
-<td style="text-align: center;">交换力度小，产生的开销小</td>
-<td style="text-align: center;">由程序员完成，不方便且易出错</td>
+<tr>
+<td align="center">覆盖技术</td>
+<td align="center">交换力度小，产生的开销小</td>
+<td align="center">由程序员完成，不方便且易出错</td>
 </tr>
-</tbody>
-</table>
-<h3 id="交换技术">交换技术</h3>
-<h4 id="交换过程">交换过程</h4>
-<p><img src="操作系统内存交换技术.png" /></p>
+</tbody></table>
+<h3 id="交换技术"><a href="#交换技术" class="headerlink" title="交换技术"></a>交换技术</h3><h4 id="交换过程"><a href="#交换过程" class="headerlink" title="交换过程"></a>交换过程</h4><p><img src="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF.png"></p>
 <p>上图所示就是操作系统的内存交换过程，首先知道交换技术是进程在内存和外存之间的导入导出操作，主要原因是内存的容量不够，其中的A，B，C，D均为进程。</p>
-<ol type="1">
+<ol>
 <li>运行进程A，进程A的程序和数据从头开始放</li>
 <li>之后运行进程B，此时进程A处于就绪状态，依旧存在于内存之中</li>
 <li>加载C进程，和前面的方法类似</li>
@@ -323,25 +318,21 @@
 <li>杀死进程B</li>
 <li>从外存导入进程A，此时是空闲区刚好容纳A进程的大小</li>
 </ol>
-<h4 id="内存紧缩">内存紧缩</h4>
-<p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
-<p><img src="操作系统内存紧缩.png" /></p>
+<h4 id="内存紧缩"><a href="#内存紧缩" class="headerlink" title="内存紧缩"></a>内存紧缩</h4><p>上述就是交换过程，其中有一个问题，那就是一个进程被导出之后留下了空闲区，空闲区的存在可能容纳不了下一个加载进程的大小。</p>
+<p><img src="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%B4%A7%E7%BC%A9.png"></p>
 <p>这时候，就需要将进程B与进程A挪一挪，将其变成下面的状态。</p>
-<p><img src="操作系统内存紧缩2.png" /></p>
+<p><img src="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%B4%A7%E7%BC%A92.png"></p>
 <p>这样的拷贝移动的过程称为内存紧缩。当然这种技术很不错，但是有一个问题，那就是开销，之前说到交换技术的最大的缺点是开销问题，开销是因为进程过于庞大，频繁移动他们需要很大的资源。</p>
 <blockquote>
 <p>例如，一台16GB内存的计算机可以每8ns复制8个字节，那么其紧缩全部内存需要花费16s</p>
 </blockquote>
 <p>这其实是很长的时间了，可以想象，经常使用内存紧缩是不合适的。</p>
-<h4 id="动态分配">动态分配</h4>
-<p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
-<h3 id="覆盖技术">覆盖技术</h3>
-<blockquote>
+<h4 id="动态分配"><a href="#动态分配" class="headerlink" title="动态分配"></a>动态分配</h4><p>前面说到的进程好像就是一个进程导入内存就可以运行了，但是在很多情况下，进程需要接收输入，并且会进行一些处理，如果是数据增长，那么解决方法较为简单，因为数据位于数据段，可以直接由编程语言从堆中分配内存，还有一种情况是进程空间需要扩大，那么就需要操作系统在导入进程的时候预留一部分空间给进程，以应对其扩张。分配的大小是由操作系统需要的大小分配，即进程中所带的信息决定的，当其意外的超出了规定的大小并且磁盘上也没有多余的交换空间之后，那么该进程就会被挂起直到有一些空闲的空间。</p>
+<h3 id="覆盖技术"><a href="#覆盖技术" class="headerlink" title="覆盖技术"></a>覆盖技术</h3><blockquote>
 <p>一个典型的SATA磁盘的峰值传输率高达每秒几百兆，这就意味着需要好几秒才能换出或者换入一个1GB的程序。</p>
 </blockquote>
 <p>所以交换技术的开销问题确实是一个很致命的点。所以就出现了将程序分割，称为模块，将模块进行交换的技术，即覆盖技术</p>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
+<h2 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h2><p>从上面的交换技术和覆盖技术中可以看出，他们各自互补各自的优缺点。如果有一种技术，能够像覆盖那样导入导出小的模块，又能像交换那样由操作系统完成就优势互补了，这就是虚拟内存技术产生的原因了。</p>
 <p>虚拟内存的思想是和覆盖类似，只不过将模块变成了页，页是对于程序的等大小的划分，这些页被映射到物理内存，并且由硬件直接运行。</p>
 <blockquote>
 <p>从某个角度来说，虚拟内存是对基址寄存器和界限寄存器的一种综合。</p>
