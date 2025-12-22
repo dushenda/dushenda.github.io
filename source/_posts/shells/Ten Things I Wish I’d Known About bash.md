@@ -292,10 +292,10 @@ $ ./myscript.sh -i data.txt -o /tmp/output -v file1 file2
 4. 重置 OPTIND
     如果在同一脚本中需要多次调用 `getopts`解析不同参数集，必须在每次解析新参数集前手动重置 `OPTIND=1`，因为 Shell 不会自动重置它。
 
-%% 
-- `getopts`主要用于解析**短选项**（如 `-a`, `-l`）。虽然可以通过一些技巧模拟处理长选项（如 `--help`），但过程较为复杂，通常需要借助 `getopt`命令（注意，不是内置的 `getopts`）。
-- `getopts`是 Shell 内置命令，执行效率高。而 `getopt`是外部命令，功能更强大（如直接支持长选项），但使用也更复杂，且不同系统上的实现可能有差异。 
-%%
+
+> - `getopts`主要用于解析**短选项**（如 `-a`, `-l`）。虽然可以通过一些技巧模拟处理长选项（如 `--help`），但过程较为复杂，通常需要借助 `getopt`命令（注意，不是内置的 `getopts`）。
+> - `getopts`是 Shell 内置命令，执行效率高。而 `getopt`是外部命令，功能更强大（如直接支持长选项），但使用也更复杂，且不同系统上的实现可能有差异。 
+
 
 If you go deep with bash, you might end up writing chunky utilities in it. If you do, then getting to grips with `getopts` can pay large dividends.
 
