@@ -902,165 +902,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">bpftrace技术3-内置变量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="内置变量">内置变量</h1>
-<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 24%" />
-<col style="width: 63%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>变量类别</th>
-<th>变量名</th>
-<th>说明与典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>进程/线程信息</strong>​</td>
-<td><code>pid</code></td>
-<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>tid</code></td>
-<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>comm</code></td>
-<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>uid</code></td>
-<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
-</tr>
-<tr class="odd">
-<td><strong>时间信息</strong>​</td>
-<td><code>nsecs</code></td>
-<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
-</tr>
-<tr class="even">
-<td><strong>CPU/系统信息</strong>​</td>
-<td><code>cpu</code></td>
-<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>curtask</code></td>
-<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
-</tr>
-<tr class="even">
-<td><strong>探针上下文信息</strong>​</td>
-<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
-<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>args</code></td>
-<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>retval</code></td>
-<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>func</code></td>
-<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>kstack</code>/ <code>ustack</code></td>
-<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
-<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
-<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
-<p><img src="image1.png" /></p>
-<h1 id="其他说明">其他说明</h1>
-<ul>
-<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
-<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1345,6 +1186,165 @@
 <li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
 <li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
 <li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">bpftrace技术3-内置变量</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="内置变量">内置变量</h1>
+<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 24%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>变量类别</th>
+<th>变量名</th>
+<th>说明与典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>进程/线程信息</strong>​</td>
+<td><code>pid</code></td>
+<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>tid</code></td>
+<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>comm</code></td>
+<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>uid</code></td>
+<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
+</tr>
+<tr class="odd">
+<td><strong>时间信息</strong>​</td>
+<td><code>nsecs</code></td>
+<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
+</tr>
+<tr class="even">
+<td><strong>CPU/系统信息</strong>​</td>
+<td><code>cpu</code></td>
+<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>curtask</code></td>
+<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
+</tr>
+<tr class="even">
+<td><strong>探针上下文信息</strong>​</td>
+<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
+<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>args</code></td>
+<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>retval</code></td>
+<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>func</code></td>
+<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>kstack</code>/ <code>ustack</code></td>
+<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
+</tr>
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
+<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
+<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
+<p><img src="image1.png" /></p>
+<h1 id="其他说明">其他说明</h1>
+<ul>
+<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
+<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
