@@ -5,8 +5,6 @@ tags:
   - cheatsheet
   - Linux
 ---
-
-
 > https://paulgorman.org/technical/linux-iproute2-cheatsheet.html
 > https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf
 
