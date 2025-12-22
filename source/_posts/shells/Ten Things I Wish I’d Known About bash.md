@@ -172,13 +172,11 @@ echo '*'   # 输出"*"，*不保留特殊含义
 |**获取最后参数**​|`!$`|代表**上一条命令的最后一个参数**。|当你执行 `ls /a/very/long/path`后，想进入该目录，只需 `cd !$`，等效于 `cd /a/very/long/path`。|
 |**获取参数范围**​|`!:1-$`|代表**上一条命令中从第1个到最后一个的所有参数**。|误将 `tar -czf archive.tar.gz file1 file2`打成了 `zip`，可快速改为 `tar -czf archive.tar.gz !:1-$`。|
 |**提取目录路径**​|`:h`  <br>（修饰符）|移除路径中的**最后一级**（文件名或目录名），返回纯目录路径。|操作文件失败时（如 `cat /etc/nginx/sites-available/my_site`），用 `cd !$:h`直接切换到文件所在目录 `/etc/nginx/sites-available`查看。|
-
 `!$`：特殊变量，上一条命令的最后一个参数。如果你在处理文件，懒得一遍又一遍地重新输入命令，这可以省下很多工作：
 ```shell
 grep somestring /long/path/to/some/file/or/other.txt
 vi !$
 ```
-
 `!:1-$`:这个组合使这更进一步。 它获取上一个命令的所有参数并将它们放入。所以：
 ```shell
 grep isthere /long/path/to/some/file/or/other.txt
