@@ -7,4 +7,6 @@ tags:
   - perf
 ---
 
+> https://jvns.ca/perf-cheat-sheet.pdf
+
 ![](perfcheatsheet.png)
