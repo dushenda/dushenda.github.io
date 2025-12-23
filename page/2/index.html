@@ -181,12 +181,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -218,6 +218,343 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">性能分析-Windows（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-17T00:00:00+00:00">2025-12-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="overview">Overview</h1>
+<p>介绍几款Windows下的性能分析工具。</p>
+<h1 id="工具介绍">工具介绍</h1>
+<ul>
+<li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
+<li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
+<li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
+<li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
+<li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
+</ul>
+<h1 id="工具概览">工具概览</h1>
+<h2 id="perfmon">Perfmon</h2>
+<p>Windows自带的，详细使用方法，参考官方<a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
+<h2 id="sysinternals">Sysinternals</h2>
+<p>下载后即可使用的工具集，官方下链接<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
+<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
+<p>这个是Windows下的性能工具合集，见<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
+<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
+<h2 id="perfview">perfview</h2>
+<p>perfview<a target="_blank" rel="noopener" href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
+<h2 id="system-informer">System Informer</h2>
+<p>系统资源监控工具，支持windows10、windows11，官网<a target="_blank" rel="noopener" href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/15/TCP%E5%AD%A6%E4%B9%A0/TCP%E5%AD%A6%E4%B9%A0-NS3%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">TCP学习-NS3模拟环境搭建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-15 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-15T00:00:00+00:00">2025-12-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>参考https://github.com/ituring/tcp-book/?tab=readme-ov-file</p>
+</blockquote>
+<h1 id="前置工具下载">前置工具下载</h1>
+<h2 id="virtualbox最新版本即可">virtualBox（最新版本即可）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VirtualBox 图形用户界面</span><br><span class="line">版本 7.0.22 r165102 (Qt5.15.2)</span><br><span class="line">Copyright © 2024 Oracle and/or its affiliates</span><br></pre></td></tr></table></figure></p>
+<h2 id="vagrant最新版本即可">Vagrant（最新版本即可）</h2>
+<p><a target="_blank" rel="noopener" href="https://developer.hashicorp.com/vagrant">https://developer.hashicorp.com/vagrant</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; vagrant.exe -v</span><br><span class="line">Vagrant 2.4.9</span><br></pre></td></tr></table></figure></p>
+<h2 id="powershell">Powershell</h2>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5">https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.5</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\dushenda&gt; pwsh.exe -v</span><br><span class="line">PowerShell 7.1.4</span><br></pre></td></tr></table></figure></p>
+<h2 id="x-server">X server</h2>
+<h3 id="下载并安装-vcxsrv">下载并安装 VcXsrv：</h3>
+<ol type="1">
+<li>访问：https://sourceforge.net/projects/vcxsrv/</li>
+<li>下载并安装 VcXsrv Windows X Server</li>
+</ol>
+<h3 id="配置-vcxsrv">配置 VcXsrv：</h3>
+<ol type="1">
+<li>启动 “XLaunch”</li>
+<li>选择 “Multiple windows”</li>
+<li>Display number 设为 “0” 或 “-1”（自动）</li>
+<li>选择 “Start no client”</li>
+<li>在 “Extra settings” 中勾选 “Disable access control”（重要！）</li>
+<li>完成设置，VcXsrv 会在系统托盘运行</li>
+</ol>
+<h3 id="设置-powershell-环境变量">设置 PowerShell 环境变量</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在启动 Vagrant 前设置 DISPLAY</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;localhost:0.0&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者尝试</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">env</span>:DISPLAY = <span class="string">&quot;127.0.0.1:0.0&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="修改-vagrantfile-配置">修改 Vagrantfile 配置</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define &quot;guest1&quot; do |guest1|</span><br><span class="line">    guest1.vm.box = &quot;ubuntu/xenial64&quot;</span><br><span class="line">    </span><br><span class="line">    # 关键配置：启用 X11 转发</span><br><span class="line">    guest1.ssh.forward_x11 = true</span><br><span class="line">    guest1.ssh.forward_agent = true</span><br><span class="line">    guest1.ssh.forward_x11_trusted = true</span><br><span class="line">    guest1.ssh.keep_alive = true</span><br><span class="line">    </span><br><span class="line">    # 网络配置</span><br><span class="line">    guest1.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h1 id="安装wireshark虚拟机">安装wireshark虚拟机</h1>
+<h2 id="配置环境">配置环境</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/wireshark/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<h2 id="登录虚拟机">登录虚拟机</h2>
+<p>使用以下的命令，ssh连接到Guest操作系统上。在登录消息显示之后，命令行提示会变成<code>vagrant@guest1:~$</code>。</p>
+<p>在<code>powershell</code>中运行<code>vagrant ssh guest1</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant ssh guest1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-139-generic x86_64)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">* Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; Get cloud support with Ubuntu Advantage Cloud Guest:</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">http://www.ubuntu.com/business/services/cloud</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; 0 packages can be updated.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">0 updates are security updates.</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">&gt; New release <span class="string">&#x27;18.04.1 LTS&#x27;</span> available.</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Run <span class="string">&#x27;do-release-upgrade&#x27;</span> to upgrade to it.</span></span><br><span class="line"></span><br><span class="line">vagrant@guest1:~$</span><br></pre></td></tr></table></figure>
+<p>启动Wireshark。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@guest1:~$ wireshark</span><br></pre></td></tr></table></figure> <img src="环境搭建wireshark.png" /></p>
+<h1 id="安装ns3虚拟机">安装ns3虚拟机</h1>
+<p>当确认已经准备好VirtualBox和Vagrant的环境之后，请将<a target="_blank" rel="noopener" href="https://github.com/ituring/tcp-book">此Github代码库</a>克隆到任意目录。打开其中的<code>ns3/vagrant</code>目录，执行<code>vagrant up</code>命令。如此一来，就在虚拟机上完成了安装Ubuntu 16.04，并搭建ns-3的过程。另外，在2019年4月1日的时间点，第5章和第6章所使用的CUBIC和BBR模块不支持ns-3.28以上版本，因此本书使用ns-3.27版本。由于搭建ns-3环境相当花时间，请务必耐心等待 。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/ituring/tcp-book.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> tcp-book/ns3/vagrant</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vagrant up</span></span><br></pre></td></tr></table></figure>
+<p><img src="安装虚拟机.png" /> 在<code>powershell</code>中运行<code>vagrant ssh</code> <img src="ns3环境搭建.png" /></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/" class="post-title-link" itemprop="url">Linux内存子系统-Page Cache</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-13T00:00:00+00:00">2025-12-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="pagecache是什么">pagecache是什么</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached</p>
+<p><img src="pagecache.png" /></p>
+<p>/proc/meminfo的解释见如下网站<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
+<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。</p>
+<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。</p>
+<p><img src="swapcache.png" /></p>
+<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。</p>
+<p>下面解释一下free输出</p>
+<p>buff/cache = Buffers + Cached + SReclaimable <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure></p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>数据来源 (参考 <code>/proc/meminfo</code>)</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>Buffers</code></strong>​</td>
+<td><code>Buffers</code>值</td>
+<td>临时存放<strong>原始磁盘块数据</strong>，用于优化对磁盘（块设备）的直接读写操作。</td>
+</tr>
+<tr class="even">
+<td><strong><code>Cached</code></strong>​</td>
+<td><code>Cached</code>值</td>
+<td>缓存<strong>从文件读取的数据</strong>（即页缓存/Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>SReclaimable</code></strong>​</td>
+<td><code>SReclaimable</code>值</td>
+<td>属于 <strong>Slab 分配器</strong>​ 的一部分，记录内核对象（如目录项、inode 等）缓存中<strong>可以被回收</strong>占用的内存。指可以被回收的内核内存，包括 dentry 和 inode 等。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if=/dev/urandom of=/dev/sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if=/dev/urandom of=/tmp/file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
+</blockquote>
+<h1 id="pagecache出现的意义">pagecache出现的意义</h1>
+<p>先看如何使用pagecache的方法</p>
+<ul>
+<li>第一种，应用程序维护自己的 Cache 做更加细粒度的控制，比如 MySQL 就是这样做的，你可以参考MySQL Buffer Pool 。</li>
+<li>第二种，使用 Direct I/O 来绕过 Page Cache。</li>
+</ul>
+<p>pagecache的意义就是加速：标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率。</p>
+<p>我们看一个具体的例子。首先，我们来生成一个 1G 大小的新文件，然后把 Page Cache 清空，确保文件内容不在内存中，以此来比较第一次读文件和第二次读文件耗时的差异。具体的流程如下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=./dd.out bs=4096 count=((1024*256))</span><br></pre></td></tr></table></figure>
+<p>清空 Page Cache，需要先执行一下 sync 来将脏页同步到磁盘再去 drop cache。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>读两次文件，计算耗时 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure></p>
+<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I/O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I/O，提升应用的 I/O 速度。</p>
+<h1 id="pagecache机制">pagecache机制</h1>
+<h2 id="pagecache产生">pagecache产生</h2>
+<p>Page Cache 的产生有两种不同的方式：</p>
+<ul>
+<li>Buffered I/O（标准 I/O）；</li>
+<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
+</ul>
+<p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
+<p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
+<p>显然，存储映射 I/O 要比标准 I/O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I/O 比标准 I/O 方式性能要好一些的主要原因。</p>
+<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I/O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
+<h2 id="pagecache回收">pagecache回收</h2>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1132,6 +1469,165 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">bpftrace技术3-内置变量</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="内置变量">内置变量</h1>
+<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 24%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>变量类别</th>
+<th>变量名</th>
+<th>说明与典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>进程/线程信息</strong>​</td>
+<td><code>pid</code></td>
+<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>tid</code></td>
+<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>comm</code></td>
+<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>uid</code></td>
+<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
+</tr>
+<tr class="odd">
+<td><strong>时间信息</strong>​</td>
+<td><code>nsecs</code></td>
+<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
+</tr>
+<tr class="even">
+<td><strong>CPU/系统信息</strong>​</td>
+<td><code>cpu</code></td>
+<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>curtask</code></td>
+<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
+</tr>
+<tr class="even">
+<td><strong>探针上下文信息</strong>​</td>
+<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
+<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>args</code></td>
+<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>retval</code></td>
+<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>func</code></td>
+<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>kstack</code>/ <code>ustack</code></td>
+<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
+</tr>
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
+<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
+<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
+<p><img src="image1.png" /></p>
+<h1 id="其他说明">其他说明</h1>
+<ul>
+<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
+<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1416,165 +1912,6 @@
 <li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
 <li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
 <li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF3-%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">bpftrace技术3-内置变量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="内置变量">内置变量</h1>
-<p>bpftrace 的内置变量是其强大功能的基石，它们能让你在脚本中轻松获取事件触发时的上下文信息。</p>
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 24%" />
-<col style="width: 63%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>变量类别</th>
-<th>变量名</th>
-<th>说明与典型应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>进程/线程信息</strong>​</td>
-<td><code>pid</code></td>
-<td>当前<strong>进程ID</strong>。用于过滤特定进程的事件。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>tid</code></td>
-<td>当前<strong>线程ID</strong>。用于进行更精细的线程级分析。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>comm</code></td>
-<td>当前<strong>进程名</strong>（最多16个字符）。常用于按进程名进行统计和过滤。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>uid</code></td>
-<td>当前<strong>用户ID</strong>。用于分析特定用户的操作。</td>
-</tr>
-<tr class="odd">
-<td><strong>时间信息</strong>​</td>
-<td><code>nsecs</code></td>
-<td>自系统启动以来的<strong>纳秒级时间戳</strong>。常用于计算函数耗时、事件间隔等。</td>
-</tr>
-<tr class="even">
-<td><strong>CPU/系统信息</strong>​</td>
-<td><code>cpu</code></td>
-<td>当前事件发生时所在的<strong>CPU处理器ID</strong>。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>curtask</code></td>
-<td>当前进程的内核<code>task_struct</code>结构体地址（以64位无符号整数表示），用于高级内核调试。</td>
-</tr>
-<tr class="even">
-<td><strong>探针上下文信息</strong>​</td>
-<td><code>arg0</code>, <code>arg1</code>, … <code>argN</code></td>
-<td><strong>Kprobe/Uprobe 的参数</strong>。用于获取被探测函数的参数值（注意：Tracepoint 不可用）。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>args</code></td>
-<td><strong>Tracepoint 的参数结构体</strong>。用于通过 <code>args-&gt;field_name</code>的方式访问 Tracepoint 的特定字段。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>retval</code></td>
-<td><strong>Kretprobe/Uretprobe 的返回值</strong>。用于获取被探测函数的返回值。</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>func</code></td>
-<td>当前触发的 <strong>Kprobe/Uprobe 所探测的函数名</strong>。</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>kstack</code>/ <code>ustack</code></td>
-<td>当前时刻的<strong>内核栈</strong>或<strong>用户栈</strong>描述。用于分析代码执行路径，定位性能瓶颈</td>
-</tr>
-</tbody>
-</table>
-<h1 id="例子">例子</h1>
-<h2 id="计算函数执行时间"><strong>计算函数执行时间</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测量 vfs_read 函数的执行时间（微秒）</span></span><br><span class="line">~ » bpftrace -e &#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125;</span><br><span class="line">                                kretprobe:vfs_read /@start[tid]/ &#123;</span><br><span class="line">                                    $duration_us = (nsecs - @start[tid]) / 1000;</span><br><span class="line">                                    @us = hist($duration_us);</span><br><span class="line">                                    delete(@start[tid]);</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 2 probes...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@start[551]: 84374532046638</span><br><span class="line">@start[323672]: 84374600291711</span><br><span class="line">@us:</span><br><span class="line">[0]                   45 |@@@@@                                               |</span><br><span class="line">[1]                  452 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[2, 4)               264 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br><span class="line">[4, 8)               338 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              |</span><br><span class="line">[8, 16)               43 |@@@@                                                |</span><br><span class="line">[16, 32)              25 |@@                                                  |</span><br><span class="line">[32, 64)               4 |                                                    |</span><br><span class="line">[64, 128)              0 |                                                    |</span><br><span class="line">[128, 256)             0 |                                                    |</span><br><span class="line">[256, 512)             0 |                                                    |</span><br><span class="line">[512, 1K)              6 |                                                    |</span><br><span class="line">[1K, 2K)               0 |                                                    |</span><br><span class="line">[2K, 4K)               3 |                                                    |</span><br><span class="line">[4K, 8K)               1 |                                                    |</span><br></pre></td></tr></table></figure>
-<h2 id="追踪特定进程的系统调用"><strong>追踪特定进程的系统调用</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -e &#x27;tracepoint:syscalls:sys_enter_openat /comm == &quot;top&quot;/ &#123;</span><br><span class="line">    printf(&quot;PID %d is opening: %s\n&quot;, pid, str(args-&gt;filename));</span><br><span class="line">&#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc</span><br><span class="line">PID 323556 is opening: /proc/uptime</span><br><span class="line">PID 323556 is opening: /proc/1/stat</span><br><span class="line">PID 323556 is opening: /proc/1/statm</span><br><span class="line">PID 323556 is opening: /proc/2/stat</span><br><span class="line">PID 323556 is opening: /proc/2/statm</span><br><span class="line">PID 323556 is opening: /proc/7/stat</span><br></pre></td></tr></table></figure>
-<h2 id="分析内核调用路径"><strong>分析内核调用路径</strong></h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">// 统计 ip_output 函数的调用栈，这里要注意，@[kstack]的key记录的是两条不同的调用链</span><br><span class="line">~ » bpftrace -e &#x27;kprobe:ip_output &#123; @[kstack] = count(); &#125;&#x27;</span><br><span class="line">Attaching 1 probe...</span><br><span class="line">^C</span><br><span class="line"></span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    rest_init+218</span><br><span class="line">    arch_call_rest_init+18</span><br><span class="line">    start_kernel+1241</span><br><span class="line">    x86_64_start_reservations+37</span><br><span class="line">    __pfx_reserve_bios_regions+0</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 3</span><br><span class="line">@[</span><br><span class="line">    ip_output+5</span><br><span class="line">    __ip_queue_xmit+400</span><br><span class="line">    ip_queue_xmit+25</span><br><span class="line">    __tcp_transmit_skb+2666</span><br><span class="line">    __tcp_send_ack.part.0+198</span><br><span class="line">    tcp_send_ack+32</span><br><span class="line">    __tcp_ack_snd_check+66</span><br><span class="line">    tcp_rcv_established+660</span><br><span class="line">    tcp_v4_do_rcv+362</span><br><span class="line">    tcp_v4_rcv+3671</span><br><span class="line">    ip_protocol_deliver_rcu+55</span><br><span class="line">    ip_local_deliver_finish+138</span><br><span class="line">    ip_local_deliver+115</span><br><span class="line">    ip_sublist_rcv_finish+137</span><br><span class="line">    ip_sublist_rcv+410</span><br><span class="line">    ip_list_rcv+314</span><br><span class="line">    __netif_receive_skb_list_core+639</span><br><span class="line">    netif_receive_skb_list_internal+463</span><br><span class="line">    napi_complete_done+126</span><br><span class="line">    netvsc_poll+1451</span><br><span class="line">    __napi_poll+49</span><br><span class="line">    net_rx_action+680</span><br><span class="line">    handle_softirqs+244</span><br><span class="line">    __irq_exit_rcu+120</span><br><span class="line">    irq_exit_rcu+18</span><br><span class="line">    sysvec_hyperv_callback+180</span><br><span class="line">    asm_sysvec_hyperv_callback+31</span><br><span class="line">    pv_native_safe_halt+15</span><br><span class="line">    arch_cpu_idle+13</span><br><span class="line">    default_idle_call+46</span><br><span class="line">    do_idle+517</span><br><span class="line">    cpu_startup_entry+49</span><br><span class="line">    start_secondary+281</span><br><span class="line">    secondary_startup_64_no_verify+381</span><br><span class="line">]: 8</span><br></pre></td></tr></table></figure>
-<p><img src="image1.png" /></p>
-<h1 id="其他说明">其他说明</h1>
-<ul>
-<li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
-<li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -2631,252 +2968,6 @@ Field reference (click to expand)
 <ul>
 <li>modify priority of running process</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">xv6-增加系统调用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-09T00:00:00+00:00">2025-12-09</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">audit审计工具使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-11T00:00:00+00:00">2024-04-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="audit用途">audit用途</h2>
-<p>监控文件、命令、网络等，生成监控报告。</p>
-<h2 id="安装启动audit">安装启动audit</h2>
-<p>安装audit工具 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
-<p>将 <code>auditd</code> 配置为在引导时启动：</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
-<p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
-<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <code>_&lt;action&gt;_</code>可以是以下之一：</p>
-<p><code>stop</code> ：停止 <code>auditd</code>。</p>
-<p><code>restart</code>：重新启动 <code>auditd</code>。</p>
-<p><code>reload</code> 或 <code>force-reload</code>：重新加载 <code>/etc/audit/auditd.conf</code> 文件中 <code>auditd</code> 的配置。</p>
-<p><code>rotate</code>：轮转 <code>/var/log/audit/</code> 目录中的日志文件。</p>
-<p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
-<p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
-<p><code>status</code>：显示 <code>auditd</code> 的运行状态。</p>
-<h2 id="配置规则">配置规则</h2>
-<p>举例说明，监控<code>/home/test_audit/</code>文件夹（文件）的变更选项为rwxa（<strong>r</strong>=read, <strong>w</strong>=write, <strong>x</strong>=execute, <strong>a</strong>=attribute），设置关键字<code>dushnda_watch</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 配置完后查询规则 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@172 ~]# auditctl -l</span><br><span class="line">-w /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 之后做一些权限改变，增改文件操，查看日志<code>ausearch</code>，查看报告<code>areport</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ausearch -i -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
-<p><img src="audit审计工具使用_20240411_3.png" /></p>
-<p>这里的每个type是一个一次的一条记录，具体的含义查看参考链接<code>[1]</code>，这里主要关注对文件的操作，这段日志含义是使用vim打开了文件（syscall），当前文件权限是644。</p>
-<p><img src="audit审计工具使用_20240411_1.png" /></p>
-<p>删除路径监控 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -W /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>其中，<code>auditctl -d</code>的删除和<code>auditctl -a</code>的添加对应，<code>auditctl -W</code>的删除和<code>auditctl -w</code>的添加对应，<code>auditctl -D</code>删除所有规则。</p>
-</blockquote>
-<h2 id="参考链接">参考链接</h2>
-<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
-<p>[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/03/19/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/19/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">qemu调试linux（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-19T00:00:00+00:00">2024-03-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="gdb调试">GDB调试</h2>
-<p>当前文件夹目录 <img src="qemu调试linux（二）_20240319_1.png" /> Makefile文件 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">cpvmlinux:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/vmlinux vmlinux  </span><br><span class="line">  </span><br><span class="line"><span class="section">cpimage:  </span></span><br><span class="line">cp /home/dsd/Code/linux-5.18.10/arch/x86/boot/bzImage ./bzImage  </span><br><span class="line">  </span><br><span class="line"><span class="section">initramfs:  </span></span><br><span class="line">cd ./initramfs_dir &amp;&amp; find . -print0 | cpio -ov --null --format=newc | gzip -9 &gt; ../initramfs.img  </span><br><span class="line">  </span><br><span class="line"><span class="section">run:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="section">debug:  </span></span><br><span class="line">qemu-system-x86_64 \  </span><br><span class="line">-kernel bzImage \  </span><br><span class="line">-initrd initramfs.img \  </span><br><span class="line">-m 1G \  </span><br><span class="line">-nographic \  </span><br><span class="line">-append <span class="string">&quot;earlyprintk=serial,ttyS0 console=ttyS0 nokaslr&quot;</span> \  </span><br><span class="line">-S \  </span><br><span class="line">-gdb tcp::9000</span><br></pre></td></tr></table></figure> 此目录下新建<code>.gdbinit</code>文件 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target remote :9000  </span><br><span class="line">break start_kernel  </span><br><span class="line">continue  </span><br><span class="line">step</span><br></pre></td></tr></table></figure> 在<code>root/.gdbinit</code>文件增加<code>add-auto-load-safe-path /home/dsd/Code/qemu_linux_x86_5.18_space/.gdbinit</code> <img src="qemu调试linux（二）_20240319_2.png" /> 运行指令，任选一条 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gdb vmlinux</span><br><span class="line">gdb-multiarch vmlinux --tui</span><br></pre></td></tr></table></figure> <img src="qemu调试linux（二）_20240319_3.png" /></p>
-<h2 id="vscode调试">vscode调试</h2>
-<p>wsl权限问题，目录往外多一些 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown 755 &lt;usr&gt; *</span><br></pre></td></tr></table></figure> 生成编译指令信息，此时linux源码根目录下增加文件<code>compile_commands.json</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./scripts/clang-tools/gen_compile_commands.py</span><br></pre></td></tr></table></figure> 配置<code>.vscode/lanuch.json</code> <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qemu-kernel-gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1:9000&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/vmlinux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 配置<code>.vscode/c_cpp_properties.json</code> <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c11&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gnu++14&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compileCommands&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/compile_commands.json&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure> 开始调试 <img src="qemu调试linux（二）_20240319_4.png" /></p>
-<h3 id="附调试qemu虚拟机模板">附：调试qemu虚拟机模板</h3>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> </span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug.elf&quot;</span><span class="punctuation">,</span><span class="comment">//vmlinux路径，debug的文件 &lt;--修改这里</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="comment">//启动参数,如果需要记录日志可以自己增加参数。因为gdbsever已经有了参数，这里可以不用设置</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="comment">//会自动停在main,不需要则设置为false</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">//运行模式</span></span><br><span class="line">            <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;moduleLoad&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//命令</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture aarch64&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;gdb-multiarch&quot;</span><span class="punctuation">,</span><span class="comment">//工具链gdb，arm下要使用多分支</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;localhost:1234&quot;</span><span class="comment">//远程端口</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
