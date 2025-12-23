@@ -637,7 +637,7 @@ title &quot;TCP Packet&quot;
 </tbody>
 </table>
 <h2 id="mtumsspmtu和分片">MTU、MSS、PMTU和分片</h2>
-<p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。 <span class="math display"><em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em><em>头</em> + <em>T</em><em>C</em><em>P</em><em>头</em> + <em>M</em><em>S</em><em>S</em></span></p>
+<p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。 <span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em><em>头</em> + <em>T</em><em>C</em><em>P</em><em>头</em> + <em>M</em><em>S</em><em>S</em></span> TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
 
       
     </div>
@@ -1480,6 +1480,498 @@ title &quot;TCP Packet&quot;
 <p>If you go deep with bash, you might end up writing chunky utilities in it. If you do, then getting to grips with <code>getopts</code> can pay large dividends.</p>
 <p>For fun, I once wrote a <a target="_blank" rel="noopener" href="https://github.com/ianmiell/cheapci/blob/master/cheapci">script</a> called <code>cheapci</code> which I used to work like a Jenkins job.</p>
 <p>The code <a target="_blank" rel="noopener" href="https://github.com/ianmiell/cheapci/blob/master/cheapci#L70-L96">here</a> implements the reading of the <a target="_blank" rel="noopener" href="https://github.com/ianmiell/cheapci/blob/master/cheapci#L33-L51">two required, and 14 non-required arguments</a>. Better to learn this than to build up a bunch of bespoke code that can get very messy pretty quickly as your utility grows.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">常用shell命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-21T00:00:00+00:00">2025-12-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="bash快捷键">Bash快捷键</h1>
+<p><img src="moving_cli.png" /></p>
+<h2 id="moving">Moving</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl + a</td>
+<td>Goto BEGINNING of command line</td>
+</tr>
+<tr class="even">
+<td>ctrl + e</td>
+<td>Goto END of command line</td>
+</tr>
+<tr class="odd">
+<td>ctrl + b</td>
+<td>move back one character</td>
+</tr>
+<tr class="even">
+<td>ctrl + f</td>
+<td>move forward one character</td>
+</tr>
+<tr class="odd">
+<td>alt + f</td>
+<td>move cursor FORWARD one word</td>
+</tr>
+<tr class="even">
+<td>alt + b</td>
+<td>move cursor BACK one word</td>
+</tr>
+<tr class="odd">
+<td>ctrl + xx</td>
+<td>Toggle between the start of line and current cursor position</td>
+</tr>
+<tr class="even">
+<td>ctrl + ] + x</td>
+<td>Where x is any character, moves the cursor forward to the next occurance of x</td>
+</tr>
+<tr class="odd">
+<td>alt + ctrl + ] + x</td>
+<td>Where x is any character, moves the cursor backwards to the previous occurance of x</td>
+</tr>
+</tbody>
+</table>
+<h2 id="edit-other">Edit / Other</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl + d</td>
+<td>Delete the character under the cursor</td>
+</tr>
+<tr class="even">
+<td>ctrl + h</td>
+<td>Delete the previous character before cursor</td>
+</tr>
+<tr class="odd">
+<td>ctrl + u</td>
+<td>Clear all / cut BEFORE cursor</td>
+</tr>
+<tr class="even">
+<td>ctrl + k</td>
+<td>Clear all / cut AFTER cursor</td>
+</tr>
+<tr class="odd">
+<td>ctrl + w</td>
+<td>delete the word BEFORE the cursor</td>
+</tr>
+<tr class="even">
+<td>alt + d</td>
+<td>delete the word FROM the cursor</td>
+</tr>
+<tr class="odd">
+<td>ctrl + y</td>
+<td>paste (if you used a previous command to delete)</td>
+</tr>
+<tr class="even">
+<td>ctrl + i</td>
+<td>command completion like Tab</td>
+</tr>
+<tr class="odd">
+<td>ctrl + l</td>
+<td>Clear the screen (same as clear command)</td>
+</tr>
+<tr class="even">
+<td>ctrl + c</td>
+<td>kill whatever is running</td>
+</tr>
+<tr class="odd">
+<td>ctrl + d</td>
+<td>Exit shell (same as exit command when cursor line is empty)</td>
+</tr>
+<tr class="even">
+<td>ctrl + z</td>
+<td>Place current process in background</td>
+</tr>
+<tr class="odd">
+<td>ctrl + _</td>
+<td>Undo</td>
+</tr>
+<tr class="even">
+<td>ctrl + x ctrl + u</td>
+<td>Undo the last changes. ctrl+ _ does the same</td>
+</tr>
+<tr class="odd">
+<td>ctrl + t</td>
+<td>Swap the last two characters before the cursor</td>
+</tr>
+<tr class="even">
+<td>esc + t</td>
+<td>Swap last two words before the cursor</td>
+</tr>
+<tr class="odd">
+<td>alt + t</td>
+<td>swap current word with previous</td>
+</tr>
+<tr class="even">
+<td>esc + .</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>esc + _</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>alt + [Backspace]</td>
+<td>delete PREVIOUS word</td>
+</tr>
+<tr class="odd">
+<td>alt + &lt;</td>
+<td>Move to the first line in the history</td>
+</tr>
+<tr class="even">
+<td>alt + &gt;</td>
+<td>Move to the end of the input history, i.e., the line currently being entered</td>
+</tr>
+<tr class="odd">
+<td>alt + ?</td>
+<td>display the file/folder names in the current path as help</td>
+</tr>
+<tr class="even">
+<td>alt + *</td>
+<td>print all the file/folder names in the current path as parameter</td>
+</tr>
+<tr class="odd">
+<td>alt + .</td>
+<td>print the LAST ARGUMENT (ie “vim file1.txt file2.txt” will yield “file2.txt”)</td>
+</tr>
+<tr class="even">
+<td>alt + c</td>
+<td>capitalize the first character to end of word starting at cursor (whole word if cursor is at the beginning of word)</td>
+</tr>
+<tr class="odd">
+<td>alt + u</td>
+<td>make uppercase from cursor to end of word</td>
+</tr>
+<tr class="even">
+<td>alt + l</td>
+<td>make lowercase from cursor to end of word</td>
+</tr>
+<tr class="odd">
+<td>alt + n</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>alt + p</td>
+<td>Non-incremental reverse search of history.</td>
+</tr>
+<tr class="odd">
+<td>alt + r</td>
+<td>Undo all changes to the line</td>
+</tr>
+<tr class="even">
+<td>alt + ctl + e</td>
+<td>Expand command line.</td>
+</tr>
+<tr class="odd">
+<td>~[TAB][TAB]</td>
+<td>List all users</td>
+</tr>
+<tr class="even">
+<td>$[TAB][TAB]</td>
+<td>List all system variables</td>
+</tr>
+<tr class="odd">
+<td>@[TAB][TAB]</td>
+<td>List all entries in your /etc/hosts file</td>
+</tr>
+<tr class="even">
+<td>[TAB]</td>
+<td>Auto complete</td>
+</tr>
+<tr class="odd">
+<td>cd -</td>
+<td>change to PREVIOUS working directory</td>
+</tr>
+</tbody>
+</table>
+<h2 id="history">History</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl + r</td>
+<td>Search backward starting at the current line and moving ‘up’ through the history as necessary</td>
+</tr>
+<tr class="even">
+<td>crtl + s</td>
+<td>Search forward starting at the current line and moving ‘down’ through the history as necessary</td>
+</tr>
+<tr class="odd">
+<td>ctrl + p</td>
+<td>Fetch the previous command from the history list, moving back in the list (same as up arrow)</td>
+</tr>
+<tr class="even">
+<td>ctrl + n</td>
+<td>Fetch the next command from the history list, moving forward in the list (same as down arrow)</td>
+</tr>
+<tr class="odd">
+<td>ctrl + o</td>
+<td>Execute the command found via Ctrl+r or Ctrl+s</td>
+</tr>
+<tr class="even">
+<td>ctrl + g</td>
+<td>Escape from history searching mode</td>
+</tr>
+<tr class="odd">
+<td>!!</td>
+<td>Run PREVIOUS command (ie <code>sudo !!</code>)</td>
+</tr>
+<tr class="even">
+<td>!vi</td>
+<td>Run PREVIOUS command that BEGINS with vi</td>
+</tr>
+<tr class="odd">
+<td>!vi:p</td>
+<td>Print previously run command that BEGINS with vi</td>
+</tr>
+<tr class="even">
+<td>!n</td>
+<td>Execute nth command in history</td>
+</tr>
+<tr class="odd">
+<td>!$</td>
+<td>Last argument of last command</td>
+</tr>
+<tr class="even">
+<td>!^</td>
+<td>First argument of last command</td>
+</tr>
+<tr class="odd">
+<td><sup>abc</sup>xyz</td>
+<td>Replace first occurance of abc with xyz in last command and execute it</td>
+</tr>
+</tbody>
+</table>
+<h1 id="常用命令">常用命令</h1>
+<blockquote>
+<p>https://github.com/jlevy/the-art-of-command-line/tree/master</p>
+</blockquote>
+<h2 id="bash命令行">bash命令行</h2>
+<ul>
+<li>如果你输入命令的时候中途改了主意，按下 <strong>alt-#</strong> 在行首添加 <code>#</code> 把它当做注释再按下回车执行（或者依次按下 <strong>ctrl-a</strong>， <strong>#</strong>， <strong>enter</strong>）。这样做的话，之后借助命令行历史记录，你可以很方便恢复你刚才输入到一半的命令。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ # yum install gcc   &lt;--前面加#</span><br><span class="line">➜  ~ # yum install gcc   &lt;-- 按上键</span><br></pre></td></tr></table></figure></li>
+<li>使用 <code>netstat -lntp</code> 或 <code>ss -plat</code> 检查哪些进程在监听端口（默认是检查 TCP 端口; 添加参数 <code>-u</code> 则检查 UDP 端口）或者 <code>lsof -iTCP -sTCP:LISTEN -P -n</code> (这也可以在 OS X 上运行)。</li>
+<li><code>pstree -p</code> 以一种优雅的方式展示进程树。</li>
+<li>使用 <code>nohup</code> 或 <code>disown</code> 使一个后台进程持续运行。</li>
+<li>使用 <code>pgrep</code> 和 <code>pkill</code> 根据名字查找进程或发送信号（<code>-f</code> 参数通常有用）。</li>
+<li>将 shell 切换为其他用户，使用 <code>su username</code> 或者 <code>su - username</code>。加入 <code>-</code> 会使得切换后的环境与使用该用户登录后的环境相同。省略用户名则默认为 root。切换到哪个用户，就需要输入_哪个用户的_密码。</li>
+<li>可以把别名、shell 选项和常用函数保存在 <code>~/.bashrc</code>，具体看下这篇<a target="_blank" rel="noopener" href="http://superuser.com/a/183980/7106">文章</a>。这样做的话你就可以在所有 shell 会话中使用你的设定。</li>
+<li>把环境变量的设定以及登陆时要执行的命令保存在 <code>~/.bash_profile</code>。而对于从图形界面启动的 shell 和 <code>cron</code> 启动的 shell，则需要单独配置文件。</li>
+<li>shell PS1显示 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 编辑配置文件（以当前用户的 ~/.bashrc 为例）</span></span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 在文件末尾添加一行，例如：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示效果类似于：[Sun Dec 21 14:05:30] user@server:~$</span></span><br><span class="line">export PS1=&quot;[\d \t] \u@\h:\W\$ &quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3. 让配置立即生效</span></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="文件及数据处理">文件及数据处理</h2>
+<ul>
+<li><code>wc</code> 去计算新行数（<code>-l</code>），字符数（<code>-m</code>），单词数（<code>-w</code>）以及字节数（<code>-c</code>）。</li>
+<li>使用 <code>tee</code> 将标准输入复制到文件甚至标准输出，例如 <code>ls -al | tee file.txt</code>。</li>
+<li>替换一个或多个文件中出现的字符串： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -pi.bak -e &#x27;s/old-string/new-string/g&#x27; my-files-*.txt</span><br></pre></td></tr></table></figure></li>
+<li><code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a target="_blank" rel="noopener" href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快方法</a>之一： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure></li>
+<li>标准的源代码对比及合并工具是 <code>diff</code> 和 <code>patch</code>。使用 <code>diffstat</code> 查看变更总览数据。注意到 <code>diff -r</code> 对整个文件夹有效。使用 <code>diff -r tree1 tree2 | diffstat</code> 查看变更的统计数据。<code>vimdiff</code> 用于比对并编辑文件。 <img src="diff.png" /></li>
+<li>对于二进制文件，使用 <code>hd</code>，<code>hexdump</code> 或者 <code>xxd</code> 使其以十六进制显示，使用 <code>bvi</code>，<code>hexedit</code> 或者 <code>biew</code> 来进行二进制编辑。</li>
+<li>同样对于二进制文件，<code>strings</code>（包括 <code>grep</code> 等工具）可以帮助在二进制文件中查找特定比特。</li>
+<li>拆分文件可以使用 <code>split</code>（按大小拆分）和 <code>csplit</code>（按模式拆分）。</li>
+<li>操作日期和时间表达式，可以用 <a target="_blank" rel="noopener" href="http://www.fresse.org/dateutils/"><code>dateutils</code></a> 中的 <code>dateadd</code>、<code>datediff</code>、<code>strptime</code> 等工具。</li>
+<li>使用 <code>zless</code>、<code>zmore</code>、<code>zcat</code> 和 <code>zgrep</code> 对压缩过的文件进行操作。</li>
+<li>文件属性可以通过 <code>chattr</code> 进行设置，它比文件权限更加底层。例如，为了保护文件不被意外删除，可以使用不可修改标记：<code>sudo chattr +i /critical/directory/or/file</code></li>
+<li>使用 <code>getfacl</code> 和 <code>setfacl</code> 以保存和恢复文件权限。例如： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getfacl -R /some/path &gt; permissions.txt</span><br><span class="line">setfacl --restore=permissions.txt</span><br></pre></td></tr></table></figure></li>
+<li>为了高效地创建空文件，请使用 <code>truncate</code>（创建<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%A8%80%E7%96%8F%E6%96%87%E4%BB%B6">稀疏文件</a>），<code>fallocate</code>（用于 ext4，xfs，btrf 和 ocfs2 文件系统），<code>xfs_mkfile</code>（适用于几乎所有的文件系统，包含在 xfsprogs 包中），<code>mkfile</code>（用于类 Unix 操作系统，比如 Solaris 和 Mac OS）。</li>
+</ul>
+<h2 id="系统调试">系统调试</h2>
+<ul>
+<li><code>curl</code> 和 <code>curl -I</code> 可以被轻松地应用于 web 调试中，它们的好兄弟 <code>wget</code> 也是如此，或者也可以试试更潮的 <a target="_blank" rel="noopener" href="https://github.com/jkbrzt/httpie"><code>httpie</code></a>。</li>
+<li>获取 CPU 和硬盘的使用状态，通常使用使用 <code>top</code>（<code>htop</code> 更佳），<code>iostat</code> 和 <code>iotop</code>。而 <code>iostat -mxz 15</code> 可以让你获悉 CPU 和每个硬盘分区的基本信息和性能表现。</li>
+<li>使用 <code>netstat</code> 和 <code>ss</code> 查看网络连接的细节。</li>
+<li><code>dstat</code> 在你想要对系统的现状有一个粗略的认识时是非常有用的。然而若要对系统有一个深度的总体认识，使用 <a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a>，它会在一个终端窗口中向你提供一些系统级的数据。</li>
+<li>若要了解内存状态，运行并理解 <code>free</code> 和 <code>vmstat</code> 的输出。值得留意的是“cached”的值，它指的是 Linux 内核用来作为文件缓存的内存大小，而与空闲内存无关。</li>
+<li>Java 系统调试则是一件截然不同的事，一个可以用于 Oracle 的 JVM 或其他 JVM 上的调试的技巧是你可以运行 <code>kill -3 &lt;pid&gt;</code> 同时一个完整的栈轨迹和堆概述（包括 GC 的细节）会被保存到标准错误或是日志文件。JDK 中的 <code>jps</code>，<code>jstat</code>，<code>jstack</code>，<code>jmap</code> 很有用。<a target="_blank" rel="noopener" href="https://github.com/aragozin/jvm-tools">SJK tools</a> 更高级。</li>
+<li>使用 <a target="_blank" rel="noopener" href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a> 去跟踪路由，用于确定网络问题。</li>
+<li>用 <a target="_blank" rel="noopener" href="https://dev.yorhel.nl/ncdu"><code>ncdu</code></a> 来查看磁盘使用情况，它比寻常的命令，如 <code>du -sh *</code>，更节省时间。</li>
+<li>查找正在使用带宽的套接字连接或进程，使用 <a target="_blank" rel="noopener" href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a>。</li>
+<li><code>ab</code> 工具（Apache 中自带）可以简单粗暴地检查 web 服务器的性能。对于更复杂的负载测试，使用 <code>siege</code>。</li>
+<li><a target="_blank" rel="noopener" href="https://wireshark.org/"><code>wireshark</code></a>，<a target="_blank" rel="noopener" href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a> 和 <a target="_blank" rel="noopener" href="http://ngrep.sourceforge.net/"><code>ngrep</code></a> 可用于复杂的网络调试。</li>
+<li>了解 <code>strace</code> 和 <code>ltrace</code>。这俩工具在你的程序运行失败、挂起甚至崩溃，而你却不知道为什么或你想对性能有个总体的认识的时候是非常有用的。注意 profile 参数（<code>-c</code>）和附加到一个运行的进程参数 （<code>-p</code>）。</li>
+<li>了解使用 <code>ldd</code> 来检查共享库。但是<a target="_blank" rel="noopener" href="http://www.catonmat.net/blog/ldd-arbitrary-code-execution/">永远不要在不信任的文件上运行</a>。</li>
+<li>了解如何运用 <code>gdb</code> 连接到一个运行着的进程并获取它的堆栈轨迹。</li>
+<li>学会使用 <code>/proc</code>。它在调试正在出现的问题的时候有时会效果惊人。比如：<code>/proc/cpuinfo</code>，<code>/proc/meminfo</code>，<code>/proc/cmdline</code>，<code>/proc/xxx/cwd</code>，<code>/proc/xxx/exe</code>，<code>/proc/xxx/fd/</code>，<code>/proc/xxx/smaps</code>（这里的 <code>xxx</code> 表示进程的 id 或 pid）。</li>
+<li>当调试一些之前出现的问题的时候，<a target="_blank" rel="noopener" href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a> 非常有用。它展示了 cpu、内存以及网络等的历史数据。</li>
+<li>关于更深层次的系统分析以及性能分析，看看 <code>stap</code>（<a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/wiki">SystemTap</a>），<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Perf_(Linux)"><code>perf</code></a>，以及<a target="_blank" rel="noopener" href="https://github.com/draios/sysdig"><code>sysdig</code></a>。</li>
+<li>查看你当前使用的系统，使用 <code>uname</code>，<code>uname -a</code>（Unix／kernel 信息）或者 <code>lsb_release -a</code>（Linux 发行版信息）。</li>
+<li>无论什么东西工作得很欢乐（可能是硬件或驱动问题）时可以试试 <code>dmesg</code>。</li>
+<li>如果你删除了一个文件，但通过 <code>du</code> 发现没有释放预期的磁盘空间，请检查文件是否被进程占用： <code>lsof | grep deleted | grep "filename-of-my-big-file"</code></li>
+</ul>
+<h2 id="单行脚本">单行脚本</h2>
+<ul>
+<li>当你需要对文本文件做集合交、并、差运算时，<code>sort</code> 和 <code>uniq</code> 会是你的好帮手。具体例子请参照代码后面的，此处假设 <code>a</code> 与 <code>b</code> 是两内容不同的文件。这种方式效率很高，并且在小文件和上 G 的文件上都能运用（注意尽管在 <code>/tmp</code> 在一个小的根分区上时你可能需要 <code>-T</code> 参数，但是实际上 <code>sort</code> 并不被内存大小约束），参阅前文中关于 <code>LC_ALL</code> 和 <code>sort</code> 的 <code>-u</code> 参数的部分。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort a b | uniq &gt; c   # c 是 a 并 b</span><br><span class="line">sort a b | uniq -d &gt; c   # c 是 a 交 b</span><br><span class="line">sort a b b | uniq -u &gt; c   # c 是 a - b</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>使用 <code>grep . *</code>（每行都会附上文件名）或者 <code>head -100 *</code>（每个文件有一个标题）来阅读检查目录下所有文件的内容。这在检查一个充满配置文件的目录（如 <code>/sys</code>、<code>/proc</code>、<code>/etc</code>）时特别好用。</p></li>
+<li><p>计算文本文件第三列中所有数的和（可能比同等作用的 Python 代码快三倍且代码量少三倍）： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;&#123; x += $3 &#125; END &#123; print x &#125;&#x27; myfile</span><br></pre></td></tr></table></figure></p></li>
+<li><p>如果你想在文件树上查看大小/日期，这可能看起来像递归版的 <code>ls -l</code> 但比 <code>ls -lR</code> 更易于理解： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f -ls</span><br></pre></td></tr></table></figure></p></li>
+<li><p>假设你有一个类似于 web 服务器日志文件的文本文件，并且一个确定的值只会出现在某些行上，假设一个 <code>acct_id</code> 参数在 URI 中。如果你想计算出每个 <code>acct_id</code> 值有多少次请求，使用如下代码： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep -o &#x27;acct_id=[0-9]+&#x27; access.log | cut -d= -f2 | sort | uniq -c | sort -rn</span><br></pre></td></tr></table></figure></p></li>
+<li><p>要持续监测文件改动，可以使用 <code>watch</code>，例如检查某个文件夹中文件的改变，可以用 <code>watch -d -n 2 'ls -rtlh | tail'</code>；或者在排查 WiFi 设置故障时要监测网络设置的更改，可以用 <code>watch -d -n 2 ifconfig</code>。</p></li>
+<li><p>运行这个函数从这篇文档中随机获取一条技巧（解析 Markdown 文件并抽取项目）： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function taocl() &#123;</span><br><span class="line">	curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README-zh.md|</span><br><span class="line">	pandoc -f markdown -t html |</span><br><span class="line">       iconv -f &#x27;utf-8&#x27; -t &#x27;unicode&#x27; |</span><br><span class="line">       xmlstarlet fo --html --dropdtd |</span><br><span class="line">       xmlstarlet sel -t -v &quot;(html/body/ul/li[count(p)&gt;0])[$RANDOM mod last()+1]&quot; |</span><br><span class="line">       xmlstarlet unesc | fmt -80</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure> ## 冷门但有用</p></li>
+<li><p><code>expr</code>：计算表达式或正则匹配</p></li>
+<li><p><code>m4</code>：简单的宏处理器</p></li>
+<li><p><code>yes</code>：多次打印字符串</p></li>
+<li><p><code>cal</code>：漂亮的日历</p></li>
+<li><p><code>env</code>：执行一个命令（脚本文件中很有用）</p></li>
+<li><p><code>printenv</code>：打印环境变量（调试时或在写脚本文件时很有用）</p></li>
+<li><p><code>look</code>：查找以特定字符串开头的单词或行</p></li>
+<li><p><code>cut</code>，<code>paste</code> 和 <code>join</code>：数据修改</p></li>
+<li><p><code>fmt</code>：格式化文本段落</p></li>
+<li><p><code>pr</code>：将文本格式化成页／列形式</p></li>
+<li><p><code>fold</code>：包裹文本中的几行</p></li>
+<li><p><code>column</code>：将文本格式化成多个对齐、定宽的列或表格</p></li>
+<li><p><code>expand</code> 和 <code>unexpand</code>：制表符与空格之间转换</p></li>
+<li><p><code>nl</code>：添加行号</p></li>
+<li><p><code>seq</code>：打印数字</p></li>
+<li><p><code>bc</code>：计算器</p></li>
+<li><p><code>factor</code>：分解因数</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://gnupg.org/"><code>gpg</code></a>：加密并签名文件</p></li>
+<li><p><code>toe</code>：terminfo 入口列表</p></li>
+<li><p><code>nc</code>：网络调试及数据传输</p></li>
+<li><p><code>socat</code>：套接字代理，与 <code>netcat</code> 类似</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/mattthias/slurm"><code>slurm</code></a>：网络流量可视化</p></li>
+<li><p><code>dd</code>：文件或设备间传输数据</p></li>
+<li><p><code>file</code>：确定文件类型</p></li>
+<li><p><code>tree</code>：以树的形式显示路径和文件，类似于递归的 <code>ls</code></p></li>
+<li><p><code>stat</code>：文件信息</p></li>
+<li><p><code>time</code>：执行命令，并计算执行时间</p></li>
+<li><p><code>timeout</code>：在指定时长范围内执行命令，并在规定时间结束后停止进程</p></li>
+<li><p><code>lockfile</code>：使文件只能通过 <code>rm -f</code> 移除</p></li>
+<li><p><code>logrotate</code>： 切换、压缩以及发送日志文件</p></li>
+<li><p><code>watch</code>：重复运行同一个命令，展示结果并／或高亮有更改的部分</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/joh/when-changed"><code>when-changed</code></a>：当检测到文件更改时执行指定命令。参阅 <code>inotifywait</code> 和 <code>entr</code>。</p></li>
+<li><p><code>tac</code>：反向输出文件</p></li>
+<li><p><code>shuf</code>：文件中随机选取几行</p></li>
+<li><p><code>comm</code>：一行一行的比较排序过的文件</p></li>
+<li><p><code>strings</code>：从二进制文件中抽取文本</p></li>
+<li><p><code>tr</code>：转换字母</p></li>
+<li><p><code>iconv</code> 或 <code>uconv</code>：文本编码转换</p></li>
+<li><p><code>split</code> 和 <code>csplit</code>：分割文件</p></li>
+<li><p><code>sponge</code>：在写入前读取所有输入，在读取文件后再向同一文件写入时比较有用，例如 <code>grep -v something some-file | sponge some-file</code></p></li>
+<li><p><code>units</code>：将一种计量单位转换为另一种等效的计量单位（参阅 <code>/usr/share/units/definitions.units</code>）</p></li>
+<li><p><code>apg</code>：随机生成密码</p></li>
+<li><p><code>xz</code>：高比例的文件压缩</p></li>
+<li><p><code>ldd</code>：动态库信息</p></li>
+<li><p><code>nm</code>：提取 obj 文件中的符号</p></li>
+<li><p><code>ab</code> 或 <a target="_blank" rel="noopener" href="https://github.com/wg/wrk"><code>wrk</code></a>：web 服务器性能分析</p></li>
+<li><p><code>strace</code>：调试系统调用</p></li>
+<li><p><a target="_blank" rel="noopener" href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a>：更好的网络调试跟踪工具</p></li>
+<li><p><code>cssh</code>：可视化的并发 shell</p></li>
+<li><p><code>rsync</code>：通过 ssh 或本地文件系统同步文件和文件夹</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://wireshark.org/"><code>wireshark</code></a> 和 <a target="_blank" rel="noopener" href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a>：抓包和网络调试工具</p></li>
+<li><p><a target="_blank" rel="noopener" href="http://ngrep.sourceforge.net/"><code>ngrep</code></a>：网络层的 grep</p></li>
+<li><p><code>host</code> 和 <code>dig</code>：DNS 查找</p></li>
+<li><p><code>lsof</code>：列出当前系统打开文件的工具以及查看端口信息</p></li>
+<li><p><code>dstat</code>：系统状态查看</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a>：高层次的多子系统总览</p></li>
+<li><p><code>iostat</code>：硬盘使用状态</p></li>
+<li><p><code>mpstat</code>： CPU 使用状态</p></li>
+<li><p><code>vmstat</code>： 内存使用状态</p></li>
+<li><p><code>htop</code>：top 的加强版</p></li>
+<li><p><code>last</code>：登入记录</p></li>
+<li><p><code>w</code>：查看处于登录状态的用户</p></li>
+<li><p><code>id</code>：用户/组 ID 信息</p></li>
+<li><p><a target="_blank" rel="noopener" href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a>：系统历史数据</p></li>
+<li><p><a target="_blank" rel="noopener" href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a>：套接字及进程的网络利用情况</p></li>
+<li><p><code>ss</code>：套接字数据</p></li>
+<li><p><code>dmesg</code>：引导及系统错误信息</p></li>
+<li><p><code>sysctl</code>： 在内核运行时动态地查看和修改内核的运行参数</p></li>
+<li><p><code>hdparm</code>：SATA/ATA 磁盘更改及性能分析</p></li>
+<li><p><code>lsblk</code>：列出块设备信息：以树形展示你的磁盘以及磁盘分区信息</p></li>
+<li><p><code>lshw</code>，<code>lscpu</code>，<code>lspci</code>，<code>lsusb</code> 和 <code>dmidecode</code>：查看硬件信息，包括 CPU、BIOS、RAID、显卡、USB设备等</p></li>
+<li><p><code>lsmod</code> 和 <code>modinfo</code>：列出内核模块，并显示其细节</p></li>
+<li><p><code>fortune</code>，<code>ddate</code> 和 <code>sl</code>：额，这主要取决于你是否认为蒸汽火车和莫名其妙的名人名言是否“有用”</p></li>
+</ul>
 
       
     </div>
@@ -2511,498 +3003,6 @@ title &quot;TCP Packet&quot;
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Trace syscalls and timings</span></span><br><span class="line">strace -ttT -p &lt;pid&gt; -f -e trace=network,file,fsync,clock,nanosleep</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optional CPU hotspot profiling</span></span><br><span class="line">perf record -g -p &lt;pid&gt;; perf report</span><br></pre></td></tr></table></figure>
 <h2 id="container-restart-loops">Container restart loops</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Docker restart loops</span></span><br><span class="line">docker ps --filter &#x27;status=restarting&#x27;</span><br><span class="line">docker logs &lt;id&gt; --tail=200</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kubernetes restart loops</span></span><br><span class="line">kubectl get pods -A</span><br><span class="line">kubectl describe pod &lt;pod&gt; -n &lt;ns&gt;</span><br><span class="line">kubectl logs &lt;pod&gt; -n &lt;ns&gt; --previous</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Node/agent issues</span></span><br><span class="line">journalctl -u kubelet</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">常用shell命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-21T00:00:00+00:00">2025-12-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="bash快捷键">Bash快捷键</h1>
-<p><img src="moving_cli.png" /></p>
-<h2 id="moving">Moving</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>command</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl + a</td>
-<td>Goto BEGINNING of command line</td>
-</tr>
-<tr class="even">
-<td>ctrl + e</td>
-<td>Goto END of command line</td>
-</tr>
-<tr class="odd">
-<td>ctrl + b</td>
-<td>move back one character</td>
-</tr>
-<tr class="even">
-<td>ctrl + f</td>
-<td>move forward one character</td>
-</tr>
-<tr class="odd">
-<td>alt + f</td>
-<td>move cursor FORWARD one word</td>
-</tr>
-<tr class="even">
-<td>alt + b</td>
-<td>move cursor BACK one word</td>
-</tr>
-<tr class="odd">
-<td>ctrl + xx</td>
-<td>Toggle between the start of line and current cursor position</td>
-</tr>
-<tr class="even">
-<td>ctrl + ] + x</td>
-<td>Where x is any character, moves the cursor forward to the next occurance of x</td>
-</tr>
-<tr class="odd">
-<td>alt + ctrl + ] + x</td>
-<td>Where x is any character, moves the cursor backwards to the previous occurance of x</td>
-</tr>
-</tbody>
-</table>
-<h2 id="edit-other">Edit / Other</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>command</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl + d</td>
-<td>Delete the character under the cursor</td>
-</tr>
-<tr class="even">
-<td>ctrl + h</td>
-<td>Delete the previous character before cursor</td>
-</tr>
-<tr class="odd">
-<td>ctrl + u</td>
-<td>Clear all / cut BEFORE cursor</td>
-</tr>
-<tr class="even">
-<td>ctrl + k</td>
-<td>Clear all / cut AFTER cursor</td>
-</tr>
-<tr class="odd">
-<td>ctrl + w</td>
-<td>delete the word BEFORE the cursor</td>
-</tr>
-<tr class="even">
-<td>alt + d</td>
-<td>delete the word FROM the cursor</td>
-</tr>
-<tr class="odd">
-<td>ctrl + y</td>
-<td>paste (if you used a previous command to delete)</td>
-</tr>
-<tr class="even">
-<td>ctrl + i</td>
-<td>command completion like Tab</td>
-</tr>
-<tr class="odd">
-<td>ctrl + l</td>
-<td>Clear the screen (same as clear command)</td>
-</tr>
-<tr class="even">
-<td>ctrl + c</td>
-<td>kill whatever is running</td>
-</tr>
-<tr class="odd">
-<td>ctrl + d</td>
-<td>Exit shell (same as exit command when cursor line is empty)</td>
-</tr>
-<tr class="even">
-<td>ctrl + z</td>
-<td>Place current process in background</td>
-</tr>
-<tr class="odd">
-<td>ctrl + _</td>
-<td>Undo</td>
-</tr>
-<tr class="even">
-<td>ctrl + x ctrl + u</td>
-<td>Undo the last changes. ctrl+ _ does the same</td>
-</tr>
-<tr class="odd">
-<td>ctrl + t</td>
-<td>Swap the last two characters before the cursor</td>
-</tr>
-<tr class="even">
-<td>esc + t</td>
-<td>Swap last two words before the cursor</td>
-</tr>
-<tr class="odd">
-<td>alt + t</td>
-<td>swap current word with previous</td>
-</tr>
-<tr class="even">
-<td>esc + .</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>esc + _</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>alt + [Backspace]</td>
-<td>delete PREVIOUS word</td>
-</tr>
-<tr class="odd">
-<td>alt + &lt;</td>
-<td>Move to the first line in the history</td>
-</tr>
-<tr class="even">
-<td>alt + &gt;</td>
-<td>Move to the end of the input history, i.e., the line currently being entered</td>
-</tr>
-<tr class="odd">
-<td>alt + ?</td>
-<td>display the file/folder names in the current path as help</td>
-</tr>
-<tr class="even">
-<td>alt + *</td>
-<td>print all the file/folder names in the current path as parameter</td>
-</tr>
-<tr class="odd">
-<td>alt + .</td>
-<td>print the LAST ARGUMENT (ie “vim file1.txt file2.txt” will yield “file2.txt”)</td>
-</tr>
-<tr class="even">
-<td>alt + c</td>
-<td>capitalize the first character to end of word starting at cursor (whole word if cursor is at the beginning of word)</td>
-</tr>
-<tr class="odd">
-<td>alt + u</td>
-<td>make uppercase from cursor to end of word</td>
-</tr>
-<tr class="even">
-<td>alt + l</td>
-<td>make lowercase from cursor to end of word</td>
-</tr>
-<tr class="odd">
-<td>alt + n</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>alt + p</td>
-<td>Non-incremental reverse search of history.</td>
-</tr>
-<tr class="odd">
-<td>alt + r</td>
-<td>Undo all changes to the line</td>
-</tr>
-<tr class="even">
-<td>alt + ctl + e</td>
-<td>Expand command line.</td>
-</tr>
-<tr class="odd">
-<td>~[TAB][TAB]</td>
-<td>List all users</td>
-</tr>
-<tr class="even">
-<td>$[TAB][TAB]</td>
-<td>List all system variables</td>
-</tr>
-<tr class="odd">
-<td>@[TAB][TAB]</td>
-<td>List all entries in your /etc/hosts file</td>
-</tr>
-<tr class="even">
-<td>[TAB]</td>
-<td>Auto complete</td>
-</tr>
-<tr class="odd">
-<td>cd -</td>
-<td>change to PREVIOUS working directory</td>
-</tr>
-</tbody>
-</table>
-<h2 id="history">History</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>command</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl + r</td>
-<td>Search backward starting at the current line and moving ‘up’ through the history as necessary</td>
-</tr>
-<tr class="even">
-<td>crtl + s</td>
-<td>Search forward starting at the current line and moving ‘down’ through the history as necessary</td>
-</tr>
-<tr class="odd">
-<td>ctrl + p</td>
-<td>Fetch the previous command from the history list, moving back in the list (same as up arrow)</td>
-</tr>
-<tr class="even">
-<td>ctrl + n</td>
-<td>Fetch the next command from the history list, moving forward in the list (same as down arrow)</td>
-</tr>
-<tr class="odd">
-<td>ctrl + o</td>
-<td>Execute the command found via Ctrl+r or Ctrl+s</td>
-</tr>
-<tr class="even">
-<td>ctrl + g</td>
-<td>Escape from history searching mode</td>
-</tr>
-<tr class="odd">
-<td>!!</td>
-<td>Run PREVIOUS command (ie <code>sudo !!</code>)</td>
-</tr>
-<tr class="even">
-<td>!vi</td>
-<td>Run PREVIOUS command that BEGINS with vi</td>
-</tr>
-<tr class="odd">
-<td>!vi:p</td>
-<td>Print previously run command that BEGINS with vi</td>
-</tr>
-<tr class="even">
-<td>!n</td>
-<td>Execute nth command in history</td>
-</tr>
-<tr class="odd">
-<td>!$</td>
-<td>Last argument of last command</td>
-</tr>
-<tr class="even">
-<td>!^</td>
-<td>First argument of last command</td>
-</tr>
-<tr class="odd">
-<td><sup>abc</sup>xyz</td>
-<td>Replace first occurance of abc with xyz in last command and execute it</td>
-</tr>
-</tbody>
-</table>
-<h1 id="常用命令">常用命令</h1>
-<blockquote>
-<p>https://github.com/jlevy/the-art-of-command-line/tree/master</p>
-</blockquote>
-<h2 id="bash命令行">bash命令行</h2>
-<ul>
-<li>如果你输入命令的时候中途改了主意，按下 <strong>alt-#</strong> 在行首添加 <code>#</code> 把它当做注释再按下回车执行（或者依次按下 <strong>ctrl-a</strong>， <strong>#</strong>， <strong>enter</strong>）。这样做的话，之后借助命令行历史记录，你可以很方便恢复你刚才输入到一半的命令。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ # yum install gcc   &lt;--前面加#</span><br><span class="line">➜  ~ # yum install gcc   &lt;-- 按上键</span><br></pre></td></tr></table></figure></li>
-<li>使用 <code>netstat -lntp</code> 或 <code>ss -plat</code> 检查哪些进程在监听端口（默认是检查 TCP 端口; 添加参数 <code>-u</code> 则检查 UDP 端口）或者 <code>lsof -iTCP -sTCP:LISTEN -P -n</code> (这也可以在 OS X 上运行)。</li>
-<li><code>pstree -p</code> 以一种优雅的方式展示进程树。</li>
-<li>使用 <code>nohup</code> 或 <code>disown</code> 使一个后台进程持续运行。</li>
-<li>使用 <code>pgrep</code> 和 <code>pkill</code> 根据名字查找进程或发送信号（<code>-f</code> 参数通常有用）。</li>
-<li>将 shell 切换为其他用户，使用 <code>su username</code> 或者 <code>su - username</code>。加入 <code>-</code> 会使得切换后的环境与使用该用户登录后的环境相同。省略用户名则默认为 root。切换到哪个用户，就需要输入_哪个用户的_密码。</li>
-<li>可以把别名、shell 选项和常用函数保存在 <code>~/.bashrc</code>，具体看下这篇<a target="_blank" rel="noopener" href="http://superuser.com/a/183980/7106">文章</a>。这样做的话你就可以在所有 shell 会话中使用你的设定。</li>
-<li>把环境变量的设定以及登陆时要执行的命令保存在 <code>~/.bash_profile</code>。而对于从图形界面启动的 shell 和 <code>cron</code> 启动的 shell，则需要单独配置文件。</li>
-<li>shell PS1显示 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 编辑配置文件（以当前用户的 ~/.bashrc 为例）</span></span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 在文件末尾添加一行，例如：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示效果类似于：[Sun Dec 21 14:05:30] user@server:~$</span></span><br><span class="line">export PS1=&quot;[\d \t] \u@\h:\W\$ &quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3. 让配置立即生效</span></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="文件及数据处理">文件及数据处理</h2>
-<ul>
-<li><code>wc</code> 去计算新行数（<code>-l</code>），字符数（<code>-m</code>），单词数（<code>-w</code>）以及字节数（<code>-c</code>）。</li>
-<li>使用 <code>tee</code> 将标准输入复制到文件甚至标准输出，例如 <code>ls -al | tee file.txt</code>。</li>
-<li>替换一个或多个文件中出现的字符串： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -pi.bak -e &#x27;s/old-string/new-string/g&#x27; my-files-*.txt</span><br></pre></td></tr></table></figure></li>
-<li><code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a target="_blank" rel="noopener" href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快方法</a>之一： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure></li>
-<li>标准的源代码对比及合并工具是 <code>diff</code> 和 <code>patch</code>。使用 <code>diffstat</code> 查看变更总览数据。注意到 <code>diff -r</code> 对整个文件夹有效。使用 <code>diff -r tree1 tree2 | diffstat</code> 查看变更的统计数据。<code>vimdiff</code> 用于比对并编辑文件。 <img src="diff.png" /></li>
-<li>对于二进制文件，使用 <code>hd</code>，<code>hexdump</code> 或者 <code>xxd</code> 使其以十六进制显示，使用 <code>bvi</code>，<code>hexedit</code> 或者 <code>biew</code> 来进行二进制编辑。</li>
-<li>同样对于二进制文件，<code>strings</code>（包括 <code>grep</code> 等工具）可以帮助在二进制文件中查找特定比特。</li>
-<li>拆分文件可以使用 <code>split</code>（按大小拆分）和 <code>csplit</code>（按模式拆分）。</li>
-<li>操作日期和时间表达式，可以用 <a target="_blank" rel="noopener" href="http://www.fresse.org/dateutils/"><code>dateutils</code></a> 中的 <code>dateadd</code>、<code>datediff</code>、<code>strptime</code> 等工具。</li>
-<li>使用 <code>zless</code>、<code>zmore</code>、<code>zcat</code> 和 <code>zgrep</code> 对压缩过的文件进行操作。</li>
-<li>文件属性可以通过 <code>chattr</code> 进行设置，它比文件权限更加底层。例如，为了保护文件不被意外删除，可以使用不可修改标记：<code>sudo chattr +i /critical/directory/or/file</code></li>
-<li>使用 <code>getfacl</code> 和 <code>setfacl</code> 以保存和恢复文件权限。例如： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getfacl -R /some/path &gt; permissions.txt</span><br><span class="line">setfacl --restore=permissions.txt</span><br></pre></td></tr></table></figure></li>
-<li>为了高效地创建空文件，请使用 <code>truncate</code>（创建<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%A8%80%E7%96%8F%E6%96%87%E4%BB%B6">稀疏文件</a>），<code>fallocate</code>（用于 ext4，xfs，btrf 和 ocfs2 文件系统），<code>xfs_mkfile</code>（适用于几乎所有的文件系统，包含在 xfsprogs 包中），<code>mkfile</code>（用于类 Unix 操作系统，比如 Solaris 和 Mac OS）。</li>
-</ul>
-<h2 id="系统调试">系统调试</h2>
-<ul>
-<li><code>curl</code> 和 <code>curl -I</code> 可以被轻松地应用于 web 调试中，它们的好兄弟 <code>wget</code> 也是如此，或者也可以试试更潮的 <a target="_blank" rel="noopener" href="https://github.com/jkbrzt/httpie"><code>httpie</code></a>。</li>
-<li>获取 CPU 和硬盘的使用状态，通常使用使用 <code>top</code>（<code>htop</code> 更佳），<code>iostat</code> 和 <code>iotop</code>。而 <code>iostat -mxz 15</code> 可以让你获悉 CPU 和每个硬盘分区的基本信息和性能表现。</li>
-<li>使用 <code>netstat</code> 和 <code>ss</code> 查看网络连接的细节。</li>
-<li><code>dstat</code> 在你想要对系统的现状有一个粗略的认识时是非常有用的。然而若要对系统有一个深度的总体认识，使用 <a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a>，它会在一个终端窗口中向你提供一些系统级的数据。</li>
-<li>若要了解内存状态，运行并理解 <code>free</code> 和 <code>vmstat</code> 的输出。值得留意的是“cached”的值，它指的是 Linux 内核用来作为文件缓存的内存大小，而与空闲内存无关。</li>
-<li>Java 系统调试则是一件截然不同的事，一个可以用于 Oracle 的 JVM 或其他 JVM 上的调试的技巧是你可以运行 <code>kill -3 &lt;pid&gt;</code> 同时一个完整的栈轨迹和堆概述（包括 GC 的细节）会被保存到标准错误或是日志文件。JDK 中的 <code>jps</code>，<code>jstat</code>，<code>jstack</code>，<code>jmap</code> 很有用。<a target="_blank" rel="noopener" href="https://github.com/aragozin/jvm-tools">SJK tools</a> 更高级。</li>
-<li>使用 <a target="_blank" rel="noopener" href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a> 去跟踪路由，用于确定网络问题。</li>
-<li>用 <a target="_blank" rel="noopener" href="https://dev.yorhel.nl/ncdu"><code>ncdu</code></a> 来查看磁盘使用情况，它比寻常的命令，如 <code>du -sh *</code>，更节省时间。</li>
-<li>查找正在使用带宽的套接字连接或进程，使用 <a target="_blank" rel="noopener" href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a>。</li>
-<li><code>ab</code> 工具（Apache 中自带）可以简单粗暴地检查 web 服务器的性能。对于更复杂的负载测试，使用 <code>siege</code>。</li>
-<li><a target="_blank" rel="noopener" href="https://wireshark.org/"><code>wireshark</code></a>，<a target="_blank" rel="noopener" href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a> 和 <a target="_blank" rel="noopener" href="http://ngrep.sourceforge.net/"><code>ngrep</code></a> 可用于复杂的网络调试。</li>
-<li>了解 <code>strace</code> 和 <code>ltrace</code>。这俩工具在你的程序运行失败、挂起甚至崩溃，而你却不知道为什么或你想对性能有个总体的认识的时候是非常有用的。注意 profile 参数（<code>-c</code>）和附加到一个运行的进程参数 （<code>-p</code>）。</li>
-<li>了解使用 <code>ldd</code> 来检查共享库。但是<a target="_blank" rel="noopener" href="http://www.catonmat.net/blog/ldd-arbitrary-code-execution/">永远不要在不信任的文件上运行</a>。</li>
-<li>了解如何运用 <code>gdb</code> 连接到一个运行着的进程并获取它的堆栈轨迹。</li>
-<li>学会使用 <code>/proc</code>。它在调试正在出现的问题的时候有时会效果惊人。比如：<code>/proc/cpuinfo</code>，<code>/proc/meminfo</code>，<code>/proc/cmdline</code>，<code>/proc/xxx/cwd</code>，<code>/proc/xxx/exe</code>，<code>/proc/xxx/fd/</code>，<code>/proc/xxx/smaps</code>（这里的 <code>xxx</code> 表示进程的 id 或 pid）。</li>
-<li>当调试一些之前出现的问题的时候，<a target="_blank" rel="noopener" href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a> 非常有用。它展示了 cpu、内存以及网络等的历史数据。</li>
-<li>关于更深层次的系统分析以及性能分析，看看 <code>stap</code>（<a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/wiki">SystemTap</a>），<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Perf_(Linux)"><code>perf</code></a>，以及<a target="_blank" rel="noopener" href="https://github.com/draios/sysdig"><code>sysdig</code></a>。</li>
-<li>查看你当前使用的系统，使用 <code>uname</code>，<code>uname -a</code>（Unix／kernel 信息）或者 <code>lsb_release -a</code>（Linux 发行版信息）。</li>
-<li>无论什么东西工作得很欢乐（可能是硬件或驱动问题）时可以试试 <code>dmesg</code>。</li>
-<li>如果你删除了一个文件，但通过 <code>du</code> 发现没有释放预期的磁盘空间，请检查文件是否被进程占用： <code>lsof | grep deleted | grep "filename-of-my-big-file"</code></li>
-</ul>
-<h2 id="单行脚本">单行脚本</h2>
-<ul>
-<li>当你需要对文本文件做集合交、并、差运算时，<code>sort</code> 和 <code>uniq</code> 会是你的好帮手。具体例子请参照代码后面的，此处假设 <code>a</code> 与 <code>b</code> 是两内容不同的文件。这种方式效率很高，并且在小文件和上 G 的文件上都能运用（注意尽管在 <code>/tmp</code> 在一个小的根分区上时你可能需要 <code>-T</code> 参数，但是实际上 <code>sort</code> 并不被内存大小约束），参阅前文中关于 <code>LC_ALL</code> 和 <code>sort</code> 的 <code>-u</code> 参数的部分。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort a b | uniq &gt; c   # c 是 a 并 b</span><br><span class="line">sort a b | uniq -d &gt; c   # c 是 a 交 b</span><br><span class="line">sort a b b | uniq -u &gt; c   # c 是 a - b</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>使用 <code>grep . *</code>（每行都会附上文件名）或者 <code>head -100 *</code>（每个文件有一个标题）来阅读检查目录下所有文件的内容。这在检查一个充满配置文件的目录（如 <code>/sys</code>、<code>/proc</code>、<code>/etc</code>）时特别好用。</p></li>
-<li><p>计算文本文件第三列中所有数的和（可能比同等作用的 Python 代码快三倍且代码量少三倍）： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;&#123; x += $3 &#125; END &#123; print x &#125;&#x27; myfile</span><br></pre></td></tr></table></figure></p></li>
-<li><p>如果你想在文件树上查看大小/日期，这可能看起来像递归版的 <code>ls -l</code> 但比 <code>ls -lR</code> 更易于理解： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f -ls</span><br></pre></td></tr></table></figure></p></li>
-<li><p>假设你有一个类似于 web 服务器日志文件的文本文件，并且一个确定的值只会出现在某些行上，假设一个 <code>acct_id</code> 参数在 URI 中。如果你想计算出每个 <code>acct_id</code> 值有多少次请求，使用如下代码： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep -o &#x27;acct_id=[0-9]+&#x27; access.log | cut -d= -f2 | sort | uniq -c | sort -rn</span><br></pre></td></tr></table></figure></p></li>
-<li><p>要持续监测文件改动，可以使用 <code>watch</code>，例如检查某个文件夹中文件的改变，可以用 <code>watch -d -n 2 'ls -rtlh | tail'</code>；或者在排查 WiFi 设置故障时要监测网络设置的更改，可以用 <code>watch -d -n 2 ifconfig</code>。</p></li>
-<li><p>运行这个函数从这篇文档中随机获取一条技巧（解析 Markdown 文件并抽取项目）： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function taocl() &#123;</span><br><span class="line">	curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README-zh.md|</span><br><span class="line">	pandoc -f markdown -t html |</span><br><span class="line">       iconv -f &#x27;utf-8&#x27; -t &#x27;unicode&#x27; |</span><br><span class="line">       xmlstarlet fo --html --dropdtd |</span><br><span class="line">       xmlstarlet sel -t -v &quot;(html/body/ul/li[count(p)&gt;0])[$RANDOM mod last()+1]&quot; |</span><br><span class="line">       xmlstarlet unesc | fmt -80</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure> ## 冷门但有用</p></li>
-<li><p><code>expr</code>：计算表达式或正则匹配</p></li>
-<li><p><code>m4</code>：简单的宏处理器</p></li>
-<li><p><code>yes</code>：多次打印字符串</p></li>
-<li><p><code>cal</code>：漂亮的日历</p></li>
-<li><p><code>env</code>：执行一个命令（脚本文件中很有用）</p></li>
-<li><p><code>printenv</code>：打印环境变量（调试时或在写脚本文件时很有用）</p></li>
-<li><p><code>look</code>：查找以特定字符串开头的单词或行</p></li>
-<li><p><code>cut</code>，<code>paste</code> 和 <code>join</code>：数据修改</p></li>
-<li><p><code>fmt</code>：格式化文本段落</p></li>
-<li><p><code>pr</code>：将文本格式化成页／列形式</p></li>
-<li><p><code>fold</code>：包裹文本中的几行</p></li>
-<li><p><code>column</code>：将文本格式化成多个对齐、定宽的列或表格</p></li>
-<li><p><code>expand</code> 和 <code>unexpand</code>：制表符与空格之间转换</p></li>
-<li><p><code>nl</code>：添加行号</p></li>
-<li><p><code>seq</code>：打印数字</p></li>
-<li><p><code>bc</code>：计算器</p></li>
-<li><p><code>factor</code>：分解因数</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://gnupg.org/"><code>gpg</code></a>：加密并签名文件</p></li>
-<li><p><code>toe</code>：terminfo 入口列表</p></li>
-<li><p><code>nc</code>：网络调试及数据传输</p></li>
-<li><p><code>socat</code>：套接字代理，与 <code>netcat</code> 类似</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/mattthias/slurm"><code>slurm</code></a>：网络流量可视化</p></li>
-<li><p><code>dd</code>：文件或设备间传输数据</p></li>
-<li><p><code>file</code>：确定文件类型</p></li>
-<li><p><code>tree</code>：以树的形式显示路径和文件，类似于递归的 <code>ls</code></p></li>
-<li><p><code>stat</code>：文件信息</p></li>
-<li><p><code>time</code>：执行命令，并计算执行时间</p></li>
-<li><p><code>timeout</code>：在指定时长范围内执行命令，并在规定时间结束后停止进程</p></li>
-<li><p><code>lockfile</code>：使文件只能通过 <code>rm -f</code> 移除</p></li>
-<li><p><code>logrotate</code>： 切换、压缩以及发送日志文件</p></li>
-<li><p><code>watch</code>：重复运行同一个命令，展示结果并／或高亮有更改的部分</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/joh/when-changed"><code>when-changed</code></a>：当检测到文件更改时执行指定命令。参阅 <code>inotifywait</code> 和 <code>entr</code>。</p></li>
-<li><p><code>tac</code>：反向输出文件</p></li>
-<li><p><code>shuf</code>：文件中随机选取几行</p></li>
-<li><p><code>comm</code>：一行一行的比较排序过的文件</p></li>
-<li><p><code>strings</code>：从二进制文件中抽取文本</p></li>
-<li><p><code>tr</code>：转换字母</p></li>
-<li><p><code>iconv</code> 或 <code>uconv</code>：文本编码转换</p></li>
-<li><p><code>split</code> 和 <code>csplit</code>：分割文件</p></li>
-<li><p><code>sponge</code>：在写入前读取所有输入，在读取文件后再向同一文件写入时比较有用，例如 <code>grep -v something some-file | sponge some-file</code></p></li>
-<li><p><code>units</code>：将一种计量单位转换为另一种等效的计量单位（参阅 <code>/usr/share/units/definitions.units</code>）</p></li>
-<li><p><code>apg</code>：随机生成密码</p></li>
-<li><p><code>xz</code>：高比例的文件压缩</p></li>
-<li><p><code>ldd</code>：动态库信息</p></li>
-<li><p><code>nm</code>：提取 obj 文件中的符号</p></li>
-<li><p><code>ab</code> 或 <a target="_blank" rel="noopener" href="https://github.com/wg/wrk"><code>wrk</code></a>：web 服务器性能分析</p></li>
-<li><p><code>strace</code>：调试系统调用</p></li>
-<li><p><a target="_blank" rel="noopener" href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a>：更好的网络调试跟踪工具</p></li>
-<li><p><code>cssh</code>：可视化的并发 shell</p></li>
-<li><p><code>rsync</code>：通过 ssh 或本地文件系统同步文件和文件夹</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://wireshark.org/"><code>wireshark</code></a> 和 <a target="_blank" rel="noopener" href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a>：抓包和网络调试工具</p></li>
-<li><p><a target="_blank" rel="noopener" href="http://ngrep.sourceforge.net/"><code>ngrep</code></a>：网络层的 grep</p></li>
-<li><p><code>host</code> 和 <code>dig</code>：DNS 查找</p></li>
-<li><p><code>lsof</code>：列出当前系统打开文件的工具以及查看端口信息</p></li>
-<li><p><code>dstat</code>：系统状态查看</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a>：高层次的多子系统总览</p></li>
-<li><p><code>iostat</code>：硬盘使用状态</p></li>
-<li><p><code>mpstat</code>： CPU 使用状态</p></li>
-<li><p><code>vmstat</code>： 内存使用状态</p></li>
-<li><p><code>htop</code>：top 的加强版</p></li>
-<li><p><code>last</code>：登入记录</p></li>
-<li><p><code>w</code>：查看处于登录状态的用户</p></li>
-<li><p><code>id</code>：用户/组 ID 信息</p></li>
-<li><p><a target="_blank" rel="noopener" href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a>：系统历史数据</p></li>
-<li><p><a target="_blank" rel="noopener" href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a>：套接字及进程的网络利用情况</p></li>
-<li><p><code>ss</code>：套接字数据</p></li>
-<li><p><code>dmesg</code>：引导及系统错误信息</p></li>
-<li><p><code>sysctl</code>： 在内核运行时动态地查看和修改内核的运行参数</p></li>
-<li><p><code>hdparm</code>：SATA/ATA 磁盘更改及性能分析</p></li>
-<li><p><code>lsblk</code>：列出块设备信息：以树形展示你的磁盘以及磁盘分区信息</p></li>
-<li><p><code>lshw</code>，<code>lscpu</code>，<code>lspci</code>，<code>lsusb</code> 和 <code>dmidecode</code>：查看硬件信息，包括 CPU、BIOS、RAID、显卡、USB设备等</p></li>
-<li><p><code>lsmod</code> 和 <code>modinfo</code>：列出内核模块，并显示其细节</p></li>
-<li><p><code>fortune</code>，<code>ddate</code> 和 <code>sl</code>：额，这主要取决于你是否认为蒸汽火车和莫名其妙的名人名言是否“有用”</p></li>
-</ul>
 
       
     </div>
