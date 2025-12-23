@@ -19,35 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="立体角 在谈立体角之前，我们先来复习一下球坐标及其面积分。 球面坐标系及积分 球坐标系  sphere1  如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用(ρ,ϕ,θ)来描述，与笛卡尔坐标系之间的转化如下 $$ x&#x3D;\rho\sin\phi\cos\theta\\ y&#x3D;\rho\sin\phi\sin\theta\\ z&#x3D;\cos\phi $$ 上式就是球坐标和笛卡尔坐标之间的">
+    <meta name="description" content="报文格式 以太网物理帧 packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;         字段 长度 含义     帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完">
 <meta property="og:type" content="article">
-<meta property="og:title" content="立体角">
-<meta property="og:url" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/index.html">
+<meta property="og:title" content="TCP报文格式">
+<meta property="og:url" content="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="立体角 在谈立体角之前，我们先来复习一下球坐标及其面积分。 球面坐标系及积分 球坐标系  sphere1  如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用(ρ,ϕ,θ)来描述，与笛卡尔坐标系之间的转化如下 $$ x&#x3D;\rho\sin\phi\cos\theta\\ y&#x3D;\rho\sin\phi\sin\theta\\ z&#x3D;\cos\phi $$ 上式就是球坐标和笛卡尔坐标之间的">
+<meta property="og:description" content="报文格式 以太网物理帧 packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;         字段 长度 含义     帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere1.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere3.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere4.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/1.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/angle1.png">
-<meta property="og:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/angle2.jpg">
-<meta property="article:published_time" content="2019-10-14T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-23T14:28:40.319Z">
+<meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-23T14:28:40.239Z">
 <meta property="article:author" content="dushenda">
-<meta property="article:tag" content="光学">
-<meta property="article:tag" content="几何">
+<meta property="article:tag" content="TCP">
+<meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/sphere1.png">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/">
+<link rel="canonical" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/","path":"2019/10/14/立体角概念/立体角/","title":"立体角"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/","path":"2025/12/23/TCP学习/TCP报文格式/","title":"TCP报文格式"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>立体角 | dushenda</title>
+<title>TCP报文格式 | dushenda</title>
   
 
 
@@ -177,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92"><span class="nav-number">1.</span> <span class="nav-text">立体角</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%83%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB%E5%8F%8A%E7%A7%AF%E5%88%86"><span class="nav-number">1.1.</span> <span class="nav-text">球面坐标系及积分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%83%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">球坐标系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%83%E9%9D%A2%E7%A7%AF%E5%88%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">球面积分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%92%E5%BA%A6"><span class="nav-number">1.1.3.</span> <span class="nav-text">角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92-1"><span class="nav-number">1.1.4.</span> <span class="nav-text">立体角</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">报文格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%89%A9%E7%90%86%E5%B8%A7"><span class="nav-number">1.1.</span> <span class="nav-text">以太网物理帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E5%A4%B4"><span class="nav-number">1.2.</span> <span class="nav-text">以太网帧头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp%E6%8A%A5%E6%96%87%E5%A4%B4"><span class="nav-number">1.3.</span> <span class="nav-text">TCP报文头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mtumsspmtu%E5%92%8C%E5%88%86%E7%89%87"><span class="nav-number">1.4.</span> <span class="nav-text">MTU、MSS、PMTU和分片</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -239,7 +232,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -252,12 +245,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="立体角 | dushenda">
+      <meta itemprop="name" content="TCP报文格式 | dushenda">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          立体角
+          TCP报文格式
         </h1>
 
         <div class="post-meta-container">
@@ -268,7 +261,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-10-14 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-14T00:00:00+00:00">2019-10-14</time>
+      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
     </span>
 
   
@@ -280,59 +273,225 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="立体角">立体角</h1>
-<p>在谈立体角之前，我们先来复习一下球坐标及其面积分。</p>
-<h2 id="球面坐标系及积分">球面坐标系及积分</h2>
-<h3 id="球坐标系">球坐标系</h3>
-<figure>
-<img src="sphere1.png" alt="sphere1" /><figcaption aria-hidden="true">sphere1</figcaption>
-</figure>
-<p>如上图所示，就是一个典型的球坐标系统，在坐标系中的每一点都可以使用<span class="math inline">(<em>ρ</em>,<em>ϕ</em>,<em>θ</em>)</span>来描述，与笛卡尔坐标系之间的转化如下</p>
-<p><span class="math display">$$
-x=\rho\sin\phi\cos\theta\\
-y=\rho\sin\phi\sin\theta\\
-z=\cos\phi
-$$</span></p>
-<p>上式就是球坐标和笛卡尔坐标之间的转化，这个转化很容从图上看出来。</p>
-<h3 id="球面积分">球面积分</h3>
-<figure>
-<img src="sphere3.png" alt="sphere2" /><figcaption aria-hidden="true">sphere2</figcaption>
-</figure>
-<p>从上图可以看出，面积的微元，长为<span class="math inline"><em>ρ</em><em>d</em><em>ϕ</em></span>，因为这个方向上的长度为<span class="math inline"><em>ρ</em><em>ϕ</em></span>，所以微元为<span class="math inline"><em>ρ</em><em>d</em><em>ϕ</em></span>；宽为<span class="math inline"><em>ρ</em>sin <em>ϕ</em><em>d</em><em>θ</em></span>，这是因为首先要投影到<span class="math inline"><em>x</em><em>y</em></span>平面，在这个平面上的长度为<span class="math inline"><em>ρ</em>sin <em>ϕ</em></span>，从图上可以看出，这个长度也就是宽，所以微元的宽为<span class="math inline"><em>ρ</em>sin <em>ϕ</em><em>d</em><em>ϕ</em></span>。所以球面积分的微元面积<span class="math inline"><em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em>​</span>。</p>
-<ul>
-<li>来看几个例子
-<ol type="1">
-<li><p>球的表面积计算</p>
-<figure>
-<img src="sphere4.png" alt="shpere4" /><figcaption aria-hidden="true">shpere4</figcaption>
-</figure>
-<p>表面积的求法，就是对于微元而言，<span class="math inline"><em>ϕ</em></span>的取值为<span class="math inline">0</span>到<span class="math inline">2<em>π</em></span>，<span class="math inline"><em>θ</em></span>的取值也是<span class="math inline">0</span>到<span class="math inline">2<em>π</em></span>。<span class="math inline"><em>ρ</em></span>就是球的半径。 所以微元<span class="math inline"><em>d</em><em>S</em> = <em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em></span>。表面积的求法如下： <span class="math display"><em>S</em> = ∫<sub>0</sub><sup>2<em>π</em></sup><em>d</em><em>θ</em>∫<sub>0</sub><sup>2<em>π</em></sup><em>ρ</em><sup>2</sup>sin <em>ϕ</em><em>d</em><em>ϕ</em></span> <span class="math inline"> → 2<em>π</em><em>ρ</em><sup>2</sup>(−cos<em>θ</em>)|<sub>0</sub><sup>2<em>π</em></sup> = 4<em>π</em><em>ρ</em><sup>2</sup>​</span>，这就是很熟悉的圆表面积计算公式了。<span class="math inline"><em>S</em><sub><em>圆</em></sub> = 4<em>π</em><em>r</em><sup>2</sup>​</span>，这个公式应该在高中时候就经常使用了。</p></li>
-<li><p>球帽表面积的计算 <img src="1.png" alt="shpere5" /></p></li>
-</ol>
-蓝色部分就叫做球帽，计算这一部分的表面积。首先面积分的微元跟之前的一样，为<span class="math inline"><em>d</em><em>S</em> = <em>ρ</em><sup>2</sup>sin <em>θ</em><em>ϕ</em><em>d</em><em>ϕ</em><em>d</em><em>θ</em></span>，不过这个图上的角度标的不太一样，那么改变一下，把<span class="math inline"><em>x</em><em>y</em></span>平面的角度设为<span class="math inline"><em>ϕ</em></span>，把与<span class="math inline"><em>z</em></span>轴之间的夹角设为<span class="math inline"><em>α</em></span>。很容易从图上看出，<span class="math inline"><em>ϕ</em> ∈ [0,2<em>ϕ</em>], <em>α</em> ∈ [0,<em>θ</em>]</span>，这边要注意这个<span class="math inline"><em>α</em></span>，它的取值是从<span class="math inline"><em>z</em></span>轴为<span class="math inline">0</span>，到<span class="math inline"><em>x</em><em>y</em></span>平面为<span class="math inline">$\frac{\pi}{2}$</span>。所以其表面积为</li>
-</ul>
-<p><span class="math display"><em>S</em> = ∫<sub>0</sub><sup>2<em>π</em></sup><em>d</em><em>ϕ</em>∫<sub>0</sub><sup><em>θ</em></sup><em>r</em><sup>2</sup>sin <em>θ</em><em>d</em><em>θ</em></span> ​ <span class="math inline">$\rightarrow 2\pi r^2(-\cos\theta)|^{\theta}_0=2\pi r^2(1-\cos\theta)=2\pi r^2(1-\frac{r-h}{r})=2\pi rh​$</span>，如果<span class="math inline"><em>h</em> = <em>r</em>​</span>，那么求的是半球的面积， 面积<span class="math inline"><em>S</em> = 2<em>π</em><em>r</em><sup>2</sup>​</span>，跟之前的球表面积也对上了。</p>
-<hr />
-<p>球面坐标复习到这儿，下面就进入正题了。 ## 立体角</p>
-<h3 id="角度">角度</h3>
-<p>在介绍立体角之前，也先做个铺垫，讲一下角度。</p>
-<p><img src="angle1.png" /></p>
-<p>如上图所示，平面角，简称角度定义为圆的弧长与半径之间的比值，单位为弧度(<span class="math inline"><em>r</em><em>a</em><em>d</em></span>)。 <span class="math display">$$
-\theta=\frac{l}{r}
-$$</span></p>
-<h3 id="立体角-1">立体角</h3>
-<p>参考平面角的定义，立体角的定义为表面积与半径平方的比值，即</p>
-<p><span class="math display">$$
-\Omega=\frac{S}{r^2}
-$$</span></p>
-<p>反映的是从该点出发，向球面区域张成的视野大小，是平面角的三维扩展。</p>
-<p><img src="angle2.jpg" /></p>
-<p>接上面计算的表面积的例子。</p>
-<ol type="1">
-<li>球的立体角 球的表面积为<span class="math inline"><em>S</em> = 4<em>π</em><em>r</em><sup>2</sup>​</span>，球的半径为<span class="math inline"><em>r</em>​</span>，立体角为<span class="math inline">$\Omega=\frac{S}{r^2}=4\pi​$</span>，这也是最大的立体角。</li>
-<li>球帽的立体角 球帽的表面积为<span class="math inline">2<em>π</em><em>r</em><em>h</em></span>，半径为<span class="math inline"><em>r</em></span>，立体角为<span class="math inline">$\Omega=\frac{S}{r^2}=2\pi h$</span>。</li>
-</ol>
-<p>需要注意的是，立体角计算也可以理解为是所形成表面在以原点为圆心的球的球面上的投影除以半径的平方。因为要计算的立体角表面不一定是球面的一部分，所以需要先投影到球面再进行计算。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="报文格式">报文格式</h1>
+<h2 id="以太网物理帧">以太网物理帧</h2>
+<pre><code class="highlight mermaid">packet-beta
+title 以太网物理层头
+0-11: &quot;Inter Frame Gap（至少12Byte）&quot;
+12-18: &quot;Preamble&quot;
+19-20: &quot;FSD&quot;</code></pre>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 3%" />
+<col style="width: 93%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>帧间隙</td>
+<td>至少12字节</td>
+<td>每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待一段时间才能再发另外一个帧，以便让帧接收者对接收的帧做必要的处理（如调整缓存的指针、更新计数、通知对报文进行处理等等）。在以太网标准中规定最小帧间隙是12个字节，其数据为全1。对于个别的接口，可减少到64(GE)或40比特(10GE)，其他的接口都不应该小于12字节。</td>
+</tr>
+<tr class="even">
+<td>前同步码</td>
+<td>7字节</td>
+<td>以太网标准中规定前导码为10101010 10101010 10101010 10101010 10101010 10101010 10101010（二进制），共7字节。</td>
+</tr>
+<tr class="odd">
+<td>帧开始定界符</td>
+<td>1字节</td>
+<td>以太网标准中规定帧开始定界符为10101011（二进制），共1字节。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="以太网帧头">以太网帧头</h2>
+<pre><code class="highlight mermaid">packet-beta
+title Ethernet II
+0-5: &quot;DMAC&quot;
+6-11: &quot;SMAC&quot;
+12-20: &quot;Data(46~1500)&quot;
+21-24: &quot;FCS&quot;</code></pre>
+<table>
+<colgroup>
+<col style="width: 1%" />
+<col style="width: 4%" />
+<col style="width: 93%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DMAC</td>
+<td>6字节</td>
+<td>目的MAC地址，IPv4为6字节，该字段标识帧的接收者。</td>
+</tr>
+<tr class="even">
+<td>SMAC</td>
+<td>6字节</td>
+<td>源MAC地址，IPv4为6字节，该字段标识帧的发送者。</td>
+</tr>
+<tr class="odd">
+<td>Type</td>
+<td>2字节</td>
+<td>协议类型。<a target="_blank" rel="noopener" href="https://support.huawei.com/enterprise/zh/doc/EDOC1100174722/ea0a043c#ethII_tab_3">表1-3</a>列出了链路直接封装的协议类型。</td>
+</tr>
+<tr class="even">
+<td>Data</td>
+<td>46～1500字节</td>
+<td>数据字段，标识帧的负载（可能包含填充位）。<br><br>数据字段的最小长度必须为46字节以保证帧长至少为64字节，这意味着传输1字节信息也必须使用46字节的数据字段。<br><br>如果填入该字段的信息少于46字节，该字段的其余部分也必须进行填充。数据字段的最大长度为1500字节。<br><br>以太帧的长度必须为整数字节，因此帧的负载长度不足整数字节，需插入填充字段以保证数据帧的长度为整数字节。</td>
+</tr>
+<tr class="odd">
+<td>FCS</td>
+<td>4字节</td>
+<td>帧校验序列FCS（Frame Check Sequence）是为接收者提供判断是否传输错误的一种方法，如果发现错误，丢弃此帧。<br><br>FCS只是通用叫法，具体的FCS还可以细分多种校验方法。在以太帧中，FCS通常采用循环冗余码校验CRC（Cyclical Redundancy Check）。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tcp报文头">TCP报文头</h2>
+<pre><code class="highlight mermaid">packet-beta
+title &quot;TCP Packet&quot;
+0-15: &quot;Source Port&quot;
+16-31: &quot;Destination Port&quot;
+32-63: &quot;Sequence Number&quot;
+64-95: &quot;Acknowledgment Number&quot;
+96-99: &quot;Data Offset&quot;
+100-105: &quot;Reserved&quot;
+106: &quot;URG&quot;
+107: &quot;ACK&quot;
+108: &quot;PSH&quot;
+109: &quot;RST&quot;
+110: &quot;SYN&quot;
+111: &quot;FIN&quot;
+112-127: &quot;Window&quot;
+128-143: &quot;Checksum&quot;
+144-159: &quot;Urgent Pointer&quot;
+160-191: &quot;(Options and Padding)&quot;
+192-255: &quot;Data (&lt;=MSS)&quot;</code></pre>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 0%" />
+<col style="width: 93%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Source Port</td>
+<td>16比特</td>
+<td>源端口，标识哪个应用程序发送。</td>
+</tr>
+<tr class="even">
+<td>Destination Port</td>
+<td>16比特</td>
+<td>目的端口，标识哪个应用程序接收。</td>
+</tr>
+<tr class="odd">
+<td>Sequence Number</td>
+<td>32比特</td>
+<td>序号字段。TCP链接中传输的数据流中每个字节都编上一个序号。序号字段的值指的是本报文段所发送的数据的第一个字节的序号。</td>
+</tr>
+<tr class="even">
+<td>Acknowledgment Number</td>
+<td>32比特</td>
+<td>确认号，是期望收到对方的下一个报文段的数据的第1个字节的序号，即上次已成功接收到的数据字节序号加1。只有ACK标识为1，此字段有效。</td>
+</tr>
+<tr class="odd">
+<td>Data Offset</td>
+<td>4比特</td>
+<td>数据偏移，即首部长度，指出TCP报文段的数据起始处距离TCP报文段的起始处有多远，以32比特（4字节）为计算单位。最多有60字节的首部，若无选项字段，正常为20字节。</td>
+</tr>
+<tr class="even">
+<td>Reserved</td>
+<td>4比特</td>
+<td>保留，必须填0。</td>
+</tr>
+<tr class="odd">
+<td>CWR</td>
+<td>1比特</td>
+<td>拥塞窗口减少标识</td>
+</tr>
+<tr class="even">
+<td>ECE</td>
+<td>1比特</td>
+<td>ECN回声标识</td>
+</tr>
+<tr class="odd">
+<td>URG</td>
+<td>1比特</td>
+<td>紧急指针有效标识。它告诉系统此报文段中有紧急数据，应尽快传送（相当于高优先级的数据）。</td>
+</tr>
+<tr class="even">
+<td>ACK</td>
+<td>1比特</td>
+<td>确认序号有效标识。只有当ACK=1时确认号字段才有效。当ACK=0时，确认号无效。</td>
+</tr>
+<tr class="odd">
+<td>PSH</td>
+<td>1比特</td>
+<td>标识接收方应该尽快将这个报文段交给应用层。接收到PSH = 1的TCP报文段，应尽快的交付接收应用进程，而不再等待整个缓存都填满了后再向上交付。</td>
+</tr>
+<tr class="even">
+<td>RST</td>
+<td>1比特</td>
+<td>重建连接标识。当RST=1时，表明TCP连接中出现严重错误（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立连接。</td>
+</tr>
+<tr class="odd">
+<td>SYN</td>
+<td>1比特</td>
+<td>同步序号标识，用来发起一个连接。SYN=1表示这是一个连接请求或连接接受请求。</td>
+</tr>
+<tr class="even">
+<td>FIN</td>
+<td>1比特</td>
+<td>发端完成发送任务标识。用来释放一个连接。FIN=1表明此报文段的发送端的数据已经发送完毕，并要求释放连接。</td>
+</tr>
+<tr class="odd">
+<td>Window</td>
+<td>16比特</td>
+<td>窗口：TCP的流量控制，窗口起始于确认序号字段指明的值，这个值是接收端期望接收的字节数。窗口最大为65535字节。</td>
+</tr>
+<tr class="even">
+<td>Checksum</td>
+<td>16比特</td>
+<td>校验字段，包括TCP首部和TCP数据，是一个强制性的字段，一定是由发端计算和存储，并由收端进行验证。在计算检验和时，要在TCP报文段的前面加上12字节的伪首部。</td>
+</tr>
+<tr class="odd">
+<td>Urgent Pointer</td>
+<td>16比特</td>
+<td>紧急指针，只有当URG标志置1时紧急指针才有效。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。紧急指针指出在本报文段中紧急数据共有多少个字节（紧急数据放在本报文段数据的最前面）。</td>
+</tr>
+<tr class="even">
+<td>Options</td>
+<td>可变</td>
+<td>选项字段。TCP协议最初只规定了一种选项，即最长报文段长度（只包含数据字段，不包括TCP首部），又称为MSS。MSS告诉对方TCP“我的缓存所能接收的报文段的数据字段的最大长度是MSS个字节”。<br><br>新的RFC规定有以下几种选型：选项表结束，空操作，最大报文段长度，窗口扩大因子，时间戳。<br><br>- 选项表结束。<br>- 空操作：没有特殊含义，一般用于将TCP选项的总长度填充为4字节的整数倍。<br>- 最大报文段长度：又称为MSS，只包含数据字段，不包括TCP首部。<br>- 窗口扩大因子：3字节，其中一个字节表示偏移值S。新的窗口值等于TCP首部中的窗口位数增大到（16+S），相当于把窗口值向左移动S位后获得实际的窗口大小。<br>- 时间戳：10字节，其中最主要的字段是时间戳值（4字节）和时间戳回送应答字段（4字节）。</td>
+</tr>
+<tr class="odd">
+<td>data</td>
+<td>可变</td>
+<td>TCP负载。小于等于MSS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mtumsspmtu和分片">MTU、MSS、PMTU和分片</h2>
+<p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。 <span class="math display"><em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em><em>头</em> + <em>T</em><em>C</em><em>P</em><em>头</em> + <em>M</em><em>S</em><em>S</em></span></p>
 
     </div>
 
@@ -342,21 +501,21 @@ $$</span></p>
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%85%89%E5%AD%A6/" rel="tag"># 光学</a>
-              <a href="/tags/%E5%87%A0%E4%BD%95/" rel="tag"># 几何</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/TCP/" rel="tag"># TCP</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/10/10/%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95%E8%AF%AF%E5%B7%AE%E6%8A%A5%E5%91%8A/%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95%E8%AF%AF%E5%B7%AE%E6%8A%A5%E5%91%8A/" rel="prev" title="几种算法误差报告">
-                  <i class="fa fa-angle-left"></i> 几种算法误差报告
+                <a href="/2025/12/23/ceatsheet/bpftrace%20cheatsheet/" rel="prev" title="bpftrace cheatsheet">
+                  <i class="fa fa-angle-left"></i> bpftrace cheatsheet
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/11/24/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/" rel="next" title="最大间隙问题">
-                  最大间隙问题 <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/23/Linux%20Debug/ftrace%E6%8A%80%E6%9C%AF-%E9%9D%99%E6%80%81%E8%B7%9F%E8%B8%AA%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="ftrace技术-静态跟踪（一）">
+                  ftrace技术-静态跟踪（一） <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

@@ -181,7 +181,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -218,6 +218,80 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">xv6-vscode调试</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="gdbinit">.gdbinit</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="launch.json">launch.json</h2>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="tasks.json">tasks.json</h2>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1832,101 +1906,6 @@ Field reference (click to expand)
     
     <div class="post-body" itemprop="articleBody">
           
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">DHCP协议分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2024-01-14T00:00:00+00:00">2024-01-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="协议流程">协议流程</h1>
-<h2 id="直接dhcp">直接DHCP</h2>
-<p>DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。</p>
-<p>当客户端发送广播<strong>DISCOVER</strong>包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的<strong>OFFER</strong>报文。 客户机用一个<strong>REQUEST</strong>包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确认的方式，发送它刚刚从服务器返回的信息。 然后，服务器发送最后的<strong>ACKNOWLEDGEMENT</strong>数据包，同样带有相同的信息，再次确认它。</p>
-<p>这是通常称为<strong>DORA</strong>序列(<strong>发现、提供、请求、确认</strong>)，通常是这样描述的:</p>
-<p><img src="dhcp原理.jpg" /></p>
-<p>因为这些都是 UDP 数据包，请记住 UDP 协议中没有任何会话信息，那么是什么将这四个数据包绑定到一个“会话”中呢? 因此，最初的 Discover 报文有一个事务 ID，在随后的三个报文中匹配- Wireshark 跟踪如下所示:</p>
-<p><img src="dhcp报文示例1.jpg" /></p>
-<p>实际上，客户端直到第四个包才有一个地址，所以 Discover 和 Request 包是从 IP 为<code>0.0.0.0</code>的客户端的 MAC 地址到<code>255.255.255.255</code>的广播地址(即到整个局域网)。</p>
-<h2 id="中继dhcp">中继DHCP</h2>
-<p>在许多公司网络中，服务器在它们自己的子网中——分离服务器和工作站是相当普遍的做法。 这种情况下 DHCP 顺序如何工作? DORA 序列的前三个数据包被发送到广播地址，因此它们只能到达同一 VLAN 上的其他主机。</p>
-<p>我们通过在客户端子网中的主机上放置一个 DHCP“转发器”或“中继”进程来完成这项工作。 该进程接收本地广播，然后将其以单播形式转发给 DHCP 服务器。 当服务器应答时(以单播方式向转发器主机)，转发器将包“转换”为客户机所期望的广播应答。 几乎总是，这个转发器功能是在客户端子网上的路由器或交换机 IP 地址上完成的——换句话说，接口最终将成为客户端的默认网关。 这个函数在技术上不需要在那个接口上，但它是一个我们知道会在那里的接口，而且这个函数几乎总是可供我们使用。 另外，如果我们将其作为一种不成文的惯例，当我们以后需要更改它时，它将更容易找到该命令! 在 Cisco 路由器或交换机上，这个命令看起来像这样: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface VLAN &lt;x&gt;  ip helper-address 10.10.10.10</span><br></pre></td></tr></table></figure></p>
-<p>这里，<code>10.10.10.10</code>是我们 DHCP 服务器的 IP 地址。</p>
-<p>在操作中，这改变了我们在大多数家庭网络上拥有的简单的广播操作： <img src="dhcp原理2-中继.jpg" /> 这如何修改我们的 DORA 序列? 简单的回答是，它实际上不会修改任何数据包的 DHCP 内容。 它所做的是修改数据包中的上层“IP 地址”字段-路由器和服务器之间修改的数据包有“真实的”源和目的 IP 地址。 但是，客户端看到的包内容保持不变。 如果你深入研究 DHCP 报文，你会发现不管是否有中继，DHCP 客户端的 MAC 地址和 DHCP 服务器的 IP 地址实际上包含在 7 层 DHCP 协议的数据字段中。</p>
-<p>现在我们开始为基本配置 DHCP 服务器工作站操作,但在我们到达之前,我们要考虑我们需要的专用设备,如 iphone,<strong>无线访问点</strong>(<strong>WAP), 或者甚至是</strong>预执行环境(PXE)设备，可以从 DHCP 信息加载其整个操作系统。</p>
-<h2 id="仿真">仿真</h2>
-<h3 id="组网">组网</h3>
-<p><img src="Pastedimage20231215004144.png" /></p>
-<h3 id="路由设置">路由设置</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20231215004416.png" /></p>
-<h2 id="抓包">抓包</h2>
-<p><img src="Pastedimage20231215005008.png" /></p>
-<h3 id="dhcp-discover">dhcp discover</h3>
-<p><img src="Pastedimage20231215010535.png" /></p>
-<p><img src="Pastedimage20231215010615.png" /></p>
-<h3 id="dhcp-offer">dhcp offer</h3>
 
       
     </div>
