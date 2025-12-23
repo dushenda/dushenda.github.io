@@ -96,3 +96,13 @@ $$
 $$
 
 TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。
+
+$$
+f(x)=\left\{
+\begin{array}{**lr**}
+3n+1&x为奇数且x\neq1\\
+n/2&x为偶数\\
+1&x=1
+\end{array}
+\right.
+$$
