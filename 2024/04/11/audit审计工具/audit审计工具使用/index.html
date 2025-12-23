@@ -19,22 +19,22 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="audit用途 监控文件、命令、网络等，生成监控报告。 安装启动audit 安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start 将 auditd 配置为在引导时启动： 1systemctl enable audit">
+    <meta name="description" content="audit用途监控文件、命令、网络等，生成监控报告。 安装启动audit安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start  将 auditd 配置为在引导时启动： 1systemctl enable auditd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="audit审计工具使用">
 <meta property="og:url" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="audit用途 监控文件、命令、网络等，生成监控报告。 安装启动audit 安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start 将 auditd 配置为在引导时启动： 1systemctl enable audit">
+<meta property="og:description" content="audit用途监控文件、命令、网络等，生成监控报告。 安装启动audit安装audit工具 1yum install audit 配置了 auditd 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 auditd ： 1service auditd start  将 auditd 配置为在引导时启动： 1systemctl enable auditd">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_1.png">
+<meta property="og:image" content="https://dushenda.github.io/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
+<meta property="og:image" content="https://dushenda.github.io/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_1.png">
 <meta property="article:published_time" content="2024-04-11T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-23T15:26:04.240Z">
+<meta property="article:modified_time" content="2025-12-23T15:35:00.054Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="audit">
 <meta property="article:tag" content="监控">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
+<meta name="twitter:image" content="https://dushenda.github.io/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
@@ -188,7 +188,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -276,13 +276,15 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="audit用途">audit用途</h2>
-<p>监控文件、命令、网络等，生成监控报告。</p>
-<h2 id="安装启动audit">安装启动audit</h2>
-<p>安装audit工具 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="audit用途"><a href="#audit用途" class="headerlink" title="audit用途"></a>audit用途</h2><p>监控文件、命令、网络等，生成监控报告。</p>
+<h2 id="安装启动audit"><a href="#安装启动audit" class="headerlink" title="安装启动audit"></a>安装启动audit</h2><p>安装audit工具</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure>
+<p>配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
+
 <p>将 <code>auditd</code> 配置为在引导时启动：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
+
 <p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
 <p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <code>_&lt;action&gt;_</code>可以是以下之一：</p>
 <p><code>stop</code> ：停止 <code>auditd</code>。</p>
@@ -292,18 +294,24 @@
 <p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
 <p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
 <p><code>status</code>：显示 <code>auditd</code> 的运行状态。</p>
-<h2 id="配置规则">配置规则</h2>
-<p>举例说明，监控<code>/home/test_audit/</code>文件夹（文件）的变更选项为rwxa（<strong>r</strong>=read, <strong>w</strong>=write, <strong>x</strong>=execute, <strong>a</strong>=attribute），设置关键字<code>dushnda_watch</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 配置完后查询规则 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@172 ~]# auditctl -l</span><br><span class="line">-w /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 之后做一些权限改变，增改文件操，查看日志<code>ausearch</code>，查看报告<code>areport</code> <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ausearch -i -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
-<p><img src="audit审计工具使用_20240411_3.png" /></p>
+<h2 id="配置规则"><a href="#配置规则" class="headerlink" title="配置规则"></a>配置规则</h2><p>举例说明，监控<code>/home/test_audit/</code>文件夹（文件）的变更选项为rwxa（<strong>r</strong>&#x3D;read, <strong>w</strong>&#x3D;write, <strong>x</strong>&#x3D;execute, <strong>a</strong>&#x3D;attribute），设置关键字<code>dushnda_watch</code></p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure>
+<p>配置完后查询规则</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@172 ~]# auditctl -l</span><br><span class="line">-w /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure>
+<p>之后做一些权限改变，增改文件操，查看日志<code>ausearch</code>，查看报告<code>areport</code></p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ausearch -i -k dushnda_watch</span><br></pre></td></tr></table></figure>
+
+<p><img src="/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_3.png"></p>
 <p>这里的每个type是一个一次的一条记录，具体的含义查看参考链接<code>[1]</code>，这里主要关注对文件的操作，这段日志含义是使用vim打开了文件（syscall），当前文件权限是644。</p>
-<p><img src="audit审计工具使用_20240411_1.png" /></p>
-<p>删除路径监控 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -W /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
+<p><img src="/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8_20240411_1.png"></p>
+<p>删除路径监控</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auditctl -W /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>其中，<code>auditctl -d</code>的删除和<code>auditctl -a</code>的添加对应，<code>auditctl -W</code>的删除和<code>auditctl -w</code>的添加对应，<code>auditctl -D</code>删除所有规则。</p>
 </blockquote>
-<h2 id="参考链接">参考链接</h2>
-<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
-<p>[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>[1] <a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system">https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html">https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</a></p>
 
     </div>
 

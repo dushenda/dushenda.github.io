@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="报文格式 以太网物理帧 packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;         字段 长度 含义     帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完">
+    <meta name="description" content="报文格式以太网物理帧packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;     字段 长度 含义    帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP报文格式">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="报文格式 以太网物理帧 packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;         字段 长度 含义     帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完">
+<meta property="og:description" content="报文格式以太网物理帧packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;     字段 长度 含义    帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-23T15:26:04.228Z">
+<meta property="article:modified_time" content="2025-12-23T15:35:00.042Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="TCP">
 <meta property="article:tag" content="网络">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">报文格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%89%A9%E7%90%86%E5%B8%A7"><span class="nav-number">1.1.</span> <span class="nav-text">以太网物理帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E5%A4%B4"><span class="nav-number">1.2.</span> <span class="nav-text">以太网帧头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp%E6%8A%A5%E6%96%87%E5%A4%B4"><span class="nav-number">1.3.</span> <span class="nav-text">TCP报文头</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mtumsspmtu%E5%92%8C%E5%88%86%E7%89%87"><span class="nav-number">2.</span> <span class="nav-text">MTU、MSS、PMTU和分片</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">报文格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%89%A9%E7%90%86%E5%B8%A7"><span class="nav-number">1.1.</span> <span class="nav-text">以太网物理帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E5%A4%B4"><span class="nav-number">1.2.</span> <span class="nav-text">以太网帧头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E6%8A%A5%E6%96%87%E5%A4%B4"><span class="nav-number">1.3.</span> <span class="nav-text">TCP报文头</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MTU%E3%80%81MSS%E3%80%81PMTU%E5%92%8C%E5%88%86%E7%89%87"><span class="nav-number">2.</span> <span class="nav-text">MTU、MSS、PMTU和分片</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -185,7 +185,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -273,94 +273,78 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="报文格式">报文格式</h1>
-<h2 id="以太网物理帧">以太网物理帧</h2>
-<pre><code class="highlight mermaid">packet-beta
+    <div class="post-body" itemprop="articleBody"><h1 id="报文格式"><a href="#报文格式" class="headerlink" title="报文格式"></a>报文格式</h1><h2 id="以太网物理帧"><a href="#以太网物理帧" class="headerlink" title="以太网物理帧"></a>以太网物理帧</h2><pre><code class="highlight mermaid">packet-beta
 title 以太网物理层头
 0-11: &quot;Inter Frame Gap（至少12Byte）&quot;
 12-18: &quot;Preamble&quot;
 19-20: &quot;FSD&quot;</code></pre>
+
 <table>
-<colgroup>
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 93%" />
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>字段</th>
 <th>长度</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>帧间隙</td>
 <td>至少12字节</td>
 <td>每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待一段时间才能再发另外一个帧，以便让帧接收者对接收的帧做必要的处理（如调整缓存的指针、更新计数、通知对报文进行处理等等）。在以太网标准中规定最小帧间隙是12个字节，其数据为全1。对于个别的接口，可减少到64(GE)或40比特(10GE)，其他的接口都不应该小于12字节。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>前同步码</td>
 <td>7字节</td>
 <td>以太网标准中规定前导码为10101010 10101010 10101010 10101010 10101010 10101010 10101010（二进制），共7字节。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>帧开始定界符</td>
 <td>1字节</td>
 <td>以太网标准中规定帧开始定界符为10101011（二进制），共1字节。</td>
 </tr>
-</tbody>
-</table>
-<h2 id="以太网帧头">以太网帧头</h2>
-<pre><code class="highlight mermaid">packet-beta
+</tbody></table>
+<h2 id="以太网帧头"><a href="#以太网帧头" class="headerlink" title="以太网帧头"></a>以太网帧头</h2><pre><code class="highlight mermaid">packet-beta
 title Ethernet II
 0-5: &quot;DMAC&quot;
 6-11: &quot;SMAC&quot;
 12-20: &quot;Data(46~1500)&quot;
 21-24: &quot;FCS&quot;</code></pre>
+
 <table>
-<colgroup>
-<col style="width: 1%" />
-<col style="width: 4%" />
-<col style="width: 93%" />
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>字段</th>
 <th>长度</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>DMAC</td>
 <td>6字节</td>
 <td>目的MAC地址，IPv4为6字节，该字段标识帧的接收者。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>SMAC</td>
 <td>6字节</td>
 <td>源MAC地址，IPv4为6字节，该字段标识帧的发送者。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Type</td>
 <td>2字节</td>
 <td>协议类型。<a target="_blank" rel="noopener" href="https://support.huawei.com/enterprise/zh/doc/EDOC1100174722/ea0a043c#ethII_tab_3">表1-3</a>列出了链路直接封装的协议类型。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Data</td>
 <td>46～1500字节</td>
 <td>数据字段，标识帧的负载（可能包含填充位）。<br><br>数据字段的最小长度必须为46字节以保证帧长至少为64字节，这意味着传输1字节信息也必须使用46字节的数据字段。<br><br>如果填入该字段的信息少于46字节，该字段的其余部分也必须进行填充。数据字段的最大长度为1500字节。<br><br>以太帧的长度必须为整数字节，因此帧的负载长度不足整数字节，需插入填充字段以保证数据帧的长度为整数字节。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>FCS</td>
 <td>4字节</td>
 <td>帧校验序列FCS（Frame Check Sequence）是为接收者提供判断是否传输错误的一种方法，如果发现错误，丢弃此帧。<br><br>FCS只是通用叫法，具体的FCS还可以细分多种校验方法。在以太帧中，FCS通常采用循环冗余码校验CRC（Cyclical Redundancy Check）。</td>
 </tr>
-</tbody>
-</table>
-<h2 id="tcp报文头">TCP报文头</h2>
-<pre><code class="highlight mermaid">packet-beta
+</tbody></table>
+<h2 id="TCP报文头"><a href="#TCP报文头" class="headerlink" title="TCP报文头"></a>TCP报文头</h2><pre><code class="highlight mermaid">packet-beta
 title &quot;TCP Packet&quot;
 0-15: &quot;Source Port&quot;
 16-31: &quot;Destination Port&quot;
@@ -379,121 +363,115 @@ title &quot;TCP Packet&quot;
 144-159: &quot;Urgent Pointer&quot;
 160-191: &quot;(Options and Padding)&quot;
 192-255: &quot;Data (&lt;=MSS)&quot;</code></pre>
+
 <table>
-<colgroup>
-<col style="width: 5%" />
-<col style="width: 2%" />
-<col style="width: 92%" />
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>字段</th>
 <th>长度</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>Source Port</td>
 <td>16比特</td>
 <td>源端口，标识哪个应用程序发送。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Destination Port</td>
 <td>16比特</td>
 <td>目的端口，标识哪个应用程序接收。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Sequence Number</td>
 <td>32比特</td>
 <td>序号字段。TCP链接中传输的数据流中每个字节都编上一个序号。序号字段的值指的是本报文段所发送的数据的第一个字节的序号。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Acknowledgment Number</td>
 <td>32比特</td>
 <td>确认号，是期望收到对方的下一个报文段的数据的第1个字节的序号，即上次已成功接收到的数据字节序号加1。只有ACK标识为1，此字段有效。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Data Offset</td>
 <td>4比特</td>
 <td>数据偏移，即首部长度，指出TCP报文段的数据起始处距离TCP报文段的起始处有多远，以32比特（4字节）为计算单位。最多有60字节的首部，若无选项字段，正常为20字节。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Reserved</td>
 <td>4比特</td>
 <td>保留，必须填0。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>CWR</td>
 <td>1比特</td>
 <td>拥塞窗口减少标识</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ECE</td>
 <td>1比特</td>
 <td>ECN回声标识</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>URG</td>
 <td>1比特</td>
 <td>紧急指针有效标识。它告诉系统此报文段中有紧急数据，应尽快传送（相当于高优先级的数据）。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ACK</td>
 <td>1比特</td>
-<td>确认序号有效标识。只有当ACK=1时确认号字段才有效。当ACK=0时，确认号无效。</td>
+<td>确认序号有效标识。只有当ACK&#x3D;1时确认号字段才有效。当ACK&#x3D;0时，确认号无效。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>PSH</td>
 <td>1比特</td>
-<td>标识接收方应该尽快将这个报文段交给应用层。接收到PSH = 1的TCP报文段，应尽快的交付接收应用进程，而不再等待整个缓存都填满了后再向上交付。</td>
+<td>标识接收方应该尽快将这个报文段交给应用层。接收到PSH &#x3D; 1的TCP报文段，应尽快的交付接收应用进程，而不再等待整个缓存都填满了后再向上交付。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>RST</td>
 <td>1比特</td>
-<td>重建连接标识。当RST=1时，表明TCP连接中出现严重错误（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立连接。</td>
+<td>重建连接标识。当RST&#x3D;1时，表明TCP连接中出现严重错误（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立连接。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>SYN</td>
 <td>1比特</td>
-<td>同步序号标识，用来发起一个连接。SYN=1表示这是一个连接请求或连接接受请求。</td>
+<td>同步序号标识，用来发起一个连接。SYN&#x3D;1表示这是一个连接请求或连接接受请求。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>FIN</td>
 <td>1比特</td>
-<td>发端完成发送任务标识。用来释放一个连接。FIN=1表明此报文段的发送端的数据已经发送完毕，并要求释放连接。</td>
+<td>发端完成发送任务标识。用来释放一个连接。FIN&#x3D;1表明此报文段的发送端的数据已经发送完毕，并要求释放连接。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Window</td>
 <td>16比特</td>
 <td>窗口：TCP的流量控制，窗口起始于确认序号字段指明的值，这个值是接收端期望接收的字节数。窗口最大为65535字节。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Checksum</td>
 <td>16比特</td>
 <td>校验字段，包括TCP首部和TCP数据，是一个强制性的字段，一定是由发端计算和存储，并由收端进行验证。在计算检验和时，要在TCP报文段的前面加上12字节的伪首部。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Urgent Pointer</td>
 <td>16比特</td>
 <td>紧急指针，只有当URG标志置1时紧急指针才有效。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。紧急指针指出在本报文段中紧急数据共有多少个字节（紧急数据放在本报文段数据的最前面）。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Options</td>
 <td>可变</td>
-<td>选项字段。TCP协议最初只规定了一种选项，即最长报文段长度（只包含数据字段，不包括TCP首部），又称为MSS。MSS告诉对方TCP“我的缓存所能接收的报文段的数据字段的最大长度是MSS个字节”。<br><br>新的RFC规定有以下几种选型：选项表结束，空操作，最大报文段长度，窗口扩大因子，时间戳。<br><br>- 选项表结束。<br>- 空操作：没有特殊含义，一般用于将TCP选项的总长度填充为4字节的整数倍。<br>- 最大报文段长度：又称为MSS，只包含数据字段，不包括TCP首部。<br>- 窗口扩大因子：3字节，其中一个字节表示偏移值S。新的窗口值等于TCP首部中的窗口位数增大到（16+S），相当于把窗口值向左移动S位后获得实际的窗口大小。<br>- 时间戳：10字节，其中最主要的字段是时间戳值（4字节）和时间戳回送应答字段（4字节）。</td>
+<td>选项字段。TCP协议最初只规定了一种选项，即最长报文段长度（只包含数据字段，不包括TCP首部），又称为MSS。MSS告诉对方TCP“我的缓存所能接收的报文段的数据字段的最大长度是MSS个字节”。<br><br>新的RFC规定有以下几种选型：选项表结束，空操作，最大报文段长度，窗口扩大因子，时间戳。<br><br>-  选项表结束。<br>- 空操作：没有特殊含义，一般用于将TCP选项的总长度填充为4字节的整数倍。<br>- 最大报文段长度：又称为MSS，只包含数据字段，不包括TCP首部。<br>- 窗口扩大因子：3字节，其中一个字节表示偏移值S。新的窗口值等于TCP首部中的窗口位数增大到（16+S），相当于把窗口值向左移动S位后获得实际的窗口大小。<br>- 时间戳：10字节，其中最主要的字段是时间戳值（4字节）和时间戳回送应答字段（4字节）。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>data</td>
 <td>可变</td>
 <td>TCP负载。小于等于MSS</td>
 </tr>
-</tbody>
-</table>
-<h1 id="mtumsspmtu和分片">MTU、MSS、PMTU和分片</h1>
-<p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
-<p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em><em>h</em><em>e</em><em>a</em><em>d</em> + <em>T</em><em>C</em><em>P</em><em>h</em><em>e</em><em>a</em><em>d</em> + <em>M</em><em>S</em><em>S</em></span></p>
+</tbody></table>
+<h1 id="MTU、MSS、PMTU和分片"><a href="#MTU、MSS、PMTU和分片" class="headerlink" title="MTU、MSS、PMTU和分片"></a>MTU、MSS、PMTU和分片</h1><p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
+<p>$$<br>(P)MTU&#x3D;IP head+TCP head+MSS<br>$$</p>
 <p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
+<p>$$<br>f(x)&#x3D;\left{<br>\begin{array}{<strong>lr</strong>}<br>3n+1&amp;x为奇数且x\neq1\<br>n&#x2F;2&amp;x为偶数\<br>1&amp;x&#x3D;1<br>\end{array}<br>\right.<br>$$</p>
 
     </div>
 
@@ -511,8 +489,8 @@ title &quot;TCP Packet&quot;
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/23/ceatsheet/ftrace%20cheatsheet/" rel="prev" title="ftrace cheatsheet">
-                  <i class="fa fa-angle-left"></i> ftrace cheatsheet
+                <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/" rel="prev" title="TCP窗口">
+                  <i class="fa fa-angle-left"></i> TCP窗口
                 </a>
             </div>
             <div class="post-nav-item">

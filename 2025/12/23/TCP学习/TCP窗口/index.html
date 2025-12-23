@@ -19,25 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="雄关漫道真如铁，而今迈步从头越">
-<meta property="og:type" content="website">
-<meta property="og:title" content="dushenda">
-<meta property="og:url" content="https://dushenda.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
+    <meta name="description" content="TCP几个窗口概念TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用    **接收窗口 (RWND)**​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   **拥塞窗口 (CWND)**​ Congestion Win">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP窗口">
+<meta property="og:url" content="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="雄关漫道真如铁，而今迈步从头越">
+<meta property="og:description" content="TCP几个窗口概念TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用    **接收窗口 (RWND)**​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   **拥塞窗口 (CWND)**​ Congestion Win">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-23T15:35:00.042Z">
 <meta property="article:author" content="dushenda">
-<meta property="article:tag" content="代码、科研、计算机系统">
+<meta property="article:tag" content="TCP">
+<meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://dushenda.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+<link rel="canonical" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/操作系统/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/","path":"2025/12/23/TCP学习/TCP窗口/","title":"TCP窗口"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: 操作系统 | dushenda</title>
+<title>TCP窗口 | dushenda</title>
   
 
 
@@ -154,7 +157,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -167,6 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -217,176 +221,128 @@
 
     </div>
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">操作系统
-          <small>标签</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TCP窗口 | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TCP窗口
         </h1>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2025</span>
-    </div>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2025-12-10T00:00:00+00:00"
-              content="2025-12-10">
-          12-10
-        </time>
-      </div>
+      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
+    </span>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/" itemprop="url">
-            <span itemprop="name">xv6-vscode调试</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2025-12-09T00:00:00+00:00"
-              content="2025-12-09">
-          12-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2025/12/09/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/%E5%B8%B8%E8%A7%81%E7%9A%84linux%E6%80%A7%E8%83%BD%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4/" itemprop="url">
-            <span itemprop="name">常见的linux性能查询命令</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2025-12-09T00:00:00+00:00"
-              content="2025-12-09">
-          12-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" itemprop="url">
-            <span itemprop="name">xv6-增加系统调用</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-01-22T00:00:00+00:00"
-              content="2024-01-22">
-          01-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/01/22/Linux%20Debug/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/" itemprop="url">
-            <span itemprop="name">bcc初体验</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2018</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2018-12-28T00:00:00+00:00"
-              content="2018-12-28">
-          12-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2018/12/28/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B16~30/" itemprop="url">
-            <span itemprop="name">现代操作系统-进程与线程16~30</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2018-12-20T00:00:00+00:00"
-              content="2018-12-20">
-          12-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2018/12/20/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B1~15/" itemprop="url">
-            <span itemprop="name">现代操作系统-进程与线程1~15</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2018-11-11T00:00:00+00:00"
-              content="2018-11-11">
-          11-11
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2018/11/11/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/" itemprop="url">
-            <span itemprop="name">现代操作系统-内存管理1</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-    </div>
-  </div>
   
-  
-  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="TCP几个窗口概念"><a href="#TCP几个窗口概念" class="headerlink" title="TCP几个窗口概念"></a>TCP几个窗口概念</h1><p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
+<p>下表总结了TCP通信中几个关键的窗口类型：</p>
+<table>
+<thead>
+<tr>
+<th>窗口类型</th>
+<th>英文全称</th>
+<th>控制方</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>**接收窗口 (RWND)**​</td>
+<td>Receiver Window</td>
+<td>接收端</td>
+<td>流量控制，反映接收方应用程序的缓存剩余空间</td>
+</tr>
+<tr>
+<td>**拥塞窗口 (CWND)**​</td>
+<td>Congestion Window</td>
+<td>发送端</td>
+<td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
+</tr>
+<tr>
+<td>**发送窗口 (SWND)**​</td>
+<td>Sender Window</td>
+<td>发送端</td>
+<td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
+<li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
+<li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/TCP/" rel="tag"># TCP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/23/ceatsheet/bpftrace%20cheatsheet/" rel="prev" title="bpftrace cheatsheet">
+                  <i class="fa fa-angle-left"></i> bpftrace cheatsheet
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" rel="next" title="TCP报文格式">
+                  TCP报文格式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
 
 </div>
   </main>
