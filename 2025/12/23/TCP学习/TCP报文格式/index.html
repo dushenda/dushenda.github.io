@@ -27,7 +27,7 @@
 <meta property="og:description" content="报文格式 以太网物理帧 packet-beta title 以太网物理层头 0-11: &quot;Inter Frame Gap（至少12Byte）&quot; 12-18: &quot;Preamble&quot; 19-20: &quot;FSD&quot;         字段 长度 含义     帧间隙 至少12字节 每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-23T14:33:53.248Z">
+<meta property="article:modified_time" content="2025-12-23T14:41:57.176Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="TCP">
 <meta property="article:tag" content="网络">
@@ -382,8 +382,8 @@ title &quot;TCP Packet&quot;
 <table>
 <colgroup>
 <col style="width: 5%" />
-<col style="width: 0%" />
-<col style="width: 93%" />
+<col style="width: 2%" />
+<col style="width: 92%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -492,7 +492,7 @@ title &quot;TCP Packet&quot;
 </table>
 <h2 id="mtumsspmtu和分片">MTU、MSS、PMTU和分片</h2>
 <p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
-<p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em><em>头</em> + <em>T</em><em>C</em><em>P</em><em>头</em> + <em>M</em><em>S</em><em>S</em></span></p>
+<p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em><em>h</em><em>e</em><em>a</em><em>d</em> + <em>T</em><em>C</em><em>P</em><em>h</em><em>e</em><em>a</em><em>d</em> + <em>M</em><em>S</em><em>S</em></span></p>
 <p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
 
     </div>
@@ -511,8 +511,8 @@ title &quot;TCP Packet&quot;
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/23/ceatsheet/ftrace%20cheatsheet/" rel="prev" title="ftrace cheatsheet">
-                  <i class="fa fa-angle-left"></i> ftrace cheatsheet
+                <a href="/2025/12/23/ceatsheet/bpftrace%20cheatsheet/" rel="prev" title="bpftrace cheatsheet">
+                  <i class="fa fa-angle-left"></i> bpftrace cheatsheet
                 </a>
             </div>
             <div class="post-nav-item">
