@@ -381,6 +381,578 @@
       </tags>
   </entry>
   <entry>
+    <title>bcc初体验</title>
+    <url>/2024/01/22/Linux%20Debug/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+    <content><![CDATA[<h2 id="安装">安装</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用">使用</h2>
+<p>funccount</p>
+<p>stackcount</p>
+]]></content>
+      <tags>
+        <tag>bpf</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux-网络抓包</title>
+    <url>/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/</url>
+    <content><![CDATA[<h1 id="wireshark">wireshark</h1>
+<h2 id="远程抓包">远程抓包</h2>
+<p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） <img src="img1.png" /> <img src="image.png" alt="image.png" /></p>
+<h2 id="sshtcpdumpwireshark解析">ssh+tcpdump+wireshark解析</h2>
+<p>直接抓包解析 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 跳板机执行 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 直接抓包并保存 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure></p>
+<h1 id="tcpdump">tcpdump</h1>
+<h2 id="常用抓包指令">常用抓包指令</h2>
+<p>过滤tcp flags，比如抓syn报文，看是否能握手成功 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br></pre></td></tr></table></figure> 查看tcp状态，如下为发送了sync，如果一直未回复，则可以在<code>sar -n ETCP 1</code>看到<code>retrans/s</code>不断上升 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">watch -n 0.1 &#x27;ss -tpn state syn-sent&#x27;</span><br></pre></td></tr></table></figure> 抓syn和syn+ack报文 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any <span class="string">&#x27;tcp[tcpflags] == tcp-syn or tcp[13]=18&#x27;</span></span><br></pre></td></tr></table></figure> 抓syn和syn+rst报文 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or tcp[13] &amp; 4!=0&#x27;</span><br></pre></td></tr></table></figure> 抓syn和icmp不可达报文 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> 抓syn、syn+ack、rst和icmp端口不可达报文（tcp[13]指的是从tcp报文头偏移13字节的选项） <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;(tcp[tcpflags] == tcp-syn or tcp[13]=18) or tcp[13] &amp;amp; 4!=0 or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> tcp flags抓包例子 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-rst&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-fin&#x27;</span><br></pre></td></tr></table></figure> 抓取指定报文大小 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump less 32</span><br><span class="line">tcpdump greater 32</span><br><span class="line">tcpdump &lt;= 102</span><br></pre></td></tr></table></figure> 持续抓取端口 <code>8080</code>的流量，每个文件最大 <code>100MB</code>，最多保留 <code>10</code>个文件，写满后覆盖最旧的文件 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080</span><br></pre></td></tr></table></figure> 抓取 <code>10000</code>个发往 <code>80</code>端口的包 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -i any -c 10000 -w http_requests.pcap dst port 80</span><br></pre></td></tr></table></figure></p>
+<h2 id="常用选项">常用选项</h2>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>-i &lt;interface&gt;</code></strong>​</td>
+<td>指定抓包网卡。<code>any</code>表示所有网卡。</td>
+<td><code>-i any</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>port &lt;端口号&gt;</code></strong>​</td>
+<td>过滤特定端口的流量（TCP/UDP）。</td>
+<td><code>port 8080</code></td>
+</tr>
+<tr class="odd">
+<td><strong><code>-C &lt;大小&gt;</code></strong>​</td>
+<td><strong>按文件大小分割</strong>。单位通常为MB（M）。</td>
+<td><code>-C 100</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>-W &lt;数量&gt;</code></strong>​</td>
+<td><strong>限制文件总数</strong>，与 <code>-C</code>配合实现循环覆盖。</td>
+<td><code>-W 10</code></td>
+</tr>
+<tr class="odd">
+<td><strong><code>-w &lt;文件名&gt;</code></strong>​</td>
+<td>将抓取的原始数据包写入指定文件。</td>
+<td><code>-w my_capture.pcap</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>-c &lt;数量&gt;</code></strong>​</td>
+<td>抓取指定数量的数据包后自动退出。</td>
+<td><code>-c 10000</code></td>
+</tr>
+<tr class="odd">
+<td><strong><code>-s &lt;长度&gt;</code></strong>​</td>
+<td>设置每个数据包的抓取长度（快照长度byte），<code>-s 0</code>表示抓取完整数据包。<strong>(在长期抓只需要分析报文头很实用)</strong></td>
+<td><code>-s 0</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他选项">其他选项</h2>
+<h3 id="capture-commands">Capture Commands</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Example usage</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-i any</code></td>
+<td><code>tcpdump -i any</code></td>
+<td>Capture from all interfaces; may require superuser (<code>sudo/su</code>)</td>
+</tr>
+<tr class="even">
+<td><code>-i eth0</code></td>
+<td><code>tcpdump -i eth0</code></td>
+<td>Capture from the interface <code>eth0</code></td>
+</tr>
+<tr class="odd">
+<td><code>-c count</code></td>
+<td><code>tcpdump -i eth0 -c 5</code></td>
+<td>Exit after receiving <code>count (5)</code> packets</td>
+</tr>
+<tr class="even">
+<td><code>-r captures.pcap</code></td>
+<td><code>tcpdump -i eth0 -r captures.pcap</code></td>
+<td>Read and analyze saved capture file <code>captures.pcap</code></td>
+</tr>
+<tr class="odd">
+<td><code>tcp</code></td>
+<td><code>tcpdump -i eth0 tcp</code></td>
+<td>Show TCP packets only</td>
+</tr>
+<tr class="even">
+<td><code>udp</code></td>
+<td><code>tcpdump -i eth0 udp</code></td>
+<td>Show UDP packets only</td>
+</tr>
+<tr class="odd">
+<td><code>icmp</code></td>
+<td><code>tcpdump -i eth0 icmp</code></td>
+<td>Show ICMP packets only</td>
+</tr>
+<tr class="even">
+<td><code>ip</code></td>
+<td><code>tcpdump -i eth0 ip</code></td>
+<td>Show IPv4 packets only</td>
+</tr>
+<tr class="odd">
+<td><code>ip6</code></td>
+<td><code>tcpdump -i eth0 ip6</code></td>
+<td>Show IPv6 packets only</td>
+</tr>
+<tr class="even">
+<td><code>arp</code></td>
+<td><code>tcpdump -i eth0 arp</code></td>
+<td>Show ARP packets only</td>
+</tr>
+<tr class="odd">
+<td><code>rarp</code></td>
+<td><code>tcpdump -i eth0 rarp</code></td>
+<td>Show RARP packets only</td>
+</tr>
+<tr class="even">
+<td><code>slip</code></td>
+<td><code>tcpdump -i eth0 slip</code></td>
+<td>Show SLIP packets only</td>
+</tr>
+<tr class="odd">
+<td><code>-I</code></td>
+<td><code>tcpdump -i eth0 -I</code></td>
+<td>Set interface as monitor mode</td>
+</tr>
+<tr class="even">
+<td><code>-K</code></td>
+<td><code>tcpdump -i eth0 -K</code></td>
+<td>Don’t verify checksum</td>
+</tr>
+<tr class="odd">
+<td><code>-p</code></td>
+<td><code>tcpdump -i eth0 -p</code></td>
+<td>Don’t capture in promiscuous mode</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filter-commands">Filter Commands</h3>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter expression</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>src host 127.0.0.1</code></td>
+<td>Filter by source IP/hostname <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>dst host 127.0.0.1</code></td>
+<td>Filter by destination IP/hostname <code>127.0.0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>host 127.0.0.1</code></td>
+<td>Filter by source or destination = <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>ether src 01:23:45:AB:CD:EF</code></td>
+<td>Filter by source MAC <code>01:23:45:AB:CD:EF</code></td>
+</tr>
+<tr class="odd">
+<td><code>ether dst 01:23:45:AB:CD:EF</code></td>
+<td>Filter by destination MAC <code>01:23:45:AB:CD:EF</code></td>
+</tr>
+<tr class="even">
+<td><code>ether host 01:23:45:AB:CD:EF</code></td>
+<td>Filter by source or destination MAC <code>01:23:45:AB:CD:EF</code></td>
+</tr>
+<tr class="odd">
+<td><code>src net 127.0.0.1</code></td>
+<td>Filter by source network location <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>dst net 127.0.0.1</code></td>
+<td>Filter by destination network location <code>127.0.0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>net 127.0.0.1</code></td>
+<td>Filter by source or destination network location <code>127.0.0.1</code></td>
+</tr>
+<tr class="even">
+<td><code>net 127.0.0.1/24</code></td>
+<td>Filter by source or destination network location <code>127.0.0.1</code> with the tcpdump subnet mask of length <code>24</code></td>
+</tr>
+<tr class="odd">
+<td><code>src port 80</code></td>
+<td>Filter by source port = 80</td>
+</tr>
+<tr class="even">
+<td><code>dst port 80</code></td>
+<td>Filter by destination port = 80</td>
+</tr>
+<tr class="odd">
+<td><code>port 80</code></td>
+<td>Filter by source or destination port = 80</td>
+</tr>
+<tr class="even">
+<td><code>src portrange 80-400</code></td>
+<td>Filter by source port value between 80 and 400</td>
+</tr>
+<tr class="odd">
+<td><code>dst portrange 80-400</code></td>
+<td>Filter by destination port value between 80 and 400</td>
+</tr>
+<tr class="even">
+<td><code>portrange 80-400</code></td>
+<td>Filter by source or destination port value between 80 and 400</td>
+</tr>
+<tr class="odd">
+<td><code>ether broadcast</code></td>
+<td>Filter for Ethernet broadcasts</td>
+</tr>
+<tr class="even">
+<td><code>ip broadcast</code></td>
+<td>Filter for IPv4 broadcasts</td>
+</tr>
+<tr class="odd">
+<td><code>ether multicast</code></td>
+<td>Filter for Ethernet multicasts</td>
+</tr>
+<tr class="even">
+<td><code>ip multicast</code></td>
+<td>Filter for IPv4 multicasts</td>
+</tr>
+<tr class="odd">
+<td><code>ip6 multicast</code></td>
+<td>Filter for IPv6 multicasts</td>
+</tr>
+<tr class="even">
+<td><code>ip src host mydevice</code></td>
+<td>Filter by IPv4 source hostname <code>mydevice</code></td>
+</tr>
+<tr class="odd">
+<td><code>arp dst host mycar</code></td>
+<td>Filter by ARP destination hostname <code>mycar</code></td>
+</tr>
+<tr class="even">
+<td><code>rarp src host 127.0.0.1</code></td>
+<td>Filter by RARP source <code>127.0.0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>ip6 dst host mywatch</code></td>
+<td>Filter by IPv6 destination hostname <code>mywatch</code></td>
+</tr>
+<tr class="even">
+<td><code>tcp dst port 8000</code></td>
+<td>Filter by destination TCP port = 8000</td>
+</tr>
+<tr class="odd">
+<td><code>udp src portrange 1000-2000</code></td>
+<td>Filter by source TCP ports in 1000–2000</td>
+</tr>
+<tr class="even">
+<td><code>sctp port 22</code></td>
+<td>Filter by source or destination port = 22</td>
+</tr>
+</tbody>
+</table>
+<h3 id="display-commands">Display Commands</h3>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -A</code></td>
+<td>Print each packet (minus its link level header) in ASCII. Handy for capturing web pages. <br> <br>[![Screenshot with ASCII (sudo tcpdump twitter)</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -D</code></td>
+<td>Print the list of the network interfaces available on the system and on which tcpdump can capture packets.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -e</code></td>
+<td>Print the link-level header on each output line, such as MAC layer addresses for protocols such as Ethernet and IEEE 802.11.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -F /path/to/params.conf</code></td>
+<td>Use the file <code>params.conf</code> as input for the <a href="###%20Filter%20Commands">filter expression</a>. (Ignore other expressions on the command line.)</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -n</code></td>
+<td>Don’t convert addresses (i.e., host addresses, port numbers, etc.) to names.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -S</code></td>
+<td>Print absolute, rather than relative, TCP sequence numbers. (Absolute TCP sequence numbers are longer.)</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 --time-stamp-precision=nano</code></td>
+<td>When capturing, set the timestamp precision for the capture to <code>tsp</code>: <br>• <code>micro</code> for microsecond (default) <br>• <code>nano</code> for nanosecond.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -t</code></td>
+<td>Omit the timestamp on each output line.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -tt</code></td>
+<td>Print the timestamp, as seconds since January 1, 1970, 00:00:00, UTC, and fractions of a second since that time, on each dump line.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -ttt</code></td>
+<td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and previous line on each output line. The default is microsecond resolution.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -tttt</code></td>
+<td>Print a timestamp as hours, minutes, seconds, and fractions of a second since midnight, preceded by the date, on each dump line.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -ttttt</code></td>
+<td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and first line on each dump line. The default is microsecond resolution.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -u</code></td>
+<td>Print undecoded network file system (NFS) handles.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -v</code></td>
+<td>Produce verbose output. <br>When writing to a file (<code>-w</code> option) and at the same time not reading from a file (<code>-r</code> option), report to standard error, once per second, the number of packets captured.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -vv</code></td>
+<td>Additional verbose output than <code>-v</code></td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -vvv</code></td>
+<td>Additional verbose output than <code>-vv</code></td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -x</code></td>
+<td>Print the headers and data of each packet (minus its link level header) in hex.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -xx</code></td>
+<td>Print the headers and data of each packet, including its link level header, in hex.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -X</code></td>
+<td>Print the headers and data of each packet (minus its link level header) in hex and ASCII.</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i eth0 -XX</code></td>
+<td>Print the headers and data of each packet, including its link level header, in hex and ASCII.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="output-commands">Output Commands</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Example</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-w captures.pcap</code></td>
+<td><code>tcpdump -i eth0 -w captures.pcap</code></td>
+<td>Output capture to a file <code>captures.pcap</code></td>
+</tr>
+<tr class="even">
+<td><code>-d</code></td>
+<td><code>tcpdump -i eth0 -d</code></td>
+<td>Display human-readable form in standard output</td>
+</tr>
+<tr class="odd">
+<td><code>-L</code></td>
+<td><code>tcpdump -i eth0 -L</code></td>
+<td>Display data link types for the interface</td>
+</tr>
+<tr class="even">
+<td><code>-q</code></td>
+<td><code>tcpdump -i eth0 -q</code></td>
+<td>Quick/quiet output. Print less protocol information, so output lines are shorter.</td>
+</tr>
+<tr class="odd">
+<td><code>-U</code></td>
+<td><code>tcpdump -i eth0 -U -w out.pcap</code></td>
+<td><strong>Without -w option</strong> <br>Print a description of each packet’s contents. <br><strong>With -w option</strong> <br>Write each packet to the output file <code>out.pcap</code> in real time rather than only when the output buffer fills.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="miscellaneous-commands">Miscellaneous Commands</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Syntax</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>AND</code></td>
+<td><code>and, &amp;&amp;</code></td>
+<td><code>tcpdump -n src 127.0.0.1 and dst port 21</code></td>
+<td>Combine filtering options joined by “and”</td>
+</tr>
+<tr class="even">
+<td><code>OR</code></td>
+<td><code>or, \|</code></td>
+<td><code>tcpdump dst 127.0.0.1 or src port 22</code></td>
+<td>Match any of the conditions joined by “or”</td>
+</tr>
+<tr class="odd">
+<td><code>EXCEPT</code></td>
+<td><code>not, !</code></td>
+<td><code>tcpdump dst 127.0.0.1 and not icmp</code></td>
+<td>Negate the condition prefixed by “not”</td>
+</tr>
+<tr class="even">
+<td><code>LESS</code></td>
+<td><code>less, &lt;, (&lt;=)</code></td>
+<td><code>tcpdump dst host 127.0.0.1 and less 128</code></td>
+<td>Shows packets shorter than (or equal to) 128 bytes in length. <br>&lt; only applies to length 32, i.e., <code>&lt;32</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>GREATER</code></td>
+<td><code>greater, &gt;, (&gt;=)</code></td>
+<td><code>tcpdump dst host 127.0.0.1 and greater 64</code></td>
+<td>Shows packets longer than (or equal to) 64 bytes in length. <br>&gt; only applies to length 32, i.e., <code>&gt;32</code>.</td>
+</tr>
+<tr class="even">
+<td><code>EQUAL</code></td>
+<td><code>=, ==</code></td>
+<td><code>tcpdump host 127.0.0.1 = 0</code></td>
+<td>Show packets with zero length</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-usage">Example Usage</h3>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tcpdump -r outfile.pcap src host 10.0.2.15</code></td>
+<td>Print all packets in the file <code>outfile.pcap</code> coming from the host with IP address 10.0.2.15</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -i any ip and not tcp port 80</code></td>
+<td>Listen for non-HTTP packets (which have TCP port number 80) on any network interface</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump -i eth0 -n &gt;32 -w pv01.pcap -c 30</code></td>
+<td>Save 30 packets of length exceeding 32 bytes to <code>captures.pcap</code> without DNS resolution on the <code>eth0</code> network interface</td>
+</tr>
+<tr class="even">
+<td><code>tcpdump -AtuvX icmp</code></td>
+<td>Capture ICMP traffic and print ICMP packets in hex and ASCII and the following features: <br>With: <br>• headers <br>• data <br>• undecoded NFS handles <br>Without: <br>• link level headers <br>• timestamps.</td>
+</tr>
+<tr class="odd">
+<td><code>tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)'</code></td>
+<td>Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考搬运">参考/搬运</h1>
+<ul>
+<li><a href="https://debugging.works/blog/network-debugging/">https://debugging.works/blog/network-debugging/</a></li>
+<li><a href="https://www.stationx.net/tcpdump-cheat-sheet/">https://www.stationx.net/tcpdump-cheat-sheet/</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bpftrace技术1-常用命令</title>
+    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
+<p>一种追踪内核态和用户态的新技术</p>
+<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
+<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
+<h2 id="是否调用">是否调用</h2>
+<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
+<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
+<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
+<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p> <code>2</code> 的含义解释如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="打印入参">打印入参</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="打印返回值">打印返回值</h2>
+<p>使用默认变量<code>retval</code>。</p>
+<h3 id="内核函数返回值">内核函数返回值</h3>
+<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
+<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
+<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤条件">过滤条件</h3>
+<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>bpftrace</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ARM相关缩略语</title>
     <url>/2025/12/20/ARM%E7%9B%B8%E5%85%B3/ARM%E7%9B%B8%E5%85%B3%E7%BC%A9%E7%95%A5%E8%AF%AD/</url>
     <content><![CDATA[<blockquote>
@@ -1039,578 +1611,6 @@ AMBA 总线协议</p>
       </tags>
   </entry>
   <entry>
-    <title>Linux-网络抓包</title>
-    <url>/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/</url>
-    <content><![CDATA[<h1 id="wireshark">wireshark</h1>
-<h2 id="远程抓包">远程抓包</h2>
-<p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） <img src="img1.png" /> <img src="image.png" alt="image.png" /></p>
-<h2 id="sshtcpdumpwireshark解析">ssh+tcpdump+wireshark解析</h2>
-<p>直接抓包解析 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 跳板机执行 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 直接抓包并保存 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure></p>
-<h1 id="tcpdump">tcpdump</h1>
-<h2 id="常用抓包指令">常用抓包指令</h2>
-<p>过滤tcp flags，比如抓syn报文，看是否能握手成功 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br></pre></td></tr></table></figure> 查看tcp状态，如下为发送了sync，如果一直未回复，则可以在<code>sar -n ETCP 1</code>看到<code>retrans/s</code>不断上升 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">watch -n 0.1 &#x27;ss -tpn state syn-sent&#x27;</span><br></pre></td></tr></table></figure> 抓syn和syn+ack报文 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any <span class="string">&#x27;tcp[tcpflags] == tcp-syn or tcp[13]=18&#x27;</span></span><br></pre></td></tr></table></figure> 抓syn和syn+rst报文 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or tcp[13] &amp; 4!=0&#x27;</span><br></pre></td></tr></table></figure> 抓syn和icmp不可达报文 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> 抓syn、syn+ack、rst和icmp端口不可达报文（tcp[13]指的是从tcp报文头偏移13字节的选项） <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -ni any &#x27;(tcp[tcpflags] == tcp-syn or tcp[13]=18) or tcp[13] &amp;amp; 4!=0 or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> tcp flags抓包例子 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-rst&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-fin&#x27;</span><br></pre></td></tr></table></figure> 抓取指定报文大小 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump less 32</span><br><span class="line">tcpdump greater 32</span><br><span class="line">tcpdump &lt;= 102</span><br></pre></td></tr></table></figure> 持续抓取端口 <code>8080</code>的流量，每个文件最大 <code>100MB</code>，最多保留 <code>10</code>个文件，写满后覆盖最旧的文件 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080</span><br></pre></td></tr></table></figure> 抓取 <code>10000</code>个发往 <code>80</code>端口的包 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tcpdump -i any -c 10000 -w http_requests.pcap dst port 80</span><br></pre></td></tr></table></figure></p>
-<h2 id="常用选项">常用选项</h2>
-<table>
-<thead>
-<tr class="header">
-<th>参数</th>
-<th>说明</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>-i &lt;interface&gt;</code></strong>​</td>
-<td>指定抓包网卡。<code>any</code>表示所有网卡。</td>
-<td><code>-i any</code></td>
-</tr>
-<tr class="even">
-<td><strong><code>port &lt;端口号&gt;</code></strong>​</td>
-<td>过滤特定端口的流量（TCP/UDP）。</td>
-<td><code>port 8080</code></td>
-</tr>
-<tr class="odd">
-<td><strong><code>-C &lt;大小&gt;</code></strong>​</td>
-<td><strong>按文件大小分割</strong>。单位通常为MB（M）。</td>
-<td><code>-C 100</code></td>
-</tr>
-<tr class="even">
-<td><strong><code>-W &lt;数量&gt;</code></strong>​</td>
-<td><strong>限制文件总数</strong>，与 <code>-C</code>配合实现循环覆盖。</td>
-<td><code>-W 10</code></td>
-</tr>
-<tr class="odd">
-<td><strong><code>-w &lt;文件名&gt;</code></strong>​</td>
-<td>将抓取的原始数据包写入指定文件。</td>
-<td><code>-w my_capture.pcap</code></td>
-</tr>
-<tr class="even">
-<td><strong><code>-c &lt;数量&gt;</code></strong>​</td>
-<td>抓取指定数量的数据包后自动退出。</td>
-<td><code>-c 10000</code></td>
-</tr>
-<tr class="odd">
-<td><strong><code>-s &lt;长度&gt;</code></strong>​</td>
-<td>设置每个数据包的抓取长度（快照长度byte），<code>-s 0</code>表示抓取完整数据包。<strong>(在长期抓只需要分析报文头很实用)</strong></td>
-<td><code>-s 0</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="其他选项">其他选项</h2>
-<h3 id="capture-commands">Capture Commands</h3>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Command</th>
-<th>Example usage</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>-i any</code></td>
-<td><code>tcpdump -i any</code></td>
-<td>Capture from all interfaces; may require superuser (<code>sudo/su</code>)</td>
-</tr>
-<tr class="even">
-<td><code>-i eth0</code></td>
-<td><code>tcpdump -i eth0</code></td>
-<td>Capture from the interface <code>eth0</code></td>
-</tr>
-<tr class="odd">
-<td><code>-c count</code></td>
-<td><code>tcpdump -i eth0 -c 5</code></td>
-<td>Exit after receiving <code>count (5)</code> packets</td>
-</tr>
-<tr class="even">
-<td><code>-r captures.pcap</code></td>
-<td><code>tcpdump -i eth0 -r captures.pcap</code></td>
-<td>Read and analyze saved capture file <code>captures.pcap</code></td>
-</tr>
-<tr class="odd">
-<td><code>tcp</code></td>
-<td><code>tcpdump -i eth0 tcp</code></td>
-<td>Show TCP packets only</td>
-</tr>
-<tr class="even">
-<td><code>udp</code></td>
-<td><code>tcpdump -i eth0 udp</code></td>
-<td>Show UDP packets only</td>
-</tr>
-<tr class="odd">
-<td><code>icmp</code></td>
-<td><code>tcpdump -i eth0 icmp</code></td>
-<td>Show ICMP packets only</td>
-</tr>
-<tr class="even">
-<td><code>ip</code></td>
-<td><code>tcpdump -i eth0 ip</code></td>
-<td>Show IPv4 packets only</td>
-</tr>
-<tr class="odd">
-<td><code>ip6</code></td>
-<td><code>tcpdump -i eth0 ip6</code></td>
-<td>Show IPv6 packets only</td>
-</tr>
-<tr class="even">
-<td><code>arp</code></td>
-<td><code>tcpdump -i eth0 arp</code></td>
-<td>Show ARP packets only</td>
-</tr>
-<tr class="odd">
-<td><code>rarp</code></td>
-<td><code>tcpdump -i eth0 rarp</code></td>
-<td>Show RARP packets only</td>
-</tr>
-<tr class="even">
-<td><code>slip</code></td>
-<td><code>tcpdump -i eth0 slip</code></td>
-<td>Show SLIP packets only</td>
-</tr>
-<tr class="odd">
-<td><code>-I</code></td>
-<td><code>tcpdump -i eth0 -I</code></td>
-<td>Set interface as monitor mode</td>
-</tr>
-<tr class="even">
-<td><code>-K</code></td>
-<td><code>tcpdump -i eth0 -K</code></td>
-<td>Don’t verify checksum</td>
-</tr>
-<tr class="odd">
-<td><code>-p</code></td>
-<td><code>tcpdump -i eth0 -p</code></td>
-<td>Don’t capture in promiscuous mode</td>
-</tr>
-</tbody>
-</table>
-<h3 id="filter-commands">Filter Commands</h3>
-<table>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 77%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Filter expression</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>src host 127.0.0.1</code></td>
-<td>Filter by source IP/hostname <code>127.0.0.1</code></td>
-</tr>
-<tr class="even">
-<td><code>dst host 127.0.0.1</code></td>
-<td>Filter by destination IP/hostname <code>127.0.0.1</code></td>
-</tr>
-<tr class="odd">
-<td><code>host 127.0.0.1</code></td>
-<td>Filter by source or destination = <code>127.0.0.1</code></td>
-</tr>
-<tr class="even">
-<td><code>ether src 01:23:45:AB:CD:EF</code></td>
-<td>Filter by source MAC <code>01:23:45:AB:CD:EF</code></td>
-</tr>
-<tr class="odd">
-<td><code>ether dst 01:23:45:AB:CD:EF</code></td>
-<td>Filter by destination MAC <code>01:23:45:AB:CD:EF</code></td>
-</tr>
-<tr class="even">
-<td><code>ether host 01:23:45:AB:CD:EF</code></td>
-<td>Filter by source or destination MAC <code>01:23:45:AB:CD:EF</code></td>
-</tr>
-<tr class="odd">
-<td><code>src net 127.0.0.1</code></td>
-<td>Filter by source network location <code>127.0.0.1</code></td>
-</tr>
-<tr class="even">
-<td><code>dst net 127.0.0.1</code></td>
-<td>Filter by destination network location <code>127.0.0.1</code></td>
-</tr>
-<tr class="odd">
-<td><code>net 127.0.0.1</code></td>
-<td>Filter by source or destination network location <code>127.0.0.1</code></td>
-</tr>
-<tr class="even">
-<td><code>net 127.0.0.1/24</code></td>
-<td>Filter by source or destination network location <code>127.0.0.1</code> with the tcpdump subnet mask of length <code>24</code></td>
-</tr>
-<tr class="odd">
-<td><code>src port 80</code></td>
-<td>Filter by source port = 80</td>
-</tr>
-<tr class="even">
-<td><code>dst port 80</code></td>
-<td>Filter by destination port = 80</td>
-</tr>
-<tr class="odd">
-<td><code>port 80</code></td>
-<td>Filter by source or destination port = 80</td>
-</tr>
-<tr class="even">
-<td><code>src portrange 80-400</code></td>
-<td>Filter by source port value between 80 and 400</td>
-</tr>
-<tr class="odd">
-<td><code>dst portrange 80-400</code></td>
-<td>Filter by destination port value between 80 and 400</td>
-</tr>
-<tr class="even">
-<td><code>portrange 80-400</code></td>
-<td>Filter by source or destination port value between 80 and 400</td>
-</tr>
-<tr class="odd">
-<td><code>ether broadcast</code></td>
-<td>Filter for Ethernet broadcasts</td>
-</tr>
-<tr class="even">
-<td><code>ip broadcast</code></td>
-<td>Filter for IPv4 broadcasts</td>
-</tr>
-<tr class="odd">
-<td><code>ether multicast</code></td>
-<td>Filter for Ethernet multicasts</td>
-</tr>
-<tr class="even">
-<td><code>ip multicast</code></td>
-<td>Filter for IPv4 multicasts</td>
-</tr>
-<tr class="odd">
-<td><code>ip6 multicast</code></td>
-<td>Filter for IPv6 multicasts</td>
-</tr>
-<tr class="even">
-<td><code>ip src host mydevice</code></td>
-<td>Filter by IPv4 source hostname <code>mydevice</code></td>
-</tr>
-<tr class="odd">
-<td><code>arp dst host mycar</code></td>
-<td>Filter by ARP destination hostname <code>mycar</code></td>
-</tr>
-<tr class="even">
-<td><code>rarp src host 127.0.0.1</code></td>
-<td>Filter by RARP source <code>127.0.0.1</code></td>
-</tr>
-<tr class="odd">
-<td><code>ip6 dst host mywatch</code></td>
-<td>Filter by IPv6 destination hostname <code>mywatch</code></td>
-</tr>
-<tr class="even">
-<td><code>tcp dst port 8000</code></td>
-<td>Filter by destination TCP port = 8000</td>
-</tr>
-<tr class="odd">
-<td><code>udp src portrange 1000-2000</code></td>
-<td>Filter by source TCP ports in 1000–2000</td>
-</tr>
-<tr class="even">
-<td><code>sctp port 22</code></td>
-<td>Filter by source or destination port = 22</td>
-</tr>
-</tbody>
-</table>
-<h3 id="display-commands">Display Commands</h3>
-<table>
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 81%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Example</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -A</code></td>
-<td>Print each packet (minus its link level header) in ASCII. Handy for capturing web pages. <br> <br>[![Screenshot with ASCII (sudo tcpdump twitter)</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -D</code></td>
-<td>Print the list of the network interfaces available on the system and on which tcpdump can capture packets.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -e</code></td>
-<td>Print the link-level header on each output line, such as MAC layer addresses for protocols such as Ethernet and IEEE 802.11.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -F /path/to/params.conf</code></td>
-<td>Use the file <code>params.conf</code> as input for the <a href="###%20Filter%20Commands">filter expression</a>. (Ignore other expressions on the command line.)</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -n</code></td>
-<td>Don’t convert addresses (i.e., host addresses, port numbers, etc.) to names.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -S</code></td>
-<td>Print absolute, rather than relative, TCP sequence numbers. (Absolute TCP sequence numbers are longer.)</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 --time-stamp-precision=nano</code></td>
-<td>When capturing, set the timestamp precision for the capture to <code>tsp</code>: <br>• <code>micro</code> for microsecond (default) <br>• <code>nano</code> for nanosecond.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -t</code></td>
-<td>Omit the timestamp on each output line.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -tt</code></td>
-<td>Print the timestamp, as seconds since January 1, 1970, 00:00:00, UTC, and fractions of a second since that time, on each dump line.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -ttt</code></td>
-<td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and previous line on each output line. The default is microsecond resolution.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -tttt</code></td>
-<td>Print a timestamp as hours, minutes, seconds, and fractions of a second since midnight, preceded by the date, on each dump line.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -ttttt</code></td>
-<td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and first line on each dump line. The default is microsecond resolution.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -u</code></td>
-<td>Print undecoded network file system (NFS) handles.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -v</code></td>
-<td>Produce verbose output. <br>When writing to a file (<code>-w</code> option) and at the same time not reading from a file (<code>-r</code> option), report to standard error, once per second, the number of packets captured.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -vv</code></td>
-<td>Additional verbose output than <code>-v</code></td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -vvv</code></td>
-<td>Additional verbose output than <code>-vv</code></td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -x</code></td>
-<td>Print the headers and data of each packet (minus its link level header) in hex.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -xx</code></td>
-<td>Print the headers and data of each packet, including its link level header, in hex.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -X</code></td>
-<td>Print the headers and data of each packet (minus its link level header) in hex and ASCII.</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i eth0 -XX</code></td>
-<td>Print the headers and data of each packet, including its link level header, in hex and ASCII.</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="output-commands">Output Commands</h3>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Command</th>
-<th>Example</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>-w captures.pcap</code></td>
-<td><code>tcpdump -i eth0 -w captures.pcap</code></td>
-<td>Output capture to a file <code>captures.pcap</code></td>
-</tr>
-<tr class="even">
-<td><code>-d</code></td>
-<td><code>tcpdump -i eth0 -d</code></td>
-<td>Display human-readable form in standard output</td>
-</tr>
-<tr class="odd">
-<td><code>-L</code></td>
-<td><code>tcpdump -i eth0 -L</code></td>
-<td>Display data link types for the interface</td>
-</tr>
-<tr class="even">
-<td><code>-q</code></td>
-<td><code>tcpdump -i eth0 -q</code></td>
-<td>Quick/quiet output. Print less protocol information, so output lines are shorter.</td>
-</tr>
-<tr class="odd">
-<td><code>-U</code></td>
-<td><code>tcpdump -i eth0 -U -w out.pcap</code></td>
-<td><strong>Without -w option</strong> <br>Print a description of each packet’s contents. <br><strong>With -w option</strong> <br>Write each packet to the output file <code>out.pcap</code> in real time rather than only when the output buffer fills.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="miscellaneous-commands">Miscellaneous Commands</h3>
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Operator</th>
-<th>Syntax</th>
-<th>Example</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>AND</code></td>
-<td><code>and, &amp;&amp;</code></td>
-<td><code>tcpdump -n src 127.0.0.1 and dst port 21</code></td>
-<td>Combine filtering options joined by “and”</td>
-</tr>
-<tr class="even">
-<td><code>OR</code></td>
-<td><code>or, \|</code></td>
-<td><code>tcpdump dst 127.0.0.1 or src port 22</code></td>
-<td>Match any of the conditions joined by “or”</td>
-</tr>
-<tr class="odd">
-<td><code>EXCEPT</code></td>
-<td><code>not, !</code></td>
-<td><code>tcpdump dst 127.0.0.1 and not icmp</code></td>
-<td>Negate the condition prefixed by “not”</td>
-</tr>
-<tr class="even">
-<td><code>LESS</code></td>
-<td><code>less, &lt;, (&lt;=)</code></td>
-<td><code>tcpdump dst host 127.0.0.1 and less 128</code></td>
-<td>Shows packets shorter than (or equal to) 128 bytes in length. <br>&lt; only applies to length 32, i.e., <code>&lt;32</code>.</td>
-</tr>
-<tr class="odd">
-<td><code>GREATER</code></td>
-<td><code>greater, &gt;, (&gt;=)</code></td>
-<td><code>tcpdump dst host 127.0.0.1 and greater 64</code></td>
-<td>Shows packets longer than (or equal to) 64 bytes in length. <br>&gt; only applies to length 32, i.e., <code>&gt;32</code>.</td>
-</tr>
-<tr class="even">
-<td><code>EQUAL</code></td>
-<td><code>=, ==</code></td>
-<td><code>tcpdump host 127.0.0.1 = 0</code></td>
-<td>Show packets with zero length</td>
-</tr>
-</tbody>
-</table>
-<h3 id="example-usage">Example Usage</h3>
-<table>
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 71%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Example</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>tcpdump -r outfile.pcap src host 10.0.2.15</code></td>
-<td>Print all packets in the file <code>outfile.pcap</code> coming from the host with IP address 10.0.2.15</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -i any ip and not tcp port 80</code></td>
-<td>Listen for non-HTTP packets (which have TCP port number 80) on any network interface</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump -i eth0 -n &gt;32 -w pv01.pcap -c 30</code></td>
-<td>Save 30 packets of length exceeding 32 bytes to <code>captures.pcap</code> without DNS resolution on the <code>eth0</code> network interface</td>
-</tr>
-<tr class="even">
-<td><code>tcpdump -AtuvX icmp</code></td>
-<td>Capture ICMP traffic and print ICMP packets in hex and ASCII and the following features: <br>With: <br>• headers <br>• data <br>• undecoded NFS handles <br>Without: <br>• link level headers <br>• timestamps.</td>
-</tr>
-<tr class="odd">
-<td><code>tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)'</code></td>
-<td>Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.</td>
-</tr>
-</tbody>
-</table>
-<h1 id="参考搬运">参考/搬运</h1>
-<ul>
-<li><a href="https://debugging.works/blog/network-debugging/">https://debugging.works/blog/network-debugging/</a></li>
-<li><a href="https://www.stationx.net/tcpdump-cheat-sheet/">https://www.stationx.net/tcpdump-cheat-sheet/</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bcc初体验</title>
-    <url>/2024/01/22/Linux%20Debug/bcc%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
-    <content><![CDATA[<h2 id="安装">安装</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>BCC已经打包到Ubuntu的multiverse仓库，名字<code>bpfcc-tools</code>，使用如下命令安装 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential bpfcc-tools linux-header-$(uname -r) bpftrace</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用">使用</h2>
-<p>funccount</p>
-<p>stackcount</p>
-]]></content>
-      <tags>
-        <tag>bpf</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bpftrace技术1-常用命令</title>
-    <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="bpftrace是什么">bpftrace是什么</h1>
-<p>一种追踪内核态和用户态的新技术</p>
-<h1 id="看可以跟踪哪些内核函数">看可以跟踪哪些内核函数</h1>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -l | grep kprobe</span><br></pre></td></tr></table></figure>
-<h1 id="跟踪内核函数例子">跟踪内核函数例子</h1>
-<h2 id="是否调用">是否调用</h2>
-<p>跟踪 <code>net/ipv4/netfilter/ip_tables.c looks promising</code> 的两个函数: <code>compat_do_ipt_get_ctl</code> 和 <code>do_ipt_get_ctl</code>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">bpftrace -e <span class="string">&#x27;kprobe:do_ipt_get_ctl &#123; printf(&quot;function was called!\n&quot;); &#125;&#x27;</span></span></span><br><span class="line">Attaching 1 probe...</span><br><span class="line">function was called!</span><br><span class="line">function was called!</span><br></pre></td></tr></table></figure>
-<p><code>compat_do_ipt_get_ctl</code> 函数签名如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">compat_do_ipt_get_ctl</span><span class="params">(<span class="keyword">struct</span> sock *sk, <span class="type">int</span> cmd, <span class="type">void</span> __user *user, <span class="type">int</span> *len)</span></span><br></pre></td></tr></table></figure>
-<h2 id="调用命令pid入参">调用命令，pid，入参</h2>
-<p>建立<code>test.bpf</code>文件 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;net/sock.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">kprobe:do_ipt_get_ctl</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called by %s (pid: %d). and: %d\n&quot;</span>, comm, pid, ((sock *)arg0)-&gt;__sk_common.skc_family);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>执行结果如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">~<span class="meta"># bpftrace test.bpf</span></span><br><span class="line">/bpftrace/include/stdarg.h:<span class="number">52</span>:<span class="number">1</span>: warning: null character ignored [-Wnull-character]       </span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">209</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">256</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/bitops.h:<span class="number">310</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/jump_label.h:<span class="number">23</span>:<span class="number">2</span>: error: <span class="string">&#x27;asm goto&#x27;</span> constructs are not supported yet</span><br><span class="line">/lib/modules/<span class="number">4.19</span>.<span class="number">0</span><span class="number">-8</span>-amd64/source/arch/x86/include/<span class="keyword">asm</span>/signal.h:<span class="number">24</span>:<span class="number">2</span>: note: <span class="built_in">array</span> <span class="string">&#x27;sig&#x27;</span> declared here</span><br><span class="line">Attaching <span class="number">1</span> probe...</span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br><span class="line">called by iptables-legacy (pid: <span class="number">2981</span>). and: <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p> <code>2</code> 的含义解释如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">/usr/src/linux-headers<span class="number">-4.19</span>.<span class="number">0</span><span class="number">-8</span>-common/include/linux/socket.h</span><br><span class="line"><span class="number">160</span> <span class="comment">/* Supported address families. */</span></span><br><span class="line"><span class="number">161</span> <span class="meta">#<span class="keyword">define</span> AF_UNSPEC   0</span></span><br><span class="line"><span class="number">162</span> <span class="meta">#<span class="keyword">define</span> AF_UNIX     1   <span class="comment">/* Unix domain sockets      */</span></span></span><br><span class="line"><span class="number">163</span> <span class="meta">#<span class="keyword">define</span> AF_LOCAL    1   <span class="comment">/* POSIX name for AF_UNIX   */</span></span></span><br><span class="line"><span class="number">164</span> <span class="meta">#<span class="keyword">define</span> AF_INET     2   <span class="comment">/* Internet IP Protocol     */</span></span></span><br><span class="line"><span class="number">165</span> <span class="meta">#<span class="keyword">define</span> AF_AX25     3   <span class="comment">/* Amateur Radio AX.25      */</span></span></span><br><span class="line"><span class="number">166</span> <span class="meta">#<span class="keyword">define</span> AF_IPX      4   <span class="comment">/* Novell IPX           */</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="打印入参">打印入参</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_open &#123; printf(&quot;open path: %s\n&quot;, str(((path *)arg0)-&gt;dentry-&gt;d_name.name)); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="打印返回值">打印返回值</h2>
-<p>使用默认变量<code>retval</code>。</p>
-<h3 id="内核函数返回值">内核函数返回值</h3>
-<p>使用 <code>kretprobe</code>跟踪内核函数的返回值。例如，跟踪 <code>vfs_read</code>的返回值（读取的字节数或错误码）： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="用户空间函数返回值">用户空间函数返回值</h3>
-<p>使用 <code>uretprobe</code>跟踪用户空间函数的返回值。例如，跟踪一个名为 <code>myfunc</code>的函数的返回值： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;uretprobe:/path/to/binary:myfunc &#123; printf(&quot;myfunc returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="结合入口和返回探针">结合入口和返回探针</h3>
-<p>测量函数执行时间或关联参数与返回值。这可以通过在函数入口（如 <code>kprobe</code>/<code>uprobe</code>）记录时间戳（<code>tid</code>是内置变量，代表线程id），然后在返回探针中计算差值来实现。例如： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read &#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">                kretprobe:vfs_read /@start[tid]/ &#123; </span></span><br><span class="line"><span class="string">                    $duration = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">                    printf(&quot;vfs_read took %d ns, returned %d\n&quot;, $duration, retval); </span></span><br><span class="line"><span class="string">                    delete(@start[tid]); </span></span><br><span class="line"><span class="string">                &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="过滤条件">过滤条件</h3>
-<p>可以在返回探针上添加过滤条件，例如只处理特定进程或返回值范围的调用。使用 <code>/&lt;filter&gt;/</code>语法。例如，只打印返回值大于0的 <code>vfs_read</code>调用： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kretprobe:vfs_read /retval &gt; 0/ &#123; printf(&quot;vfs_read returned: %d\n&quot;, retval); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>bpftrace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bpftrace技术2-map变量和map函数</title>
     <url>/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
@@ -1963,85 +1963,6 @@ AMBA 总线协议</p>
       </tags>
   </entry>
   <entry>
-    <title>Linux内存子系统-Page Cache</title>
-    <url>/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/</url>
-    <content><![CDATA[<h1 id="pagecache是什么">pagecache是什么</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached</p>
-<p><img src="pagecache.png" /></p>
-<p>/proc/meminfo的解释见如下网站<a href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
-<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。</p>
-<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。</p>
-<p><img src="swapcache.png" /></p>
-<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。</p>
-<p>下面解释一下free输出</p>
-<p>buff/cache = Buffers + Cached + SReclaimable <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure></p>
-<table>
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 18%" />
-<col style="width: 67%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>指标</th>
-<th>数据来源 (参考 <code>/proc/meminfo</code>)</th>
-<th>主要作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>Buffers</code></strong>​</td>
-<td><code>Buffers</code>值</td>
-<td>临时存放<strong>原始磁盘块数据</strong>，用于优化对磁盘（块设备）的直接读写操作。</td>
-</tr>
-<tr class="even">
-<td><strong><code>Cached</code></strong>​</td>
-<td><code>Cached</code>值</td>
-<td>缓存<strong>从文件读取的数据</strong>（即页缓存/Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>SReclaimable</code></strong>​</td>
-<td><code>SReclaimable</code>值</td>
-<td>属于 <strong>Slab 分配器</strong>​ 的一部分，记录内核对象（如目录项、inode 等）缓存中<strong>可以被回收</strong>占用的内存。指可以被回收的内核内存，包括 dentry 和 inode 等。</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if=/dev/urandom of=/dev/sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if=/dev/urandom of=/tmp/file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
-</blockquote>
-<h1 id="pagecache出现的意义">pagecache出现的意义</h1>
-<p>先看如何使用pagecache的方法</p>
-<ul>
-<li>第一种，应用程序维护自己的 Cache 做更加细粒度的控制，比如 MySQL 就是这样做的，你可以参考MySQL Buffer Pool 。</li>
-<li>第二种，使用 Direct I/O 来绕过 Page Cache。</li>
-</ul>
-<p>pagecache的意义就是加速：标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率。</p>
-<p>我们看一个具体的例子。首先，我们来生成一个 1G 大小的新文件，然后把 Page Cache 清空，确保文件内容不在内存中，以此来比较第一次读文件和第二次读文件耗时的差异。具体的流程如下。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=./dd.out bs=4096 count=((1024*256))</span><br></pre></td></tr></table></figure>
-<p>清空 Page Cache，需要先执行一下 sync 来将脏页同步到磁盘再去 drop cache。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>读两次文件，计算耗时 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure></p>
-<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I/O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I/O，提升应用的 I/O 速度。</p>
-<h1 id="pagecache机制">pagecache机制</h1>
-<h2 id="pagecache产生">pagecache产生</h2>
-<p>Page Cache 的产生有两种不同的方式：</p>
-<ul>
-<li>Buffered I/O（标准 I/O）；</li>
-<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
-</ul>
-<p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
-<p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
-<p>显然，存储映射 I/O 要比标准 I/O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I/O 比标准 I/O 方式性能要好一些的主要原因。</p>
-<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I/O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
-<h2 id="pagecache回收">pagecache回收</h2>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>内存子系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ftrace技术-静态跟踪（一）</title>
     <url>/2025/12/23/Linux%20Debug/ftrace%E6%8A%80%E6%9C%AF-%E9%9D%99%E6%80%81%E8%B7%9F%E8%B8%AA%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h1 id="介绍">介绍</h1>
@@ -2301,6 +2222,85 @@ AMBA 总线协议</p>
       <tags>
         <tag>Linux</tag>
         <tag>性能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux内存子系统-Page Cache</title>
+    <url>/2025/12/13/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F/Linux%E5%86%85%E5%AD%98%E5%AD%90%E7%B3%BB%E7%BB%9F-Page%20Cache/</url>
+    <content><![CDATA[<h1 id="pagecache是什么">pagecache是什么</h1>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/meminfo</span></span><br><span class="line">...</span><br><span class="line">Buffers:            1224 kB</span><br><span class="line">Cached:           111472 kB</span><br><span class="line">SwapCached:        36364 kB</span><br><span class="line">Active:          6224232 kB</span><br><span class="line">Inactive:         979432 kB</span><br><span class="line">Active(anon):    6173036 kB</span><br><span class="line">Inactive(anon):   927932 kB</span><br><span class="line">Active(file):      51196 kB</span><br><span class="line">Inactive(file):    51500 kB</span><br><span class="line">...</span><br><span class="line">Shmem:             10000 kB</span><br><span class="line">...</span><br><span class="line">SReclaimable:      43532 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Page Cache = Buffers + Cached + SwapCached = Active(file) + Inactive(file) + Shmem + SwapCached</p>
+<p><img src="pagecache.png" /></p>
+<p>/proc/meminfo的解释见如下网站<a href="https://www.kernel.org/doc/Documentation/filesystems/proc.rst">https://www.kernel.org/doc/Documentation/filesystems/proc.rst</a></p>
+<p>在 Page Cache 中，Active(file)+Inactive(file) 是 File-backed page（与文件对应的内存页），是你最需要关注的部分。因为你平时用的 mmap() 内存映射方式和 buffered I/O 来消耗的内存就属于这部分。</p>
+<p>而 SwapCached 是在打开了 Swap 分区后，把 Inactive(anon)+Active(anon) 这两项里的匿名页给交换到磁盘（swap out），然后再读入到内存（swap in）后分配的内存。由于读入到内存后原来的 Swap File 还在，所以 SwapCached 也可以认为是 File-backed page，即属于 Page Cache。这样做的目的也是为了减少 I/O。</p>
+<p><img src="swapcache.png" /></p>
+<p>SwapCached 只在 Swap 分区打开的情况下才会有，建议在生产环境中关闭 Swap 分区，因为 Swap 过程产生的 I/O 会很容易引起性能抖动。</p>
+<p>下面解释一下free输出</p>
+<p>buff/cache = Buffers + Cached + SReclaimable <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">free -k</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        7926580     7277960      492392       10000      156228      430680</span><br><span class="line">Swap:       8224764      380748     7844016</span><br></pre></td></tr></table></figure></p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>数据来源 (参考 <code>/proc/meminfo</code>)</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>Buffers</code></strong>​</td>
+<td><code>Buffers</code>值</td>
+<td>临时存放<strong>原始磁盘块数据</strong>，用于优化对磁盘（块设备）的直接读写操作。</td>
+</tr>
+<tr class="even">
+<td><strong><code>Cached</code></strong>​</td>
+<td><code>Cached</code>值</td>
+<td>缓存<strong>从文件读取的数据</strong>（即页缓存/Page Cache），使得再次访问这些文件时可以直接从内存快速读取，无需访问磁盘。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>SReclaimable</code></strong>​</td>
+<td><code>SReclaimable</code>值</td>
+<td>属于 <strong>Slab 分配器</strong>​ 的一部分，记录内核对象（如目录项、inode 等）缓存中<strong>可以被回收</strong>占用的内存。指可以被回收的内核内存，包括 dentry 和 inode 等。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>实际场景中的表现：通过 vmstat等工具可以观察它们的变化。例如，当使用 dd命令向磁盘分区直接写入大量数据时（如 dd if=/dev/urandom of=/dev/sdb1 …），会观察到 Buffers显著增长，因为这是对原始磁盘块的操作。而当读写普通文件时（如 dd if=/dev/urandom of=/tmp/file …），则会看到 Cached部分明显增加，因为这些数据被文件系统缓存了。</p>
+</blockquote>
+<h1 id="pagecache出现的意义">pagecache出现的意义</h1>
+<p>先看如何使用pagecache的方法</p>
+<ul>
+<li>第一种，应用程序维护自己的 Cache 做更加细粒度的控制，比如 MySQL 就是这样做的，你可以参考MySQL Buffer Pool 。</li>
+<li>第二种，使用 Direct I/O 来绕过 Page Cache。</li>
+</ul>
+<p>pagecache的意义就是加速：标准 I/O 和内存映射会先把数据写入到 Page Cache，这样做会通过减少 I/O 次数来提升读写效率。</p>
+<p>我们看一个具体的例子。首先，我们来生成一个 1G 大小的新文件，然后把 Page Cache 清空，确保文件内容不在内存中，以此来比较第一次读文件和第二次读文件耗时的差异。具体的流程如下。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=/dev/zero of=./dd.out bs=4096 count=((1024*256))</span><br></pre></td></tr></table></figure>
+<p>清空 Page Cache，需要先执行一下 sync 来将脏页同步到磁盘再去 drop cache。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>读两次文件，计算耗时 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span></span><br><span class="line">real  0m5.733s</span><br><span class="line">user  0m0.003s</span><br><span class="line">sys  0m0.213s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="keyword">time</span> <span class="built_in">cat</span> /home/yafang/test/dd.out &amp;&gt; /dev/null</span> </span><br><span class="line">real  0m0.132s</span><br><span class="line">user  0m0.001s</span><br><span class="line">sys  0m0.130s</span><br></pre></td></tr></table></figure></p>
+<p>通过这样详细的过程你可以看到，第二次读取文件的耗时远小于第一次的耗时，这是因为第一次是从磁盘来读取的内容，磁盘 I/O 是比较耗时的，而第二次读取的时候由于文件内容已经在第一次读取时被读到内存了，所以是直接从内存读取的数据，内存相比磁盘速度是快很多的。这就是 Page Cache 存在的意义：减少 I/O，提升应用的 I/O 速度。</p>
+<h1 id="pagecache机制">pagecache机制</h1>
+<h2 id="pagecache产生">pagecache产生</h2>
+<p>Page Cache 的产生有两种不同的方式：</p>
+<ul>
+<li>Buffered I/O（标准 I/O）；</li>
+<li>Memory-Mapped I/O（存储映射 I/O）。 <img src="pagecache_twoway.png" /></li>
+</ul>
+<p>buffered/mmap都能产生 Page Cache，但是二者的还是有些差异的：标准 I/O 是写的 (write(2)) 用户缓冲区 (Userpace Page 对应的内存)，然后再将用户缓冲区里的数据拷贝到内核缓冲区 (Pagecache Page 对应的内存)；如果是读的 (read(2)) 话则是先从内核缓冲区拷贝到用户缓冲区，再从用户缓冲区读数据，也就是 buffer 和文件内容不存在任何映射关系。</p>
+<p>对于存储映射 I/O 而言，则是直接将 Pagecache Page 给映射到用户地址空间，用户直接读写 Pagecache Page 中内容。</p>
+<p>显然，存储映射 I/O 要比标准 I/O 效率高一些，毕竟少了“用户空间到内核空间互相拷贝”的过程。这也是很多应用开发者发现，为什么使用内存映射 I/O 比标准 I/O 方式性能要好一些的主要原因。</p>
+<p>我们来用具体的例子演示一下 Page Cache 是如何“诞生”的，就以其中的标准 I/O 为例，因为这是我们最常使用的一种方式，如下是一个简单的示例脚本：</p>
+<h2 id="pagecache回收">pagecache回收</h2>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>内存子系统</tag>
       </tags>
   </entry>
   <entry>
@@ -3379,43 +3379,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>audit审计工具使用</title>
-    <url>/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h2 id="audit用途">audit用途</h2>
-<p>监控文件、命令、网络等，生成监控报告。</p>
-<h2 id="安装启动audit">安装启动audit</h2>
-<p>安装audit工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
-<p>将 <code>auditd</code> 配置为在引导时启动：</p>
-<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
-<p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
-<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <code>_&lt;action&gt;_</code>可以是以下之一：</p>
-<p><code>stop</code> ：停止 <code>auditd</code>。</p>
-<p><code>restart</code>：重新启动 <code>auditd</code>。</p>
-<p><code>reload</code> 或 <code>force-reload</code>：重新加载 <code>/etc/audit/auditd.conf</code> 文件中 <code>auditd</code> 的配置。</p>
-<p><code>rotate</code>：轮转 <code>/var/log/audit/</code> 目录中的日志文件。</p>
-<p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
-<p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
-<p><code>status</code>：显示 <code>auditd</code> 的运行状态。</p>
-<h2 id="配置规则">配置规则</h2>
-<p>举例说明，监控<code>/home/test_audit/</code>文件夹（文件）的变更选项为rwxa（<strong>r</strong>=read, <strong>w</strong>=write, <strong>x</strong>=execute, <strong>a</strong>=attribute），设置关键字<code>dushnda_watch</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 配置完后查询规则 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@172 ~]# auditctl -l</span><br><span class="line">-w /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 之后做一些权限改变，增改文件操，查看日志<code>ausearch</code>，查看报告<code>areport</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">ausearch -i -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
-<p><img src="audit审计工具使用_20240411_3.png" /></p>
-<p>这里的每个type是一个一次的一条记录，具体的含义查看参考链接<code>[1]</code>，这里主要关注对文件的操作，这段日志含义是使用vim打开了文件（syscall），当前文件权限是644。</p>
-<p><img src="audit审计工具使用_20240411_1.png" /></p>
-<p>删除路径监控 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">auditctl -W /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>其中，<code>auditctl -d</code>的删除和<code>auditctl -a</code>的添加对应，<code>auditctl -W</code>的删除和<code>auditctl -w</code>的添加对应，<code>auditctl -D</code>删除所有规则。</p>
-</blockquote>
-<h2 id="参考链接">参考链接</h2>
-<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
-<p>[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</p>
-]]></content>
-      <tags>
-        <tag>监控</tag>
-        <tag>audit</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>bpftrace cheatsheet</title>
     <url>/2025/12/23/ceatsheet/bpftrace%20cheatsheet/</url>
     <content><![CDATA[<h1 id="使用方法">使用方法</h1>
@@ -3770,10 +3733,52 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>audit审计工具使用</title>
+    <url>/2024/04/11/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7/audit%E5%AE%A1%E8%AE%A1%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="audit用途">audit用途</h2>
+<p>监控文件、命令、网络等，生成监控报告。</p>
+<h2 id="安装启动audit">安装启动audit</h2>
+<p>安装audit工具 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">yum install audit</span><br></pre></td></tr></table></figure> 配置了 <code>auditd</code> 后，启动服务以收集 审计信息，并将它存储在日志文件中。以 root 用户身份运行以下命令来启动 <code>auditd</code> ：</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">service auditd start</span><br></pre></td></tr></table></figure>
+<p>将 <code>auditd</code> 配置为在引导时启动：</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">systemctl enable auditd</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code># auditctl -e 0</code> 命令临时禁用 <code>auditd</code>，并使用 <code># auditctl -e 1</code> 重新启用它。</p>
+<p>可以使用 <code>service auditd _&lt;action&gt;_</code> 命令对 <code>auditd</code> 执行其他操作，其中 <code>_&lt;action&gt;_</code>可以是以下之一：</p>
+<p><code>stop</code> ：停止 <code>auditd</code>。</p>
+<p><code>restart</code>：重新启动 <code>auditd</code>。</p>
+<p><code>reload</code> 或 <code>force-reload</code>：重新加载 <code>/etc/audit/auditd.conf</code> 文件中 <code>auditd</code> 的配置。</p>
+<p><code>rotate</code>：轮转 <code>/var/log/audit/</code> 目录中的日志文件。</p>
+<p><code>resume</code>：在其之前被暂停后重新恢复审计事件记录，例如，当保存审计日志文件的磁盘分区中没有足够的可用空间时。</p>
+<p><code>condrestart</code> 或 <code>try-restart</code>：只有当 <code>auditd</code> 运行时才重新启动它。</p>
+<p><code>status</code>：显示 <code>auditd</code> 的运行状态。</p>
+<h2 id="配置规则">配置规则</h2>
+<p>举例说明，监控<code>/home/test_audit/</code>文件夹（文件）的变更选项为rwxa（<strong>r</strong>=read, <strong>w</strong>=write, <strong>x</strong>=execute, <strong>a</strong>=attribute），设置关键字<code>dushnda_watch</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">auditctl -w /home/test_audit/ -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 配置完后查询规则 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[root@172 ~]# auditctl -l</span><br><span class="line">-w /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure> 之后做一些权限改变，增改文件操，查看日志<code>ausearch</code>，查看报告<code>areport</code> <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">ausearch -i -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
+<p><img src="audit审计工具使用_20240411_3.png" /></p>
+<p>这里的每个type是一个一次的一条记录，具体的含义查看参考链接<code>[1]</code>，这里主要关注对文件的操作，这段日志含义是使用vim打开了文件（syscall），当前文件权限是644。</p>
+<p><img src="audit审计工具使用_20240411_1.png" /></p>
+<p>删除路径监控 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">auditctl -W /home/test_audit -p rwxa -k dushnda_watch</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>其中，<code>auditctl -d</code>的删除和<code>auditctl -a</code>的添加对应，<code>auditctl -W</code>的删除和<code>auditctl -w</code>的添加对应，<code>auditctl -D</code>删除所有规则。</p>
+</blockquote>
+<h2 id="参考链接">参考链接</h2>
+<p>[1] https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#linux-audit_auditing-the-system</p>
+<p>[2] https://deepinout.com/linux-cmd/linux-audit-system-related-cmd/linux-cmd-auditctl.html</p>
+]]></content>
+      <tags>
+        <tag>监控</tag>
+        <tag>audit</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ftrace cheatsheet</title>
     <url>/2025/12/23/ceatsheet/ftrace%20cheatsheet/</url>
     <content><![CDATA[
 ]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>ftrace</tag>
+        <tag>cheatsheet</tag>
+      </tags>
   </entry>
   <entry>
     <title>iproute cheatsheet</title>
@@ -3802,20 +3807,6 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
-    <title>perf cheatsheet</title>
-    <url>/2025/12/23/ceatsheet/perf%20cheatsheet/</url>
-    <content><![CDATA[<blockquote>
-<p>https://jvns.ca/perf-cheat-sheet.pdf</p>
-</blockquote>
-<p><img src="perfcheatsheet.png" /></p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>ceatsheet</tag>
-        <tag>perf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>qemu调试linux（一）</title>
     <url>/2024/01/24/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="编译内核">编译内核</h2>
@@ -3840,6 +3831,150 @@ Field reference (click to expand)
       </tags>
   </entry>
   <entry>
+    <title>Ten Things I Wish I’d Known About bash</title>
+    <url>/2025/12/22/shells/Ten%20Things%20I%20Wish%20I%E2%80%99d%20Known%20About%20bash/</url>
+    <content><![CDATA[<blockquote>
+<p>https://zwischenzugs.com/2018/01/06/ten-things-i-wish-id-known-about-bash/</p>
+</blockquote>
+<h2 id="vs">1)  <code>``</code> vs <code>$()</code></h2>
+<p>这两完成了一样的事情： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> `<span class="built_in">ls</span>`</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> $(<span class="built_in">ls</span>)</span></span><br></pre></td></tr></table></figure> <code>``</code> 是Unix时代引入的，<code>$()</code>更现代和易读易写。 比如： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> `<span class="built_in">echo</span> \`<span class="built_in">echo</span> \\\`<span class="built_in">echo</span> inside\\\`\``</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> $(<span class="built_in">echo</span> $(<span class="built_in">echo</span> $(<span class="built_in">echo</span> inside)))</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="globbing-vs-regexps">2) globbing vs regexps</h2>
+<p>glob和regexps是不一样的东西，glob是通配符，regexp是正则表达式。 看以下的表达式： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rename -n <span class="string">&#x27;s/(.*)/new$1/&#x27;</span> *</span></span><br></pre></td></tr></table></figure> 这里有两个<code>*</code>号 - 第一个在引号内部，作为正则表达式的一部分 - 第二个在外部，作为通配符的部分 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span> *</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span> .*</span></span><br></pre></td></tr></table></figure> 所以第二个看着像是正则表达式，但是实际上并不是</p>
+<h2 id="exit-codes">3) Exit Codes</h2>
+<p>所有的命令都会返回值给shell <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep not_there /dev/null</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> $?</span></span><br></pre></td></tr></table></figure> - 0就是命令执行正确，非0就是执行失败 - <code>$?</code>是一个特殊的符号，用来从shell里获取上一条命令的返回值</p>
+<h2 id="if-statements-and">4) <code>if</code> statements, <code>[</code> and <code>[[</code></h2>
+<ul>
+<li><code>[</code>（单方括号）实际上是<code>test</code>命令的别名，是一个内置命令。它用于基本的条件测试，需要遵循严格的语法格式（如括号内必须有空格）。</li>
+<li><code>[[</code>（双方括号）​ 是Bash的关键字，提供了比<code>[</code>更强大的功能。它不是普通命令，而是Bash的语法结构，因此具有更灵活和直观的行为。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[（需要引号防止空变量错误）</span></span><br><span class="line">if [ &quot;$name&quot; = &quot;John&quot; ]; then</span><br><span class="line">    echo &quot;Hello John&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[[（更安全，无需引号）</span></span><br><span class="line">if [[ $name == &quot;John&quot; ]]; then</span><br><span class="line">    echo &quot;Hello John&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure> 举个例子 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[]</span></span><br><span class="line">if [ $(grep not_there /dev/null) = &#x27;&#x27; ]</span><br><span class="line">then</span><br><span class="line">    echo -n hi</span><br><span class="line">else</span><br><span class="line">    echo -n lo</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[[]]</span></span><br><span class="line">if [[ $(grep not_there /dev/null) = &#x27;&#x27; ]]</span><br><span class="line">then</span><br><span class="line">    echo -n hi</span><br><span class="line">else</span><br><span class="line">    echo -n lo</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
+<li>第一个会报错，因为<code>$(grep not_there /dev/null)</code>返回值是空，那么最后就会变成<code>[ = '' ]</code>直接报错，这就是为什么经常能看到这些语句 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ x$(grep not_there /dev/null) = &#x27;x&#x27; ]</span><br></pre></td></tr></table></figure></li>
+<li>推荐使用第二种用法，因为它更安全、功能更丰富</li>
+</ul>
+<h2 id="set">5) <code>set</code></h2>
+<p>当脚本中<strong>任何一条命令</strong>的退出状态码（<code>$?</code>）<strong>非零</strong>（即执行失败）时，脚本<strong>立即终止</strong>运行，后续命令不再执行 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set -e</span><br></pre></td></tr></table></figure> 建议使用trap来做一些清理工作，例如 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">set -e</span><br><span class="line"></span><br><span class="line">cleanup() &#123;</span><br><span class="line">    echo &quot;脚本在第 $1 行出错，正在执行清理...&quot;</span><br><span class="line">    # 清理临时文件等操作</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置陷阱，在收到 ERR 信号时（即命令失败）调用 cleanup 函数</span></span><br><span class="line">trap &#x27;cleanup $LINENO&#x27; ERR</span><br></pre></td></tr></table></figure> <code>set -e</code><strong>管道命令的盲点</strong>：默认只检查管道中<strong>最后一个命令</strong>的退出状态。如果管道中前面的命令失败，但最后一个命令成功，脚本不会退出 。解决方案是结合 <code>set -o pipefail</code>。推荐设置如下 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">set -euo pipefail  # -e: 出错退出; -u: 使用未定义变量时报错; -o pipefail: 处理管道错误</span><br></pre></td></tr></table></figure> 调试命令，打印执行的命令 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set -x</span><br></pre></td></tr></table></figure> 因此这个是设置一些选项 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">set -e</span><br><span class="line">set -x</span><br><span class="line">grep not_there /dev/null  &lt;-- 错误了之后直接退出</span><br><span class="line">echo $?</span><br></pre></td></tr></table></figure></p>
+<h2 id="section">6) ​​<code>&lt;()</code></h2>
+<p><code>&lt;()</code>输出的是文件，比如 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">diff比较grep完file1和file2的结果</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep somestring file1 &gt; /tmp/a</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep somestring file2 &gt; /tmp/b</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">diff /tmp/a /tmp/b</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">直接等价于下面的命令，更优雅</span></span><br><span class="line">diff &lt;(grep somestring file1) &lt;(grep somestring file2)</span><br></pre></td></tr></table></figure></p>
+<h2 id="quoting">7) Quoting</h2>
+<p>引用在 bash 中是一个棘手的主题，就像在许多软件环境中一样。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=&#x27;123&#x27;  </span><br><span class="line">echo &quot;$A&quot;   # &lt;-- 123</span><br><span class="line">echo &#x27;$A&#x27;   # &lt;-- $A</span><br></pre></td></tr></table></figure> 非常简单——双引号取消引用变量，而单引号则直接引用 下面的表格清晰地总结了两者的主要差异：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 41%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>特性</th>
+<th>单引号 (<code>'</code>)</th>
+<th>双引号 (<code>"</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>变量替换</strong>​</td>
+<td>不进行替换，原样输出</td>
+<td>进行替换，输出变量值</td>
+</tr>
+<tr class="even">
+<td><strong>命令替换</strong>​</td>
+<td>不执行，原样输出</td>
+<td>执行，输出命令结果</td>
+</tr>
+<tr class="odd">
+<td><strong>转义字符</strong>​</td>
+<td>不解析（<code>也视为普通字符）                 | 解析（如 `\n`, `\t`等，需配合 `echo -e`）    | | **特殊字符**​ | 所有字符（`$`,</code> <code>``, ``等）均失去特殊含义 | 仅部分字符（</code>$<code>, ``</code> <code>, `"`,</code>）保留特殊含义</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>简单来说，单引号提供严格的字面意义保护，而双引号在保护字符串整体的同时，允许变量和命令等动态内容的插入。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p tmp</span><br><span class="line">cd tmp</span><br><span class="line">touch a</span><br><span class="line">echo &quot;*&quot;   # 输出&quot;*&quot;</span><br><span class="line">echo &#x27;*&#x27;   # 输出&quot;*&quot;，*不保留特殊含义</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>使用单引号 (<code>'</code>)</strong>：当你的字符串是<strong>纯粹的文本常量</strong>，不需要任何变量或命令替换，也不需要解析转义字符时。例如，固定的提示信息、符号文字等。</li>
+<li><strong>使用双引号 (<code>"</code>)</strong>：当你的字符串中<strong>需要包含变量、命令执行结果，或者需要处理包含空格的参数</strong>时。这是更常见的情况，也是更安全的做法，因为它可以防止字符串被意外分割。</li>
+<li><strong>避免无引号</strong>：除非是极简单的连续字符（如数字、路径），否则为变量赋值或传递参数时，<strong>强烈建议总是使用引号</strong>，这能有效预防许多难以排查的错误。</li>
+</ul>
+<h2 id="top-three-shortcuts">8) Top three shortcuts</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>功能</th>
+<th>语法</th>
+<th>作用</th>
+<th>经典使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>获取最后参数</strong>​</td>
+<td><code>!$</code></td>
+<td>代表<strong>上一条命令的最后一个参数</strong>。</td>
+<td>当你执行 <code>ls /a/very/long/path</code>后，想进入该目录，只需 <code>cd !$</code>，等效于 <code>cd /a/very/long/path</code>。</td>
+</tr>
+<tr class="even">
+<td><strong>获取参数范围</strong>​</td>
+<td><code>!:1-$</code></td>
+<td>代表<strong>上一条命令中从第1个到最后一个的所有参数</strong>。</td>
+<td>误将 <code>tar -czf archive.tar.gz file1 file2</code>打成了 <code>zip</code>，可快速改为 <code>tar -czf archive.tar.gz !:1-$</code>。</td>
+</tr>
+<tr class="odd">
+<td><strong>提取目录路径</strong>​</td>
+<td><code>:h</code> <br>（修饰符）</td>
+<td>移除路径中的<strong>最后一级</strong>（文件名或目录名），返回纯目录路径。</td>
+<td>操作文件失败时（如 <code>cat /etc/nginx/sites-available/my_site</code>），用 <code>cd !$:h</code>直接切换到文件所在目录 <code>/etc/nginx/sites-available</code>查看。</td>
+</tr>
+</tbody>
+</table>
+<p><code>!$</code>：特殊变量，上一条命令的最后一个参数。如果你在处理文件，懒得一遍又一遍地重新输入命令，这可以省下很多工作： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep somestring /long/path/to/some/file/or/other.txt</span><br><span class="line">vi !$</span><br></pre></td></tr></table></figure> <code>!:1-$</code>:这个组合使这更进一步。 它获取上一个命令的所有参数并将它们放入。所以： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep isthere /long/path/to/some/file/or/other.txt</span><br><span class="line">egrep !:1-$</span><br><span class="line">fgrep !:1-$</span><br></pre></td></tr></table></figure> &gt; :是分隔符，1-$指的是第一个到最后一个参数，！指的是上一个命令</p>
+<p>我也经常使用这个。 如果将其放在文件名后面，它将更改该文件名以删除该文件夹中的所有内容。 像这样： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep isthere /long/path/to/some/file/or/other.txt</span><br><span class="line">cd !$:h # 进入了/long/path/to/some/file/or/ 目录</span><br></pre></td></tr></table></figure></p>
+<h2 id="startup-order">9) startup order</h2>
+<p>bash的启动顺序如下图 <img src="shell-startup-actual.png" /> 它显示 bash 决定根据有关 bash 运行上下文的决策（决定要遵循的颜色）从顶部运行哪些脚本。</p>
+<p>因此，如果处于本地（非远程）、非登录、交互式 shell 中（例如，当您从命令行运行 bash 本身时），您就位于“绿色”行，这些是读取文件的顺序： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/bash.bashrc</span><br><span class="line">~/.bashrc</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">[bash runs, <span class="keyword">then</span> terminates]</span></span><br><span class="line">~/.bash_logout</span><br></pre></td></tr></table></figure></p>
+<h2 id="getopts-cheapci">10) getopts (cheapci)</h2>
+<p>Bash 的 <code>getopts</code>是一个内置命令，用于在 Shell 脚本中规范地解析命令行选项和参数。</p>
+<p><code>getopts</code>的基本命令格式为： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">getopts optstring name [args]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p><strong><code>optstring</code></strong>：定义脚本识别的选项字符。</p>
+<ul>
+<li>如果一个字符后跟冒号（<code>:</code>），表示该选项需要参数，如 <code>a:</code>表示 <code>-a</code>需要跟一个参数。</li>
+<li>如果 <code>optstring</code>以冒号（<code>:</code>）开头，则开启<strong>静默错误模式</strong>，抑制默认错误信息，便于自定义错误处理。</li>
+</ul></li>
+<li><p><strong><code>name</code></strong>：每次调用 <code>getopts</code>时，会将解析到的选项字符（不带 <code>-</code>）存入该变量。</p></li>
+<li><p><strong><code>[args]</code></strong>：可选参数。若提供，<code>getopts</code>会解析这些参数而非脚本的位置参数（<code>$1, $2, ...</code>）。 <code>getopts</code>依赖两个重要的环境变量：</p></li>
+<li><p><strong><code>OPTARG</code></strong>：当选项需要参数时，该参数值存放在 <code>OPTARG</code>变量中。</p></li>
+<li><p><strong><code>OPTIND</code></strong>：保存下一个要被处理的参数索引。初始值为 1，处理完选项后，可用 <code>shift $(($OPTIND - 1))</code>跳过已处理的选项，使 <code>$1</code>指向第一个非选项参数。</p></li>
+</ul>
+<p>通常将 <code>getopts</code>放入 <code>while</code>循环，结合 <code>case</code>语句处理不同选项。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">verbose=false</span><br><span class="line">input_file=&quot;&quot;</span><br><span class="line">output_dir=&quot;&quot;</span><br><span class="line"></span><br><span class="line">while getopts &quot;:vi:o:&quot; opt; do</span><br><span class="line">    case $opt in</span><br><span class="line">        v) </span><br><span class="line">            verbose=true</span><br><span class="line">            echo &quot;详细模式已开启&quot; </span><br><span class="line">            ;;</span><br><span class="line">        i) </span><br><span class="line">            input_file=&quot;$OPTARG&quot;</span><br><span class="line">            echo &quot;输入文件设置为: $input_file&quot; </span><br><span class="line">            ;;</span><br><span class="line">        o) </span><br><span class="line">            output_dir=&quot;$OPTARG&quot;</span><br><span class="line">            echo &quot;输出目录设置为: $output_dir&quot; </span><br><span class="line">            ;;</span><br><span class="line">        \?) </span><br><span class="line">            echo &quot;错误：不支持的选项 -$OPTARG&quot; &gt;&amp;2</span><br><span class="line">            exit 1 </span><br><span class="line">            ;;</span><br><span class="line">        :) </span><br><span class="line">            echo &quot;错误：选项 -$OPTARG 需要一个参数&quot; &gt;&amp;2</span><br><span class="line">            exit 1 </span><br><span class="line">            ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">处理剩余的非选项参数</span></span><br><span class="line">shift $(($OPTIND - 1))</span><br><span class="line"></span><br><span class="line">if [ $# -gt 0 ]; then</span><br><span class="line">    echo &quot;剩余的非选项参数: $@&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure> <strong>脚本用法示例</strong>： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ./myscript.sh -i data.txt -o /tmp/output -v file1 file2</span><br><span class="line">输入文件设置为: data.txt</span><br><span class="line">输出目录设置为: /tmp/output</span><br><span class="line">详细模式已开启</span><br><span class="line">剩余的非选项参数: file1 file2</span><br></pre></td></tr></table></figure></p>
+<ol type="1">
+<li><p><strong>选项处理顺序与组合</strong> <code>getopts</code>按顺序解析选项，遇到非选项参数（不以 <code>-</code>开头）或 <code>--</code>时停止。选项可以组合，如 <code>-vi file</code>等效于 <code>-v -i file</code>。</p></li>
+<li><p><strong>错误处理模式</strong> 通过在 <code>optstring</code>前加冒号（<code>:</code>）开启静默模式。此模式下：</p>
+<ul>
+<li>遇到无效选项，<code>name</code>被设置为 <code>?</code>，<code>OPTARG</code>为无效选项字符。</li>
+<li>遇到缺少参数的选项，<code>name</code>被设置为 <code>:</code>，<code>OPTARG</code>为对应选项字符。</li>
+</ul></li>
+<li><p>处理完选项后，使用 <code>shift $(($OPTIND - 1))</code>来移除已处理的选项和其参数，便于后续处理剩余的非选项参数。</p></li>
+<li><p>重置 OPTIND 如果在同一脚本中需要多次调用 <code>getopts</code>解析不同参数集，必须在每次解析新参数集前手动重置 <code>OPTIND=1</code>，因为 Shell 不会自动重置它。</p></li>
+</ol>
+<blockquote>
+<ul>
+<li><code>getopts</code>主要用于解析<strong>短选项</strong>（如 <code>-a</code>, <code>-l</code>）。虽然可以通过一些技巧模拟处理长选项（如 <code>--help</code>），但过程较为复杂，通常需要借助 <code>getopt</code>命令（注意，不是内置的 <code>getopts</code>）。</li>
+<li><code>getopts</code>是 Shell 内置命令，执行效率高。而 <code>getopt</code>是外部命令，功能更强大（如直接支持长选项），但使用也更复杂，且不同系统上的实现可能有差异。</li>
+</ul>
+</blockquote>
+<p>If you go deep with bash, you might end up writing chunky utilities in it. If you do, then getting to grips with <code>getopts</code> can pay large dividends.</p>
+<p>For fun, I once wrote a <a href="https://github.com/ianmiell/cheapci/blob/master/cheapci">script</a> called <code>cheapci</code> which I used to work like a Jenkins job.</p>
+<p>The code <a href="https://github.com/ianmiell/cheapci/blob/master/cheapci#L70-L96">here</a> implements the reading of the <a href="https://github.com/ianmiell/cheapci/blob/master/cheapci#L33-L51">two required, and 14 non-required arguments</a>. Better to learn this than to build up a bunch of bespoke code that can get very messy pretty quickly as your utility grows.</p>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>bash</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>qemu调试linux（二）</title>
     <url>/2024/03/19/qemu/qemu%E8%B0%83%E8%AF%95linux%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<h2 id="gdb调试">GDB调试</h2>
@@ -3853,6 +3988,469 @@ Field reference (click to expand)
         <tag>linux</tag>
         <tag>环境搭建</tag>
         <tag>qemu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>perf cheatsheet</title>
+    <url>/2025/12/23/ceatsheet/perf%20cheatsheet/</url>
+    <content><![CDATA[<blockquote>
+<p>https://jvns.ca/perf-cheat-sheet.pdf</p>
+</blockquote>
+<p><img src="perfcheatsheet.png" /></p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>ceatsheet</tag>
+        <tag>perf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xv6-vscode调试</title>
+    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="launch.json">launch.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="tasks.json">tasks.json</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>环境搭建</tag>
+        <tag>xv6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用shell命令</title>
+    <url>/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="bash快捷键">Bash快捷键</h1>
+<p><img src="moving_cli.png" /></p>
+<h2 id="moving">Moving</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl + a</td>
+<td>Goto BEGINNING of command line</td>
+</tr>
+<tr class="even">
+<td>ctrl + e</td>
+<td>Goto END of command line</td>
+</tr>
+<tr class="odd">
+<td>ctrl + b</td>
+<td>move back one character</td>
+</tr>
+<tr class="even">
+<td>ctrl + f</td>
+<td>move forward one character</td>
+</tr>
+<tr class="odd">
+<td>alt + f</td>
+<td>move cursor FORWARD one word</td>
+</tr>
+<tr class="even">
+<td>alt + b</td>
+<td>move cursor BACK one word</td>
+</tr>
+<tr class="odd">
+<td>ctrl + xx</td>
+<td>Toggle between the start of line and current cursor position</td>
+</tr>
+<tr class="even">
+<td>ctrl + ] + x</td>
+<td>Where x is any character, moves the cursor forward to the next occurance of x</td>
+</tr>
+<tr class="odd">
+<td>alt + ctrl + ] + x</td>
+<td>Where x is any character, moves the cursor backwards to the previous occurance of x</td>
+</tr>
+</tbody>
+</table>
+<h2 id="edit-other">Edit / Other</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl + d</td>
+<td>Delete the character under the cursor</td>
+</tr>
+<tr class="even">
+<td>ctrl + h</td>
+<td>Delete the previous character before cursor</td>
+</tr>
+<tr class="odd">
+<td>ctrl + u</td>
+<td>Clear all / cut BEFORE cursor</td>
+</tr>
+<tr class="even">
+<td>ctrl + k</td>
+<td>Clear all / cut AFTER cursor</td>
+</tr>
+<tr class="odd">
+<td>ctrl + w</td>
+<td>delete the word BEFORE the cursor</td>
+</tr>
+<tr class="even">
+<td>alt + d</td>
+<td>delete the word FROM the cursor</td>
+</tr>
+<tr class="odd">
+<td>ctrl + y</td>
+<td>paste (if you used a previous command to delete)</td>
+</tr>
+<tr class="even">
+<td>ctrl + i</td>
+<td>command completion like Tab</td>
+</tr>
+<tr class="odd">
+<td>ctrl + l</td>
+<td>Clear the screen (same as clear command)</td>
+</tr>
+<tr class="even">
+<td>ctrl + c</td>
+<td>kill whatever is running</td>
+</tr>
+<tr class="odd">
+<td>ctrl + d</td>
+<td>Exit shell (same as exit command when cursor line is empty)</td>
+</tr>
+<tr class="even">
+<td>ctrl + z</td>
+<td>Place current process in background</td>
+</tr>
+<tr class="odd">
+<td>ctrl + _</td>
+<td>Undo</td>
+</tr>
+<tr class="even">
+<td>ctrl + x ctrl + u</td>
+<td>Undo the last changes. ctrl+ _ does the same</td>
+</tr>
+<tr class="odd">
+<td>ctrl + t</td>
+<td>Swap the last two characters before the cursor</td>
+</tr>
+<tr class="even">
+<td>esc + t</td>
+<td>Swap last two words before the cursor</td>
+</tr>
+<tr class="odd">
+<td>alt + t</td>
+<td>swap current word with previous</td>
+</tr>
+<tr class="even">
+<td>esc + .</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>esc + _</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>alt + [Backspace]</td>
+<td>delete PREVIOUS word</td>
+</tr>
+<tr class="odd">
+<td>alt + &lt;</td>
+<td>Move to the first line in the history</td>
+</tr>
+<tr class="even">
+<td>alt + &gt;</td>
+<td>Move to the end of the input history, i.e., the line currently being entered</td>
+</tr>
+<tr class="odd">
+<td>alt + ?</td>
+<td>display the file/folder names in the current path as help</td>
+</tr>
+<tr class="even">
+<td>alt + *</td>
+<td>print all the file/folder names in the current path as parameter</td>
+</tr>
+<tr class="odd">
+<td>alt + .</td>
+<td>print the LAST ARGUMENT (ie “vim file1.txt file2.txt” will yield “file2.txt”)</td>
+</tr>
+<tr class="even">
+<td>alt + c</td>
+<td>capitalize the first character to end of word starting at cursor (whole word if cursor is at the beginning of word)</td>
+</tr>
+<tr class="odd">
+<td>alt + u</td>
+<td>make uppercase from cursor to end of word</td>
+</tr>
+<tr class="even">
+<td>alt + l</td>
+<td>make lowercase from cursor to end of word</td>
+</tr>
+<tr class="odd">
+<td>alt + n</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>alt + p</td>
+<td>Non-incremental reverse search of history.</td>
+</tr>
+<tr class="odd">
+<td>alt + r</td>
+<td>Undo all changes to the line</td>
+</tr>
+<tr class="even">
+<td>alt + ctl + e</td>
+<td>Expand command line.</td>
+</tr>
+<tr class="odd">
+<td>~[TAB][TAB]</td>
+<td>List all users</td>
+</tr>
+<tr class="even">
+<td>$[TAB][TAB]</td>
+<td>List all system variables</td>
+</tr>
+<tr class="odd">
+<td>@[TAB][TAB]</td>
+<td>List all entries in your /etc/hosts file</td>
+</tr>
+<tr class="even">
+<td>[TAB]</td>
+<td>Auto complete</td>
+</tr>
+<tr class="odd">
+<td>cd -</td>
+<td>change to PREVIOUS working directory</td>
+</tr>
+</tbody>
+</table>
+<h2 id="history">History</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl + r</td>
+<td>Search backward starting at the current line and moving ‘up’ through the history as necessary</td>
+</tr>
+<tr class="even">
+<td>crtl + s</td>
+<td>Search forward starting at the current line and moving ‘down’ through the history as necessary</td>
+</tr>
+<tr class="odd">
+<td>ctrl + p</td>
+<td>Fetch the previous command from the history list, moving back in the list (same as up arrow)</td>
+</tr>
+<tr class="even">
+<td>ctrl + n</td>
+<td>Fetch the next command from the history list, moving forward in the list (same as down arrow)</td>
+</tr>
+<tr class="odd">
+<td>ctrl + o</td>
+<td>Execute the command found via Ctrl+r or Ctrl+s</td>
+</tr>
+<tr class="even">
+<td>ctrl + g</td>
+<td>Escape from history searching mode</td>
+</tr>
+<tr class="odd">
+<td>!!</td>
+<td>Run PREVIOUS command (ie <code>sudo !!</code>)</td>
+</tr>
+<tr class="even">
+<td>!vi</td>
+<td>Run PREVIOUS command that BEGINS with vi</td>
+</tr>
+<tr class="odd">
+<td>!vi:p</td>
+<td>Print previously run command that BEGINS with vi</td>
+</tr>
+<tr class="even">
+<td>!n</td>
+<td>Execute nth command in history</td>
+</tr>
+<tr class="odd">
+<td>!$</td>
+<td>Last argument of last command</td>
+</tr>
+<tr class="even">
+<td>!^</td>
+<td>First argument of last command</td>
+</tr>
+<tr class="odd">
+<td><sup>abc</sup>xyz</td>
+<td>Replace first occurance of abc with xyz in last command and execute it</td>
+</tr>
+</tbody>
+</table>
+<h1 id="常用命令">常用命令</h1>
+<blockquote>
+<p>https://github.com/jlevy/the-art-of-command-line/tree/master</p>
+</blockquote>
+<h2 id="bash命令行">bash命令行</h2>
+<ul>
+<li>如果你输入命令的时候中途改了主意，按下 <strong>alt-#</strong> 在行首添加 <code>#</code> 把它当做注释再按下回车执行（或者依次按下 <strong>ctrl-a</strong>， <strong>#</strong>， <strong>enter</strong>）。这样做的话，之后借助命令行历史记录，你可以很方便恢复你刚才输入到一半的命令。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ # yum install gcc   &lt;--前面加#</span><br><span class="line">➜  ~ # yum install gcc   &lt;-- 按上键</span><br></pre></td></tr></table></figure></li>
+<li>使用 <code>netstat -lntp</code> 或 <code>ss -plat</code> 检查哪些进程在监听端口（默认是检查 TCP 端口; 添加参数 <code>-u</code> 则检查 UDP 端口）或者 <code>lsof -iTCP -sTCP:LISTEN -P -n</code> (这也可以在 OS X 上运行)。</li>
+<li><code>pstree -p</code> 以一种优雅的方式展示进程树。</li>
+<li>使用 <code>nohup</code> 或 <code>disown</code> 使一个后台进程持续运行。</li>
+<li>使用 <code>pgrep</code> 和 <code>pkill</code> 根据名字查找进程或发送信号（<code>-f</code> 参数通常有用）。</li>
+<li>将 shell 切换为其他用户，使用 <code>su username</code> 或者 <code>su - username</code>。加入 <code>-</code> 会使得切换后的环境与使用该用户登录后的环境相同。省略用户名则默认为 root。切换到哪个用户，就需要输入_哪个用户的_密码。</li>
+<li>可以把别名、shell 选项和常用函数保存在 <code>~/.bashrc</code>，具体看下这篇<a href="http://superuser.com/a/183980/7106">文章</a>。这样做的话你就可以在所有 shell 会话中使用你的设定。</li>
+<li>把环境变量的设定以及登陆时要执行的命令保存在 <code>~/.bash_profile</code>。而对于从图形界面启动的 shell 和 <code>cron</code> 启动的 shell，则需要单独配置文件。</li>
+<li>shell PS1显示 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 编辑配置文件（以当前用户的 ~/.bashrc 为例）</span></span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 在文件末尾添加一行，例如：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示效果类似于：[Sun Dec 21 14:05:30] user@server:~$</span></span><br><span class="line">export PS1=&quot;[\d \t] \u@\h:\W\$ &quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3. 让配置立即生效</span></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="文件及数据处理">文件及数据处理</h2>
+<ul>
+<li><code>wc</code> 去计算新行数（<code>-l</code>），字符数（<code>-m</code>），单词数（<code>-w</code>）以及字节数（<code>-c</code>）。</li>
+<li>使用 <code>tee</code> 将标准输入复制到文件甚至标准输出，例如 <code>ls -al | tee file.txt</code>。</li>
+<li>替换一个或多个文件中出现的字符串： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">perl -pi.bak -e &#x27;s/old-string/new-string/g&#x27; my-files-*.txt</span><br></pre></td></tr></table></figure></li>
+<li><code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快方法</a>之一： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure></li>
+<li>标准的源代码对比及合并工具是 <code>diff</code> 和 <code>patch</code>。使用 <code>diffstat</code> 查看变更总览数据。注意到 <code>diff -r</code> 对整个文件夹有效。使用 <code>diff -r tree1 tree2 | diffstat</code> 查看变更的统计数据。<code>vimdiff</code> 用于比对并编辑文件。 <img src="diff.png" /></li>
+<li>对于二进制文件，使用 <code>hd</code>，<code>hexdump</code> 或者 <code>xxd</code> 使其以十六进制显示，使用 <code>bvi</code>，<code>hexedit</code> 或者 <code>biew</code> 来进行二进制编辑。</li>
+<li>同样对于二进制文件，<code>strings</code>（包括 <code>grep</code> 等工具）可以帮助在二进制文件中查找特定比特。</li>
+<li>拆分文件可以使用 <code>split</code>（按大小拆分）和 <code>csplit</code>（按模式拆分）。</li>
+<li>操作日期和时间表达式，可以用 <a href="http://www.fresse.org/dateutils/"><code>dateutils</code></a> 中的 <code>dateadd</code>、<code>datediff</code>、<code>strptime</code> 等工具。</li>
+<li>使用 <code>zless</code>、<code>zmore</code>、<code>zcat</code> 和 <code>zgrep</code> 对压缩过的文件进行操作。</li>
+<li>文件属性可以通过 <code>chattr</code> 进行设置，它比文件权限更加底层。例如，为了保护文件不被意外删除，可以使用不可修改标记：<code>sudo chattr +i /critical/directory/or/file</code></li>
+<li>使用 <code>getfacl</code> 和 <code>setfacl</code> 以保存和恢复文件权限。例如： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">getfacl -R /some/path &gt; permissions.txt</span><br><span class="line">setfacl --restore=permissions.txt</span><br></pre></td></tr></table></figure></li>
+<li>为了高效地创建空文件，请使用 <code>truncate</code>（创建<a href="https://zh.wikipedia.org/wiki/%E7%A8%80%E7%96%8F%E6%96%87%E4%BB%B6">稀疏文件</a>），<code>fallocate</code>（用于 ext4，xfs，btrf 和 ocfs2 文件系统），<code>xfs_mkfile</code>（适用于几乎所有的文件系统，包含在 xfsprogs 包中），<code>mkfile</code>（用于类 Unix 操作系统，比如 Solaris 和 Mac OS）。</li>
+</ul>
+<h2 id="系统调试">系统调试</h2>
+<ul>
+<li><code>curl</code> 和 <code>curl -I</code> 可以被轻松地应用于 web 调试中，它们的好兄弟 <code>wget</code> 也是如此，或者也可以试试更潮的 <a href="https://github.com/jkbrzt/httpie"><code>httpie</code></a>。</li>
+<li>获取 CPU 和硬盘的使用状态，通常使用使用 <code>top</code>（<code>htop</code> 更佳），<code>iostat</code> 和 <code>iotop</code>。而 <code>iostat -mxz 15</code> 可以让你获悉 CPU 和每个硬盘分区的基本信息和性能表现。</li>
+<li>使用 <code>netstat</code> 和 <code>ss</code> 查看网络连接的细节。</li>
+<li><code>dstat</code> 在你想要对系统的现状有一个粗略的认识时是非常有用的。然而若要对系统有一个深度的总体认识，使用 <a href="https://github.com/nicolargo/glances"><code>glances</code></a>，它会在一个终端窗口中向你提供一些系统级的数据。</li>
+<li>若要了解内存状态，运行并理解 <code>free</code> 和 <code>vmstat</code> 的输出。值得留意的是“cached”的值，它指的是 Linux 内核用来作为文件缓存的内存大小，而与空闲内存无关。</li>
+<li>Java 系统调试则是一件截然不同的事，一个可以用于 Oracle 的 JVM 或其他 JVM 上的调试的技巧是你可以运行 <code>kill -3 &lt;pid&gt;</code> 同时一个完整的栈轨迹和堆概述（包括 GC 的细节）会被保存到标准错误或是日志文件。JDK 中的 <code>jps</code>，<code>jstat</code>，<code>jstack</code>，<code>jmap</code> 很有用。<a href="https://github.com/aragozin/jvm-tools">SJK tools</a> 更高级。</li>
+<li>使用 <a href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a> 去跟踪路由，用于确定网络问题。</li>
+<li>用 <a href="https://dev.yorhel.nl/ncdu"><code>ncdu</code></a> 来查看磁盘使用情况，它比寻常的命令，如 <code>du -sh *</code>，更节省时间。</li>
+<li>查找正在使用带宽的套接字连接或进程，使用 <a href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a href="https://github.com/raboof/nethogs"><code>nethogs</code></a>。</li>
+<li><code>ab</code> 工具（Apache 中自带）可以简单粗暴地检查 web 服务器的性能。对于更复杂的负载测试，使用 <code>siege</code>。</li>
+<li><a href="https://wireshark.org/"><code>wireshark</code></a>，<a href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a> 和 <a href="http://ngrep.sourceforge.net/"><code>ngrep</code></a> 可用于复杂的网络调试。</li>
+<li>了解 <code>strace</code> 和 <code>ltrace</code>。这俩工具在你的程序运行失败、挂起甚至崩溃，而你却不知道为什么或你想对性能有个总体的认识的时候是非常有用的。注意 profile 参数（<code>-c</code>）和附加到一个运行的进程参数 （<code>-p</code>）。</li>
+<li>了解使用 <code>ldd</code> 来检查共享库。但是<a href="http://www.catonmat.net/blog/ldd-arbitrary-code-execution/">永远不要在不信任的文件上运行</a>。</li>
+<li>了解如何运用 <code>gdb</code> 连接到一个运行着的进程并获取它的堆栈轨迹。</li>
+<li>学会使用 <code>/proc</code>。它在调试正在出现的问题的时候有时会效果惊人。比如：<code>/proc/cpuinfo</code>，<code>/proc/meminfo</code>，<code>/proc/cmdline</code>，<code>/proc/xxx/cwd</code>，<code>/proc/xxx/exe</code>，<code>/proc/xxx/fd/</code>，<code>/proc/xxx/smaps</code>（这里的 <code>xxx</code> 表示进程的 id 或 pid）。</li>
+<li>当调试一些之前出现的问题的时候，<a href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a> 非常有用。它展示了 cpu、内存以及网络等的历史数据。</li>
+<li>关于更深层次的系统分析以及性能分析，看看 <code>stap</code>（<a href="https://sourceware.org/systemtap/wiki">SystemTap</a>），<a href="https://en.wikipedia.org/wiki/Perf_(Linux)"><code>perf</code></a>，以及<a href="https://github.com/draios/sysdig"><code>sysdig</code></a>。</li>
+<li>查看你当前使用的系统，使用 <code>uname</code>，<code>uname -a</code>（Unix／kernel 信息）或者 <code>lsb_release -a</code>（Linux 发行版信息）。</li>
+<li>无论什么东西工作得很欢乐（可能是硬件或驱动问题）时可以试试 <code>dmesg</code>。</li>
+<li>如果你删除了一个文件，但通过 <code>du</code> 发现没有释放预期的磁盘空间，请检查文件是否被进程占用： <code>lsof | grep deleted | grep "filename-of-my-big-file"</code></li>
+</ul>
+<h2 id="单行脚本">单行脚本</h2>
+<ul>
+<li>当你需要对文本文件做集合交、并、差运算时，<code>sort</code> 和 <code>uniq</code> 会是你的好帮手。具体例子请参照代码后面的，此处假设 <code>a</code> 与 <code>b</code> 是两内容不同的文件。这种方式效率很高，并且在小文件和上 G 的文件上都能运用（注意尽管在 <code>/tmp</code> 在一个小的根分区上时你可能需要 <code>-T</code> 参数，但是实际上 <code>sort</code> 并不被内存大小约束），参阅前文中关于 <code>LC_ALL</code> 和 <code>sort</code> 的 <code>-u</code> 参数的部分。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sort a b | uniq &gt; c   # c 是 a 并 b</span><br><span class="line">sort a b | uniq -d &gt; c   # c 是 a 交 b</span><br><span class="line">sort a b b | uniq -u &gt; c   # c 是 a - b</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>使用 <code>grep . *</code>（每行都会附上文件名）或者 <code>head -100 *</code>（每个文件有一个标题）来阅读检查目录下所有文件的内容。这在检查一个充满配置文件的目录（如 <code>/sys</code>、<code>/proc</code>、<code>/etc</code>）时特别好用。</p></li>
+<li><p>计算文本文件第三列中所有数的和（可能比同等作用的 Python 代码快三倍且代码量少三倍）： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">awk &#x27;&#123; x += $3 &#125; END &#123; print x &#125;&#x27; myfile</span><br></pre></td></tr></table></figure></p></li>
+<li><p>如果你想在文件树上查看大小/日期，这可能看起来像递归版的 <code>ls -l</code> 但比 <code>ls -lR</code> 更易于理解： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -ls</span><br></pre></td></tr></table></figure></p></li>
+<li><p>假设你有一个类似于 web 服务器日志文件的文本文件，并且一个确定的值只会出现在某些行上，假设一个 <code>acct_id</code> 参数在 URI 中。如果你想计算出每个 <code>acct_id</code> 值有多少次请求，使用如下代码： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">egrep -o &#x27;acct_id=[0-9]+&#x27; access.log | cut -d= -f2 | sort | uniq -c | sort -rn</span><br></pre></td></tr></table></figure></p></li>
+<li><p>要持续监测文件改动，可以使用 <code>watch</code>，例如检查某个文件夹中文件的改变，可以用 <code>watch -d -n 2 'ls -rtlh | tail'</code>；或者在排查 WiFi 设置故障时要监测网络设置的更改，可以用 <code>watch -d -n 2 ifconfig</code>。</p></li>
+<li><p>运行这个函数从这篇文档中随机获取一条技巧（解析 Markdown 文件并抽取项目）： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">function taocl() &#123;</span><br><span class="line">	curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README-zh.md|</span><br><span class="line">	pandoc -f markdown -t html |</span><br><span class="line">       iconv -f &#x27;utf-8&#x27; -t &#x27;unicode&#x27; |</span><br><span class="line">       xmlstarlet fo --html --dropdtd |</span><br><span class="line">       xmlstarlet sel -t -v &quot;(html/body/ul/li[count(p)&gt;0])[$RANDOM mod last()+1]&quot; |</span><br><span class="line">       xmlstarlet unesc | fmt -80</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure> ## 冷门但有用</p></li>
+<li><p><code>expr</code>：计算表达式或正则匹配</p></li>
+<li><p><code>m4</code>：简单的宏处理器</p></li>
+<li><p><code>yes</code>：多次打印字符串</p></li>
+<li><p><code>cal</code>：漂亮的日历</p></li>
+<li><p><code>env</code>：执行一个命令（脚本文件中很有用）</p></li>
+<li><p><code>printenv</code>：打印环境变量（调试时或在写脚本文件时很有用）</p></li>
+<li><p><code>look</code>：查找以特定字符串开头的单词或行</p></li>
+<li><p><code>cut</code>，<code>paste</code> 和 <code>join</code>：数据修改</p></li>
+<li><p><code>fmt</code>：格式化文本段落</p></li>
+<li><p><code>pr</code>：将文本格式化成页／列形式</p></li>
+<li><p><code>fold</code>：包裹文本中的几行</p></li>
+<li><p><code>column</code>：将文本格式化成多个对齐、定宽的列或表格</p></li>
+<li><p><code>expand</code> 和 <code>unexpand</code>：制表符与空格之间转换</p></li>
+<li><p><code>nl</code>：添加行号</p></li>
+<li><p><code>seq</code>：打印数字</p></li>
+<li><p><code>bc</code>：计算器</p></li>
+<li><p><code>factor</code>：分解因数</p></li>
+<li><p><a href="https://gnupg.org/"><code>gpg</code></a>：加密并签名文件</p></li>
+<li><p><code>toe</code>：terminfo 入口列表</p></li>
+<li><p><code>nc</code>：网络调试及数据传输</p></li>
+<li><p><code>socat</code>：套接字代理，与 <code>netcat</code> 类似</p></li>
+<li><p><a href="https://github.com/mattthias/slurm"><code>slurm</code></a>：网络流量可视化</p></li>
+<li><p><code>dd</code>：文件或设备间传输数据</p></li>
+<li><p><code>file</code>：确定文件类型</p></li>
+<li><p><code>tree</code>：以树的形式显示路径和文件，类似于递归的 <code>ls</code></p></li>
+<li><p><code>stat</code>：文件信息</p></li>
+<li><p><code>time</code>：执行命令，并计算执行时间</p></li>
+<li><p><code>timeout</code>：在指定时长范围内执行命令，并在规定时间结束后停止进程</p></li>
+<li><p><code>lockfile</code>：使文件只能通过 <code>rm -f</code> 移除</p></li>
+<li><p><code>logrotate</code>： 切换、压缩以及发送日志文件</p></li>
+<li><p><code>watch</code>：重复运行同一个命令，展示结果并／或高亮有更改的部分</p></li>
+<li><p><a href="https://github.com/joh/when-changed"><code>when-changed</code></a>：当检测到文件更改时执行指定命令。参阅 <code>inotifywait</code> 和 <code>entr</code>。</p></li>
+<li><p><code>tac</code>：反向输出文件</p></li>
+<li><p><code>shuf</code>：文件中随机选取几行</p></li>
+<li><p><code>comm</code>：一行一行的比较排序过的文件</p></li>
+<li><p><code>strings</code>：从二进制文件中抽取文本</p></li>
+<li><p><code>tr</code>：转换字母</p></li>
+<li><p><code>iconv</code> 或 <code>uconv</code>：文本编码转换</p></li>
+<li><p><code>split</code> 和 <code>csplit</code>：分割文件</p></li>
+<li><p><code>sponge</code>：在写入前读取所有输入，在读取文件后再向同一文件写入时比较有用，例如 <code>grep -v something some-file | sponge some-file</code></p></li>
+<li><p><code>units</code>：将一种计量单位转换为另一种等效的计量单位（参阅 <code>/usr/share/units/definitions.units</code>）</p></li>
+<li><p><code>apg</code>：随机生成密码</p></li>
+<li><p><code>xz</code>：高比例的文件压缩</p></li>
+<li><p><code>ldd</code>：动态库信息</p></li>
+<li><p><code>nm</code>：提取 obj 文件中的符号</p></li>
+<li><p><code>ab</code> 或 <a href="https://github.com/wg/wrk"><code>wrk</code></a>：web 服务器性能分析</p></li>
+<li><p><code>strace</code>：调试系统调用</p></li>
+<li><p><a href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a>：更好的网络调试跟踪工具</p></li>
+<li><p><code>cssh</code>：可视化的并发 shell</p></li>
+<li><p><code>rsync</code>：通过 ssh 或本地文件系统同步文件和文件夹</p></li>
+<li><p><a href="https://wireshark.org/"><code>wireshark</code></a> 和 <a href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a>：抓包和网络调试工具</p></li>
+<li><p><a href="http://ngrep.sourceforge.net/"><code>ngrep</code></a>：网络层的 grep</p></li>
+<li><p><code>host</code> 和 <code>dig</code>：DNS 查找</p></li>
+<li><p><code>lsof</code>：列出当前系统打开文件的工具以及查看端口信息</p></li>
+<li><p><code>dstat</code>：系统状态查看</p></li>
+<li><p><a href="https://github.com/nicolargo/glances"><code>glances</code></a>：高层次的多子系统总览</p></li>
+<li><p><code>iostat</code>：硬盘使用状态</p></li>
+<li><p><code>mpstat</code>： CPU 使用状态</p></li>
+<li><p><code>vmstat</code>： 内存使用状态</p></li>
+<li><p><code>htop</code>：top 的加强版</p></li>
+<li><p><code>last</code>：登入记录</p></li>
+<li><p><code>w</code>：查看处于登录状态的用户</p></li>
+<li><p><code>id</code>：用户/组 ID 信息</p></li>
+<li><p><a href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a>：系统历史数据</p></li>
+<li><p><a href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a href="https://github.com/raboof/nethogs"><code>nethogs</code></a>：套接字及进程的网络利用情况</p></li>
+<li><p><code>ss</code>：套接字数据</p></li>
+<li><p><code>dmesg</code>：引导及系统错误信息</p></li>
+<li><p><code>sysctl</code>： 在内核运行时动态地查看和修改内核的运行参数</p></li>
+<li><p><code>hdparm</code>：SATA/ATA 磁盘更改及性能分析</p></li>
+<li><p><code>lsblk</code>：列出块设备信息：以树形展示你的磁盘以及磁盘分区信息</p></li>
+<li><p><code>lshw</code>，<code>lscpu</code>，<code>lspci</code>，<code>lsusb</code> 和 <code>dmidecode</code>：查看硬件信息，包括 CPU、BIOS、RAID、显卡、USB设备等</p></li>
+<li><p><code>lsmod</code> 和 <code>modinfo</code>：列出内核模块，并显示其细节</p></li>
+<li><p><code>fortune</code>，<code>ddate</code> 和 <code>sl</code>：额，这主要取决于你是否认为蒸汽火车和莫名其妙的名人名言是否“有用”</p></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -4824,616 +5422,6 @@ Field reference (click to expand)
 ]]></content>
   </entry>
   <entry>
-    <title>Ten Things I Wish I’d Known About bash</title>
-    <url>/2025/12/22/shells/Ten%20Things%20I%20Wish%20I%E2%80%99d%20Known%20About%20bash/</url>
-    <content><![CDATA[<blockquote>
-<p>https://zwischenzugs.com/2018/01/06/ten-things-i-wish-id-known-about-bash/</p>
-</blockquote>
-<h2 id="vs">1)  <code>``</code> vs <code>$()</code></h2>
-<p>这两完成了一样的事情： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> `<span class="built_in">ls</span>`</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> $(<span class="built_in">ls</span>)</span></span><br></pre></td></tr></table></figure> <code>``</code> 是Unix时代引入的，<code>$()</code>更现代和易读易写。 比如： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> `<span class="built_in">echo</span> \`<span class="built_in">echo</span> \\\`<span class="built_in">echo</span> inside\\\`\``</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> $(<span class="built_in">echo</span> $(<span class="built_in">echo</span> $(<span class="built_in">echo</span> inside)))</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="globbing-vs-regexps">2) globbing vs regexps</h2>
-<p>glob和regexps是不一样的东西，glob是通配符，regexp是正则表达式。 看以下的表达式： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rename -n <span class="string">&#x27;s/(.*)/new$1/&#x27;</span> *</span></span><br></pre></td></tr></table></figure> 这里有两个<code>*</code>号 - 第一个在引号内部，作为正则表达式的一部分 - 第二个在外部，作为通配符的部分 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span> *</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span> .*</span></span><br></pre></td></tr></table></figure> 所以第二个看着像是正则表达式，但是实际上并不是</p>
-<h2 id="exit-codes">3) Exit Codes</h2>
-<p>所有的命令都会返回值给shell <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep not_there /dev/null</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> $?</span></span><br></pre></td></tr></table></figure> - 0就是命令执行正确，非0就是执行失败 - <code>$?</code>是一个特殊的符号，用来从shell里获取上一条命令的返回值</p>
-<h2 id="if-statements-and">4) <code>if</code> statements, <code>[</code> and <code>[[</code></h2>
-<ul>
-<li><code>[</code>（单方括号）实际上是<code>test</code>命令的别名，是一个内置命令。它用于基本的条件测试，需要遵循严格的语法格式（如括号内必须有空格）。</li>
-<li><code>[[</code>（双方括号）​ 是Bash的关键字，提供了比<code>[</code>更强大的功能。它不是普通命令，而是Bash的语法结构，因此具有更灵活和直观的行为。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[（需要引号防止空变量错误）</span></span><br><span class="line">if [ &quot;$name&quot; = &quot;John&quot; ]; then</span><br><span class="line">    echo &quot;Hello John&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[[（更安全，无需引号）</span></span><br><span class="line">if [[ $name == &quot;John&quot; ]]; then</span><br><span class="line">    echo &quot;Hello John&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure> 举个例子 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[]</span></span><br><span class="line">if [ $(grep not_there /dev/null) = &#x27;&#x27; ]</span><br><span class="line">then</span><br><span class="line">    echo -n hi</span><br><span class="line">else</span><br><span class="line">    echo -n lo</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用[[]]</span></span><br><span class="line">if [[ $(grep not_there /dev/null) = &#x27;&#x27; ]]</span><br><span class="line">then</span><br><span class="line">    echo -n hi</span><br><span class="line">else</span><br><span class="line">    echo -n lo</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
-<li>第一个会报错，因为<code>$(grep not_there /dev/null)</code>返回值是空，那么最后就会变成<code>[ = '' ]</code>直接报错，这就是为什么经常能看到这些语句 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ x$(grep not_there /dev/null) = &#x27;x&#x27; ]</span><br></pre></td></tr></table></figure></li>
-<li>推荐使用第二种用法，因为它更安全、功能更丰富</li>
-</ul>
-<h2 id="set">5) <code>set</code></h2>
-<p>当脚本中<strong>任何一条命令</strong>的退出状态码（<code>$?</code>）<strong>非零</strong>（即执行失败）时，脚本<strong>立即终止</strong>运行，后续命令不再执行 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set -e</span><br></pre></td></tr></table></figure> 建议使用trap来做一些清理工作，例如 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">set -e</span><br><span class="line"></span><br><span class="line">cleanup() &#123;</span><br><span class="line">    echo &quot;脚本在第 $1 行出错，正在执行清理...&quot;</span><br><span class="line">    # 清理临时文件等操作</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置陷阱，在收到 ERR 信号时（即命令失败）调用 cleanup 函数</span></span><br><span class="line">trap &#x27;cleanup $LINENO&#x27; ERR</span><br></pre></td></tr></table></figure> <code>set -e</code><strong>管道命令的盲点</strong>：默认只检查管道中<strong>最后一个命令</strong>的退出状态。如果管道中前面的命令失败，但最后一个命令成功，脚本不会退出 。解决方案是结合 <code>set -o pipefail</code>。推荐设置如下 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">set -euo pipefail  # -e: 出错退出; -u: 使用未定义变量时报错; -o pipefail: 处理管道错误</span><br></pre></td></tr></table></figure> 调试命令，打印执行的命令 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set -x</span><br></pre></td></tr></table></figure> 因此这个是设置一些选项 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">set -e</span><br><span class="line">set -x</span><br><span class="line">grep not_there /dev/null  &lt;-- 错误了之后直接退出</span><br><span class="line">echo $?</span><br></pre></td></tr></table></figure></p>
-<h2 id="section">6) ​​<code>&lt;()</code></h2>
-<p><code>&lt;()</code>输出的是文件，比如 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">diff比较grep完file1和file2的结果</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep somestring file1 &gt; /tmp/a</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep somestring file2 &gt; /tmp/b</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">diff /tmp/a /tmp/b</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">直接等价于下面的命令，更优雅</span></span><br><span class="line">diff &lt;(grep somestring file1) &lt;(grep somestring file2)</span><br></pre></td></tr></table></figure></p>
-<h2 id="quoting">7) Quoting</h2>
-<p>引用在 bash 中是一个棘手的主题，就像在许多软件环境中一样。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=&#x27;123&#x27;  </span><br><span class="line">echo &quot;$A&quot;   # &lt;-- 123</span><br><span class="line">echo &#x27;$A&#x27;   # &lt;-- $A</span><br></pre></td></tr></table></figure> 非常简单——双引号取消引用变量，而单引号则直接引用 下面的表格清晰地总结了两者的主要差异：</p>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 41%" />
-<col style="width: 46%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>特性</th>
-<th>单引号 (<code>'</code>)</th>
-<th>双引号 (<code>"</code>)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>变量替换</strong>​</td>
-<td>不进行替换，原样输出</td>
-<td>进行替换，输出变量值</td>
-</tr>
-<tr class="even">
-<td><strong>命令替换</strong>​</td>
-<td>不执行，原样输出</td>
-<td>执行，输出命令结果</td>
-</tr>
-<tr class="odd">
-<td><strong>转义字符</strong>​</td>
-<td>不解析（<code>也视为普通字符）                 | 解析（如 `\n`, `\t`等，需配合 `echo -e`）    | | **特殊字符**​ | 所有字符（`$`,</code> <code>``, ``等）均失去特殊含义 | 仅部分字符（</code>$<code>, ``</code> <code>, `"`,</code>）保留特殊含义</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>简单来说，单引号提供严格的字面意义保护，而双引号在保护字符串整体的同时，允许变量和命令等动态内容的插入。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p tmp</span><br><span class="line">cd tmp</span><br><span class="line">touch a</span><br><span class="line">echo &quot;*&quot;   # 输出&quot;*&quot;</span><br><span class="line">echo &#x27;*&#x27;   # 输出&quot;*&quot;，*不保留特殊含义</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>使用单引号 (<code>'</code>)</strong>：当你的字符串是<strong>纯粹的文本常量</strong>，不需要任何变量或命令替换，也不需要解析转义字符时。例如，固定的提示信息、符号文字等。</li>
-<li><strong>使用双引号 (<code>"</code>)</strong>：当你的字符串中<strong>需要包含变量、命令执行结果，或者需要处理包含空格的参数</strong>时。这是更常见的情况，也是更安全的做法，因为它可以防止字符串被意外分割。</li>
-<li><strong>避免无引号</strong>：除非是极简单的连续字符（如数字、路径），否则为变量赋值或传递参数时，<strong>强烈建议总是使用引号</strong>，这能有效预防许多难以排查的错误。</li>
-</ul>
-<h2 id="top-three-shortcuts">8) Top three shortcuts</h2>
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>功能</th>
-<th>语法</th>
-<th>作用</th>
-<th>经典使用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>获取最后参数</strong>​</td>
-<td><code>!$</code></td>
-<td>代表<strong>上一条命令的最后一个参数</strong>。</td>
-<td>当你执行 <code>ls /a/very/long/path</code>后，想进入该目录，只需 <code>cd !$</code>，等效于 <code>cd /a/very/long/path</code>。</td>
-</tr>
-<tr class="even">
-<td><strong>获取参数范围</strong>​</td>
-<td><code>!:1-$</code></td>
-<td>代表<strong>上一条命令中从第1个到最后一个的所有参数</strong>。</td>
-<td>误将 <code>tar -czf archive.tar.gz file1 file2</code>打成了 <code>zip</code>，可快速改为 <code>tar -czf archive.tar.gz !:1-$</code>。</td>
-</tr>
-<tr class="odd">
-<td><strong>提取目录路径</strong>​</td>
-<td><code>:h</code> <br>（修饰符）</td>
-<td>移除路径中的<strong>最后一级</strong>（文件名或目录名），返回纯目录路径。</td>
-<td>操作文件失败时（如 <code>cat /etc/nginx/sites-available/my_site</code>），用 <code>cd !$:h</code>直接切换到文件所在目录 <code>/etc/nginx/sites-available</code>查看。</td>
-</tr>
-</tbody>
-</table>
-<p><code>!$</code>：特殊变量，上一条命令的最后一个参数。如果你在处理文件，懒得一遍又一遍地重新输入命令，这可以省下很多工作： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep somestring /long/path/to/some/file/or/other.txt</span><br><span class="line">vi !$</span><br></pre></td></tr></table></figure> <code>!:1-$</code>:这个组合使这更进一步。 它获取上一个命令的所有参数并将它们放入。所以： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep isthere /long/path/to/some/file/or/other.txt</span><br><span class="line">egrep !:1-$</span><br><span class="line">fgrep !:1-$</span><br></pre></td></tr></table></figure> &gt; :是分隔符，1-$指的是第一个到最后一个参数，！指的是上一个命令</p>
-<p>我也经常使用这个。 如果将其放在文件名后面，它将更改该文件名以删除该文件夹中的所有内容。 像这样： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep isthere /long/path/to/some/file/or/other.txt</span><br><span class="line">cd !$:h # 进入了/long/path/to/some/file/or/ 目录</span><br></pre></td></tr></table></figure></p>
-<h2 id="startup-order">9) startup order</h2>
-<p>bash的启动顺序如下图 <img src="shell-startup-actual.png" /> 它显示 bash 决定根据有关 bash 运行上下文的决策（决定要遵循的颜色）从顶部运行哪些脚本。</p>
-<p>因此，如果处于本地（非远程）、非登录、交互式 shell 中（例如，当您从命令行运行 bash 本身时），您就位于“绿色”行，这些是读取文件的顺序： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/bash.bashrc</span><br><span class="line">~/.bashrc</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">[bash runs, <span class="keyword">then</span> terminates]</span></span><br><span class="line">~/.bash_logout</span><br></pre></td></tr></table></figure></p>
-<h2 id="getopts-cheapci">10) getopts (cheapci)</h2>
-<p>Bash 的 <code>getopts</code>是一个内置命令，用于在 Shell 脚本中规范地解析命令行选项和参数。</p>
-<p><code>getopts</code>的基本命令格式为： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">getopts optstring name [args]</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p><strong><code>optstring</code></strong>：定义脚本识别的选项字符。</p>
-<ul>
-<li>如果一个字符后跟冒号（<code>:</code>），表示该选项需要参数，如 <code>a:</code>表示 <code>-a</code>需要跟一个参数。</li>
-<li>如果 <code>optstring</code>以冒号（<code>:</code>）开头，则开启<strong>静默错误模式</strong>，抑制默认错误信息，便于自定义错误处理。</li>
-</ul></li>
-<li><p><strong><code>name</code></strong>：每次调用 <code>getopts</code>时，会将解析到的选项字符（不带 <code>-</code>）存入该变量。</p></li>
-<li><p><strong><code>[args]</code></strong>：可选参数。若提供，<code>getopts</code>会解析这些参数而非脚本的位置参数（<code>$1, $2, ...</code>）。 <code>getopts</code>依赖两个重要的环境变量：</p></li>
-<li><p><strong><code>OPTARG</code></strong>：当选项需要参数时，该参数值存放在 <code>OPTARG</code>变量中。</p></li>
-<li><p><strong><code>OPTIND</code></strong>：保存下一个要被处理的参数索引。初始值为 1，处理完选项后，可用 <code>shift $(($OPTIND - 1))</code>跳过已处理的选项，使 <code>$1</code>指向第一个非选项参数。</p></li>
-</ul>
-<p>通常将 <code>getopts</code>放入 <code>while</code>循环，结合 <code>case</code>语句处理不同选项。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">verbose=false</span><br><span class="line">input_file=&quot;&quot;</span><br><span class="line">output_dir=&quot;&quot;</span><br><span class="line"></span><br><span class="line">while getopts &quot;:vi:o:&quot; opt; do</span><br><span class="line">    case $opt in</span><br><span class="line">        v) </span><br><span class="line">            verbose=true</span><br><span class="line">            echo &quot;详细模式已开启&quot; </span><br><span class="line">            ;;</span><br><span class="line">        i) </span><br><span class="line">            input_file=&quot;$OPTARG&quot;</span><br><span class="line">            echo &quot;输入文件设置为: $input_file&quot; </span><br><span class="line">            ;;</span><br><span class="line">        o) </span><br><span class="line">            output_dir=&quot;$OPTARG&quot;</span><br><span class="line">            echo &quot;输出目录设置为: $output_dir&quot; </span><br><span class="line">            ;;</span><br><span class="line">        \?) </span><br><span class="line">            echo &quot;错误：不支持的选项 -$OPTARG&quot; &gt;&amp;2</span><br><span class="line">            exit 1 </span><br><span class="line">            ;;</span><br><span class="line">        :) </span><br><span class="line">            echo &quot;错误：选项 -$OPTARG 需要一个参数&quot; &gt;&amp;2</span><br><span class="line">            exit 1 </span><br><span class="line">            ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">处理剩余的非选项参数</span></span><br><span class="line">shift $(($OPTIND - 1))</span><br><span class="line"></span><br><span class="line">if [ $# -gt 0 ]; then</span><br><span class="line">    echo &quot;剩余的非选项参数: $@&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure> <strong>脚本用法示例</strong>： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ./myscript.sh -i data.txt -o /tmp/output -v file1 file2</span><br><span class="line">输入文件设置为: data.txt</span><br><span class="line">输出目录设置为: /tmp/output</span><br><span class="line">详细模式已开启</span><br><span class="line">剩余的非选项参数: file1 file2</span><br></pre></td></tr></table></figure></p>
-<ol type="1">
-<li><p><strong>选项处理顺序与组合</strong> <code>getopts</code>按顺序解析选项，遇到非选项参数（不以 <code>-</code>开头）或 <code>--</code>时停止。选项可以组合，如 <code>-vi file</code>等效于 <code>-v -i file</code>。</p></li>
-<li><p><strong>错误处理模式</strong> 通过在 <code>optstring</code>前加冒号（<code>:</code>）开启静默模式。此模式下：</p>
-<ul>
-<li>遇到无效选项，<code>name</code>被设置为 <code>?</code>，<code>OPTARG</code>为无效选项字符。</li>
-<li>遇到缺少参数的选项，<code>name</code>被设置为 <code>:</code>，<code>OPTARG</code>为对应选项字符。</li>
-</ul></li>
-<li><p>处理完选项后，使用 <code>shift $(($OPTIND - 1))</code>来移除已处理的选项和其参数，便于后续处理剩余的非选项参数。</p></li>
-<li><p>重置 OPTIND 如果在同一脚本中需要多次调用 <code>getopts</code>解析不同参数集，必须在每次解析新参数集前手动重置 <code>OPTIND=1</code>，因为 Shell 不会自动重置它。</p></li>
-</ol>
-<blockquote>
-<ul>
-<li><code>getopts</code>主要用于解析<strong>短选项</strong>（如 <code>-a</code>, <code>-l</code>）。虽然可以通过一些技巧模拟处理长选项（如 <code>--help</code>），但过程较为复杂，通常需要借助 <code>getopt</code>命令（注意，不是内置的 <code>getopts</code>）。</li>
-<li><code>getopts</code>是 Shell 内置命令，执行效率高。而 <code>getopt</code>是外部命令，功能更强大（如直接支持长选项），但使用也更复杂，且不同系统上的实现可能有差异。</li>
-</ul>
-</blockquote>
-<p>If you go deep with bash, you might end up writing chunky utilities in it. If you do, then getting to grips with <code>getopts</code> can pay large dividends.</p>
-<p>For fun, I once wrote a <a href="https://github.com/ianmiell/cheapci/blob/master/cheapci">script</a> called <code>cheapci</code> which I used to work like a Jenkins job.</p>
-<p>The code <a href="https://github.com/ianmiell/cheapci/blob/master/cheapci#L70-L96">here</a> implements the reading of the <a href="https://github.com/ianmiell/cheapci/blob/master/cheapci#L33-L51">two required, and 14 non-required arguments</a>. Better to learn this than to build up a bunch of bespoke code that can get very messy pretty quickly as your utility grows.</p>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>bash</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常用shell命令</title>
-    <url>/2025/12/21/shells/%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="bash快捷键">Bash快捷键</h1>
-<p><img src="moving_cli.png" /></p>
-<h2 id="moving">Moving</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>command</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl + a</td>
-<td>Goto BEGINNING of command line</td>
-</tr>
-<tr class="even">
-<td>ctrl + e</td>
-<td>Goto END of command line</td>
-</tr>
-<tr class="odd">
-<td>ctrl + b</td>
-<td>move back one character</td>
-</tr>
-<tr class="even">
-<td>ctrl + f</td>
-<td>move forward one character</td>
-</tr>
-<tr class="odd">
-<td>alt + f</td>
-<td>move cursor FORWARD one word</td>
-</tr>
-<tr class="even">
-<td>alt + b</td>
-<td>move cursor BACK one word</td>
-</tr>
-<tr class="odd">
-<td>ctrl + xx</td>
-<td>Toggle between the start of line and current cursor position</td>
-</tr>
-<tr class="even">
-<td>ctrl + ] + x</td>
-<td>Where x is any character, moves the cursor forward to the next occurance of x</td>
-</tr>
-<tr class="odd">
-<td>alt + ctrl + ] + x</td>
-<td>Where x is any character, moves the cursor backwards to the previous occurance of x</td>
-</tr>
-</tbody>
-</table>
-<h2 id="edit-other">Edit / Other</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>command</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl + d</td>
-<td>Delete the character under the cursor</td>
-</tr>
-<tr class="even">
-<td>ctrl + h</td>
-<td>Delete the previous character before cursor</td>
-</tr>
-<tr class="odd">
-<td>ctrl + u</td>
-<td>Clear all / cut BEFORE cursor</td>
-</tr>
-<tr class="even">
-<td>ctrl + k</td>
-<td>Clear all / cut AFTER cursor</td>
-</tr>
-<tr class="odd">
-<td>ctrl + w</td>
-<td>delete the word BEFORE the cursor</td>
-</tr>
-<tr class="even">
-<td>alt + d</td>
-<td>delete the word FROM the cursor</td>
-</tr>
-<tr class="odd">
-<td>ctrl + y</td>
-<td>paste (if you used a previous command to delete)</td>
-</tr>
-<tr class="even">
-<td>ctrl + i</td>
-<td>command completion like Tab</td>
-</tr>
-<tr class="odd">
-<td>ctrl + l</td>
-<td>Clear the screen (same as clear command)</td>
-</tr>
-<tr class="even">
-<td>ctrl + c</td>
-<td>kill whatever is running</td>
-</tr>
-<tr class="odd">
-<td>ctrl + d</td>
-<td>Exit shell (same as exit command when cursor line is empty)</td>
-</tr>
-<tr class="even">
-<td>ctrl + z</td>
-<td>Place current process in background</td>
-</tr>
-<tr class="odd">
-<td>ctrl + _</td>
-<td>Undo</td>
-</tr>
-<tr class="even">
-<td>ctrl + x ctrl + u</td>
-<td>Undo the last changes. ctrl+ _ does the same</td>
-</tr>
-<tr class="odd">
-<td>ctrl + t</td>
-<td>Swap the last two characters before the cursor</td>
-</tr>
-<tr class="even">
-<td>esc + t</td>
-<td>Swap last two words before the cursor</td>
-</tr>
-<tr class="odd">
-<td>alt + t</td>
-<td>swap current word with previous</td>
-</tr>
-<tr class="even">
-<td>esc + .</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>esc + _</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>alt + [Backspace]</td>
-<td>delete PREVIOUS word</td>
-</tr>
-<tr class="odd">
-<td>alt + &lt;</td>
-<td>Move to the first line in the history</td>
-</tr>
-<tr class="even">
-<td>alt + &gt;</td>
-<td>Move to the end of the input history, i.e., the line currently being entered</td>
-</tr>
-<tr class="odd">
-<td>alt + ?</td>
-<td>display the file/folder names in the current path as help</td>
-</tr>
-<tr class="even">
-<td>alt + *</td>
-<td>print all the file/folder names in the current path as parameter</td>
-</tr>
-<tr class="odd">
-<td>alt + .</td>
-<td>print the LAST ARGUMENT (ie “vim file1.txt file2.txt” will yield “file2.txt”)</td>
-</tr>
-<tr class="even">
-<td>alt + c</td>
-<td>capitalize the first character to end of word starting at cursor (whole word if cursor is at the beginning of word)</td>
-</tr>
-<tr class="odd">
-<td>alt + u</td>
-<td>make uppercase from cursor to end of word</td>
-</tr>
-<tr class="even">
-<td>alt + l</td>
-<td>make lowercase from cursor to end of word</td>
-</tr>
-<tr class="odd">
-<td>alt + n</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>alt + p</td>
-<td>Non-incremental reverse search of history.</td>
-</tr>
-<tr class="odd">
-<td>alt + r</td>
-<td>Undo all changes to the line</td>
-</tr>
-<tr class="even">
-<td>alt + ctl + e</td>
-<td>Expand command line.</td>
-</tr>
-<tr class="odd">
-<td>~[TAB][TAB]</td>
-<td>List all users</td>
-</tr>
-<tr class="even">
-<td>$[TAB][TAB]</td>
-<td>List all system variables</td>
-</tr>
-<tr class="odd">
-<td>@[TAB][TAB]</td>
-<td>List all entries in your /etc/hosts file</td>
-</tr>
-<tr class="even">
-<td>[TAB]</td>
-<td>Auto complete</td>
-</tr>
-<tr class="odd">
-<td>cd -</td>
-<td>change to PREVIOUS working directory</td>
-</tr>
-</tbody>
-</table>
-<h2 id="history">History</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>command</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl + r</td>
-<td>Search backward starting at the current line and moving ‘up’ through the history as necessary</td>
-</tr>
-<tr class="even">
-<td>crtl + s</td>
-<td>Search forward starting at the current line and moving ‘down’ through the history as necessary</td>
-</tr>
-<tr class="odd">
-<td>ctrl + p</td>
-<td>Fetch the previous command from the history list, moving back in the list (same as up arrow)</td>
-</tr>
-<tr class="even">
-<td>ctrl + n</td>
-<td>Fetch the next command from the history list, moving forward in the list (same as down arrow)</td>
-</tr>
-<tr class="odd">
-<td>ctrl + o</td>
-<td>Execute the command found via Ctrl+r or Ctrl+s</td>
-</tr>
-<tr class="even">
-<td>ctrl + g</td>
-<td>Escape from history searching mode</td>
-</tr>
-<tr class="odd">
-<td>!!</td>
-<td>Run PREVIOUS command (ie <code>sudo !!</code>)</td>
-</tr>
-<tr class="even">
-<td>!vi</td>
-<td>Run PREVIOUS command that BEGINS with vi</td>
-</tr>
-<tr class="odd">
-<td>!vi:p</td>
-<td>Print previously run command that BEGINS with vi</td>
-</tr>
-<tr class="even">
-<td>!n</td>
-<td>Execute nth command in history</td>
-</tr>
-<tr class="odd">
-<td>!$</td>
-<td>Last argument of last command</td>
-</tr>
-<tr class="even">
-<td>!^</td>
-<td>First argument of last command</td>
-</tr>
-<tr class="odd">
-<td><sup>abc</sup>xyz</td>
-<td>Replace first occurance of abc with xyz in last command and execute it</td>
-</tr>
-</tbody>
-</table>
-<h1 id="常用命令">常用命令</h1>
-<blockquote>
-<p>https://github.com/jlevy/the-art-of-command-line/tree/master</p>
-</blockquote>
-<h2 id="bash命令行">bash命令行</h2>
-<ul>
-<li>如果你输入命令的时候中途改了主意，按下 <strong>alt-#</strong> 在行首添加 <code>#</code> 把它当做注释再按下回车执行（或者依次按下 <strong>ctrl-a</strong>， <strong>#</strong>， <strong>enter</strong>）。这样做的话，之后借助命令行历史记录，你可以很方便恢复你刚才输入到一半的命令。 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ # yum install gcc   &lt;--前面加#</span><br><span class="line">➜  ~ # yum install gcc   &lt;-- 按上键</span><br></pre></td></tr></table></figure></li>
-<li>使用 <code>netstat -lntp</code> 或 <code>ss -plat</code> 检查哪些进程在监听端口（默认是检查 TCP 端口; 添加参数 <code>-u</code> 则检查 UDP 端口）或者 <code>lsof -iTCP -sTCP:LISTEN -P -n</code> (这也可以在 OS X 上运行)。</li>
-<li><code>pstree -p</code> 以一种优雅的方式展示进程树。</li>
-<li>使用 <code>nohup</code> 或 <code>disown</code> 使一个后台进程持续运行。</li>
-<li>使用 <code>pgrep</code> 和 <code>pkill</code> 根据名字查找进程或发送信号（<code>-f</code> 参数通常有用）。</li>
-<li>将 shell 切换为其他用户，使用 <code>su username</code> 或者 <code>su - username</code>。加入 <code>-</code> 会使得切换后的环境与使用该用户登录后的环境相同。省略用户名则默认为 root。切换到哪个用户，就需要输入_哪个用户的_密码。</li>
-<li>可以把别名、shell 选项和常用函数保存在 <code>~/.bashrc</code>，具体看下这篇<a href="http://superuser.com/a/183980/7106">文章</a>。这样做的话你就可以在所有 shell 会话中使用你的设定。</li>
-<li>把环境变量的设定以及登陆时要执行的命令保存在 <code>~/.bash_profile</code>。而对于从图形界面启动的 shell 和 <code>cron</code> 启动的 shell，则需要单独配置文件。</li>
-<li>shell PS1显示 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 编辑配置文件（以当前用户的 ~/.bashrc 为例）</span></span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 在文件末尾添加一行，例如：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示效果类似于：[Sun Dec 21 14:05:30] user@server:~$</span></span><br><span class="line">export PS1=&quot;[\d \t] \u@\h:\W\$ &quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3. 让配置立即生效</span></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="文件及数据处理">文件及数据处理</h2>
-<ul>
-<li><code>wc</code> 去计算新行数（<code>-l</code>），字符数（<code>-m</code>），单词数（<code>-w</code>）以及字节数（<code>-c</code>）。</li>
-<li>使用 <code>tee</code> 将标准输入复制到文件甚至标准输出，例如 <code>ls -al | tee file.txt</code>。</li>
-<li>替换一个或多个文件中出现的字符串： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">perl -pi.bak -e &#x27;s/old-string/new-string/g&#x27; my-files-*.txt</span><br></pre></td></tr></table></figure></li>
-<li><code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快方法</a>之一： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure></li>
-<li>标准的源代码对比及合并工具是 <code>diff</code> 和 <code>patch</code>。使用 <code>diffstat</code> 查看变更总览数据。注意到 <code>diff -r</code> 对整个文件夹有效。使用 <code>diff -r tree1 tree2 | diffstat</code> 查看变更的统计数据。<code>vimdiff</code> 用于比对并编辑文件。 <img src="diff.png" /></li>
-<li>对于二进制文件，使用 <code>hd</code>，<code>hexdump</code> 或者 <code>xxd</code> 使其以十六进制显示，使用 <code>bvi</code>，<code>hexedit</code> 或者 <code>biew</code> 来进行二进制编辑。</li>
-<li>同样对于二进制文件，<code>strings</code>（包括 <code>grep</code> 等工具）可以帮助在二进制文件中查找特定比特。</li>
-<li>拆分文件可以使用 <code>split</code>（按大小拆分）和 <code>csplit</code>（按模式拆分）。</li>
-<li>操作日期和时间表达式，可以用 <a href="http://www.fresse.org/dateutils/"><code>dateutils</code></a> 中的 <code>dateadd</code>、<code>datediff</code>、<code>strptime</code> 等工具。</li>
-<li>使用 <code>zless</code>、<code>zmore</code>、<code>zcat</code> 和 <code>zgrep</code> 对压缩过的文件进行操作。</li>
-<li>文件属性可以通过 <code>chattr</code> 进行设置，它比文件权限更加底层。例如，为了保护文件不被意外删除，可以使用不可修改标记：<code>sudo chattr +i /critical/directory/or/file</code></li>
-<li>使用 <code>getfacl</code> 和 <code>setfacl</code> 以保存和恢复文件权限。例如： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">getfacl -R /some/path &gt; permissions.txt</span><br><span class="line">setfacl --restore=permissions.txt</span><br></pre></td></tr></table></figure></li>
-<li>为了高效地创建空文件，请使用 <code>truncate</code>（创建<a href="https://zh.wikipedia.org/wiki/%E7%A8%80%E7%96%8F%E6%96%87%E4%BB%B6">稀疏文件</a>），<code>fallocate</code>（用于 ext4，xfs，btrf 和 ocfs2 文件系统），<code>xfs_mkfile</code>（适用于几乎所有的文件系统，包含在 xfsprogs 包中），<code>mkfile</code>（用于类 Unix 操作系统，比如 Solaris 和 Mac OS）。</li>
-</ul>
-<h2 id="系统调试">系统调试</h2>
-<ul>
-<li><code>curl</code> 和 <code>curl -I</code> 可以被轻松地应用于 web 调试中，它们的好兄弟 <code>wget</code> 也是如此，或者也可以试试更潮的 <a href="https://github.com/jkbrzt/httpie"><code>httpie</code></a>。</li>
-<li>获取 CPU 和硬盘的使用状态，通常使用使用 <code>top</code>（<code>htop</code> 更佳），<code>iostat</code> 和 <code>iotop</code>。而 <code>iostat -mxz 15</code> 可以让你获悉 CPU 和每个硬盘分区的基本信息和性能表现。</li>
-<li>使用 <code>netstat</code> 和 <code>ss</code> 查看网络连接的细节。</li>
-<li><code>dstat</code> 在你想要对系统的现状有一个粗略的认识时是非常有用的。然而若要对系统有一个深度的总体认识，使用 <a href="https://github.com/nicolargo/glances"><code>glances</code></a>，它会在一个终端窗口中向你提供一些系统级的数据。</li>
-<li>若要了解内存状态，运行并理解 <code>free</code> 和 <code>vmstat</code> 的输出。值得留意的是“cached”的值，它指的是 Linux 内核用来作为文件缓存的内存大小，而与空闲内存无关。</li>
-<li>Java 系统调试则是一件截然不同的事，一个可以用于 Oracle 的 JVM 或其他 JVM 上的调试的技巧是你可以运行 <code>kill -3 &lt;pid&gt;</code> 同时一个完整的栈轨迹和堆概述（包括 GC 的细节）会被保存到标准错误或是日志文件。JDK 中的 <code>jps</code>，<code>jstat</code>，<code>jstack</code>，<code>jmap</code> 很有用。<a href="https://github.com/aragozin/jvm-tools">SJK tools</a> 更高级。</li>
-<li>使用 <a href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a> 去跟踪路由，用于确定网络问题。</li>
-<li>用 <a href="https://dev.yorhel.nl/ncdu"><code>ncdu</code></a> 来查看磁盘使用情况，它比寻常的命令，如 <code>du -sh *</code>，更节省时间。</li>
-<li>查找正在使用带宽的套接字连接或进程，使用 <a href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a href="https://github.com/raboof/nethogs"><code>nethogs</code></a>。</li>
-<li><code>ab</code> 工具（Apache 中自带）可以简单粗暴地检查 web 服务器的性能。对于更复杂的负载测试，使用 <code>siege</code>。</li>
-<li><a href="https://wireshark.org/"><code>wireshark</code></a>，<a href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a> 和 <a href="http://ngrep.sourceforge.net/"><code>ngrep</code></a> 可用于复杂的网络调试。</li>
-<li>了解 <code>strace</code> 和 <code>ltrace</code>。这俩工具在你的程序运行失败、挂起甚至崩溃，而你却不知道为什么或你想对性能有个总体的认识的时候是非常有用的。注意 profile 参数（<code>-c</code>）和附加到一个运行的进程参数 （<code>-p</code>）。</li>
-<li>了解使用 <code>ldd</code> 来检查共享库。但是<a href="http://www.catonmat.net/blog/ldd-arbitrary-code-execution/">永远不要在不信任的文件上运行</a>。</li>
-<li>了解如何运用 <code>gdb</code> 连接到一个运行着的进程并获取它的堆栈轨迹。</li>
-<li>学会使用 <code>/proc</code>。它在调试正在出现的问题的时候有时会效果惊人。比如：<code>/proc/cpuinfo</code>，<code>/proc/meminfo</code>，<code>/proc/cmdline</code>，<code>/proc/xxx/cwd</code>，<code>/proc/xxx/exe</code>，<code>/proc/xxx/fd/</code>，<code>/proc/xxx/smaps</code>（这里的 <code>xxx</code> 表示进程的 id 或 pid）。</li>
-<li>当调试一些之前出现的问题的时候，<a href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a> 非常有用。它展示了 cpu、内存以及网络等的历史数据。</li>
-<li>关于更深层次的系统分析以及性能分析，看看 <code>stap</code>（<a href="https://sourceware.org/systemtap/wiki">SystemTap</a>），<a href="https://en.wikipedia.org/wiki/Perf_(Linux)"><code>perf</code></a>，以及<a href="https://github.com/draios/sysdig"><code>sysdig</code></a>。</li>
-<li>查看你当前使用的系统，使用 <code>uname</code>，<code>uname -a</code>（Unix／kernel 信息）或者 <code>lsb_release -a</code>（Linux 发行版信息）。</li>
-<li>无论什么东西工作得很欢乐（可能是硬件或驱动问题）时可以试试 <code>dmesg</code>。</li>
-<li>如果你删除了一个文件，但通过 <code>du</code> 发现没有释放预期的磁盘空间，请检查文件是否被进程占用： <code>lsof | grep deleted | grep "filename-of-my-big-file"</code></li>
-</ul>
-<h2 id="单行脚本">单行脚本</h2>
-<ul>
-<li>当你需要对文本文件做集合交、并、差运算时，<code>sort</code> 和 <code>uniq</code> 会是你的好帮手。具体例子请参照代码后面的，此处假设 <code>a</code> 与 <code>b</code> 是两内容不同的文件。这种方式效率很高，并且在小文件和上 G 的文件上都能运用（注意尽管在 <code>/tmp</code> 在一个小的根分区上时你可能需要 <code>-T</code> 参数，但是实际上 <code>sort</code> 并不被内存大小约束），参阅前文中关于 <code>LC_ALL</code> 和 <code>sort</code> 的 <code>-u</code> 参数的部分。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sort a b | uniq &gt; c   # c 是 a 并 b</span><br><span class="line">sort a b | uniq -d &gt; c   # c 是 a 交 b</span><br><span class="line">sort a b b | uniq -u &gt; c   # c 是 a - b</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>使用 <code>grep . *</code>（每行都会附上文件名）或者 <code>head -100 *</code>（每个文件有一个标题）来阅读检查目录下所有文件的内容。这在检查一个充满配置文件的目录（如 <code>/sys</code>、<code>/proc</code>、<code>/etc</code>）时特别好用。</p></li>
-<li><p>计算文本文件第三列中所有数的和（可能比同等作用的 Python 代码快三倍且代码量少三倍）： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">awk &#x27;&#123; x += $3 &#125; END &#123; print x &#125;&#x27; myfile</span><br></pre></td></tr></table></figure></p></li>
-<li><p>如果你想在文件树上查看大小/日期，这可能看起来像递归版的 <code>ls -l</code> 但比 <code>ls -lR</code> 更易于理解： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -ls</span><br></pre></td></tr></table></figure></p></li>
-<li><p>假设你有一个类似于 web 服务器日志文件的文本文件，并且一个确定的值只会出现在某些行上，假设一个 <code>acct_id</code> 参数在 URI 中。如果你想计算出每个 <code>acct_id</code> 值有多少次请求，使用如下代码： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">egrep -o &#x27;acct_id=[0-9]+&#x27; access.log | cut -d= -f2 | sort | uniq -c | sort -rn</span><br></pre></td></tr></table></figure></p></li>
-<li><p>要持续监测文件改动，可以使用 <code>watch</code>，例如检查某个文件夹中文件的改变，可以用 <code>watch -d -n 2 'ls -rtlh | tail'</code>；或者在排查 WiFi 设置故障时要监测网络设置的更改，可以用 <code>watch -d -n 2 ifconfig</code>。</p></li>
-<li><p>运行这个函数从这篇文档中随机获取一条技巧（解析 Markdown 文件并抽取项目）： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">function taocl() &#123;</span><br><span class="line">	curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README-zh.md|</span><br><span class="line">	pandoc -f markdown -t html |</span><br><span class="line">       iconv -f &#x27;utf-8&#x27; -t &#x27;unicode&#x27; |</span><br><span class="line">       xmlstarlet fo --html --dropdtd |</span><br><span class="line">       xmlstarlet sel -t -v &quot;(html/body/ul/li[count(p)&gt;0])[$RANDOM mod last()+1]&quot; |</span><br><span class="line">       xmlstarlet unesc | fmt -80</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure> ## 冷门但有用</p></li>
-<li><p><code>expr</code>：计算表达式或正则匹配</p></li>
-<li><p><code>m4</code>：简单的宏处理器</p></li>
-<li><p><code>yes</code>：多次打印字符串</p></li>
-<li><p><code>cal</code>：漂亮的日历</p></li>
-<li><p><code>env</code>：执行一个命令（脚本文件中很有用）</p></li>
-<li><p><code>printenv</code>：打印环境变量（调试时或在写脚本文件时很有用）</p></li>
-<li><p><code>look</code>：查找以特定字符串开头的单词或行</p></li>
-<li><p><code>cut</code>，<code>paste</code> 和 <code>join</code>：数据修改</p></li>
-<li><p><code>fmt</code>：格式化文本段落</p></li>
-<li><p><code>pr</code>：将文本格式化成页／列形式</p></li>
-<li><p><code>fold</code>：包裹文本中的几行</p></li>
-<li><p><code>column</code>：将文本格式化成多个对齐、定宽的列或表格</p></li>
-<li><p><code>expand</code> 和 <code>unexpand</code>：制表符与空格之间转换</p></li>
-<li><p><code>nl</code>：添加行号</p></li>
-<li><p><code>seq</code>：打印数字</p></li>
-<li><p><code>bc</code>：计算器</p></li>
-<li><p><code>factor</code>：分解因数</p></li>
-<li><p><a href="https://gnupg.org/"><code>gpg</code></a>：加密并签名文件</p></li>
-<li><p><code>toe</code>：terminfo 入口列表</p></li>
-<li><p><code>nc</code>：网络调试及数据传输</p></li>
-<li><p><code>socat</code>：套接字代理，与 <code>netcat</code> 类似</p></li>
-<li><p><a href="https://github.com/mattthias/slurm"><code>slurm</code></a>：网络流量可视化</p></li>
-<li><p><code>dd</code>：文件或设备间传输数据</p></li>
-<li><p><code>file</code>：确定文件类型</p></li>
-<li><p><code>tree</code>：以树的形式显示路径和文件，类似于递归的 <code>ls</code></p></li>
-<li><p><code>stat</code>：文件信息</p></li>
-<li><p><code>time</code>：执行命令，并计算执行时间</p></li>
-<li><p><code>timeout</code>：在指定时长范围内执行命令，并在规定时间结束后停止进程</p></li>
-<li><p><code>lockfile</code>：使文件只能通过 <code>rm -f</code> 移除</p></li>
-<li><p><code>logrotate</code>： 切换、压缩以及发送日志文件</p></li>
-<li><p><code>watch</code>：重复运行同一个命令，展示结果并／或高亮有更改的部分</p></li>
-<li><p><a href="https://github.com/joh/when-changed"><code>when-changed</code></a>：当检测到文件更改时执行指定命令。参阅 <code>inotifywait</code> 和 <code>entr</code>。</p></li>
-<li><p><code>tac</code>：反向输出文件</p></li>
-<li><p><code>shuf</code>：文件中随机选取几行</p></li>
-<li><p><code>comm</code>：一行一行的比较排序过的文件</p></li>
-<li><p><code>strings</code>：从二进制文件中抽取文本</p></li>
-<li><p><code>tr</code>：转换字母</p></li>
-<li><p><code>iconv</code> 或 <code>uconv</code>：文本编码转换</p></li>
-<li><p><code>split</code> 和 <code>csplit</code>：分割文件</p></li>
-<li><p><code>sponge</code>：在写入前读取所有输入，在读取文件后再向同一文件写入时比较有用，例如 <code>grep -v something some-file | sponge some-file</code></p></li>
-<li><p><code>units</code>：将一种计量单位转换为另一种等效的计量单位（参阅 <code>/usr/share/units/definitions.units</code>）</p></li>
-<li><p><code>apg</code>：随机生成密码</p></li>
-<li><p><code>xz</code>：高比例的文件压缩</p></li>
-<li><p><code>ldd</code>：动态库信息</p></li>
-<li><p><code>nm</code>：提取 obj 文件中的符号</p></li>
-<li><p><code>ab</code> 或 <a href="https://github.com/wg/wrk"><code>wrk</code></a>：web 服务器性能分析</p></li>
-<li><p><code>strace</code>：调试系统调用</p></li>
-<li><p><a href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a>：更好的网络调试跟踪工具</p></li>
-<li><p><code>cssh</code>：可视化的并发 shell</p></li>
-<li><p><code>rsync</code>：通过 ssh 或本地文件系统同步文件和文件夹</p></li>
-<li><p><a href="https://wireshark.org/"><code>wireshark</code></a> 和 <a href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html"><code>tshark</code></a>：抓包和网络调试工具</p></li>
-<li><p><a href="http://ngrep.sourceforge.net/"><code>ngrep</code></a>：网络层的 grep</p></li>
-<li><p><code>host</code> 和 <code>dig</code>：DNS 查找</p></li>
-<li><p><code>lsof</code>：列出当前系统打开文件的工具以及查看端口信息</p></li>
-<li><p><code>dstat</code>：系统状态查看</p></li>
-<li><p><a href="https://github.com/nicolargo/glances"><code>glances</code></a>：高层次的多子系统总览</p></li>
-<li><p><code>iostat</code>：硬盘使用状态</p></li>
-<li><p><code>mpstat</code>： CPU 使用状态</p></li>
-<li><p><code>vmstat</code>： 内存使用状态</p></li>
-<li><p><code>htop</code>：top 的加强版</p></li>
-<li><p><code>last</code>：登入记录</p></li>
-<li><p><code>w</code>：查看处于登录状态的用户</p></li>
-<li><p><code>id</code>：用户/组 ID 信息</p></li>
-<li><p><a href="http://sebastien.godard.pagesperso-orange.fr/"><code>sar</code></a>：系统历史数据</p></li>
-<li><p><a href="http://www.ex-parrot.com/~pdw/iftop/"><code>iftop</code></a> 或 <a href="https://github.com/raboof/nethogs"><code>nethogs</code></a>：套接字及进程的网络利用情况</p></li>
-<li><p><code>ss</code>：套接字数据</p></li>
-<li><p><code>dmesg</code>：引导及系统错误信息</p></li>
-<li><p><code>sysctl</code>： 在内核运行时动态地查看和修改内核的运行参数</p></li>
-<li><p><code>hdparm</code>：SATA/ATA 磁盘更改及性能分析</p></li>
-<li><p><code>lsblk</code>：列出块设备信息：以树形展示你的磁盘以及磁盘分区信息</p></li>
-<li><p><code>lshw</code>，<code>lscpu</code>，<code>lspci</code>，<code>lsusb</code> 和 <code>dmidecode</code>：查看硬件信息，包括 CPU、BIOS、RAID、显卡、USB设备等</p></li>
-<li><p><code>lsmod</code> 和 <code>modinfo</code>：列出内核模块，并显示其细节</p></li>
-<li><p><code>fortune</code>，<code>ddate</code> 和 <code>sl</code>：额，这主要取决于你是否认为蒸汽火车和莫名其妙的名人名言是否“有用”</p></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>xv6-vscode调试</title>
-    <url>/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="gdbinit">.gdbinit</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="launch.json">launch.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="tasks.json">tasks.json</h2>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>环境搭建</tag>
-        <tag>xv6</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>xv6-增加系统调用</title>
-    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="panic">panic</h1>
-<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
-<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
-<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>三种大气质量和一个公式的计算方法</title>
     <url>/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h1 id="三种大气质量和一个公式的计算方法">三种大气质量和一个公式的计算方法</h1>
@@ -5545,6 +5533,23 @@ $$</span></p>
       <tags>
         <tag>linux</tag>
         <tag>kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xv6-增加系统调用</title>
+    <url>/2025/12/09/xv6%E5%AD%A6%E4%B9%A0/%E5%A2%9E%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="panic">panic</h1>
+<p>以下代码报错 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lapicid 2: panic: mycpu called with interrupts enabled</span><br><span class="line">80103937 8010394f 80104a7d 80105b51 8010589e 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line">	<span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> cpuid();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因：<code>mycpu()</code>要求在关闭中断时调用（函数开头检查 IF），而某处（这里是 scheduler 开头）在中断允许的情况下调用了它，导致 panic。</li>
+<li>修复：在调用 <code>mycpu()</code>前禁用中断<code>（pushcli）</code>，调用后恢复<code>（popcli）</code>。把 scheduler 开头修改如下。</li>
+<li>说明：这样能保证在读取/比较本 CPU 的 <code>LAPIC id</code> 时不会被中断重入。若还有其它在未禁中断情况下直接调用 <code>mycpu()</code> 的地方，也请同样处理或确保调用者已禁中断。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> </span><br><span class="line"><span class="title function_">getcpuid</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  pushcli();</span><br><span class="line">  <span class="type">int</span> id = cpuid();</span><br><span class="line">  popcli();</span><br><span class="line">  <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -6412,6 +6417,17 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
+    <title>SSD学习（一）</title>
+    <url>/2024/01/14/%E7%A1%AC%E7%9B%98/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[
+]]></content>
+      <tags>
+        <tag>存储</tag>
+        <tag>SSD</tag>
+        <tag>RAID</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>立体角</title>
     <url>/2019/10/14/%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A6%82%E5%BF%B5/%E7%AB%8B%E4%BD%93%E8%A7%92/</url>
     <content><![CDATA[<h1 id="立体角">立体角</h1>
@@ -6549,17 +6565,6 @@ $$</span></p>
       </tags>
   </entry>
   <entry>
-    <title>SSD学习（一）</title>
-    <url>/2024/01/14/%E7%A1%AC%E7%9B%98/SSD%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>存储</tag>
-        <tag>SSD</tag>
-        <tag>RAID</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>主机同网段双ip问题</title>
     <url>/2025/12/21/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%B8%BB%E6%9C%BA%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%8Cip%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h1 id="现象">现象</h1>
@@ -6596,85 +6601,6 @@ $$</span></p>
       <tags>
         <tag>网络</tag>
         <tag>问题定位</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>考拉兹猜想</title>
-    <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
-    <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">$$
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-$$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline"><em>n</em></span> ，下降最快的也就是每次下降 <span class="math inline">$\frac{1}{2}$</span>，这个下降速度对于的计算时间是 <span class="math inline">log <em>n</em></span> 。对于上界，用 <span class="math inline"><em>M</em><em>A</em><em>T</em><em>L</em><em>A</em><em>B</em>​</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline"><em>n</em><sub>0</sub></span> 的步长与 <span class="math inline"><em>n</em></span> 值变化</h2>
-<p><img src="3~6.bmp" /></p>
-<figure>
-<img src="7~10.bmp" alt="7~10" /><figcaption aria-hidden="true">7~10</figcaption>
-</figure>
-<figure>
-<img src="11~14.bmp" alt="11~14" /><figcaption aria-hidden="true">11~14</figcaption>
-</figure>
-<figure>
-<img src="15~18.bmp" alt="15~18" /><figcaption aria-hidden="true">15~18</figcaption>
-</figure>
-<figure>
-<img src="19~22.bmp" alt="19~22" /><figcaption aria-hidden="true">19~22</figcaption>
-</figure>
-<figure>
-<img src="23~26.bmp" alt="23~26" /><figcaption aria-hidden="true">23~26</figcaption>
-</figure>
-<figure>
-<img src="27~30.bmp" alt="27~30" /><figcaption aria-hidden="true">27~30</figcaption>
-</figure>
-<figure>
-<img src="31~34.bmp" alt="31~34" /><figcaption aria-hidden="true">31~34</figcaption>
-</figure>
-<figure>
-<img src="35~38.bmp" alt="35~38" /><figcaption aria-hidden="true">35~38</figcaption>
-</figure>
-<figure>
-<img src="39~42.bmp" alt="39~42" /><figcaption aria-hidden="true">39~42</figcaption>
-</figure>
-<figure>
-<img src="43~46.bmp" alt="43~46" /><figcaption aria-hidden="true">43~46</figcaption>
-</figure>
-<figure>
-<img src="47~50.bmp" alt="47~50" /><figcaption aria-hidden="true">47~50</figcaption>
-</figure>
-<figure>
-<img src="51~54.bmp" alt="51~54" /><figcaption aria-hidden="true">51~54</figcaption>
-</figure>
-<figure>
-<img src="55~58.bmp" alt="55~58" /><figcaption aria-hidden="true">55~58</figcaption>
-</figure>
-<figure>
-<img src="242~245.bmp" alt="242~245" /><figcaption aria-hidden="true">242~245</figcaption>
-</figure>
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline"><em>n</em><sub>0</sub></span> 与计算次数分布曲线</h2>
-<figure>
-<img src="次数与初值.bmp" alt="次数与初值" /><figcaption aria-hidden="true">次数与初值</figcaption>
-</figure>
-<p><img src="n0=400.bmp" /></p>
-<figure>
-<img src="n0=1000.bmp" alt="n0=1000" /><figcaption aria-hidden="true">n0=1000</figcaption>
-</figure>
-<figure>
-<img src="n0=5000.bmp" alt="n0=5000" /><figcaption aria-hidden="true">n0=5000</figcaption>
-</figure>
-<figure>
-<img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
-</figure>
-]]></content>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -6942,6 +6868,85 @@ $$</span></p>
       <tags>
         <tag>光学</tag>
         <tag>遥感</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>考拉兹猜想</title>
+    <url>/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/</url>
+    <content><![CDATA[<h1 id="考拉兹猜想">考拉兹猜想</h1>
+<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
+<p>考拉兹函数定义如下</p>
+<p><span class="math display">$$
+f(x)=\left\{
+\begin{array}{**lr**}
+3n+1&amp;x为奇数且x\neq1\\
+n/2&amp;x为偶数\\
+1&amp;x=1
+\end{array}
+\right.
+$$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
+<p>当然，下界是很容易求出来的，如果输入 <span class="math inline"><em>n</em></span> ，下降最快的也就是每次下降 <span class="math inline">$\frac{1}{2}$</span>，这个下降速度对于的计算时间是 <span class="math inline">log <em>n</em></span> 。对于上界，用 <span class="math inline"><em>M</em><em>A</em><em>T</em><em>L</em><em>A</em><em>B</em>​</span> 带入一些数值计算。得到的结果如下：</p>
+<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline"><em>n</em><sub>0</sub></span> 的步长与 <span class="math inline"><em>n</em></span> 值变化</h2>
+<p><img src="3~6.bmp" /></p>
+<figure>
+<img src="7~10.bmp" alt="7~10" /><figcaption aria-hidden="true">7~10</figcaption>
+</figure>
+<figure>
+<img src="11~14.bmp" alt="11~14" /><figcaption aria-hidden="true">11~14</figcaption>
+</figure>
+<figure>
+<img src="15~18.bmp" alt="15~18" /><figcaption aria-hidden="true">15~18</figcaption>
+</figure>
+<figure>
+<img src="19~22.bmp" alt="19~22" /><figcaption aria-hidden="true">19~22</figcaption>
+</figure>
+<figure>
+<img src="23~26.bmp" alt="23~26" /><figcaption aria-hidden="true">23~26</figcaption>
+</figure>
+<figure>
+<img src="27~30.bmp" alt="27~30" /><figcaption aria-hidden="true">27~30</figcaption>
+</figure>
+<figure>
+<img src="31~34.bmp" alt="31~34" /><figcaption aria-hidden="true">31~34</figcaption>
+</figure>
+<figure>
+<img src="35~38.bmp" alt="35~38" /><figcaption aria-hidden="true">35~38</figcaption>
+</figure>
+<figure>
+<img src="39~42.bmp" alt="39~42" /><figcaption aria-hidden="true">39~42</figcaption>
+</figure>
+<figure>
+<img src="43~46.bmp" alt="43~46" /><figcaption aria-hidden="true">43~46</figcaption>
+</figure>
+<figure>
+<img src="47~50.bmp" alt="47~50" /><figcaption aria-hidden="true">47~50</figcaption>
+</figure>
+<figure>
+<img src="51~54.bmp" alt="51~54" /><figcaption aria-hidden="true">51~54</figcaption>
+</figure>
+<figure>
+<img src="55~58.bmp" alt="55~58" /><figcaption aria-hidden="true">55~58</figcaption>
+</figure>
+<figure>
+<img src="242~245.bmp" alt="242~245" /><figcaption aria-hidden="true">242~245</figcaption>
+</figure>
+<h2 id="n_0-与计算次数分布曲线"><span class="math inline"><em>n</em><sub>0</sub></span> 与计算次数分布曲线</h2>
+<figure>
+<img src="次数与初值.bmp" alt="次数与初值" /><figcaption aria-hidden="true">次数与初值</figcaption>
+</figure>
+<p><img src="n0=400.bmp" /></p>
+<figure>
+<img src="n0=1000.bmp" alt="n0=1000" /><figcaption aria-hidden="true">n0=1000</figcaption>
+</figure>
+<figure>
+<img src="n0=5000.bmp" alt="n0=5000" /><figcaption aria-hidden="true">n0=5000</figcaption>
+</figure>
+<figure>
+<img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
+</figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
