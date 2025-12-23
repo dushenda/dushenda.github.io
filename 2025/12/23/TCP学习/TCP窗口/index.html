@@ -27,7 +27,7 @@
 <meta property="og:description" content="TCP几个窗口概念 TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用     接收窗口 (RWND)​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   拥塞窗口 (CWND)​ Congestion Window 发送">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-23T15:40:29.262Z">
+<meta property="article:modified_time" content="2025-12-23T15:52:36.974Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="TCP">
 <meta property="article:tag" content="网络">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">窗口之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cwnd"><span class="nav-number">3.</span> <span class="nav-text">CWND</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%85%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">慢启动</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -311,6 +311,15 @@
 <li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
 <li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
 </ul>
+<h1 id="窗口之间的关系">窗口之间的关系</h1>
+<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
+<h1 id="cwnd">CWND</h1>
+<h2 id="慢启动">慢启动</h2>
+<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。 <span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span> <pre><code class="highlight mermaid">xychart-beta
+        title &quot;慢启动&quot;
+        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
+        y-axis &quot;CWND&quot; 
+        line [1, 2, 4, 8, 16, 32, 64]</code></pre></p>
 
     </div>
 
@@ -328,13 +337,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/23/ceatsheet/bpftrace%20cheatsheet/" rel="prev" title="bpftrace cheatsheet">
-                  <i class="fa fa-angle-left"></i> bpftrace cheatsheet
+                <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" rel="prev" title="TCP报文格式">
+                  <i class="fa fa-angle-left"></i> TCP报文格式
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" rel="next" title="TCP报文格式">
-                  TCP报文格式 <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/23/Linux%20Debug/ftrace%E6%8A%80%E6%9C%AF-%E9%9D%99%E6%80%81%E8%B7%9F%E8%B8%AA%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="ftrace技术-静态跟踪（一）">
+                  ftrace技术-静态跟踪（一） <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
