@@ -23,8 +23,6 @@ TCP窗口大小的单位是**字节**​ 。这意味着窗口大小衡量的是
 
 # 窗口之间的关系
 
-
-
 $$
 SWND=\min(CWND, RWND)
 $$
@@ -40,9 +38,11 @@ CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提�
 ## 慢启动
 
 收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。
+
 $$
 CWND=CWND+MSS
 $$
+
 ```mermaid
 xychart-beta
         title "慢启动"
