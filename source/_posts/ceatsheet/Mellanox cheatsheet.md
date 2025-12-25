@@ -1,11 +1,10 @@
 ---
-title:
+title: Mellanox cheatsheet
 date: 2025-12-25
 tags:
   - Mellanox
   - cheatsheet
 ---
-
 # 状态检查与配置
 
 ```shell
@@ -190,4 +189,9 @@ ib_flowcontrol
 # 检查QoS配置和流优先级
 ib_qos_show
 ```
+
+## 参考
+- [https://gist.github.com/githubfoam/da75951b97e9aec21dcebadf68a6a360](https://gist.github.com/githubfoam/da75951b97e9aec21dcebadf68a6a360)
+- 
+
 
