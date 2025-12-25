@@ -21,26 +21,26 @@
 
     <meta name="description" content="状态检查与配置 1234567891011121314151617181920# IB设备的状态ibstat# IB设备的细节ibv_devinfo# 列出所有的IB设备ibdevices# 检查IB设备端口状态iblinkinfo# 查看IB地址配置ibaddr# 显示IB端口状态细节信息ibportstate# 显示IB端口统计信息ibportinfo 配置和管理 12345678910111">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dushenda">
-<meta property="og:url" content="https://dushenda.github.io/2025/12/25/%E7%BD%91%E5%8D%A1/Mellanox/index.html">
+<meta property="og:title" content="Mellanox cheatsheet">
+<meta property="og:url" content="https://dushenda.github.io/2025/12/25/ceatsheet/Mellanox%20cheatsheet/index.html">
 <meta property="og:site_name" content="dushenda">
 <meta property="og:description" content="状态检查与配置 1234567891011121314151617181920# IB设备的状态ibstat# IB设备的细节ibv_devinfo# 列出所有的IB设备ibdevices# 检查IB设备端口状态iblinkinfo# 查看IB地址配置ibaddr# 显示IB端口状态细节信息ibportstate# 显示IB端口统计信息ibportinfo 配置和管理 12345678910111">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-25T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-25T16:07:31.441Z">
+<meta property="article:modified_time" content="2025-12-25T16:17:00.510Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="Mellanox">
 <meta property="article:tag" content="cheatsheet">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2025/12/25/%E7%BD%91%E5%8D%A1/Mellanox/">
+<link rel="canonical" href="https://dushenda.github.io/2025/12/25/ceatsheet/Mellanox%20cheatsheet/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/25/%E7%BD%91%E5%8D%A1/Mellanox/","path":"2025/12/25/网卡/Mellanox/","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/25/ceatsheet/Mellanox%20cheatsheet/","path":"2025/12/25/ceatsheet/Mellanox cheatsheet/","title":"Mellanox cheatsheet"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title> | dushenda</title>
+<title>Mellanox cheatsheet | dushenda</title>
   
 
 
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A3%80%E6%9F%A5%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">状态检查与配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">配置和管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">固件更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%92%8C%E7%9B%91%E6%8E%A7"><span class="nav-number">4.</span> <span class="nav-text">性能测试和监控</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AErdma"><span class="nav-number">5.</span> <span class="nav-text">配置RDMA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">定位问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E7%AE%A1%E7%90%86ib%E5%AD%90%E7%BD%91"><span class="nav-number">7.</span> <span class="nav-text">配置和管理IB子网</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mellanox%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">Mellanox管理命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEib-qos"><span class="nav-number">9.</span> <span class="nav-text">配置IB QoS</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A3%80%E6%9F%A5%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">状态检查与配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">配置和管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">固件更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%92%8C%E7%9B%91%E6%8E%A7"><span class="nav-number">4.</span> <span class="nav-text">性能测试和监控</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AErdma"><span class="nav-number">5.</span> <span class="nav-text">配置RDMA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">定位问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E7%AE%A1%E7%90%86ib%E5%AD%90%E7%BD%91"><span class="nav-number">7.</span> <span class="nav-text">配置和管理IB子网</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mellanox%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">Mellanox管理命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEib-qos"><span class="nav-number">9.</span> <span class="nav-text">配置IB QoS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">9.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -185,7 +185,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -232,7 +232,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/25/%E7%BD%91%E5%8D%A1/Mellanox/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/25/ceatsheet/Mellanox%20cheatsheet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -245,12 +245,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="name" content="Mellanox cheatsheet | dushenda">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          Mellanox cheatsheet
         </h1>
 
         <div class="post-meta-container">
@@ -291,6 +291,11 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">网卡状态查询</span></span><br><span class="line">mst status -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启mst服务</span></span><br><span class="line">mst start</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置RDMA的Mellanox设备</span></span><br><span class="line">rdma_configure_device</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装配置Mellanox管理软件</span></span><br><span class="line">mstflint -d &lt;device&gt; qflash &lt;firmware_file.bin&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取网卡qos配置</span></span><br><span class="line">mlnx_qos -i eth2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置网卡端口的0~7 PFC优先级</span></span><br><span class="line">mlnx_qos -i eth2 -f 0,0,0,1,0,0,0,0</span><br></pre></td></tr></table></figure>
 <h1 id="配置ib-qos">配置IB QoS</h1>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set quality of service policy <span class="keyword">for</span> InfiniBand</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB qos</span></span><br><span class="line">ib_qos_policy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置IB流优先级</span></span><br><span class="line">ib_flowcontrol</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查QoS配置和流优先级</span></span><br><span class="line">ib_qos_show</span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/githubfoam/da75951b97e9aec21dcebadf68a6a360">https://gist.github.com/githubfoam/da75951b97e9aec21dcebadf68a6a360</a></li>
+<li></li>
+</ul>
 
     </div>
 
@@ -300,8 +305,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/cheatsheet/" rel="tag"># cheatsheet</a>
               <a href="/tags/Mellanox/" rel="tag"># Mellanox</a>
+              <a href="/tags/cheatsheet/" rel="tag"># cheatsheet</a>
           </div>
 
         
@@ -313,6 +318,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2025/12/25/ceatsheet/ARM64%E6%B1%87%E7%BC%96-cheatsheet/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
