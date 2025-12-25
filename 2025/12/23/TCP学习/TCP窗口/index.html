@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="TCP几个窗口概念TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用    **接收窗口 (RWND)**​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   **拥塞窗口 (CWND)**​ Congestion Win">
+    <meta name="description" content="TCP几个窗口概念 TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用     接收窗口 (RWND)​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   拥塞窗口 (CWND)​ Congestion Window 发送">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP窗口">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="TCP几个窗口概念TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用    **接收窗口 (RWND)**​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   **拥塞窗口 (CWND)**​ Congestion Win">
+<meta property="og:description" content="TCP几个窗口概念 TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用     接收窗口 (RWND)​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   拥塞窗口 (CWND)​ Congestion Window 发送">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-25T16:36:09.024Z">
+<meta property="article:modified_time" content="2025-12-25T16:36:20.197Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="TCP">
 <meta property="article:tag" content="网络">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">窗口之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CWND"><span class="nav-number">3.</span> <span class="nav-text">CWND</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%85%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E9%81%BF%E5%85%8D"><span class="nav-number">3.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text">快速恢复</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">窗口之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cwnd"><span class="nav-number">3.</span> <span class="nav-text">CWND</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%85%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E9%81%BF%E5%85%8D"><span class="nav-number">3.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text">快速恢复</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -273,57 +273,64 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="TCP几个窗口概念"><a href="#TCP几个窗口概念" class="headerlink" title="TCP几个窗口概念"></a>TCP几个窗口概念</h1><p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
+<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
 <p>下表总结了TCP通信中几个关键的窗口类型：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>窗口类型</th>
 <th>英文全称</th>
 <th>控制方</th>
 <th>核心作用</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>**接收窗口 (RWND)**​</td>
+<tbody>
+<tr class="odd">
+<td><strong>接收窗口 (RWND)</strong>​</td>
 <td>Receiver Window</td>
 <td>接收端</td>
 <td>流量控制，反映接收方应用程序的缓存剩余空间</td>
 </tr>
-<tr>
-<td>**拥塞窗口 (CWND)**​</td>
+<tr class="even">
+<td><strong>拥塞窗口 (CWND)</strong>​</td>
 <td>Congestion Window</td>
 <td>发送端</td>
 <td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
 </tr>
-<tr>
-<td>**发送窗口 (SWND)**​</td>
+<tr class="odd">
+<td><strong>发送窗口 (SWND)</strong>​</td>
 <td>Sender Window</td>
 <td>发送端</td>
 <td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
 <li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
 <li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
 <li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
 </ul>
-<h1 id="窗口之间的关系"><a href="#窗口之间的关系" class="headerlink" title="窗口之间的关系"></a>窗口之间的关系</h1><p>$$<br>SWND&#x3D;\min(CWND, RWND)<br>$$</p>
-<h1 id="CWND"><a href="#CWND" class="headerlink" title="CWND"></a>CWND</h1><p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
+<h1 id="窗口之间的关系">窗口之间的关系</h1>
+<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
+<h1 id="cwnd">CWND</h1>
+<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
 <ul>
 <li>慢启动</li>
 <li>拥塞避免</li>
 <li>快速恢复</li>
 </ul>
-<h2 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h2><p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
-<p>$$<br>CWND&#x3D;CWND+MSS<br>$$</p>
+<h2 id="慢启动">慢启动</h2>
+<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
+<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
 <pre><code class="highlight mermaid">xychart-beta
         title &quot;慢启动&quot;
         x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
         y-axis &quot;CWND&quot; 
         line [1, 2, 4, 8, 16, 32, 64]</code></pre>
+<h2 id="拥塞避免">拥塞避免</h2>
+<h2 id="快速恢复">快速恢复</h2>
 
-<h2 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h2><h2 id="快速恢复"><a href="#快速恢复" class="headerlink" title="快速恢复"></a>快速恢复</h2>
     </div>
 
     
