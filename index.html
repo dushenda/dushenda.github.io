@@ -186,7 +186,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -218,163 +218,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/29/ceatsheet/virsh%20cheatsheet/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-29 11:23:16" itemprop="dateCreated datePublished" datetime="2025-12-29T11:23:16+00:00">2025-12-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="常用命令">常用命令</h1>
-<h2 id="启动与关闭">启动与关闭</h2>
-<table>
-<thead>
-<tr class="header">
-<th>操作</th>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>启动</strong></td>
-<td><code>virsh start &lt;虚拟机名&gt;</code></td>
-<td>启动一个处于关闭状态的虚拟机</td>
-</tr>
-<tr class="even">
-<td><strong>正常关机</strong></td>
-<td><code>virsh shutdown &lt;虚拟机名&gt;</code></td>
-<td>模拟按下电源键，优雅关机（推荐）</td>
-</tr>
-<tr class="odd">
-<td><strong>强制关闭</strong></td>
-<td><code>virsh destroy &lt;虚拟机名&gt;</code></td>
-<td>相当于直接拔掉电源，仅在卡死时使用</td>
-</tr>
-<tr class="even">
-<td><strong>重启</strong></td>
-<td><code>virsh reboot &lt;虚拟机名&gt;</code></td>
-<td>重启虚拟机</td>
-</tr>
-<tr class="odd">
-<td><strong>强制重置</strong></td>
-<td><code>virsh reset &lt;虚拟机名&gt;</code></td>
-<td>强制硬重启</td>
-</tr>
-</tbody>
-</table>
-<h2 id="挂起与恢复"> 挂起与恢复</h2>
-<table>
-<thead>
-<tr class="header">
-<th>操作</th>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>挂起</strong></td>
-<td><code>virsh suspend &lt;虚拟机名&gt;</code></td>
-<td>暂停虚拟机，内存数据保留在主机</td>
-</tr>
-<tr class="even">
-<td><strong>恢复</strong></td>
-<td><code>virsh resume &lt;虚拟机名&gt;</code></td>
-<td>从挂起状态恢复运行</td>
-</tr>
-</tbody>
-</table>
-<h2 id="自启动配置"> 自启动配置</h2>
-<ul>
-<li>设置开机自启： <code>virsh autostart &lt;虚拟机名&gt;</code></li>
-<li>取消开机自启： <code>virsh autostart --disable &lt;虚拟机名&gt;</code></li>
-<li>查看自启列表： <code>virsh autostart --list</code></li>
-</ul>
-<h1 id="虚拟机信息查询">虚拟机信息查询</h1>
-<h2 id="基本状态查询"> 基本状态查询</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="配置与连接信息">配置与连接信息</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="资源监控">资源监控</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="虚拟机配置管理">虚拟机配置管理</h1>
-<h2 id="xml配置编辑核心">XML配置编辑（核心）</h2>
-<p>KVM的所有配置都存储在XML文件中：</p>
-<p><strong>编辑配置（推荐）</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 /etc/libvirt/qemu/ 下的文件，容易出错。</p>
-</blockquote>
-<p><strong>备份配置</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh dumpxml &lt;虚拟机名&gt; &gt; vm-config.xml</span><br></pre></td></tr></table></figure>
-<p><strong>从XML恢复/定义</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
-<h2 id="删除与重命名">删除与重命名</h2>
-<p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
-<p><strong>重命名虚拟机</strong>：<br />
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -585,6 +428,163 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3MDQ4MjA2Mg==&amp;mid=2247487183&amp;idx=1&amp;sn=984b50f454c454d3233bb40eaf613691&amp;chksm=cf5f692e87f39bdcd3f8f4569f6d5dcb891c920298d3ecf95b14595cf419a5114ecdbbaeea6a&amp;mpshare=1&amp;scene=24&amp;srcid=1218C6PzHMIsmMxnl4EutIig&amp;sharer_shareinfo=2ff91c68bc0949e2282bcdf00a7bacd8&amp;sharer_shareinfo_first=2ff91c68bc0949e2282bcdf00a7bacd8#rd">常见QEMU语句</a></p>
 </blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/29/ceatsheet/virsh%20cheatsheet/" class="post-title-link" itemprop="url">virsh cheatsheet</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="常用命令">常用命令</h1>
+<h2 id="启动与关闭">启动与关闭</h2>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>启动</strong></td>
+<td><code>virsh start &lt;虚拟机名&gt;</code></td>
+<td>启动一个处于关闭状态的虚拟机</td>
+</tr>
+<tr class="even">
+<td><strong>正常关机</strong></td>
+<td><code>virsh shutdown &lt;虚拟机名&gt;</code></td>
+<td>模拟按下电源键，优雅关机（推荐）</td>
+</tr>
+<tr class="odd">
+<td><strong>强制关闭</strong></td>
+<td><code>virsh destroy &lt;虚拟机名&gt;</code></td>
+<td>相当于直接拔掉电源，仅在卡死时使用</td>
+</tr>
+<tr class="even">
+<td><strong>重启</strong></td>
+<td><code>virsh reboot &lt;虚拟机名&gt;</code></td>
+<td>重启虚拟机</td>
+</tr>
+<tr class="odd">
+<td><strong>强制重置</strong></td>
+<td><code>virsh reset &lt;虚拟机名&gt;</code></td>
+<td>强制硬重启</td>
+</tr>
+</tbody>
+</table>
+<h2 id="挂起与恢复"> 挂起与恢复</h2>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>挂起</strong></td>
+<td><code>virsh suspend &lt;虚拟机名&gt;</code></td>
+<td>暂停虚拟机，内存数据保留在主机</td>
+</tr>
+<tr class="even">
+<td><strong>恢复</strong></td>
+<td><code>virsh resume &lt;虚拟机名&gt;</code></td>
+<td>从挂起状态恢复运行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="自启动配置"> 自启动配置</h2>
+<ul>
+<li>设置开机自启： <code>virsh autostart &lt;虚拟机名&gt;</code></li>
+<li>取消开机自启： <code>virsh autostart --disable &lt;虚拟机名&gt;</code></li>
+<li>查看自启列表： <code>virsh autostart --list</code></li>
+</ul>
+<h1 id="虚拟机信息查询">虚拟机信息查询</h1>
+<h2 id="基本状态查询"> 基本状态查询</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="配置与连接信息">配置与连接信息</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="资源监控">资源监控</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="虚拟机配置管理">虚拟机配置管理</h1>
+<h2 id="xml配置编辑核心">XML配置编辑（核心）</h2>
+<p>KVM的所有配置都存储在XML文件中：</p>
+<p><strong>编辑配置（推荐）</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 /etc/libvirt/qemu/ 下的文件，容易出错。</p>
+</blockquote>
+<p><strong>备份配置</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh dumpxml &lt;虚拟机名&gt; &gt; vm-config.xml</span><br></pre></td></tr></table></figure>
+<p><strong>从XML恢复/定义</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
+<h2 id="删除与重命名">删除与重命名</h2>
+<p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
+<p><strong>重命名虚拟机</strong>：<br />
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -995,131 +995,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">TCP窗口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
-<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
-<p>下表总结了TCP通信中几个关键的窗口类型：</p>
-<table>
-<thead>
-<tr class="header">
-<th>窗口类型</th>
-<th>英文全称</th>
-<th>控制方</th>
-<th>核心作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>接收窗口 (RWND)</strong>​</td>
-<td>Receiver Window</td>
-<td>接收端</td>
-<td>流量控制，反映接收方应用程序的缓存剩余空间</td>
-</tr>
-<tr class="even">
-<td><strong>拥塞窗口 (CWND)</strong>​</td>
-<td>Congestion Window</td>
-<td>发送端</td>
-<td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
-</tr>
-<tr class="odd">
-<td><strong>发送窗口 (SWND)</strong>​</td>
-<td>Sender Window</td>
-<td>发送端</td>
-<td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
-<li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
-<li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
-</ul>
-<h1 id="窗口之间的关系">窗口之间的关系</h1>
-<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
-<h1 id="cwnd">CWND</h1>
-<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
-<ul>
-<li>慢启动</li>
-<li>拥塞避免</li>
-<li>快速恢复</li>
-</ul>
-<h2 id="慢启动">慢启动</h2>
-<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
-<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
-<pre><code class="highlight mermaid">xychart-beta
-        title &quot;慢启动&quot;
-        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
-        y-axis &quot;CWND&quot; 
-        line [1, 2, 4, 8, 16, 32, 64]</code></pre>
-<h2 id="拥塞避免">拥塞避免</h2>
-<h2 id="快速恢复">快速恢复</h2>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1383,6 +1258,200 @@ title &quot;TCP Packet&quot;
 <p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
 <p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>T</em><em>C</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>M</em><em>S</em><em>S</em></span></p>
 <p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">TCP窗口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
+<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
+<p>下表总结了TCP通信中几个关键的窗口类型：</p>
+<table>
+<thead>
+<tr class="header">
+<th>窗口类型</th>
+<th>英文全称</th>
+<th>控制方</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>接收窗口 (RWND)</strong>​</td>
+<td>Receiver Window</td>
+<td>接收端</td>
+<td>流量控制，反映接收方应用程序的缓存剩余空间</td>
+</tr>
+<tr class="even">
+<td><strong>拥塞窗口 (CWND)</strong>​</td>
+<td>Congestion Window</td>
+<td>发送端</td>
+<td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
+</tr>
+<tr class="odd">
+<td><strong>发送窗口 (SWND)</strong>​</td>
+<td>Sender Window</td>
+<td>发送端</td>
+<td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
+<li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
+<li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
+</ul>
+<h1 id="窗口之间的关系">窗口之间的关系</h1>
+<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
+<h1 id="cwnd">CWND</h1>
+<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
+<ul>
+<li>慢启动</li>
+<li>拥塞避免</li>
+<li>快速恢复</li>
+</ul>
+<h2 id="慢启动">慢启动</h2>
+<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
+<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
+<pre><code class="highlight mermaid">xychart-beta
+        title &quot;慢启动&quot;
+        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
+        y-axis &quot;CWND&quot; 
+        line [1, 2, 4, 8, 16, 32, 64]</code></pre>
+<h2 id="拥塞避免">拥塞避免</h2>
+<h2 id="快速恢复">快速恢复</h2>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/ceatsheet/ftrace%20cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/23/ceatsheet/ftrace%20cheatsheet/" class="post-title-link" itemprop="url">ftrace cheatsheet</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
 
       
     </div>
@@ -1796,78 +1865,6 @@ title &quot;TCP Packet&quot;
 </tr>
 </tbody>
 </table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/23/ceatsheet/perf%20cheatsheet/" class="post-title-link" itemprop="url">perf cheatsheet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>https://jvns.ca/perf-cheat-sheet.pdf</p>
-</blockquote>
-<p><img src="perfcheatsheet.png" /></p>
 
       
     </div>
