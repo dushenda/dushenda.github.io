@@ -19,31 +19,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="https:&#x2F;&#x2F;jvns.ca&#x2F;perf-cheat-sheet.pdf">
+    <meta name="description" content="前两天社群有个用户用top命令查看进程时，有一个进程100%，以为CPU占满了，其实不然，下面我们就详细聊一下这个top命令。 很多人用 top 用了几年，却一直在错误解读它。 下面，我们就用一张真实的 top 截图，系统性讲清楚 top 的正确使用方式，以及最容易踩的认知坑。  先看截图图  MySQL 为何CPU能跑到 1265% ？  截图中最“刺眼”的一行： PID   USER   VI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="perf cheatsheet">
-<meta property="og:url" content="https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/index.html">
+<meta property="og:title" content="top常见问题">
+<meta property="og:url" content="https://dushenda.github.io/2025/12/29/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/top%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="https:&#x2F;&#x2F;jvns.ca&#x2F;perf-cheat-sheet.pdf">
+<meta property="og:description" content="前两天社群有个用户用top命令查看进程时，有一个进程100%，以为CPU占满了，其实不然，下面我们就详细聊一下这个top命令。 很多人用 top 用了几年，却一直在错误解读它。 下面，我们就用一张真实的 top 截图，系统性讲清楚 top 的正确使用方式，以及最容易踩的认知坑。  先看截图图  MySQL 为何CPU能跑到 1265% ？  截图中最“刺眼”的一行： PID   USER   VI">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/perfcheatsheet.png">
-<meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T13:40:32.906Z">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/29/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/top%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/top.png">
+<meta property="article:published_time" content="2025-12-29T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-29T13:40:32.838Z">
 <meta property="article:author" content="dushenda">
-<meta property="article:tag" content="ceatsheet">
 <meta property="article:tag" content="linux">
-<meta property="article:tag" content="perf">
+<meta property="article:tag" content="性能">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/perfcheatsheet.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2025/12/29/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/top%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/top.png">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/">
+<link rel="canonical" href="https://dushenda.github.io/2025/12/29/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/top%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/","path":"2025/12/23/ceatsheet/perf cheatsheet/","title":"perf cheatsheet"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/29/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/top%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/","path":"2025/12/29/Linux性能问题/top常见问题/","title":"top常见问题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>perf cheatsheet | dushenda</title>
+<title>top常见问题 | dushenda</title>
   
 
 
@@ -160,7 +159,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -173,6 +172,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E7%9C%8B%E6%88%AA%E5%9B%BE%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">先看截图图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA-1cpu-%E6%9C%80%E5%A4%A7%E5%8F%AA%E8%83%BD%E6%98%AF-100"><span class="nav-number">2.</span> <span class="nav-text">误区 1：%CPU 最大只能是 100%</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA-2load-average%E5%BE%88%E9%AB%98-cpu-%E5%B7%B2%E7%BB%8F%E6%89%93%E6%BB%A1"><span class="nav-number">3.</span> <span class="nav-text">误区 2：load average很高 &#x3D; CPU 已经打满</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA-3id-%E5%BE%88%E4%BD%8E%E6%89%8D%E8%AF%B4%E6%98%8E-cpu-%E6%9C%89%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">误区 3：id 很低才说明 CPU 有问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA-4virt-%E5%BE%88%E5%A4%A7-%E5%86%85%E5%AD%98%E8%A6%81%E7%82%B8"><span class="nav-number">5.</span> <span class="nav-text">误区 4：VIRT 很大 &#x3D; 内存要炸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA-5free-%E5%BE%88%E5%B0%8F-%E5%86%85%E5%AD%98%E4%B8%8D%E5%A4%9F"><span class="nav-number">6.</span> <span class="nav-text">误区 5：free 很小 &#x3D; 内存不够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA-6top-%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%AE%9A%E4%BD%8D%E6%A0%B9%E5%9B%A0"><span class="nav-number">7.</span> <span class="nav-text">误区 6：top 能直接定位“根因”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8-top"><span class="nav-number">8.</span> <span class="nav-text">正确使用 top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AC%E8%BF%90"><span class="nav-number">9.</span> <span class="nav-text">搬运</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -234,7 +234,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/ceatsheet/perf%20cheatsheet/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/top%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -247,12 +247,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="perf cheatsheet | dushenda">
+      <meta itemprop="name" content="top常见问题 | dushenda">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          perf cheatsheet
+          top常见问题
         </h1>
 
         <div class="post-meta-container">
@@ -263,7 +263,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
+      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
     </span>
 
   
@@ -275,10 +275,157 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><blockquote>
-<p>https://jvns.ca/perf-cheat-sheet.pdf</p>
+    <div class="post-body" itemprop="articleBody"><p>前两天社群有个用户用<code>top</code>命令查看进程时，有一个进程100%，以为CPU占满了，其实不然，下面我们就详细聊一下这个<code>top</code>命令。</p>
+<p>很多人用 <code>top</code> 用了几年，却<strong>一直在错误解读它</strong>。</p>
+<p>下面，我们就用一张真实的 <code>top</code> 截图，<strong>系统性讲清楚 top 的正确使用方式，以及最容易踩的认知坑</strong>。</p>
+<p><img src="top.png" /></p>
+<h2 id="先看截图图">先看截图图</h2>
+<blockquote>
+<p>MySQL 为何CPU能跑到 1265% ？</p>
 </blockquote>
-<p><img src="perfcheatsheet.png" /></p>
+<p>截图中最“刺眼”的一行：</p>
+<p><code>PID   USER   VIRT   RES   %CPU   %MEM   COMMAND   6308  mysql 220.7g 212.7g 1265   84.5   mysqld</code></p>
+<p>很多人第一反应：</p>
+<blockquote>
+<p><strong>“CPU 都 1265% 了？服务器要炸了”</strong></p>
+</blockquote>
+<p>但这恰恰是<strong>对 top 的第一个误解</strong>。上面截图中，MySQL服务多少有点问题，但业务并没有受影响。</p>
+<h2 id="误区-1cpu-最大只能是-100">误区 1：<code>%CPU</code> 最大只能是 100%</h2>
+<p><strong>错误理解：</strong></p>
+<blockquote>
+<p><code>%CPU</code> 是“CPU 使用率”，最大 100%</p>
+</blockquote>
+<p><strong>正确理解：</strong></p>
+<blockquote>
+<p><strong>top 中的 %CPU = 使用的 CPU 核心数 × 100%</strong></p>
+</blockquote>
+<p>我的机器是 <strong>16 核</strong>：</p>
+<ul>
+<li><p>100% = 1 个核满载</p></li>
+<li><p><strong>1265% ≈ 12.6 个核被 mysqld 占用，并没有达到上限</strong></p></li>
+</ul>
+<p><strong>结论：</strong>这台机器的 MySQL <strong>不是异常显示</strong>，而是<strong>在多核上疯狂并行执行</strong>。</p>
+<h2 id="误区-2load-average很高-cpu-已经打满">误区 2：load average很高 = CPU 已经打满</h2>
+<p>截图顶部：</p>
+<p><code>load average: 12.17, 11.71, 10.50</code></p>
+<p>很多人一看到 load &gt; 10，立刻下结论：</p>
+<blockquote>
+<p><strong>“CPU负载太高 快扛不住了！”</strong></p>
+</blockquote>
+<p>但你要先清楚一个问题：</p>
+<p><strong>这台机器有多少核？</strong></p>
+<p>正确判断方式</p>
+<table>
+<thead>
+<tr class="header">
+<th>CPU 核数</th>
+<th>load ≈ 核数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4 核</td>
+<td>load ≈ 4</td>
+<td>接近满载</td>
+</tr>
+<tr class="even">
+<td>16 核</td>
+<td>load ≈ 12</td>
+<td><strong>完全可接受</strong></td>
+</tr>
+<tr class="odd">
+<td>32 核</td>
+<td>load ≈ 12</td>
+<td><strong>偏空闲</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>load average ≠ CPU 使用率</strong>它表示的是：<strong>正在运行 + 等待 CPU 的进程数</strong></p>
+<h2 id="误区-3id-很低才说明-cpu-有问题">误区 3：<code>id</code> 很低才说明 CPU 有问题</h2>
+<p>截图中的 CPU 行：</p>
+<p><code>%Cpu(s): 39.9 us, 0.4 sy, 58.6 id</code></p>
+<p><strong>58.6% idle</strong></p>
+<p>这说明什么？</p>
+<blockquote>
+<p><strong>CPU 一半以上是空闲的</strong></p>
+</blockquote>
+<p>这时候再结合：</p>
+<ul>
+<li><p>mysqld：1265%</p></li>
+<li><p>idle：58%</p></li>
+</ul>
+<p>唯一合理的解释是：</p>
+<p><strong>多核机器 + 单个进程高并发消耗</strong></p>
+<h2 id="误区-4virt-很大-内存要炸">误区 4：VIRT 很大 = 内存要炸</h2>
+<p><code>VIRT 220.7g   RES  212.7g</code></p>
+<p>很多人看到 VIRT 直接慌了：</p>
+<blockquote>
+<p>“虚拟内存 220G？是不是内存泄漏？”</p>
+</blockquote>
+<p>正确理解</p>
+<table>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>VIRT</td>
+<td>进程可用的虚拟地址空间</td>
+</tr>
+<tr class="even">
+<td>RES</td>
+<td>真正占用的物理内存</td>
+</tr>
+<tr class="odd">
+<td>SHR</td>
+<td>可共享内存</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MySQL 的 VIRT 很大是正常现象</strong>：</p>
+<ul>
+<li><p>InnoDB buffer pool</p></li>
+<li><p>内存映射文件</p></li>
+<li><p>malloc 预留</p></li>
+</ul>
+<p>判断内存是否有问题，看 <code>RES + 系统是否 OOM</code>，而不是看 <code>VIRT</code></p>
+<h2 id="误区-5free-很小-内存不够">误区 5：<code>free</code> 很小 = 内存不够</h2>
+<p>截图中：</p>
+<p><code>KiB Mem:   263973326 total   8088860 free   28235512 buff/cache   30766036 avail Mem</code></p>
+<p>很多人盯着：</p>
+<blockquote>
+<p><strong>free 只有 8GB，内存要满了！</strong></p>
+</blockquote>
+<p>但 Linux 的内存哲学是：</p>
+<blockquote>
+<p><strong>不用白不用，有些在缓存中</strong></p>
+</blockquote>
+<p>真正要看的字段是：</p>
+<p><strong>avail Mem</strong></p>
+<ul>
+<li><p>avail ≈ 30GB</p></li>
+<li><p>说明：<strong>系统仍然有足够内存可用</strong></p></li>
+</ul>
+<h2 id="误区-6top-能直接定位根因">误区 6：top 能直接定位“根因”</h2>
+<p>这张图最多能得出结论：</p>
+<blockquote>
+<p><strong>MySQL 正在大量消耗 CPU</strong></p>
+</blockquote>
+<p>但你<strong>完全不知道为什么</strong>，这个就要进入MySQL数据库查看了，很大可能是慢SQL的问题。</p>
+<h2 id="正确使用-top">正确使用 top</h2>
+<p>先确认 CPU 核数</p>
+<p><code>lscpu</code></p>
+<p>load 要和核数对比</p>
+<p><code>load &lt; CPU核数 ≠ 性能问题</code></p>
+<p><code>%CPU &gt; 100%</code> 是常态</p>
+<p>多核时代，<strong>不懂这个等于白用 top</strong></p>
+<p>内存优先看 avail，不是 free，不是 buff/cache</p>
+<h2 id="搬运">搬运</h2>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkxNTU3MzUyMg==&amp;mid=2247498127&amp;idx=1&amp;sn=d62be59614a69997218d3d725d2b1edf&amp;chksm=c0cf9a98313790aa022c3874d0b3ea15d6bfbba9a713238961dd1cf01d7f8eaf6c0f06d5e1e0&amp;mpshare=1&amp;scene=24&amp;srcid=12262m5Y7c9sSWDpa2YQW25z&amp;sharer_shareinfo=7c3cdf447d7e68f36fe621484f3bdfca&amp;sharer_shareinfo_first=7c3cdf447d7e68f36fe621484f3bdfca#rd">CPU占用达1265%，一点都不慌，90% 的人都误解了 top命令</a></p>
 
     </div>
 
@@ -289,21 +436,20 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/linux/" rel="tag"># linux</a>
-              <a href="/tags/ceatsheet/" rel="tag"># ceatsheet</a>
-              <a href="/tags/perf/" rel="tag"># perf</a>
+              <a href="/tags/%E6%80%A7%E8%83%BD/" rel="tag"># 性能</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/22/ceatsheet/iproute%20cheatsheet/" rel="prev" title="iproute cheatsheet">
-                  <i class="fa fa-angle-left"></i> iproute cheatsheet
+                <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" rel="prev" title="vagrant cheatsheet">
+                  <i class="fa fa-angle-left"></i> vagrant cheatsheet
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/12/23/ceatsheet/ftrace%20cheatsheet/" rel="next" title="ftrace cheatsheet">
-                  ftrace cheatsheet <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/29/Linux%20Debug/%E6%8A%A5%E6%96%87%E8%BF%BD%E8%B8%AA/" rel="next" title="报文追踪">
+                  报文追踪 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
