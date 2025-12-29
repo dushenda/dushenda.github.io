@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="使用方法 1probe[,probe,...] &#x2F;filter&#x2F; &#123; action &#125; 探针指定要检测哪些事件，过滤器是可选的，可以根据布尔表达式筛选事件，而操作是要运行的小程序。 例子hello world: 1bpftrace -e &#x27;BEGIN &#123; printf(&quot;Hello eBPF!\n&quot;); &#125;&#x27; 探针是B">
+    <meta name="description" content="使用方法1probe[,probe,...] &#x2F;filter&#x2F; &#123; action &#125; 探针指定要检测哪些事件，过滤器是可选的，可以根据布尔表达式筛选事件，而操作是要运行的小程序。 例子hello world: 1bpftrace -e &#x27;BEGIN &#123; printf(&quot;Hello eBPF!\n&quot;); &#125;&#x27; 探针是BE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bpftrace cheatsheet">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/23/ceatsheet/bpftrace%20cheatsheet/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="使用方法 1probe[,probe,...] &#x2F;filter&#x2F; &#123; action &#125; 探针指定要检测哪些事件，过滤器是可选的，可以根据布尔表达式筛选事件，而操作是要运行的小程序。 例子hello world: 1bpftrace -e &#x27;BEGIN &#123; printf(&quot;Hello eBPF!\n&quot;); &#125;&#x27; 探针是B">
+<meta property="og:description" content="使用方法1probe[,probe,...] &#x2F;filter&#x2F; &#123; action &#125; 探针指定要检测哪些事件，过滤器是可选的，可以根据布尔表达式筛选事件，而操作是要运行的小程序。 例子hello world: 1bpftrace -e &#x27;BEGIN &#123; printf(&quot;Hello eBPF!\n&quot;); &#125;&#x27; 探针是BE">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T13:40:32.902Z">
+<meta property="article:modified_time" content="2025-12-29T15:42:30.136Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="cheatsheet">
 <meta property="article:tag" content="linux">
@@ -273,351 +273,342 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="使用方法">使用方法</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">probe[,probe,...] /filter/ &#123; action &#125;</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">probe[,probe,...] /filter/ &#123; action &#125;</span><br></pre></td></tr></table></figure>
 <p>探针指定要检测哪些事件，过滤器是可选的，可以根据布尔表达式筛选事件，而操作是要运行的小程序。</p>
-<p>例子hello world: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e &#x27;BEGIN &#123; printf(&quot;Hello eBPF!\n&quot;); &#125;&#x27;</span><br></pre></td></tr></table></figure> 探针是BEGIN，这是一个特殊的探针，会在程序开始时运行（类似于 awk）。没有过滤器。操作是printf()语句。</p>
-<p>举个实际例子： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e &#x27;kretprobe:vfs_read /pid == 181/ &#123; @bytes = hist(retval); &#125;&#x27;</span><br></pre></td></tr></table></figure> 这段代码使用 kretprobe 来检测 sys_read() 内核函数的返回值。如果进程 ID 为 181，则会将一个特殊的映射变量@bytes填充为一个以 sys_read() 返回值retval为参数的 log2 直方图函数。这样就能生成进程 ID 为 181 的读取大小的直方图。你的应用是否执行了大量 1 字节的读取操作？或许可以对此进行优化。</p>
-<h1 id="探针类型">探针类型</h1>
-<p>这些是相关的探针库。目前支持的类型有：</p>
+<p>例子hello world:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e &#x27;BEGIN &#123; printf(&quot;Hello eBPF!\n&quot;); &#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>探针是BEGIN，这是一个特殊的探针，会在程序开始时运行（类似于 awk）。没有过滤器。操作是printf()语句。</p>
+<p>举个实际例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e &#x27;kretprobe:vfs_read /pid == 181/ &#123; @bytes = hist(retval); &#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>这段代码使用 kretprobe 来检测 sys_read() 内核函数的返回值。如果进程 ID 为 181，则会将一个特殊的映射变量@bytes填充为一个以 sys_read() 返回值retval为参数的 log2 直方图函数。这样就能生成进程 ID 为 181 的读取大小的直方图。你的应用是否执行了大量 1 字节的读取操作？或许可以对此进行优化。</p>
+<h1 id="探针类型"><a href="#探针类型" class="headerlink" title="探针类型"></a>探针类型</h1><p>这些是相关的探针库。目前支持的类型有：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Alias</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>t</td>
 <td>tracepoint</td>
 <td>Kernel static instrumentation points</td>
 </tr>
-<tr class="even">
+<tr>
 <td>U</td>
 <td>usdt</td>
 <td>User-level statically defined tracing</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>k</td>
 <td>kprobe</td>
 <td>Kernel dynamic function instrumentation (standard)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>kr</td>
 <td>kretprobe</td>
 <td>Kernel dynamic function return instrumentation (standard)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>f</td>
 <td>kfunc</td>
 <td>Kernel dynamic function instrumentation (BPF based)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>fr</td>
 <td>kretfunc</td>
 <td>Kernel dynamic function return instrumentation (BPF based)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>u</td>
 <td>uprobe</td>
 <td>User-level dynamic function instrumentation</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ur</td>
 <td>uretprobe</td>
 <td>User-level dynamic function return instrumentation</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>s</td>
 <td>software</td>
 <td>Kernel software-based events</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h</td>
 <td>hardware</td>
 <td>Hardware counter-based instrumentation</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>w</td>
 <td>watchpoint</td>
 <td>Memory watchpoint events</td>
 </tr>
-<tr class="even">
+<tr>
 <td>p</td>
 <td>profile</td>
 <td>Timed sampling across all CPUs</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>i</td>
 <td>interval</td>
 <td>Timed reporting (from one CPU)</td>
 </tr>
-<tr class="even">
+<tr>
 <td></td>
 <td>iter</td>
 <td>Iterator tracing over kernel objects</td>
 </tr>
-<tr class="odd">
+<tr>
 <td></td>
 <td>BEGIN</td>
 <td>Start of bpftrace</td>
 </tr>
-<tr class="even">
+<tr>
 <td></td>
 <td>END</td>
 <td>End of bpftrace</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>动态插桩允许在不重启程序的情况下跟踪正在运行的二进制文件中的任何软件函数。但是，它所暴露的函数并非稳定的 API，因为它们可能会随软件版本的变化而改变，从而导致您开发的 bpftrace 工具失效。请尽可能使用静态探针类型，因为它们通常能提供一定的稳定性。</p>
-<h1 id="变量类型">变量类型</h1>
-<table>
+<h1 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h1><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Variable</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td><span class="citation" data-cites="name">@name</span></td>
+<tbody><tr>
+<td>@name</td>
 <td>global</td>
 </tr>
-<tr class="even">
-<td><span class="citation" data-cites="name">@name [key]</span></td>
+<tr>
+<td>@name[key]</td>
 <td>hash</td>
 </tr>
-<tr class="odd">
-<td><span class="citation" data-cites="name">@name [tid]</span></td>
+<tr>
+<td>@name[tid]</td>
 <td>thread-local</td>
 </tr>
-<tr class="even">
+<tr>
 <td>$name</td>
 <td>scratch</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>以“@”为前缀的变量使用 BPF 映射，其行为类似于关联数组。它们可以通过以下两种方式之一进行填充：</p>
 <ul>
-<li>变量赋值：<span class="citation" data-cites="name">@name</span> = x;</li>
-<li>函数赋值：<span class="citation" data-cites="name">@name</span> = hist(x); 内置了多种地图填充函数，可以快速汇总数据。</li>
+<li>变量赋值：@name &#x3D; x;</li>
+<li>函数赋值：@name &#x3D; hist(x);<br>内置了多种地图填充函数，可以快速汇总数据。</li>
 </ul>
-<h1 id="内置变量">内置变量</h1>
-<table>
+<h1 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h1><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Variable</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>pid</td>
 <td>Process ID</td>
 </tr>
-<tr class="even">
+<tr>
 <td>tid</td>
 <td>Thread ID</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>uid</td>
 <td>User ID</td>
 </tr>
-<tr class="even">
+<tr>
 <td>username</td>
 <td>Username</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>comm</td>
 <td>Process or command name</td>
 </tr>
-<tr class="even">
+<tr>
 <td>curtask</td>
 <td>Current task_struct as a u64</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>nsecs</td>
 <td>Current time in nanoseconds</td>
 </tr>
-<tr class="even">
+<tr>
 <td>elapsed</td>
 <td>Time in nanoseconds since bpftrace start</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>kstack</td>
 <td>Kernel stack trace</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ustack</td>
 <td>User-level stack trace</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>arg0…argN</td>
 <td>Function arguments</td>
 </tr>
-<tr class="even">
+<tr>
 <td>args</td>
 <td>Tracepoint arguments</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>retval</td>
 <td>Function return value</td>
 </tr>
-<tr class="even">
+<tr>
 <td>func</td>
 <td>Function name</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>probe</td>
 <td>Full probe name</td>
 </tr>
-<tr class="even">
-<td><span class="math inline">1...</span>N</td>
+<tr>
+<td>$1…$N</td>
 <td>Positional parameters</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>cgroup</td>
 <td>Default cgroup v2 ID</td>
 </tr>
-</tbody>
-</table>
-<h1 id="内置函数">内置函数</h1>
-<table>
+</tbody></table>
+<h1 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h1><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Function</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>printf(“…”)</td>
 <td>Print formatted string</td>
 </tr>
-<tr class="even">
+<tr>
 <td>time(“…”)</td>
 <td>Print formatted time</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>join(char *arr[])</td>
 <td>Join array of strings with a space</td>
 </tr>
-<tr class="even">
+<tr>
 <td>str(char *s [, int length])</td>
 <td>Return string from s pointer</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>buf(void *p [, int length])</td>
 <td>Return a hexadecimal string from p pointer</td>
 </tr>
-<tr class="even">
-<td>strncmp(char <em>s1, char </em>s2, int length)</td>
+<tr>
+<td>strncmp(char *s1, char *s2, int length)</td>
 <td>Compares two strings up to length</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>sizeof(expression)</td>
 <td>Returns the size of the expression</td>
 </tr>
-<tr class="even">
+<tr>
 <td>kstack([limit])</td>
 <td>Kernel stack trace up to limit frames</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ustack([limit])</td>
 <td>User-level stack trace up to limit frames</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ksym(void *p)</td>
 <td>Resolve kernel address to symbol</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>usym(void *p)</td>
 <td>Resolve user-space address to symbol</td>
 </tr>
-<tr class="even">
+<tr>
 <td>kaddr(char *name)</td>
 <td>Resolve kernel symbol name to address</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>uaddr(char *name)</td>
 <td>Resolve user-space symbol name to address</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ntop([int af,]int|char[4:16] addr)</td>
 <td>Convert IP address data to text</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>reg(char *name)</td>
 <td>Return register value</td>
 </tr>
-<tr class="even">
+<tr>
 <td>cgroupid(char *path)</td>
-<td>Return cgroupid for /sys/fs/cgroup/… path</td>
+<td>Return cgroupid for &#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;… path</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>time(“…”)</td>
 <td>Print formatted time</td>
 </tr>
-<tr class="even">
+<tr>
 <td>system(“…”)</td>
 <td>Run shell command</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>cat(char *filename)</td>
 <td>Print file content</td>
 </tr>
-<tr class="even">
+<tr>
 <td>signal(char[] sig | int sig)</td>
 <td>Send a signal to the current task</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>override(u64 rc)</td>
 <td>Override a kernel function return value</td>
 </tr>
-<tr class="even">
+<tr>
 <td>exit()</td>
 <td>Exits bpftrace</td>
 </tr>
-<tr class="odd">
-<td>@ = count()</td>
+<tr>
+<td>@ &#x3D; count()</td>
 <td>Count events</td>
 </tr>
-<tr class="even">
-<td>@ = sum(x)</td>
+<tr>
+<td>@ &#x3D; sum(x)</td>
 <td>Sum the value</td>
 </tr>
-<tr class="odd">
-<td>@ = hist(x)</td>
+<tr>
+<td>@ &#x3D; hist(x)</td>
 <td>Power-of-2 histogram for x</td>
 </tr>
-<tr class="even">
-<td>@ = lhist(x, min, max, step)</td>
+<tr>
+<td>@ &#x3D; lhist(x, min, max, step)</td>
 <td>Linear histogram for x</td>
 </tr>
-<tr class="odd">
-<td>@ = min(x)</td>
+<tr>
+<td>@ &#x3D; min(x)</td>
 <td>Record the minimum value seen</td>
 </tr>
-<tr class="even">
-<td>@ = max(x)</td>
+<tr>
+<td>@ &#x3D; max(x)</td>
 <td>Record the maximum value seen</td>
 </tr>
-<tr class="odd">
-<td>@ = stats(x)</td>
+<tr>
+<td>@ &#x3D; stats(x)</td>
 <td>Return the count, average, and total for this value</td>
 </tr>
-<tr class="even">
-<td>delete(<span class="citation" data-cites="x">@x [key]</span>)</td>
+<tr>
+<td>delete(@x[key])</td>
 <td>Delete the map element</td>
 </tr>
-<tr class="odd">
-<td>clear(<span class="citation" data-cites="x">@x</span>)</td>
+<tr>
+<td>clear(@x)</td>
 <td>Delete all keys from the map</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
     </div>
 

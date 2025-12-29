@@ -19,22 +19,22 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="wireshark 远程抓包 在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等）   ssh+tcpdump+wireshark解析 直接抓包解析 1ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i - 跳板机执行 1">
+    <meta name="description" content="wireshark远程抓包在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） ssh+tcpdump+wireshark解析直接抓包解析 1ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i - 跳板机执行 1ssh -">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux-网络抓包">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="wireshark 远程抓包 在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等）   ssh+tcpdump+wireshark解析 直接抓包解析 1ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i - 跳板机执行 1">
+<meta property="og:description" content="wireshark远程抓包在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） ssh+tcpdump+wireshark解析直接抓包解析 1ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i - 跳板机执行 1ssh -">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/img1.png">
-<meta property="og:image" content="https://dushenda.github.io/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/image.png">
+<meta property="og:image" content="https://dushenda.github.io/img1.png">
+<meta property="og:image" content="https://dushenda.github.io/image.png">
 <meta property="article:published_time" content="2025-12-10T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T13:40:32.818Z">
+<meta property="article:modified_time" content="2025-12-29T15:42:30.052Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/img1.png">
+<meta name="twitter:image" content="https://dushenda.github.io/img1.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/">
@@ -173,7 +173,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wireshark"><span class="nav-number">1.</span> <span class="nav-text">wireshark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%8A%93%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">远程抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sshtcpdumpwireshark%E8%A7%A3%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">ssh+tcpdump+wireshark解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tcpdump"><span class="nav-number">2.</span> <span class="nav-text">tcpdump</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8A%93%E5%8C%85%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">常用抓包指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">常用选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%80%89%E9%A1%B9"><span class="nav-number">2.3.</span> <span class="nav-text">其他选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#capture-commands"><span class="nav-number">2.3.1.</span> <span class="nav-text">Capture Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filter-commands"><span class="nav-number">2.3.2.</span> <span class="nav-text">Filter Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#display-commands"><span class="nav-number">2.3.3.</span> <span class="nav-text">Display Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#output-commands"><span class="nav-number">2.3.4.</span> <span class="nav-text">Output Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#miscellaneous-commands"><span class="nav-number">2.3.5.</span> <span class="nav-text">Miscellaneous Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#example-usage"><span class="nav-number">2.3.6.</span> <span class="nav-text">Example Usage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%90%AC%E8%BF%90"><span class="nav-number">3.</span> <span class="nav-text">参考&#x2F;搬运</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wireshark"><span class="nav-number">1.</span> <span class="nav-text">wireshark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%8A%93%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">远程抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-tcpdump-wireshark%E8%A7%A3%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">ssh+tcpdump+wireshark解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tcpdump"><span class="nav-number">2.</span> <span class="nav-text">tcpdump</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8A%93%E5%8C%85%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">常用抓包指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">常用选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%80%89%E9%A1%B9"><span class="nav-number">2.3.</span> <span class="nav-text">其他选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Capture-Commands"><span class="nav-number">2.3.1.</span> <span class="nav-text">Capture Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter-Commands"><span class="nav-number">2.3.2.</span> <span class="nav-text">Filter Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Display-Commands"><span class="nav-number">2.3.3.</span> <span class="nav-text">Display Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Commands"><span class="nav-number">2.3.4.</span> <span class="nav-text">Output Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Miscellaneous-Commands"><span class="nav-number">2.3.5.</span> <span class="nav-text">Miscellaneous Commands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Usage"><span class="nav-number">2.3.6.</span> <span class="nav-text">Example Usage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83-%E6%90%AC%E8%BF%90"><span class="nav-number">3.</span> <span class="nav-text">参考&#x2F;搬运</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -276,514 +276,484 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="wireshark">wireshark</h1>
-<h2 id="远程抓包">远程抓包</h2>
-<p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等） <img src="img1.png" /> <img src="image.png" alt="image.png" /></p>
-<h2 id="sshtcpdumpwireshark解析">ssh+tcpdump+wireshark解析</h2>
-<p>直接抓包解析 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 跳板机执行 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure> 直接抓包并保存 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure></p>
-<h1 id="tcpdump">tcpdump</h1>
-<h2 id="常用抓包指令">常用抓包指令</h2>
-<p>过滤tcp flags，比如抓syn报文，看是否能握手成功 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br></pre></td></tr></table></figure> 查看tcp状态，如下为发送了sync，如果一直未回复，则可以在<code>sar -n ETCP 1</code>看到<code>retrans/s</code>不断上升 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 0.1 &#x27;ss -tpn state syn-sent&#x27;</span><br></pre></td></tr></table></figure> 抓syn和syn+ack报文 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any <span class="string">&#x27;tcp[tcpflags] == tcp-syn or tcp[13]=18&#x27;</span></span><br></pre></td></tr></table></figure> 抓syn和syn+rst报文 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or tcp[13] &amp; 4!=0&#x27;</span><br></pre></td></tr></table></figure> 抓syn和icmp不可达报文 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> 抓syn、syn+ack、rst和icmp端口不可达报文（tcp[13]指的是从tcp报文头偏移13字节的选项） <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;(tcp[tcpflags] == tcp-syn or tcp[13]=18) or tcp[13] &amp;amp; 4!=0 or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure> tcp flags抓包例子 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-rst&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-fin&#x27;</span><br></pre></td></tr></table></figure> 抓取指定报文大小 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tcpdump less 32</span><br><span class="line">tcpdump greater 32</span><br><span class="line">tcpdump &lt;= 102</span><br></pre></td></tr></table></figure> 持续抓取端口 <code>8080</code>的流量，每个文件最大 <code>100MB</code>，最多保留 <code>10</code>个文件，写满后覆盖最旧的文件 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080</span><br></pre></td></tr></table></figure> 抓取 <code>10000</code>个发往 <code>80</code>端口的包 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -c 10000 -w http_requests.pcap dst port 80</span><br></pre></td></tr></table></figure></p>
-<h2 id="常用选项">常用选项</h2>
-<table>
+    <div class="post-body" itemprop="articleBody"><h1 id="wireshark"><a href="#wireshark" class="headerlink" title="wireshark"></a>wireshark</h1><h2 id="远程抓包"><a href="#远程抓包" class="headerlink" title="远程抓包"></a>远程抓包</h2><p>在wireshark的以下两个部分进行抓包，不建议性能分析时进行，在连通性验证时可以使用（ssh传输可能丢包等）<br><img src="/img1.png"><br><img src="/image.png" alt="image.png"></p>
+<h2 id="ssh-tcpdump-wireshark解析"><a href="#ssh-tcpdump-wireshark解析" class="headerlink" title="ssh+tcpdump+wireshark解析"></a>ssh+tcpdump+wireshark解析</h2><p>直接抓包解析</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure>
+<p>跳板机执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -J &lt;jumpsever ip&gt; &lt;ip&gt; &#x27;tcpdump -ni any -s0 -U -w - udp port 53&#x27; | wireshark -k -i -</span><br></pre></td></tr></table></figure>
+<p>直接抓包并保存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;ip&gt; <span class="string">&#x27;tcpdump -ni any -s0 -U -w- udp port 53&#x27;</span> &gt; /tmp/packets.pcap</span><br></pre></td></tr></table></figure>
+
+<h1 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h1><h2 id="常用抓包指令"><a href="#常用抓包指令" class="headerlink" title="常用抓包指令"></a>常用抓包指令</h2><p>过滤tcp flags，比如抓syn报文，看是否能握手成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br></pre></td></tr></table></figure>
+<p>查看tcp状态，如下为发送了sync，如果一直未回复，则可以在<code>sar -n ETCP 1</code>看到<code>retrans/s</code>不断上升</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 0.1 &#x27;ss -tpn state syn-sent&#x27;</span><br></pre></td></tr></table></figure>
+<p>抓syn和syn+ack报文</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any <span class="string">&#x27;tcp[tcpflags] == tcp-syn or tcp[13]=18&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>抓syn和syn+rst报文</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or tcp[13] &amp; 4!=0&#x27;</span><br></pre></td></tr></table></figure>
+<p>抓syn和icmp不可达报文</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;tcp[tcpflags] == tcp-syn or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure>
+<p>抓syn、syn+ack、rst和icmp端口不可达报文（tcp[13]指的是从tcp报文头偏移13字节的选项）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -ni any &#x27;(tcp[tcpflags] == tcp-syn or tcp[13]=18) or tcp[13] &amp;amp; 4!=0 or icmp[0] = 3&#x27;</span><br></pre></td></tr></table></figure>
+<p>tcp flags抓包例子</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-syn&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-rst&#x27;</span><br><span class="line">tcpdump &#x27;tcp[tcpflags] == tcp-fin&#x27;</span><br></pre></td></tr></table></figure>
+<p>抓取指定报文大小</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tcpdump less 32</span><br><span class="line">tcpdump greater 32</span><br><span class="line">tcpdump &lt;= 102</span><br></pre></td></tr></table></figure>
+<p>持续抓取端口 <code>8080</code>的流量，每个文件最大 <code>100MB</code>，最多保留 <code>10</code>个文件，写满后覆盖最旧的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -C 100 -W 10 -w my_capture.pcap port 8080</span><br></pre></td></tr></table></figure>
+<p>抓取 <code>10000</code>个发往 <code>80</code>端口的包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -c 10000 -w http_requests.pcap dst port 80</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h2><table>
 <thead>
-<tr class="header">
+<tr>
 <th>参数</th>
 <th>说明</th>
 <th>示例</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>-i &lt;interface&gt;</code></strong>​</td>
+<tbody><tr>
+<td>**<code>-i &lt;interface&gt;</code>**​</td>
 <td>指定抓包网卡。<code>any</code>表示所有网卡。</td>
 <td><code>-i any</code></td>
 </tr>
-<tr class="even">
-<td><strong><code>port &lt;端口号&gt;</code></strong>​</td>
-<td>过滤特定端口的流量（TCP/UDP）。</td>
+<tr>
+<td>**<code>port &lt;端口号&gt;</code>**​</td>
+<td>过滤特定端口的流量（TCP&#x2F;UDP）。</td>
 <td><code>port 8080</code></td>
 </tr>
-<tr class="odd">
-<td><strong><code>-C &lt;大小&gt;</code></strong>​</td>
+<tr>
+<td>**<code>-C &lt;大小&gt;</code>**​</td>
 <td><strong>按文件大小分割</strong>。单位通常为MB（M）。</td>
 <td><code>-C 100</code></td>
 </tr>
-<tr class="even">
-<td><strong><code>-W &lt;数量&gt;</code></strong>​</td>
+<tr>
+<td>**<code>-W &lt;数量&gt;</code>**​</td>
 <td><strong>限制文件总数</strong>，与 <code>-C</code>配合实现循环覆盖。</td>
 <td><code>-W 10</code></td>
 </tr>
-<tr class="odd">
-<td><strong><code>-w &lt;文件名&gt;</code></strong>​</td>
+<tr>
+<td>**<code>-w &lt;文件名&gt;</code>**​</td>
 <td>将抓取的原始数据包写入指定文件。</td>
 <td><code>-w my_capture.pcap</code></td>
 </tr>
-<tr class="even">
-<td><strong><code>-c &lt;数量&gt;</code></strong>​</td>
+<tr>
+<td>**<code>-c &lt;数量&gt;</code>**​</td>
 <td>抓取指定数量的数据包后自动退出。</td>
 <td><code>-c 10000</code></td>
 </tr>
-<tr class="odd">
-<td><strong><code>-s &lt;长度&gt;</code></strong>​</td>
+<tr>
+<td>**<code>-s &lt;长度&gt;</code>**​</td>
 <td>设置每个数据包的抓取长度（快照长度byte），<code>-s 0</code>表示抓取完整数据包。<strong>(在长期抓只需要分析报文头很实用)</strong></td>
 <td><code>-s 0</code></td>
 </tr>
-</tbody>
-</table>
-<h2 id="其他选项">其他选项</h2>
-<h3 id="capture-commands">Capture Commands</h3>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
+</tbody></table>
+<h2 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项"></a>其他选项</h2><h3 id="Capture-Commands"><a href="#Capture-Commands" class="headerlink" title="Capture Commands"></a>Capture Commands</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Command</th>
 <th>Example usage</th>
 <th>Explanation</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><code>-i any</code></td>
 <td><code>tcpdump -i any</code></td>
 <td>Capture from all interfaces; may require superuser (<code>sudo/su</code>)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>-i eth0</code></td>
 <td><code>tcpdump -i eth0</code></td>
 <td>Capture from the interface <code>eth0</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>-c count</code></td>
 <td><code>tcpdump -i eth0 -c 5</code></td>
 <td>Exit after receiving <code>count (5)</code> packets</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>-r captures.pcap</code></td>
 <td><code>tcpdump -i eth0 -r captures.pcap</code></td>
 <td>Read and analyze saved capture file <code>captures.pcap</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcp</code></td>
 <td><code>tcpdump -i eth0 tcp</code></td>
 <td>Show TCP packets only</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>udp</code></td>
 <td><code>tcpdump -i eth0 udp</code></td>
 <td>Show UDP packets only</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>icmp</code></td>
 <td><code>tcpdump -i eth0 icmp</code></td>
 <td>Show ICMP packets only</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ip</code></td>
 <td><code>tcpdump -i eth0 ip</code></td>
 <td>Show IPv4 packets only</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>ip6</code></td>
 <td><code>tcpdump -i eth0 ip6</code></td>
 <td>Show IPv6 packets only</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>arp</code></td>
 <td><code>tcpdump -i eth0 arp</code></td>
 <td>Show ARP packets only</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>rarp</code></td>
 <td><code>tcpdump -i eth0 rarp</code></td>
 <td>Show RARP packets only</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>slip</code></td>
 <td><code>tcpdump -i eth0 slip</code></td>
 <td>Show SLIP packets only</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>-I</code></td>
 <td><code>tcpdump -i eth0 -I</code></td>
 <td>Set interface as monitor mode</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>-K</code></td>
 <td><code>tcpdump -i eth0 -K</code></td>
 <td>Don’t verify checksum</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>-p</code></td>
 <td><code>tcpdump -i eth0 -p</code></td>
 <td>Don’t capture in promiscuous mode</td>
 </tr>
-</tbody>
-</table>
-<h3 id="filter-commands">Filter Commands</h3>
-<table>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 77%" />
-</colgroup>
+</tbody></table>
+<h3 id="Filter-Commands"><a href="#Filter-Commands" class="headerlink" title="Filter Commands"></a>Filter Commands</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Filter expression</th>
 <th>Explanation</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><code>src host 127.0.0.1</code></td>
-<td>Filter by source IP/hostname <code>127.0.0.1</code></td>
+<td>Filter by source IP&#x2F;hostname <code>127.0.0.1</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>dst host 127.0.0.1</code></td>
-<td>Filter by destination IP/hostname <code>127.0.0.1</code></td>
+<td>Filter by destination IP&#x2F;hostname <code>127.0.0.1</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>host 127.0.0.1</code></td>
-<td>Filter by source or destination = <code>127.0.0.1</code></td>
+<td>Filter by source or destination &#x3D; <code>127.0.0.1</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ether src 01:23:45:AB:CD:EF</code></td>
 <td>Filter by source MAC <code>01:23:45:AB:CD:EF</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>ether dst 01:23:45:AB:CD:EF</code></td>
 <td>Filter by destination MAC <code>01:23:45:AB:CD:EF</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ether host 01:23:45:AB:CD:EF</code></td>
 <td>Filter by source or destination MAC <code>01:23:45:AB:CD:EF</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>src net 127.0.0.1</code></td>
 <td>Filter by source network location <code>127.0.0.1</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>dst net 127.0.0.1</code></td>
 <td>Filter by destination network location <code>127.0.0.1</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>net 127.0.0.1</code></td>
 <td>Filter by source or destination network location <code>127.0.0.1</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>net 127.0.0.1/24</code></td>
 <td>Filter by source or destination network location <code>127.0.0.1</code> with the tcpdump subnet mask of length <code>24</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>src port 80</code></td>
-<td>Filter by source port = 80</td>
+<td>Filter by source port &#x3D; 80</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>dst port 80</code></td>
-<td>Filter by destination port = 80</td>
+<td>Filter by destination port &#x3D; 80</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>port 80</code></td>
-<td>Filter by source or destination port = 80</td>
+<td>Filter by source or destination port &#x3D; 80</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>src portrange 80-400</code></td>
 <td>Filter by source port value between 80 and 400</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>dst portrange 80-400</code></td>
 <td>Filter by destination port value between 80 and 400</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>portrange 80-400</code></td>
 <td>Filter by source or destination port value between 80 and 400</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>ether broadcast</code></td>
 <td>Filter for Ethernet broadcasts</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ip broadcast</code></td>
 <td>Filter for IPv4 broadcasts</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>ether multicast</code></td>
 <td>Filter for Ethernet multicasts</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ip multicast</code></td>
 <td>Filter for IPv4 multicasts</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>ip6 multicast</code></td>
 <td>Filter for IPv6 multicasts</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>ip src host mydevice</code></td>
 <td>Filter by IPv4 source hostname <code>mydevice</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>arp dst host mycar</code></td>
 <td>Filter by ARP destination hostname <code>mycar</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>rarp src host 127.0.0.1</code></td>
 <td>Filter by RARP source <code>127.0.0.1</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>ip6 dst host mywatch</code></td>
 <td>Filter by IPv6 destination hostname <code>mywatch</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcp dst port 8000</code></td>
-<td>Filter by destination TCP port = 8000</td>
+<td>Filter by destination TCP port &#x3D; 8000</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>udp src portrange 1000-2000</code></td>
 <td>Filter by source TCP ports in 1000–2000</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>sctp port 22</code></td>
-<td>Filter by source or destination port = 22</td>
+<td>Filter by source or destination port &#x3D; 22</td>
 </tr>
-</tbody>
-</table>
-<h3 id="display-commands">Display Commands</h3>
-<table>
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 81%" />
-</colgroup>
+</tbody></table>
+<h3 id="Display-Commands"><a href="#Display-Commands" class="headerlink" title="Display Commands"></a>Display Commands</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Example</th>
 <th>Explanation</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><code>tcpdump -i eth0 -A</code></td>
-<td>Print each packet (minus its link level header) in ASCII. Handy for capturing web pages. <br> <br>[![Screenshot with ASCII (sudo tcpdump twitter)</td>
+<td>Print each packet (minus its link level header) in ASCII. Handy for capturing web pages.  <br>  <br>[![Screenshot with ASCII (sudo tcpdump twitter)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -D</code></td>
 <td>Print the list of the network interfaces available on the system and on which tcpdump can capture packets.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -e</code></td>
 <td>Print the link-level header on each output line, such as MAC layer addresses for protocols such as Ethernet and IEEE 802.11.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -F /path/to/params.conf</code></td>
-<td>Use the file <code>params.conf</code> as input for the <a href="###%20Filter%20Commands">filter expression</a>. (Ignore other expressions on the command line.)</td>
+<td>Use the file <code>params.conf</code> as input for the [filter expression](### Filter Commands). (Ignore other expressions on the command line.)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -n</code></td>
 <td>Don’t convert addresses (i.e., host addresses, port numbers, etc.) to names.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -S</code></td>
 <td>Print absolute, rather than relative, TCP sequence numbers. (Absolute TCP sequence numbers are longer.)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 --time-stamp-precision=nano</code></td>
-<td>When capturing, set the timestamp precision for the capture to <code>tsp</code>: <br>• <code>micro</code> for microsecond (default) <br>• <code>nano</code> for nanosecond.</td>
+<td>When capturing, set the timestamp precision for the capture to <code>tsp</code>:  <br>• <code>micro</code> for microsecond (default)  <br>• <code>nano</code> for nanosecond.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -t</code></td>
 <td>Omit the timestamp on each output line.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -tt</code></td>
 <td>Print the timestamp, as seconds since January 1, 1970, 00:00:00, UTC, and fractions of a second since that time, on each dump line.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -ttt</code></td>
 <td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and previous line on each output line. The default is microsecond resolution.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -tttt</code></td>
 <td>Print a timestamp as hours, minutes, seconds, and fractions of a second since midnight, preceded by the date, on each dump line.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -ttttt</code></td>
 <td>Print a delta (microsecond or nanosecond resolution depending on the <code>--time-stamp-precision</code> option) between the current and first line on each dump line. The default is microsecond resolution.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -u</code></td>
 <td>Print undecoded network file system (NFS) handles.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -v</code></td>
-<td>Produce verbose output. <br>When writing to a file (<code>-w</code> option) and at the same time not reading from a file (<code>-r</code> option), report to standard error, once per second, the number of packets captured.</td>
+<td>Produce verbose output.  <br>When writing to a file (<code>-w</code> option) and at the same time not reading from a file (<code>-r</code> option), report to standard error, once per second, the number of packets captured.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -vv</code></td>
 <td>Additional verbose output than <code>-v</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -vvv</code></td>
 <td>Additional verbose output than <code>-vv</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -x</code></td>
 <td>Print the headers and data of each packet (minus its link level header) in hex.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -xx</code></td>
 <td>Print the headers and data of each packet, including its link level header, in hex.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -X</code></td>
 <td>Print the headers and data of each packet (minus its link level header) in hex and ASCII.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i eth0 -XX</code></td>
 <td>Print the headers and data of each packet, including its link level header, in hex and ASCII.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
-<h3 id="output-commands">Output Commands</h3>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
+</tbody></table>
+<h3 id="Output-Commands"><a href="#Output-Commands" class="headerlink" title="Output Commands"></a>Output Commands</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Command</th>
 <th>Example</th>
 <th>Explanation</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><code>-w captures.pcap</code></td>
 <td><code>tcpdump -i eth0 -w captures.pcap</code></td>
 <td>Output capture to a file <code>captures.pcap</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>-d</code></td>
 <td><code>tcpdump -i eth0 -d</code></td>
 <td>Display human-readable form in standard output</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>-L</code></td>
 <td><code>tcpdump -i eth0 -L</code></td>
 <td>Display data link types for the interface</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>-q</code></td>
 <td><code>tcpdump -i eth0 -q</code></td>
-<td>Quick/quiet output. Print less protocol information, so output lines are shorter.</td>
+<td>Quick&#x2F;quiet output. Print less protocol information, so output lines are shorter.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>-U</code></td>
 <td><code>tcpdump -i eth0 -U -w out.pcap</code></td>
-<td><strong>Without -w option</strong> <br>Print a description of each packet’s contents. <br><strong>With -w option</strong> <br>Write each packet to the output file <code>out.pcap</code> in real time rather than only when the output buffer fills.</td>
+<td><strong>Without -w option</strong>  <br>Print a description of each packet’s contents.  <br><strong>With -w option</strong>  <br>Write each packet to the output file <code>out.pcap</code> in real time rather than only when the output buffer fills.</td>
 </tr>
-</tbody>
-</table>
-<h3 id="miscellaneous-commands">Miscellaneous Commands</h3>
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
+</tbody></table>
+<h3 id="Miscellaneous-Commands"><a href="#Miscellaneous-Commands" class="headerlink" title="Miscellaneous Commands"></a>Miscellaneous Commands</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Operator</th>
 <th>Syntax</th>
 <th>Example</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><code>AND</code></td>
 <td><code>and, &amp;&amp;</code></td>
 <td><code>tcpdump -n src 127.0.0.1 and dst port 21</code></td>
 <td>Combine filtering options joined by “and”</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>OR</code></td>
-<td><code>or, \|</code></td>
+<td><code>or, |</code></td>
 <td><code>tcpdump dst 127.0.0.1 or src port 22</code></td>
 <td>Match any of the conditions joined by “or”</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>EXCEPT</code></td>
 <td><code>not, !</code></td>
 <td><code>tcpdump dst 127.0.0.1 and not icmp</code></td>
 <td>Negate the condition prefixed by “not”</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>LESS</code></td>
 <td><code>less, &lt;, (&lt;=)</code></td>
 <td><code>tcpdump dst host 127.0.0.1 and less 128</code></td>
-<td>Shows packets shorter than (or equal to) 128 bytes in length. <br>&lt; only applies to length 32, i.e., <code>&lt;32</code>.</td>
+<td>Shows packets shorter than (or equal to) 128 bytes in length.  <br>&lt; only applies to length 32, i.e., <code>&lt;32</code>.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>GREATER</code></td>
 <td><code>greater, &gt;, (&gt;=)</code></td>
 <td><code>tcpdump dst host 127.0.0.1 and greater 64</code></td>
-<td>Shows packets longer than (or equal to) 64 bytes in length. <br>&gt; only applies to length 32, i.e., <code>&gt;32</code>.</td>
+<td>Shows packets longer than (or equal to) 64 bytes in length.  <br>&gt; only applies to length 32, i.e., <code>&gt;32</code>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>EQUAL</code></td>
 <td><code>=, ==</code></td>
 <td><code>tcpdump host 127.0.0.1 = 0</code></td>
 <td>Show packets with zero length</td>
 </tr>
-</tbody>
-</table>
-<h3 id="example-usage">Example Usage</h3>
-<table>
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 71%" />
-</colgroup>
+</tbody></table>
+<h3 id="Example-Usage"><a href="#Example-Usage" class="headerlink" title="Example Usage"></a>Example Usage</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>Example</th>
 <th>Explanation</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><code>tcpdump -r outfile.pcap src host 10.0.2.15</code></td>
 <td>Print all packets in the file <code>outfile.pcap</code> coming from the host with IP address 10.0.2.15</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -i any ip and not tcp port 80</code></td>
 <td>Listen for non-HTTP packets (which have TCP port number 80) on any network interface</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>tcpdump -i eth0 -n &gt;32 -w pv01.pcap -c 30</code></td>
 <td>Save 30 packets of length exceeding 32 bytes to <code>captures.pcap</code> without DNS resolution on the <code>eth0</code> network interface</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>tcpdump -AtuvX icmp</code></td>
-<td>Capture ICMP traffic and print ICMP packets in hex and ASCII and the following features: <br>With: <br>• headers <br>• data <br>• undecoded NFS handles <br>Without: <br>• link level headers <br>• timestamps.</td>
+<td>Capture ICMP traffic and print ICMP packets in hex and ASCII and the following features:  <br>With:  <br>• headers  <br>• data  <br>• undecoded NFS handles  <br>Without:  <br>• link level headers  <br>• timestamps.</td>
 </tr>
-<tr class="odd">
-<td><code>tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)'</code></td>
-<td>Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.</td>
+<tr>
+<td><code>tcpdump &#39;tcp port 80 and (((ip[2:2] - ((ip[0]&amp;0xf)&lt;&lt;2)) - ((tcp[12]&amp;0xf0)&gt;&gt;2)) != 0)&#39;</code></td>
+<td>Print all IPv4 HTTP packets to and from port 80, i.e. print only packets that contain data, not, for example, SYN and FIN packets and ACK-only packets.</td>
 </tr>
-</tbody>
-</table>
-<h1 id="参考搬运">参考/搬运</h1>
-<ul>
+</tbody></table>
+<h1 id="参考-搬运"><a href="#参考-搬运" class="headerlink" title="参考&#x2F;搬运"></a>参考&#x2F;搬运</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://debugging.works/blog/network-debugging/">https://debugging.works/blog/network-debugging/</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.stationx.net/tcpdump-cheat-sheet/">https://www.stationx.net/tcpdump-cheat-sheet/</a></li>
 </ul>

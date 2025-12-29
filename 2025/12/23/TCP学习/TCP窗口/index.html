@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="TCP几个窗口概念 TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用     接收窗口 (RWND)​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   拥塞窗口 (CWND)​ Congestion Window 发送">
+    <meta name="description" content="TCP几个窗口概念TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用    **接收窗口 (RWND)**​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   **拥塞窗口 (CWND)**​ Congestion Win">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP窗口">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="TCP几个窗口概念 TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用     接收窗口 (RWND)​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   拥塞窗口 (CWND)​ Congestion Window 发送">
+<meta property="og:description" content="TCP几个窗口概念TCP窗口大小的单位是字节​ 。这意味着窗口大小衡量的是可以发送的数据字节数，而不是报文段或帧的数量。 下表总结了TCP通信中几个关键的窗口类型：    窗口类型 英文全称 控制方 核心作用    **接收窗口 (RWND)**​ Receiver Window 接收端 流量控制，反映接收方应用程序的缓存剩余空间   **拥塞窗口 (CWND)**​ Congestion Win">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-23T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T13:40:32.858Z">
+<meta property="article:modified_time" content="2025-12-29T15:42:30.092Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="TCP">
 <meta property="article:tag" content="网络">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">窗口之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cwnd"><span class="nav-number">3.</span> <span class="nav-text">CWND</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%85%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E9%81%BF%E5%85%8D"><span class="nav-number">3.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text">快速恢复</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP%E5%87%A0%E4%B8%AA%E7%AA%97%E5%8F%A3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">TCP几个窗口概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">窗口之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CWND"><span class="nav-number">3.</span> <span class="nav-text">CWND</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%85%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E9%81%BF%E5%85%8D"><span class="nav-number">3.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text">快速恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.3.1.</span> <span class="nav-text">深入理解工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%BC%94%E8%BF%9B%E4%B8%8E%E6%AF%94%E8%BE%83"><span class="nav-number">3.3.2.</span> <span class="nav-text">算法演进与比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.3.3.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -273,64 +273,146 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
-<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="TCP几个窗口概念"><a href="#TCP几个窗口概念" class="headerlink" title="TCP几个窗口概念"></a>TCP几个窗口概念</h1><p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
 <p>下表总结了TCP通信中几个关键的窗口类型：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>窗口类型</th>
 <th>英文全称</th>
 <th>控制方</th>
 <th>核心作用</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td><strong>接收窗口 (RWND)</strong>​</td>
+<tbody><tr>
+<td>**接收窗口 (RWND)**​</td>
 <td>Receiver Window</td>
 <td>接收端</td>
 <td>流量控制，反映接收方应用程序的缓存剩余空间</td>
 </tr>
-<tr class="even">
-<td><strong>拥塞窗口 (CWND)</strong>​</td>
+<tr>
+<td>**拥塞窗口 (CWND)**​</td>
 <td>Congestion Window</td>
 <td>发送端</td>
 <td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
 </tr>
-<tr class="odd">
-<td><strong>发送窗口 (SWND)</strong>​</td>
+<tr>
+<td>**发送窗口 (SWND)**​</td>
 <td>Sender Window</td>
 <td>发送端</td>
 <td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
 <li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
 <li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
 </ul>
-<h1 id="窗口之间的关系">窗口之间的关系</h1>
-<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
-<h1 id="cwnd">CWND</h1>
-<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
+<h1 id="窗口之间的关系"><a href="#窗口之间的关系" class="headerlink" title="窗口之间的关系"></a>窗口之间的关系</h1><p>$$<br>SWND&#x3D;\min(CWND, RWND)<br>$$</p>
+<h1 id="CWND"><a href="#CWND" class="headerlink" title="CWND"></a>CWND</h1><p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
 <ul>
 <li>慢启动</li>
 <li>拥塞避免</li>
 <li>快速恢复</li>
 </ul>
-<h2 id="慢启动">慢启动</h2>
-<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
-<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
+<h2 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h2><p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
+<p>$$<br>CWND&#x3D;CWND+MSS<br>$$</p>
 <pre><code class="highlight mermaid">xychart-beta
         title &quot;慢启动&quot;
         x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
         y-axis &quot;CWND&quot; 
         line [1, 2, 4, 8, 16, 32, 64]</code></pre>
-<h2 id="拥塞避免">拥塞避免</h2>
-<h2 id="快速恢复">快速恢复</h2>
 
+<h2 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h2><p>TCP的拥塞避免是TCP拥塞控制算法的核心阶段之一，其主要目的是在网络接近饱和时，平稳地利用带宽，避免因数据注入过快而导致网络拥塞。</p>
+<p>$$<br>CWND&#x3D;CWND+MSS&#x2F;CWND<br>$$<br>比如原始的cwnd为8时发生了拥塞和重传，那么RTT-cwnd的图如下</p>
+<pre><code class="highlight mermaid">xychart-beta
+        title &quot;拥塞避免&quot;
+        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]
+        y-axis &quot;CWND&quot; 
+        line [0, 1, 2, 4, 8, 8, 8, 1, 2, 4, 5, 6, 7, 8, 9]</code></pre>
+
+<h2 id="快速恢复"><a href="#快速恢复" class="headerlink" title="快速恢复"></a>快速恢复</h2><p>TCP快速恢复是拥塞控制中一项关键机制，它的核心目标是在检测到数据包丢失后（通常是收到三个重复确认ACK），<strong>避免让连接退回到慢启动阶段</strong>，从而维持较高的网络吞吐量。下面这个表格可以快速抓住演进的精髓。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>TCP Tahoe</th>
+<th>TCP Reno</th>
+<th>TCP NewReno</th>
+<th>TCP with SACK</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>核心机制</strong>​</td>
+<td>仅有快速重传</td>
+<td>快速重传 + 基础快速恢复</td>
+<td>改进的快速恢复（应对多包丢失）</td>
+<td>选择性确认 + 更精确的恢复</td>
+</tr>
+<tr>
+<td><strong>触发条件</strong>​</td>
+<td>3个重复ACK或超时</td>
+<td>3个重复ACK</td>
+<td>3个重复ACK</td>
+<td>3个重复ACK（利用SACK信息）</td>
+</tr>
+<tr>
+<td><strong>主要动作</strong>​</td>
+<td><code>ssthresh = cwnd/2</code>, <code>cwnd = 1</code>，进入慢启动</td>
+<td><code>ssthresh = cwnd/2</code>, <code>cwnd = ssthresh + 3</code>，进入快速恢复</td>
+<td><code>ssthresh = cwnd/2</code>，持续重传直至所有丢失包被确认</td>
+<td>基于SACK信息精确重传丢失包，使用<code>pipe</code>变量控制发送</td>
+</tr>
+<tr>
+<td><strong>多包丢失处理</strong>​</td>
+<td>效率低，引发多次重置</td>
+<td>效率低，可能多次进入恢复或超时</td>
+<td><strong>显著改善</strong>，可在一次恢复期内重传多个丢失包</td>
+<td><strong>最优</strong>，能同时识别和重传多个丢失包</td>
+</tr>
+<tr>
+<td><strong>主要优势</strong>​</td>
+<td>实现简单</td>
+<td>避免空窗，提升单包丢失恢复效率</td>
+<td>有效处理同一窗口内多个包丢失，减少超时</td>
+<td>恢复最精确、延迟最低，吞吐量高</td>
+</tr>
+<tr>
+<td><strong>主要局限</strong>​</td>
+<td>网络利用率低，震荡大</td>
+<td>多包丢失时性能差，易致超时</td>
+<td>每个RTT只能恢复一个丢失包</td>
+<td>实现复杂，CPU开销相对高</td>
+</tr>
+</tbody></table>
+<h3 id="深入理解工作原理"><a href="#深入理解工作原理" class="headerlink" title="深入理解工作原理"></a>深入理解工作原理</h3><p>快速恢复机制建立在几个关键原则和步骤之上：</p>
+<ol>
+<li><strong>触发与初始化</strong>：当发送端连续收到<strong>3个重复的ACK</strong>时，会推断有数据包丢失，从而触发快速恢复。随后，它会将慢启动阈值（<code>ssthresh</code>）设置为当前拥塞窗口（<code>cwnd</code>）的一半（但不小于2），为恢复阶段设定新的窗口上限。此时，拥塞窗口（<code>cwnd</code>）会被设置为新的 <code>ssthresh</code>值加上3个MSS（最大报文段长度），即 <code>cwnd = ssthresh + 3 * MSS</code>。加3是因为收到3个重复ACK，意味着有3个数据包已经离开网络，可以为新数据或重传数据腾出空间。</li>
+<li><strong>“数据包守恒”原则</strong>：这是快速恢复阶段的核心思想。在恢复期间，每收到一个重复的ACK，就意味着又有一个数据包被成功接收（尽管是乱序的），发送方就可以再发送一个新数据包（无论是重传丢失包还是发送新数据）。因此，<code>cwnd</code>会随着重复ACK的到达而线性增加（通常每个重复ACK使 <code>cwnd</code>增加1个MSS），以此维持网络中的数据流量，避免管道完全排空。</li>
+<li><strong>恢复完成与退出</strong>：当发送端收到一个<strong>确认了新数据的ACK</strong>（即序列号高于触发快速恢复的那个ACK）时，意味着此次丢失的数据包已被成功重传并确认，恢复阶段结束。此时，<code>cwnd</code>会被设置为 <code>ssthresh</code>的值，然后TCP连接进入<strong>拥塞避免</strong>阶段，<code>cwnd</code>开始线性增长。</li>
+</ol>
+<h3 id="算法演进与比较"><a href="#算法演进与比较" class="headerlink" title="算法演进与比较"></a>算法演进与比较</h3><p>不同的TCP版本对快速恢复的实现有所差异，了解其演进有助于理解为何NewReno和SACK更为高效：</p>
+<ul>
+<li><strong>Tahoe的局限</strong>：TCP Tahoe版本仅有快速重传而没有快速恢复。一旦检测到丢包（3个重复ACK或超时），无论原因为何，它都会将 <code>cwnd</code>重置为1，并重新进入慢启动阶段。这种“一刀切”的方式在非严重拥塞的随机丢包情况下会<strong>严重降低网络利用率</strong>，造成吞吐量急剧下降。</li>
+<li><strong>Reno的改进与不足</strong>：TCP Reno引入了快速恢复阶段，在单数据包丢失场景下表现良好。但其主要缺陷在于处理<strong>同一发送窗口内多个数据包丢失</strong>时显得力不从心。如果同一个窗口内有多个包丢失，Reno在收到第一个新数据的ACK（即部分确认，Partial ACK）后就会退出快速恢复。对于后续丢失的包，可能因为没有足够的重复ACK来再次触发快速重传，而不得不<strong>等待超时</strong>，这会导致性能下降。</li>
+<li><strong>NewReno的增强</strong>：TCP NewReno针对Reno的缺陷进行了关键改进。在快速恢复期间，即使收到部分确认（Partial ACK），它<strong>也不会立即退出快速恢复状态</strong>。而是会重传该部分确认指示的下一个丢失包，并继续停留在快速恢复阶段，直到该窗口内<strong>所有在快速恢复开始时未被确认的数据包都被成功确认</strong>后，才退出恢复。这确保了一次性能恢复多个丢失的数据包，显著减少了超时发生的概率。</li>
+<li><strong>SACK的精确控制</strong>：选择性确认（SACK）选项允许接收方明确告知发送方哪些数据块（包括不连续的）已经成功接收。这使得发送方能够<strong>精确知道哪些包真正丢失</strong>，从而在一个RTT内重传所有已知的丢失包，大大加快了恢复速度。SACK在快速恢复中使用一个名为 <code>pipe</code>的变量来估算网络中正在传输的数据包数量，从而更精细地控制发送时机。因此，SACK在处理多包丢失时效率最高。</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>拥塞避免算法建立在以下几个关键概念之上：</p>
+<ul>
+<li><strong>核心目标</strong>：其核心思想是<strong>谨慎地探测网络剩余带宽</strong>。与慢启动阶段的指数增长不同，在拥塞避免阶段，发送方每收到一个确认（ACK），拥塞窗口（cwnd）大约增加 1&#x2F;cwnd 个最大报文段（MSS）。这样，<strong>每个往返时延（RTT）内，cwnd仅线性增加1个MSS</strong>，增长曲线变得平缓，从而有效避免网络过载。</li>
+<li><strong>触发条件</strong>：当拥塞窗口（cwnd）达到或超过慢启动阈值（ssthresh） 时，TCP就会从慢启动阶段切换到拥塞避免阶段。这个ssthresh值并非固定不变，它会根据网络状况动态调整。</li>
+<li><strong>对拥塞的响应</strong>：当网络出现拥塞迹象（如发生超时或收到重复确认）时，TCP会采取行动。具体来说，会将ssthresh更新为<strong>发生拥塞时窗口值的一半</strong>（但不小于2个MSS），然后根据不同的拥塞指示进入不同的处理阶段。</li>
+</ul>
+<pre><code class="highlight mermaid">flowchart LR
+    A[TCP连接建立] --&gt; B[慢启动&lt;br&gt;cwnd指数增长]
+    B --&gt; C&#123;到达ssthresh?&#125;
+    C -- 是 --&gt; D[拥塞避免&lt;br&gt;cwnd线性增长]
+    D -- 收到3个重复ACK --&gt; E[快速重传]
+    E --&gt; F[快速恢复&lt;br&gt;ssthresh = cwnd/2&lt;br&gt;cwnd = ssthresh + 3]
+    F -- 收到新数据的ACK --&gt; D
+    D -- 超时重传 --&gt; G[ssthresh = cwnd/2&lt;br&gt;cwnd重置为1]
+    G --&gt; B</code></pre>
     </div>
 
     
