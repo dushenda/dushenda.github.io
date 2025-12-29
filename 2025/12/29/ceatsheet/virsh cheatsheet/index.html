@@ -19,48 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="考拉兹猜想 考拉兹猜想定义 考拉兹函数定义如下 $$ f(x)&#x3D;\left\{ \begin{array}{**lr**} 3n+1&amp;x为奇数且x\neq1\\ n&#x2F;2&amp;x为偶数\\ 1&amp;x&#x3D;1 \end{array} \right. $$ 通过对 x 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。 当然，下界是很容易求出来的，如果输入 n ，下降最快的也就">
+    <meta name="description" content="常用命令 启动与关闭    操作 命令 说明     启动 virsh start &lt;虚拟机名&gt; 启动一个处于关闭状态的虚拟机   正常关机 virsh shutdown &lt;虚拟机名&gt; 模拟按下电源键，优雅关机（推荐）   强制关闭 virsh destroy &lt;虚拟机名&gt; 相当于直接拔掉电源，仅在卡死时使用   重启 virsh reboot &lt;虚拟机名">
 <meta property="og:type" content="article">
-<meta property="og:title" content="考拉兹猜想">
-<meta property="og:url" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/index.html">
+<meta property="og:title" content="dushenda">
+<meta property="og:url" content="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="考拉兹猜想 考拉兹猜想定义 考拉兹函数定义如下 $$ f(x)&#x3D;\left\{ \begin{array}{**lr**} 3n+1&amp;x为奇数且x\neq1\\ n&#x2F;2&amp;x为偶数\\ 1&amp;x&#x3D;1 \end{array} \right. $$ 通过对 x 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。 当然，下界是很容易求出来的，如果输入 n ，下降最快的也就">
+<meta property="og:description" content="常用命令 启动与关闭    操作 命令 说明     启动 virsh start &lt;虚拟机名&gt; 启动一个处于关闭状态的虚拟机   正常关机 virsh shutdown &lt;虚拟机名&gt; 模拟按下电源键，优雅关机（推荐）   强制关闭 virsh destroy &lt;虚拟机名&gt; 相当于直接拔掉电源，仅在卡死时使用   重启 virsh reboot &lt;虚拟机名">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/7~10.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/11~14.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/15~18.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/19~22.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/23~26.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/27~30.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/31~34.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/35~38.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/39~42.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/43~46.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/47~50.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/51~54.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/55~58.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/242~245.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E6%AC%A1%E6%95%B0%E4%B8%8E%E5%88%9D%E5%80%BC.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=400.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=1000.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=5000.bmp">
-<meta property="og:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/n0=10000.bmp">
-<meta property="article:published_time" content="2019-09-25T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T11:23:17.005Z">
+<meta property="article:published_time" content="2025-12-29T11:23:16.943Z">
+<meta property="article:modified_time" content="2025-12-29T11:23:16.943Z">
 <meta property="article:author" content="dushenda">
-<meta property="article:tag" content="算法">
+<meta property="article:tag" content="代码、科研、计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/3~6.bmp">
 
 
-<link rel="canonical" href="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/">
+<link rel="canonical" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/","path":"2019/09/25/考拉兹猜想/考拉兹猜想/","title":"考拉兹猜想"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/","path":"2025/12/29/ceatsheet/virsh cheatsheet/","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>考拉兹猜想 | dushenda</title>
+<title> | dushenda</title>
   
 
 
@@ -190,7 +169,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3"><span class="nav-number">1.</span> <span class="nav-text">考拉兹猜想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">考拉兹猜想定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86-n_0-%E7%9A%84%E6%AD%A5%E9%95%BF%E4%B8%8E-n-%E5%80%BC%E5%8F%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">部分 n0 的步长与 n 值变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n_0-%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%AC%A1%E6%95%B0%E5%88%86%E5%B8%83%E6%9B%B2%E7%BA%BF"><span class="nav-number">1.3.</span> <span class="nav-text">n0 与计算次数分布曲线</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%85%B3%E9%97%AD"><span class="nav-number">1.1.</span> <span class="nav-text">启动与关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%B5%B7%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">1.2.</span> <span class="nav-text"> 挂起与恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text"> 自启动配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.</span> <span class="nav-text">虚拟机信息查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.1.</span> <span class="nav-text"> 基本状态查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">配置与连接信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7"><span class="nav-number">2.3.</span> <span class="nav-text">资源监控</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">虚拟机配置管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xml%E9%85%8D%E7%BD%AE%E7%BC%96%E8%BE%91%E6%A0%B8%E5%BF%83"><span class="nav-number">3.1.</span> <span class="nav-text">XML配置编辑（核心）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%8E%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">3.2.</span> <span class="nav-text">删除与重命名</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -252,7 +231,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2019/09/25/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/%E8%80%83%E6%8B%89%E5%85%B9%E7%8C%9C%E6%83%B3/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -265,12 +244,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="考拉兹猜想 | dushenda">
+      <meta itemprop="name" content=" | dushenda">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          考拉兹猜想
+          
         </h1>
 
         <div class="post-meta-container">
@@ -281,7 +260,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-09-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-25T00:00:00+00:00">2019-09-25</time>
+      <time title="创建时间：2025-12-29 11:23:16" itemprop="dateCreated datePublished" datetime="2025-12-29T11:23:16+00:00">2025-12-29</time>
     </span>
 
   
@@ -293,77 +272,95 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="考拉兹猜想">考拉兹猜想</h1>
-<h2 id="考拉兹猜想定义">考拉兹猜想定义</h2>
-<p>考拉兹函数定义如下</p>
-<p><span class="math display">$$
-f(x)=\left\{
-\begin{array}{**lr**}
-3n+1&amp;x为奇数且x\neq1\\
-n/2&amp;x为偶数\\
-1&amp;x=1
-\end{array}
-\right.
-$$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值，发现最后都会收敛到 1。求该函数构成算法的上下界。</p>
-<p>当然，下界是很容易求出来的，如果输入 <span class="math inline"><em>n</em></span> ，下降最快的也就是每次下降 <span class="math inline">$\frac{1}{2}$</span>，这个下降速度对于的计算时间是 <span class="math inline">log <em>n</em></span> 。对于上界，用 <span class="math inline"><em>M</em><em>A</em><em>T</em><em>L</em><em>A</em><em>B</em>​</span> 带入一些数值计算。得到的结果如下：</p>
-<h2 id="部分-n_0-的步长与-n-值变化">部分 <span class="math inline"><em>n</em><sub>0</sub></span> 的步长与 <span class="math inline"><em>n</em></span> 值变化</h2>
-<p><img src="3~6.bmp" /></p>
-<figure>
-<img src="7~10.bmp" alt="7~10" /><figcaption aria-hidden="true">7~10</figcaption>
-</figure>
-<figure>
-<img src="11~14.bmp" alt="11~14" /><figcaption aria-hidden="true">11~14</figcaption>
-</figure>
-<figure>
-<img src="15~18.bmp" alt="15~18" /><figcaption aria-hidden="true">15~18</figcaption>
-</figure>
-<figure>
-<img src="19~22.bmp" alt="19~22" /><figcaption aria-hidden="true">19~22</figcaption>
-</figure>
-<figure>
-<img src="23~26.bmp" alt="23~26" /><figcaption aria-hidden="true">23~26</figcaption>
-</figure>
-<figure>
-<img src="27~30.bmp" alt="27~30" /><figcaption aria-hidden="true">27~30</figcaption>
-</figure>
-<figure>
-<img src="31~34.bmp" alt="31~34" /><figcaption aria-hidden="true">31~34</figcaption>
-</figure>
-<figure>
-<img src="35~38.bmp" alt="35~38" /><figcaption aria-hidden="true">35~38</figcaption>
-</figure>
-<figure>
-<img src="39~42.bmp" alt="39~42" /><figcaption aria-hidden="true">39~42</figcaption>
-</figure>
-<figure>
-<img src="43~46.bmp" alt="43~46" /><figcaption aria-hidden="true">43~46</figcaption>
-</figure>
-<figure>
-<img src="47~50.bmp" alt="47~50" /><figcaption aria-hidden="true">47~50</figcaption>
-</figure>
-<figure>
-<img src="51~54.bmp" alt="51~54" /><figcaption aria-hidden="true">51~54</figcaption>
-</figure>
-<figure>
-<img src="55~58.bmp" alt="55~58" /><figcaption aria-hidden="true">55~58</figcaption>
-</figure>
-<figure>
-<img src="242~245.bmp" alt="242~245" /><figcaption aria-hidden="true">242~245</figcaption>
-</figure>
-<h2 id="n_0-与计算次数分布曲线"><span class="math inline"><em>n</em><sub>0</sub></span> 与计算次数分布曲线</h2>
-<figure>
-<img src="次数与初值.bmp" alt="次数与初值" /><figcaption aria-hidden="true">次数与初值</figcaption>
-</figure>
-<p><img src="n0=400.bmp" /></p>
-<figure>
-<img src="n0=1000.bmp" alt="n0=1000" /><figcaption aria-hidden="true">n0=1000</figcaption>
-</figure>
-<figure>
-<img src="n0=5000.bmp" alt="n0=5000" /><figcaption aria-hidden="true">n0=5000</figcaption>
-</figure>
-<figure>
-<img src="n0=10000.bmp" alt="n0=10000" /><figcaption aria-hidden="true">n0=10000</figcaption>
-</figure>
+    <div class="post-body" itemprop="articleBody"><h1 id="常用命令">常用命令</h1>
+<h2 id="启动与关闭">启动与关闭</h2>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>启动</strong></td>
+<td><code>virsh start &lt;虚拟机名&gt;</code></td>
+<td>启动一个处于关闭状态的虚拟机</td>
+</tr>
+<tr class="even">
+<td><strong>正常关机</strong></td>
+<td><code>virsh shutdown &lt;虚拟机名&gt;</code></td>
+<td>模拟按下电源键，优雅关机（推荐）</td>
+</tr>
+<tr class="odd">
+<td><strong>强制关闭</strong></td>
+<td><code>virsh destroy &lt;虚拟机名&gt;</code></td>
+<td>相当于直接拔掉电源，仅在卡死时使用</td>
+</tr>
+<tr class="even">
+<td><strong>重启</strong></td>
+<td><code>virsh reboot &lt;虚拟机名&gt;</code></td>
+<td>重启虚拟机</td>
+</tr>
+<tr class="odd">
+<td><strong>强制重置</strong></td>
+<td><code>virsh reset &lt;虚拟机名&gt;</code></td>
+<td>强制硬重启</td>
+</tr>
+</tbody>
+</table>
+<h2 id="挂起与恢复"> 挂起与恢复</h2>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>挂起</strong></td>
+<td><code>virsh suspend &lt;虚拟机名&gt;</code></td>
+<td>暂停虚拟机，内存数据保留在主机</td>
+</tr>
+<tr class="even">
+<td><strong>恢复</strong></td>
+<td><code>virsh resume &lt;虚拟机名&gt;</code></td>
+<td>从挂起状态恢复运行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="自启动配置"> 自启动配置</h2>
+<ul>
+<li>设置开机自启： <code>virsh autostart &lt;虚拟机名&gt;</code></li>
+<li>取消开机自启： <code>virsh autostart --disable &lt;虚拟机名&gt;</code></li>
+<li>查看自启列表： <code>virsh autostart --list</code></li>
+</ul>
+<h1 id="虚拟机信息查询">虚拟机信息查询</h1>
+<h2 id="基本状态查询"> 基本状态查询</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="配置与连接信息">配置与连接信息</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="资源监控">资源监控</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="虚拟机配置管理">虚拟机配置管理</h1>
+<h2 id="xml配置编辑核心">XML配置编辑（核心）</h2>
+<p>KVM的所有配置都存储在XML文件中：</p>
+<p><strong>编辑配置（推荐）</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 /etc/libvirt/qemu/ 下的文件，容易出错。</p>
+</blockquote>
+<p><strong>备份配置</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh dumpxml &lt;虚拟机名&gt; &gt; vm-config.xml</span><br></pre></td></tr></table></figure>
+<p><strong>从XML恢复/定义</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
+<h2 id="删除与重命名">删除与重命名</h2>
+<p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
+<p><strong>重命名虚拟机</strong>：<br />
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -372,22 +369,16 @@ $$</span> 通过对 <span class="math inline"><em>x</em></span> 取不同的值�
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/03/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%9C%BA%E5%9C%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9A%E6%A0%87%E6%96%B9%E6%B3%95%E7%A0%94%E7%A9%B6%E5%8F%8A%E5%BA%94%E7%94%A8/" rel="prev" title="论文笔记-场地自动化定标方法研究及应用">
-                  <i class="fa fa-angle-left"></i> 论文笔记-场地自动化定标方法研究及应用
+                <a href="/2025/12/29/ceatsheet/qemu%20cheatsheet/" rel="prev" title="qemu cheatsheet">
+                  <i class="fa fa-angle-left"></i> qemu cheatsheet
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/10/04/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/%E4%B8%89%E7%A7%8D%E5%A4%A7%E6%B0%94%E5%85%89%E5%AD%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95/" rel="next" title="三种大气质量和一个公式的计算方法">
-                  三种大气质量和一个公式的计算方法 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
