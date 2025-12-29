@@ -58,7 +58,12 @@ TCP的拥塞避免是TCP拥塞控制算法的核心阶段之一，其主要目�
 $$
 CWND=CWND+MSS/CWND
 $$
-比如原始的cwnd为8，在cwnd为10时发生了拥塞和重传，那么RTT-cwnd的图如下，t=3时到达cwnd为8，然后出现了重传，这时候sshthresh成为5，再次慢启动，cwnd变大到4后，开始拥塞避免，每个RTT增加一个单位的CWND。
+
+1. t1~t4：原始cwnd=8，sshthresh=8，慢启动到达cwnd=8
+2. t4~t7：到达cwnd后，开始拥塞避免
+3. t7~t8：有报文超时重传了，cwnd变成1，ssthresh为cwnd一半为5
+4. t8~t10：慢启动算法到cwnd为4
+5. t10~：拥塞避免算法启动
 ```mermaid
 xychart-beta
         title "拥塞避免"
@@ -66,6 +71,10 @@ xychart-beta
         y-axis "CWND" 
         line [0, 1, 2, 4, 8, 9, 10, 1, 2, 4, 5, 6, 7, 8, 9]
 ```
+
+## 快重传
+
+
 
 ## 快速恢复
 
