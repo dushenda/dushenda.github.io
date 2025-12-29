@@ -186,7 +186,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -245,7 +245,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/29/ceatsheet/qemu%20cheatsheet/" class="post-title-link" itemprop="url">未命名</a>
+          <a href="/2025/12/29/ceatsheet/qemu%20cheatsheet/" class="post-title-link" itemprop="url">qemu cheatsheet</a>
         </h2>
 
         <div class="post-meta-container">
@@ -256,7 +256,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-29 11:10:15" itemprop="dateCreated datePublished" datetime="2025-12-29T11:10:15+00:00">2025-12-29</time>
+      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
     </span>
 
   
@@ -269,7 +269,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="常见qemu语句">常见QEMU语句</h1>
+          <h1 id="qemu-cheatsheet">qemu cheatsheet</h1>
 <h2 id="一基本虚拟机启动">一、基本虚拟机启动</h2>
 <h3 id="基本启动虚拟机">1. 基本启动虚拟机</h3>
 <p>启动x86_64虚拟机加载镜像（基本用法）。</p>
@@ -838,6 +838,131 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">TCP窗口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
+<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
+<p>下表总结了TCP通信中几个关键的窗口类型：</p>
+<table>
+<thead>
+<tr class="header">
+<th>窗口类型</th>
+<th>英文全称</th>
+<th>控制方</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>接收窗口 (RWND)</strong>​</td>
+<td>Receiver Window</td>
+<td>接收端</td>
+<td>流量控制，反映接收方应用程序的缓存剩余空间</td>
+</tr>
+<tr class="even">
+<td><strong>拥塞窗口 (CWND)</strong>​</td>
+<td>Congestion Window</td>
+<td>发送端</td>
+<td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
+</tr>
+<tr class="odd">
+<td><strong>发送窗口 (SWND)</strong>​</td>
+<td>Sender Window</td>
+<td>发送端</td>
+<td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
+<li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
+<li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
+</ul>
+<h1 id="窗口之间的关系">窗口之间的关系</h1>
+<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
+<h1 id="cwnd">CWND</h1>
+<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
+<ul>
+<li>慢启动</li>
+<li>拥塞避免</li>
+<li>快速恢复</li>
+</ul>
+<h2 id="慢启动">慢启动</h2>
+<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
+<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
+<pre><code class="highlight mermaid">xychart-beta
+        title &quot;慢启动&quot;
+        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
+        y-axis &quot;CWND&quot; 
+        line [1, 2, 4, 8, 16, 32, 64]</code></pre>
+<h2 id="拥塞避免">拥塞避免</h2>
+<h2 id="快速恢复">快速恢复</h2>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1101,131 +1226,6 @@ title &quot;TCP Packet&quot;
 <p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
 <p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>T</em><em>C</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>M</em><em>S</em><em>S</em></span></p>
 <p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">TCP窗口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
-<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
-<p>下表总结了TCP通信中几个关键的窗口类型：</p>
-<table>
-<thead>
-<tr class="header">
-<th>窗口类型</th>
-<th>英文全称</th>
-<th>控制方</th>
-<th>核心作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>接收窗口 (RWND)</strong>​</td>
-<td>Receiver Window</td>
-<td>接收端</td>
-<td>流量控制，反映接收方应用程序的缓存剩余空间</td>
-</tr>
-<tr class="even">
-<td><strong>拥塞窗口 (CWND)</strong>​</td>
-<td>Congestion Window</td>
-<td>发送端</td>
-<td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
-</tr>
-<tr class="odd">
-<td><strong>发送窗口 (SWND)</strong>​</td>
-<td>Sender Window</td>
-<td>发送端</td>
-<td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
-<li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
-<li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
-</ul>
-<h1 id="窗口之间的关系">窗口之间的关系</h1>
-<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
-<h1 id="cwnd">CWND</h1>
-<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
-<ul>
-<li>慢启动</li>
-<li>拥塞避免</li>
-<li>快速恢复</li>
-</ul>
-<h2 id="慢启动">慢启动</h2>
-<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
-<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
-<pre><code class="highlight mermaid">xychart-beta
-        title &quot;慢启动&quot;
-        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
-        y-axis &quot;CWND&quot; 
-        line [1, 2, 4, 8, 16, 32, 64]</code></pre>
-<h2 id="拥塞避免">拥塞避免</h2>
-<h2 id="快速恢复">快速恢复</h2>
 
       
     </div>
