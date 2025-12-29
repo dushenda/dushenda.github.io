@@ -1,3 +1,10 @@
+---
+title: virsh cheatsheet
+date: 2025-12-29
+tags:
+  - virsh
+  - cheatsheet
+---
 # 常用命令
 
 ## 启动与关闭
