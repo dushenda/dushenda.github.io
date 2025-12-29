@@ -166,3 +166,7 @@ load 要和核数对比
 多核时代，**不懂这个等于白用 top**
 
 内存优先看 avail，不是 free，不是 buff/cache
+
+## 搬运
+
+[CPU占用达1265%，一点都不慌，90% 的人都误解了 top命令](https://mp.weixin.qq.com/s?__biz=MzkxNTU3MzUyMg==&mid=2247498127&idx=1&sn=d62be59614a69997218d3d725d2b1edf&chksm=c0cf9a98313790aa022c3874d0b3ea15d6bfbba9a713238961dd1cf01d7f8eaf6c0f06d5e1e0&mpshare=1&scene=24&srcid=12262m5Y7c9sSWDpa2YQW25z&sharer_shareinfo=7c3cdf447d7e68f36fe621484f3bdfca&sharer_shareinfo_first=7c3cdf447d7e68f36fe621484f3bdfca#rd)
