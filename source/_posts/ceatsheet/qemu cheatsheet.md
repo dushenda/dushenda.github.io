@@ -1,5 +1,12 @@
+---
+title: qemu cheatsheet
+date: 2025-12-29
+tags:
+  - qemu
+  - datasheet
+---
 
-# 常见QEMU语句
+# qemu cheatsheet
 
 ## 一、基本虚拟机启动
 
