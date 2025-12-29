@@ -270,7 +270,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
       
     </div>
 
@@ -341,36 +340,35 @@
           <p>前两天社群有个用户用<code>top</code>命令查看进程时，有一个进程100%，以为CPU占满了，其实不然，下面我们就详细聊一下这个<code>top</code>命令。</p>
 <p>很多人用 <code>top</code> 用了几年，却<strong>一直在错误解读它</strong>。</p>
 <p>下面，我们就用一张真实的 <code>top</code> 截图，<strong>系统性讲清楚 top 的正确使用方式，以及最容易踩的认知坑</strong>。</p>
-<p><img src="top.png" /></p>
-<h2 id="先看截图图">先看截图图</h2>
-<blockquote>
+<p><img src="/top.png"></p>
+<h2 id="先看截图图"><a href="#先看截图图" class="headerlink" title="先看截图图"></a>先看截图图</h2><blockquote>
 <p>MySQL 为何CPU能跑到 1265% ？</p>
 </blockquote>
 <p>截图中最“刺眼”的一行：</p>
-<p><code>PID   USER   VIRT   RES   %CPU   %MEM   COMMAND   6308  mysql 220.7g 212.7g 1265   84.5   mysqld</code></p>
+<p><code>PID   USER   VIRT   RES   %CPU   %MEM   COMMAND   6308  mysql 220.7g 212.7g 1265   84.5   mysqld   </code></p>
 <p>很多人第一反应：</p>
 <blockquote>
 <p><strong>“CPU 都 1265% 了？服务器要炸了”</strong></p>
 </blockquote>
 <p>但这恰恰是<strong>对 top 的第一个误解</strong>。上面截图中，MySQL服务多少有点问题，但业务并没有受影响。</p>
-<h2 id="误区-1cpu-最大只能是-100">误区 1：<code>%CPU</code> 最大只能是 100%</h2>
-<p><strong>错误理解：</strong></p>
+<h2 id="误区-1：-CPU-最大只能是-100"><a href="#误区-1：-CPU-最大只能是-100" class="headerlink" title="误区 1：%CPU 最大只能是 100%"></a>误区 1：<code>%CPU</code> 最大只能是 100%</h2><p><strong>错误理解：</strong></p>
 <blockquote>
 <p><code>%CPU</code> 是“CPU 使用率”，最大 100%</p>
 </blockquote>
 <p><strong>正确理解：</strong></p>
 <blockquote>
-<p><strong>top 中的 %CPU = 使用的 CPU 核心数 × 100%</strong></p>
+<p><strong>top 中的 %CPU &#x3D; 使用的 CPU 核心数 × 100%</strong></p>
 </blockquote>
 <p>我的机器是 <strong>16 核</strong>：</p>
 <ul>
-<li><p>100% = 1 个核满载</p></li>
-<li><p><strong>1265% ≈ 12.6 个核被 mysqld 占用，并没有达到上限</strong></p></li>
+<li><p>100% &#x3D; 1 个核满载</p>
+</li>
+<li><p><strong>1265% ≈ 12.6 个核被 mysqld 占用，并没有达到上限</strong></p>
+</li>
 </ul>
-<p><strong>结论：</strong>这台机器的 MySQL <strong>不是异常显示</strong>，而是<strong>在多核上疯狂并行执行</strong>。</p>
-<h2 id="误区-2load-average很高-cpu-已经打满">误区 2：load average很高 = CPU 已经打满</h2>
-<p>截图顶部：</p>
-<p><code>load average: 12.17, 11.71, 10.50</code></p>
+<p><strong>结论：<strong>这台机器的 MySQL <strong>不是异常显示</strong>，而是</strong>在多核上疯狂并行执行</strong>。</p>
+<h2 id="误区-2：load-average很高-CPU-已经打满"><a href="#误区-2：load-average很高-CPU-已经打满" class="headerlink" title="误区 2：load average很高 &#x3D; CPU 已经打满"></a>误区 2：load average很高 &#x3D; CPU 已经打满</h2><p>截图顶部：</p>
+<p><code>load average: 12.17, 11.71, 10.50   </code></p>
 <p>很多人一看到 load &gt; 10，立刻下结论：</p>
 <blockquote>
 <p><strong>“CPU负载太高 快扛不住了！”</strong></p>
@@ -380,34 +378,31 @@
 <p>正确判断方式</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>CPU 核数</th>
 <th>load ≈ 核数</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>4 核</td>
 <td>load ≈ 4</td>
 <td>接近满载</td>
 </tr>
-<tr class="even">
+<tr>
 <td>16 核</td>
 <td>load ≈ 12</td>
 <td><strong>完全可接受</strong></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>32 核</td>
 <td>load ≈ 12</td>
 <td><strong>偏空闲</strong></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p><strong>load average ≠ CPU 使用率</strong>它表示的是：<strong>正在运行 + 等待 CPU 的进程数</strong></p>
-<h2 id="误区-3id-很低才说明-cpu-有问题">误区 3：<code>id</code> 很低才说明 CPU 有问题</h2>
-<p>截图中的 CPU 行：</p>
-<p><code>%Cpu(s): 39.9 us, 0.4 sy, 58.6 id</code></p>
+<h2 id="误区-3：id-很低才说明-CPU-有问题"><a href="#误区-3：id-很低才说明-CPU-有问题" class="headerlink" title="误区 3：id 很低才说明 CPU 有问题"></a>误区 3：<code>id</code> 很低才说明 CPU 有问题</h2><p>截图中的 CPU 行：</p>
+<p><code>%Cpu(s): 39.9 us, 0.4 sy, 58.6 id   </code></p>
 <p><strong>58.6% idle</strong></p>
 <p>这说明什么？</p>
 <blockquote>
@@ -415,13 +410,14 @@
 </blockquote>
 <p>这时候再结合：</p>
 <ul>
-<li><p>mysqld：1265%</p></li>
-<li><p>idle：58%</p></li>
+<li><p>mysqld：1265%</p>
+</li>
+<li><p>idle：58%</p>
+</li>
 </ul>
 <p>唯一合理的解释是：</p>
 <p><strong>多核机器 + 单个进程高并发消耗</strong></p>
-<h2 id="误区-4virt-很大-内存要炸">误区 4：VIRT 很大 = 内存要炸</h2>
-<p><code>VIRT 220.7g   RES  212.7g</code></p>
+<h2 id="误区-4：VIRT-很大-内存要炸"><a href="#误区-4：VIRT-很大-内存要炸" class="headerlink" title="误区 4：VIRT 很大 &#x3D; 内存要炸"></a>误区 4：VIRT 很大 &#x3D; 内存要炸</h2><p><code>VIRT 220.7g   RES  212.7g   </code></p>
 <p>很多人看到 VIRT 直接慌了：</p>
 <blockquote>
 <p>“虚拟内存 220G？是不是内存泄漏？”</p>
@@ -429,36 +425,36 @@
 <p>正确理解</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>字段</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>VIRT</td>
 <td>进程可用的虚拟地址空间</td>
 </tr>
-<tr class="even">
+<tr>
 <td>RES</td>
 <td>真正占用的物理内存</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>SHR</td>
 <td>可共享内存</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p><strong>MySQL 的 VIRT 很大是正常现象</strong>：</p>
 <ul>
-<li><p>InnoDB buffer pool</p></li>
-<li><p>内存映射文件</p></li>
-<li><p>malloc 预留</p></li>
+<li><p>InnoDB buffer pool</p>
+</li>
+<li><p>内存映射文件</p>
+</li>
+<li><p>malloc 预留</p>
+</li>
 </ul>
 <p>判断内存是否有问题，看 <code>RES + 系统是否 OOM</code>，而不是看 <code>VIRT</code></p>
-<h2 id="误区-5free-很小-内存不够">误区 5：<code>free</code> 很小 = 内存不够</h2>
-<p>截图中：</p>
-<p><code>KiB Mem:   263973326 total   8088860 free   28235512 buff/cache   30766036 avail Mem</code></p>
+<h2 id="误区-5：free-很小-内存不够"><a href="#误区-5：free-很小-内存不够" class="headerlink" title="误区 5：free 很小 &#x3D; 内存不够"></a>误区 5：<code>free</code> 很小 &#x3D; 内存不够</h2><p>截图中：</p>
+<p><code>KiB Mem:   263973326 total   8088860 free   28235512 buff/cache   30766036 avail Mem   </code></p>
 <p>很多人盯着：</p>
 <blockquote>
 <p><strong>free 只有 8GB，内存要满了！</strong></p>
@@ -470,25 +466,24 @@
 <p>真正要看的字段是：</p>
 <p><strong>avail Mem</strong></p>
 <ul>
-<li><p>avail ≈ 30GB</p></li>
-<li><p>说明：<strong>系统仍然有足够内存可用</strong></p></li>
+<li><p>avail ≈ 30GB</p>
+</li>
+<li><p>说明：<strong>系统仍然有足够内存可用</strong></p>
+</li>
 </ul>
-<h2 id="误区-6top-能直接定位根因">误区 6：top 能直接定位“根因”</h2>
-<p>这张图最多能得出结论：</p>
+<h2 id="误区-6：top-能直接定位“根因”"><a href="#误区-6：top-能直接定位“根因”" class="headerlink" title="误区 6：top 能直接定位“根因”"></a>误区 6：top 能直接定位“根因”</h2><p>这张图最多能得出结论：</p>
 <blockquote>
 <p><strong>MySQL 正在大量消耗 CPU</strong></p>
 </blockquote>
 <p>但你<strong>完全不知道为什么</strong>，这个就要进入MySQL数据库查看了，很大可能是慢SQL的问题。</p>
-<h2 id="正确使用-top">正确使用 top</h2>
-<p>先确认 CPU 核数</p>
-<p><code>lscpu</code></p>
+<h2 id="正确使用-top"><a href="#正确使用-top" class="headerlink" title="正确使用 top"></a>正确使用 top</h2><p>先确认 CPU 核数</p>
+<p><code>lscpu   </code></p>
 <p>load 要和核数对比</p>
-<p><code>load &lt; CPU核数 ≠ 性能问题</code></p>
+<p><code>load &lt; CPU核数 ≠ 性能问题   </code></p>
 <p><code>%CPU &gt; 100%</code> 是常态</p>
 <p>多核时代，<strong>不懂这个等于白用 top</strong></p>
-<p>内存优先看 avail，不是 free，不是 buff/cache</p>
-<h2 id="搬运">搬运</h2>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkxNTU3MzUyMg==&amp;mid=2247498127&amp;idx=1&amp;sn=d62be59614a69997218d3d725d2b1edf&amp;chksm=c0cf9a98313790aa022c3874d0b3ea15d6bfbba9a713238961dd1cf01d7f8eaf6c0f06d5e1e0&amp;mpshare=1&amp;scene=24&amp;srcid=12262m5Y7c9sSWDpa2YQW25z&amp;sharer_shareinfo=7c3cdf447d7e68f36fe621484f3bdfca&amp;sharer_shareinfo_first=7c3cdf447d7e68f36fe621484f3bdfca#rd">CPU占用达1265%，一点都不慌，90% 的人都误解了 top命令</a></p>
+<p>内存优先看 avail，不是 free，不是 buff&#x2F;cache</p>
+<h2 id="搬运"><a href="#搬运" class="headerlink" title="搬运"></a>搬运</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkxNTU3MzUyMg==&mid=2247498127&idx=1&sn=d62be59614a69997218d3d725d2b1edf&chksm=c0cf9a98313790aa022c3874d0b3ea15d6bfbba9a713238961dd1cf01d7f8eaf6c0f06d5e1e0&mpshare=1&scene=24&srcid=12262m5Y7c9sSWDpa2YQW25z&sharer_shareinfo=7c3cdf447d7e68f36fe621484f3bdfca&sharer_shareinfo_first=7c3cdf447d7e68f36fe621484f3bdfca#rd">CPU占用达1265%，一点都不慌，90% 的人都误解了 top命令</a></p>
 
       
     </div>
@@ -557,322 +552,159 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="qemu-cheatsheet">qemu cheatsheet</h1>
-<h2 id="一基本虚拟机启动">一、基本虚拟机启动</h2>
-<h3 id="基本启动虚拟机">1. 基本启动虚拟机</h3>
-<p>启动x86_64虚拟机加载镜像（基本用法）。</p>
+          <h1 id="qemu-cheatsheet"><a href="#qemu-cheatsheet" class="headerlink" title="qemu cheatsheet"></a>qemu cheatsheet</h1><h2 id="一、基本虚拟机启动"><a href="#一、基本虚拟机启动" class="headerlink" title="一、基本虚拟机启动"></a>一、基本虚拟机启动</h2><h3 id="1-基本启动虚拟机"><a href="#1-基本启动虚拟机" class="headerlink" title="1. 基本启动虚拟机"></a>1. 基本启动虚拟机</h3><p>启动x86_64虚拟机加载镜像（基本用法）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,if=virtio</span><br></pre></td></tr></table></figure>
-<h3 id="无图形界面启动">2. 无图形界面启动</h3>
-<p>无头模式启动VM（-nographic）。</p>
+
+<h3 id="2-无图形界面启动"><a href="#2-无图形界面启动" class="headerlink" title="2. 无图形界面启动"></a>2. 无图形界面启动</h3><p>无头模式启动VM（-nographic）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -nographic -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="指定cpu核心数">3. 指定CPU核心数</h3>
-<p>指定4核CPU启动（-smp 4）。</p>
+
+<h3 id="3-指定CPU核心数"><a href="#3-指定CPU核心数" class="headerlink" title="3. 指定CPU核心数"></a>3. 指定CPU核心数</h3><p>指定4核CPU启动（-smp 4）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -smp 4 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="指定内存大小">4. 指定内存大小</h3>
-<p>分配2GB内存启动（-m 2G）。</p>
+
+<h3 id="4-指定内存大小"><a href="#4-指定内存大小" class="headerlink" title="4. 指定内存大小"></a>4. 指定内存大小</h3><p>分配2GB内存启动（-m 2G）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -m 2G -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="启用kvm加速">5. 启用KVM加速</h3>
-<p>启用KVM硬件加速（-enable-kvm）。</p>
+
+<h3 id="5-启用KVM加速"><a href="#5-启用KVM加速" class="headerlink" title="5. 启用KVM加速"></a>5. 启用KVM加速</h3><p>启用KVM硬件加速（-enable-kvm）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -enable-kvm -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="指定机器类型">6. 指定机器类型</h3>
-<p>指定q35机器类型启动（-machine q35）。</p>
+
+<h3 id="6-指定机器类型"><a href="#6-指定机器类型" class="headerlink" title="6. 指定机器类型"></a>6. 指定机器类型</h3><p>指定q35机器类型启动（-machine q35）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -machine q35 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="引导顺序指定">7. 引导顺序指定</h3>
-<p>指定从硬盘引导（-boot order=c）。</p>
+
+<h3 id="7-引导顺序指定"><a href="#7-引导顺序指定" class="headerlink" title="7. 引导顺序指定"></a>7. 引导顺序指定</h3><p>指定从硬盘引导（-boot order&#x3D;c）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -boot order=c -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="cd-rom镜像启动">8. CD-ROM镜像启动</h3>
-<p>附加CD-ROM镜像启动（-cdrom）。</p>
+
+<h3 id="8-CD-ROM镜像启动"><a href="#8-CD-ROM镜像启动" class="headerlink" title="8. CD-ROM镜像启动"></a>8. CD-ROM镜像启动</h3><p>附加CD-ROM镜像启动（-cdrom）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -cdrom iso.img -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="usb设备模拟">9. USB设备模拟</h3>
-<p>模拟USB设备启动（-usb）。</p>
+
+<h3 id="9-USB设备模拟"><a href="#9-USB设备模拟" class="headerlink" title="9. USB设备模拟"></a>9. USB设备模拟</h3><p>模拟USB设备启动（-usb）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="守护进程模式启动">10. 守护进程模式启动</h3>
-<p>后台守护进程启动VM（-daemonize）。</p>
+
+<h3 id="10-守护进程模式启动"><a href="#10-守护进程模式启动" class="headerlink" title="10. 守护进程模式启动"></a>10. 守护进程模式启动</h3><p>后台守护进程启动VM（-daemonize）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -daemonize -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h2 id="二设备配置与直通">二、设备配置与直通</h2>
-<h3 id="virtio磁盘配置">11. VirtIO磁盘配置</h3>
-<p>使用VirtIO SCSI磁盘（-drive if=virtio）。</p>
+
+<h2 id="二、设备配置与直通"><a href="#二、设备配置与直通" class="headerlink" title="二、设备配置与直通"></a>二、设备配置与直通</h2><h3 id="11-VirtIO磁盘配置"><a href="#11-VirtIO磁盘配置" class="headerlink" title="11. VirtIO磁盘配置"></a>11. VirtIO磁盘配置</h3><p>使用VirtIO SCSI磁盘（-drive if&#x3D;virtio）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,if=virtio,format=qcow2</span><br></pre></td></tr></table></figure>
-<h3 id="pci设备直通">12. PCI设备直通</h3>
-<p>直通主机PCI设备到VM（-device vfio-pci）。</p>
+
+<h3 id="12-PCI设备直通"><a href="#12-PCI设备直通" class="headerlink" title="12. PCI设备直通"></a>12. PCI设备直通</h3><p>直通主机PCI设备到VM（-device vfio-pci）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device vfio-pci,host=0000:01:00.0 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="usb主机设备直通">13. USB主机设备直通</h3>
-<p>直通USB设备（-usbdevice host）。</p>
+
+<h3 id="13-USB主机设备直通"><a href="#13-USB主机设备直通" class="headerlink" title="13. USB主机设备直通"></a>13. USB主机设备直通</h3><p>直通USB设备（-usbdevice host）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -device usb-host,vendorid=0x1234,productid=0x5678 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="网络设备配置">14. 网络设备配置</h3>
-<p>配置用户模式网络（-netdev user）。</p>
+
+<h3 id="14-网络设备配置"><a href="#14-网络设备配置" class="headerlink" title="14. 网络设备配置"></a>14. 网络设备配置</h3><p>配置用户模式网络（-netdev user）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev user,id=mynet -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="桥接网络配置">15. 桥接网络配置</h3>
-<p>桥接主机网络接口（-netdev bridge）。</p>
+
+<h3 id="15-桥接网络配置"><a href="#15-桥接网络配置" class="headerlink" title="15. 桥接网络配置"></a>15. 桥接网络配置</h3><p>桥接主机网络接口（-netdev bridge）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev bridge,id=mynet,br=br0 -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="tap网络配置">16. TAP网络配置</h3>
-<p>使用TAP接口网络（-netdev tap）。</p>
+
+<h3 id="16-TAP网络配置"><a href="#16-TAP网络配置" class="headerlink" title="16. TAP网络配置"></a>16. TAP网络配置</h3><p>使用TAP接口网络（-netdev tap）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev tap,id=mynet,ifname=tap0 -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="vfio-gpu直通">17. VFIO GPU直通</h3>
-<p>直通GPU设备并配置VGA（-vfio-pci -vga none）。</p>
+
+<h3 id="17-VFIO-GPU直通"><a href="#17-VFIO-GPU直通" class="headerlink" title="17. VFIO GPU直通"></a>17. VFIO GPU直通</h3><p>直通GPU设备并配置VGA（-vfio-pci -vga none）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device vfio-pci,host=0000:01:00.0 -vga none -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="多磁盘附加">18. 多磁盘附加</h3>
-<p>附加多个磁盘设备（-drive 多行）。</p>
+
+<h3 id="18-多磁盘附加"><a href="#18-多磁盘附加" class="headerlink" title="18. 多磁盘附加"></a>18. 多磁盘附加</h3><p>附加多个磁盘设备（-drive 多行）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk1.img,if=virtio -drive file=disk2.img,if=virtio -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="串口设备配置">19. 串口设备配置</h3>
-<p>配置串口重定向到stdio（-serial stdio）。</p>
+
+<h3 id="19-串口设备配置"><a href="#19-串口设备配置" class="headerlink" title="19. 串口设备配置"></a>19. 串口设备配置</h3><p>配置串口重定向到stdio（-serial stdio）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -serial stdio -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="块设备缓存模式">20. 块设备缓存模式</h3>
-<p>指定磁盘缓存模式为none（cache=none）。</p>
+
+<h3 id="20-块设备缓存模式"><a href="#20-块设备缓存模式" class="headerlink" title="20. 块设备缓存模式"></a>20. 块设备缓存模式</h3><p>指定磁盘缓存模式为none（cache&#x3D;none）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,cache=none,if=virtio</span><br></pre></td></tr></table></figure>
-<h2 id="三网络与迁移">三、网络与迁移</h2>
-<h3 id="多网卡配置">21. 多网卡配置</h3>
-<p>配置多个网卡接口（-netdev 多行）。</p>
+
+<h2 id="三、网络与迁移"><a href="#三、网络与迁移" class="headerlink" title="三、网络与迁移"></a>三、网络与迁移</h2><h3 id="21-多网卡配置"><a href="#21-多网卡配置" class="headerlink" title="21. 多网卡配置"></a>21. 多网卡配置</h3><p>配置多个网卡接口（-netdev 多行）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev user,id=net1 -device virtio-net,netdev=net1 -netdev user,id=net2 -device virtio-net,netdev=net2 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="vlan网络隔离">22. VLAN网络隔离</h3>
-<p>使用VLAN隔离网卡（-net vlan=1）。</p>
+
+<h3 id="22-VLAN网络隔离"><a href="#22-VLAN网络隔离" class="headerlink" title="22. VLAN网络隔离"></a>22. VLAN网络隔离</h3><p>使用VLAN隔离网卡（-net vlan&#x3D;1）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,vlan=1 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="实时迁移vm">23. 实时迁移VM</h3>
-<p>迁移VM到远程主机（-incoming tcp）。</p>
+
+<h3 id="23-实时迁移VM"><a href="#23-实时迁移VM" class="headerlink" title="23. 实时迁移VM"></a>23. 实时迁移VM</h3><p>迁移VM到远程主机（-incoming tcp）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 源: qemu-system-x86_64 -drive file=disk.img -incoming tcp:0:4444 (目标先启动)# 目标: migrate -d tcp:remote-host:4444</span><br></pre></td></tr></table></figure>
-<h3 id="迁移压缩优化">24. 迁移压缩优化</h3>
-<p>启用迁移压缩加速（-comp xbzrle）。</p>
+
+<h3 id="24-迁移压缩优化"><a href="#24-迁移压缩优化" class="headerlink" title="24. 迁移压缩优化"></a>24. 迁移压缩优化</h3><p>启用迁移压缩加速（-comp xbzrle）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img -enable-kvm -comp xbzrle</span><br></pre></td></tr></table></figure>
-<h3 id="多线程迁移">25. 多线程迁移</h3>
-<p>启用多线程迁移（-thread multi）。</p>
+
+<h3 id="25-多线程迁移"><a href="#25-多线程迁移" class="headerlink" title="25. 多线程迁移"></a>25. 多线程迁移</h3><p>启用多线程迁移（-thread multi）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img -thread multi</span><br></pre></td></tr></table></figure>
-<h3 id="网络端口转发">26. 网络端口转发</h3>
-<p>转发主机端口到VM（-net user,hostfwd）。</p>
+
+<h3 id="26-网络端口转发"><a href="#26-网络端口转发" class="headerlink" title="26. 网络端口转发"></a>26. 网络端口转发</h3><p>转发主机端口到VM（-net user,hostfwd）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,hostfwd=tcp::8080-:80 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="smb网络共享">27. SMB网络共享</h3>
-<p>配置SMB网络共享到VM（-net user,smb）。</p>
+
+<h3 id="27-SMB网络共享"><a href="#27-SMB网络共享" class="headerlink" title="27. SMB网络共享"></a>27. SMB网络共享</h3><p>配置SMB网络共享到VM（-net user,smb）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,smb=/path/to/share -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="vde网络配置">28. VDE网络配置</h3>
-<p>使用VDE交换机网络（-net vde）。</p>
+
+<h3 id="28-VDE网络配置"><a href="#28-VDE网络配置" class="headerlink" title="28. VDE网络配置"></a>28. VDE网络配置</h3><p>使用VDE交换机网络（-net vde）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net vde,sock=/tmp/vde.sock -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="网络限速配置">29. 网络限速配置</h3>
-<p>限制网络带宽（-net user,throttle）。</p>
+
+<h3 id="29-网络限速配置"><a href="#29-网络限速配置" class="headerlink" title="29. 网络限速配置"></a>29. 网络限速配置</h3><p>限制网络带宽（-net user,throttle）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,throttle=100 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="迁移快照链">30. 迁移快照链</h3>
-<p>迁移时处理快照链（-drive snapshot=on）。</p>
+
+<h3 id="30-迁移快照链"><a href="#30-迁移快照链" class="headerlink" title="30. 迁移快照链"></a>30. 迁移快照链</h3><p>迁移时处理快照链（-drive snapshot&#x3D;on）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,snapshot=on</span><br></pre></td></tr></table></figure>
-<h2 id="四图形与输入输出">四、图形与输入输出</h2>
-<h3 id="vnc图形界面">31. VNC图形界面</h3>
-<p>启用VNC远程桌面（-vnc）。</p>
+
+<h2 id="四、图形与输入输出"><a href="#四、图形与输入输出" class="headerlink" title="四、图形与输入输出"></a>四、图形与输入输出</h2><h3 id="31-VNC图形界面"><a href="#31-VNC图形界面" class="headerlink" title="31. VNC图形界面"></a>31. VNC图形界面</h3><p>启用VNC远程桌面（-vnc）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -vnc :0 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="spice图形加速">32. SPICE图形加速</h3>
-<p>使用SPICE协议图形（-spice）。</p>
+
+<h3 id="32-SPICE图形加速"><a href="#32-SPICE图形加速" class="headerlink" title="32. SPICE图形加速"></a>32. SPICE图形加速</h3><p>使用SPICE协议图形（-spice）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -spice port=5900,disable-ticketing=on -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="sdl图形界面">33. SDL图形界面</h3>
-<p>使用SDL库图形输出（-sdl）。</p>
+
+<h3 id="33-SDL图形界面"><a href="#33-SDL图形界面" class="headerlink" title="33. SDL图形界面"></a>33. SDL图形界面</h3><p>使用SDL库图形输出（-sdl）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -sdl -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="键盘布局指定">34. 键盘布局指定</h3>
-<p>指定键盘布局为en-us（-k en-us）。</p>
+
+<h3 id="34-键盘布局指定"><a href="#34-键盘布局指定" class="headerlink" title="34. 键盘布局指定"></a>34. 键盘布局指定</h3><p>指定键盘布局为en-us（-k en-us）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -k en-us -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="鼠标输入配置">35. 鼠标输入配置</h3>
-<p>配置绝对鼠标输入（-usbdevice tablet）。</p>
+
+<h3 id="35-鼠标输入配置"><a href="#35-鼠标输入配置" class="headerlink" title="35. 鼠标输入配置"></a>35. 鼠标输入配置</h3><p>配置绝对鼠标输入（-usbdevice tablet）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -device usb-tablet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="图形分辨率设置">36. 图形分辨率设置</h3>
-<p>设置VGA分辨率（-vga std -full-screen）。</p>
+
+<h3 id="36-图形分辨率设置"><a href="#36-图形分辨率设置" class="headerlink" title="36. 图形分辨率设置"></a>36. 图形分辨率设置</h3><p>设置VGA分辨率（-vga std -full-screen）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -vga std -full-screen -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="多监视器配置">37. 多监视器配置</h3>
-<p>配置多个图形输出（-device virtio-gpu）。</p>
+
+<h3 id="37-多监视器配置"><a href="#37-多监视器配置" class="headerlink" title="37. 多监视器配置"></a>37. 多监视器配置</h3><p>配置多个图形输出（-device virtio-gpu）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device virtio-gpu -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="音频设备模拟">38. 音频设备模拟</h3>
-<p>模拟音频设备输出（-soundhw ac97）。</p>
+
+<h3 id="38-音频设备模拟"><a href="#38-音频设备模拟" class="headerlink" title="38. 音频设备模拟"></a>38. 音频设备模拟</h3><p>模拟音频设备输出（-soundhw ac97）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -soundhw ac97 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="剪贴板共享">39. 剪贴板共享</h3>
-<p>启用SPICE剪贴板共享（-spice clipboard=on）。</p>
+
+<h3 id="39-剪贴板共享"><a href="#39-剪贴板共享" class="headerlink" title="39. 剪贴板共享"></a>39. 剪贴板共享</h3><p>启用SPICE剪贴板共享（-spice clipboard&#x3D;on）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -spice port=5900,clipboard=on -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="图形加速virgl">40. 图形加速Virgl</h3>
-<p>启用Virgl 3D加速（-device virtio-gpu-virgl）。</p>
+
+<h3 id="40-图形加速Virgl"><a href="#40-图形加速Virgl" class="headerlink" title="40. 图形加速Virgl"></a>40. 图形加速Virgl</h3><p>启用Virgl 3D加速（-device virtio-gpu-virgl）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device virtio-gpu-virgl -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h2 id="五调试与监视">五、调试与监视</h2>
-<h3 id="gdb调试连接">41. GDB调试连接</h3>
-<p>启用GDB调试服务器（-s -S）。</p>
+
+<h2 id="五、调试与监视"><a href="#五、调试与监视" class="headerlink" title="五、调试与监视"></a>五、调试与监视</h2><h3 id="41-GDB调试连接"><a href="#41-GDB调试连接" class="headerlink" title="41. GDB调试连接"></a>41. GDB调试连接</h3><p>启用GDB调试服务器（-s -S）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -s -S -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="监视器控制台">42. 监视器控制台</h3>
-<p>启用QMP监视器（-monitor stdio）。</p>
+
+<h3 id="42-监视器控制台"><a href="#42-监视器控制台" class="headerlink" title="42. 监视器控制台"></a>42. 监视器控制台</h3><p>启用QMP监视器（-monitor stdio）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -monitor stdio -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="qmp套接字监视">43. QMP套接字监视</h3>
-<p>使用UNIX套接字QMP监视（-qmp unix）。</p>
+
+<h3 id="43-QMP套接字监视"><a href="#43-QMP套接字监视" class="headerlink" title="43. QMP套接字监视"></a>43. QMP套接字监视</h3><p>使用UNIX套接字QMP监视（-qmp unix）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -qmp unix:/tmp/qmp.sock,server,nowait -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="性能跟踪">44. 性能跟踪</h3>
-<p>启用性能跟踪日志（-d cpu）。</p>
+
+<h3 id="44-性能跟踪"><a href="#44-性能跟踪" class="headerlink" title="44. 性能跟踪"></a>44. 性能跟踪</h3><p>启用性能跟踪日志（-d cpu）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -d cpu -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="日志文件输出">45. 日志文件输出</h3>
-<p>输出日志到文件（-D logfile）。</p>
+
+<h3 id="45-日志文件输出"><a href="#45-日志文件输出" class="headerlink" title="45. 日志文件输出"></a>45. 日志文件输出</h3><p>输出日志到文件（-D logfile）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -D qemu.log -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="内核调试模式">46. 内核调试模式</h3>
-<p>调试Linux内核（-kernel -initrd -append）。</p>
+
+<h3 id="46-内核调试模式"><a href="#46-内核调试模式" class="headerlink" title="46. 内核调试模式"></a>46. 内核调试模式</h3><p>调试Linux内核（-kernel -initrd -append）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -kernel bzImage -initrd initrd.img -append &quot;console=ttyS0&quot; -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="内存转储">47. 内存转储</h3>
-<p>转储VM内存到文件（-mem-path）。</p>
+
+<h3 id="47-内存转储"><a href="#47-内存转储" class="headerlink" title="47. 内存转储"></a>47. 内存转储</h3><p>转储VM内存到文件（-mem-path）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -mem-path /tmp/mem.dump -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="事件监视脚本">48. 事件监视脚本</h3>
-<p>使用脚本监视事件（-trace events=events.txt）。</p>
+
+<h3 id="48-事件监视脚本"><a href="#48-事件监视脚本" class="headerlink" title="48. 事件监视脚本"></a>48. 事件监视脚本</h3><p>使用脚本监视事件（-trace events&#x3D;events.txt）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -trace events=events.txt -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="cpu热插拔监视">49. CPU热插拔监视</h3>
-<p>启用CPU热插拔并监视（-smp 1,maxcpus=4）。</p>
+
+<h3 id="49-CPU热插拔监视"><a href="#49-CPU热插拔监视" class="headerlink" title="49. CPU热插拔监视"></a>49. CPU热插拔监视</h3><p>启用CPU热插拔并监视（-smp 1,maxcpus&#x3D;4）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -smp 1,maxcpus=4 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="调试符号加载">50. 调试符号加载</h3>
-<p>加载调试符号启动（-gdb tcp::1234）。</p>
+
+<h3 id="50-调试符号加载"><a href="#50-调试符号加载" class="headerlink" title="50. 调试符号加载"></a>50. 调试符号加载</h3><p>加载调试符号启动（-gdb tcp::1234）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -gdb tcp::1234 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3MDQ4MjA2Mg==&amp;mid=2247487183&amp;idx=1&amp;sn=984b50f454c454d3233bb40eaf613691&amp;chksm=cf5f692e87f39bdcd3f8f4569f6d5dcb891c920298d3ecf95b14595cf419a5114ecdbbaeea6a&amp;mpshare=1&amp;scene=24&amp;srcid=1218C6PzHMIsmMxnl4EutIig&amp;sharer_shareinfo=2ff91c68bc0949e2282bcdf00a7bacd8&amp;sharer_shareinfo_first=2ff91c68bc0949e2282bcdf00a7bacd8#rd">常见QEMU语句</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3MDQ4MjA2Mg==&mid=2247487183&idx=1&sn=984b50f454c454d3233bb40eaf613691&chksm=cf5f692e87f39bdcd3f8f4569f6d5dcb891c920298d3ecf95b14595cf419a5114ecdbbaeea6a&mpshare=1&scene=24&srcid=1218C6PzHMIsmMxnl4EutIig&sharer_shareinfo=2ff91c68bc0949e2282bcdf00a7bacd8&sharer_shareinfo_first=2ff91c68bc0949e2282bcdf00a7bacd8#rd">常见QEMU语句</a></p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/29/ceatsheet/virsh%20cheatsheet/" class="post-title-link" itemprop="url">virsh cheatsheet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="常用命令">常用命令</h1>
-<h2 id="启动与关闭">启动与关闭</h2>
-<table>
-<thead>
-<tr class="header">
-<th>操作</th>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>启动</strong></td>
-<td><code>virsh start &lt;虚拟机名&gt;</code></td>
-<td>启动一个处于关闭状态的虚拟机</td>
-</tr>
-<tr class="even">
-<td><strong>正常关机</strong></td>
-<td><code>virsh shutdown &lt;虚拟机名&gt;</code></td>
-<td>模拟按下电源键，优雅关机（推荐）</td>
-</tr>
-<tr class="odd">
-<td><strong>强制关闭</strong></td>
-<td><code>virsh destroy &lt;虚拟机名&gt;</code></td>
-<td>相当于直接拔掉电源，仅在卡死时使用</td>
-</tr>
-<tr class="even">
-<td><strong>重启</strong></td>
-<td><code>virsh reboot &lt;虚拟机名&gt;</code></td>
-<td>重启虚拟机</td>
-</tr>
-<tr class="odd">
-<td><strong>强制重置</strong></td>
-<td><code>virsh reset &lt;虚拟机名&gt;</code></td>
-<td>强制硬重启</td>
-</tr>
-</tbody>
-</table>
-<h2 id="挂起与恢复"> 挂起与恢复</h2>
-<table>
-<thead>
-<tr class="header">
-<th>操作</th>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>挂起</strong></td>
-<td><code>virsh suspend &lt;虚拟机名&gt;</code></td>
-<td>暂停虚拟机，内存数据保留在主机</td>
-</tr>
-<tr class="even">
-<td><strong>恢复</strong></td>
-<td><code>virsh resume &lt;虚拟机名&gt;</code></td>
-<td>从挂起状态恢复运行</td>
-</tr>
-</tbody>
-</table>
-<h2 id="自启动配置"> 自启动配置</h2>
-<ul>
-<li>设置开机自启： <code>virsh autostart &lt;虚拟机名&gt;</code></li>
-<li>取消开机自启： <code>virsh autostart --disable &lt;虚拟机名&gt;</code></li>
-<li>查看自启列表： <code>virsh autostart --list</code></li>
-</ul>
-<h1 id="虚拟机信息查询">虚拟机信息查询</h1>
-<h2 id="基本状态查询"> 基本状态查询</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="配置与连接信息">配置与连接信息</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="资源监控">资源监控</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="虚拟机配置管理">虚拟机配置管理</h1>
-<h2 id="xml配置编辑核心">XML配置编辑（核心）</h2>
-<p>KVM的所有配置都存储在XML文件中：</p>
-<p><strong>编辑配置（推荐）</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 /etc/libvirt/qemu/ 下的文件，容易出错。</p>
-</blockquote>
-<p><strong>备份配置</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh dumpxml &lt;虚拟机名&gt; &gt; vm-config.xml</span><br></pre></td></tr></table></figure>
-<p><strong>从XML恢复/定义</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
-<h2 id="删除与重命名">删除与重命名</h2>
-<p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
-<p><strong>重命名虚拟机</strong>：<br />
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -941,49 +773,41 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img src="vagrant-cheatsheet.png" /></p>
+          <p><img src="/vagrant-cheatsheet.png"></p>
 <p>Typing <code>vagrant</code> from the command line will display a list of all available commands.</p>
 <p>Be sure that you are in the same directory as the Vagrantfile when running these commands!</p>
-<h1 id="creating-a-vm">Creating a VM</h1>
-<ul>
-<li><code>vagrant init</code> – Initialize Vagrant with a Vagrantfile and ./.vagrant directory, using no specified base image. Before you can do vagrant up, you’ll need to specify a base image in the Vagrantfile.</li>
+<h1 id="Creating-a-VM"><a href="#Creating-a-VM" class="headerlink" title="Creating a VM"></a>Creating a VM</h1><ul>
+<li><code>vagrant init</code> – Initialize Vagrant with a Vagrantfile and .&#x2F;.vagrant directory, using no specified base image. Before you can do vagrant up, you’ll need to specify a base image in the Vagrantfile.</li>
 <li><code>vagrant init &lt;boxpath&gt;</code> – Initialize Vagrant with a specific box. To find a box, go to the <a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">public Vagrant box catalog</a>. When you find one you like, just replace it’s name with boxpath. For example, <code>vagrant init ubuntu/trusty64</code>.</li>
 </ul>
-<h1 id="starting-a-vm">Starting a VM</h1>
-<ul>
+<h1 id="Starting-a-VM"><a href="#Starting-a-VM" class="headerlink" title="Starting a VM"></a>Starting a VM</h1><ul>
 <li><code>vagrant up</code> – starts vagrant environment (also provisions only on the FIRST vagrant up)</li>
 <li><code>vagrant resume</code> – resume a suspended machine (vagrant up works just fine for this as well)</li>
 <li><code>vagrant provision</code> – forces reprovisioning of the vagrant machine</li>
 <li><code>vagrant reload</code> – restarts vagrant machine, loads new Vagrantfile configuration</li>
 <li><code>vagrant reload --provision</code> – restart the virtual machine and force provisioning</li>
 </ul>
-<h1 id="getting-into-a-vm">Getting into a VM</h1>
-<ul>
+<h1 id="Getting-into-a-VM"><a href="#Getting-into-a-VM" class="headerlink" title="Getting into a VM"></a>Getting into a VM</h1><ul>
 <li><code>vagrant ssh</code> – connects to machine via SSH</li>
 <li><code>vagrant ssh &lt;boxname&gt;</code> – If you give your box a name in your Vagrantfile, you can ssh into it with boxname. Works from any directory.</li>
 </ul>
-<h1 id="stopping-a-vm">Stopping a VM</h1>
-<ul>
+<h1 id="Stopping-a-VM"><a href="#Stopping-a-VM" class="headerlink" title="Stopping a VM"></a>Stopping a VM</h1><ul>
 <li><code>vagrant halt</code> – stops the vagrant machine</li>
 <li><code>vagrant suspend</code> – suspends a virtual machine (remembers state)</li>
 </ul>
-<h1 id="cleaning-up-a-vm">Cleaning Up a VM</h1>
-<ul>
+<h1 id="Cleaning-Up-a-VM"><a href="#Cleaning-Up-a-VM" class="headerlink" title="Cleaning Up a VM"></a>Cleaning Up a VM</h1><ul>
 <li><code>vagrant destroy</code> – stops and deletes all traces of the vagrant machine</li>
 <li><code>vagrant destroy -f</code> – same as above, without confirmation</li>
 </ul>
-<h1 id="boxes">Boxes</h1>
-<ul>
+<h1 id="Boxes"><a href="#Boxes" class="headerlink" title="Boxes"></a>Boxes</h1><ul>
 <li><code>vagrant box list</code> – see a list of all installed boxes on your computer</li>
 <li><code>vagrant box add &lt;name&gt; &lt;url&gt;</code> – download a box image to your computer</li>
 <li><code>vagrant box outdated</code> – check for updates vagrant box update</li>
 <li><code>vagrant box remove &lt;name&gt;</code> – deletes a box from the machine</li>
 <li><code>vagrant package</code> – packages a running virtualbox env in a reusable box</li>
 </ul>
-<h1 id="saving-progress">Saving Progress</h1>
-<p>-<code>vagrant snapshot save [options] [vm-name] &lt;name&gt;</code> – vm-name is often <code>default</code>. Allows us to save so that we can rollback at a later time</p>
-<h1 id="tips">Tips</h1>
-<ul>
+<h1 id="Saving-Progress"><a href="#Saving-Progress" class="headerlink" title="Saving Progress"></a>Saving Progress</h1><p>-<code>vagrant snapshot save [options] [vm-name] &lt;name&gt;</code> – vm-name is often <code>default</code>. Allows us to save so that we can rollback at a later time</p>
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><ul>
 <li><code>vagrant -v</code> – get the vagrant version</li>
 <li><code>vagrant status</code> – outputs status of the vagrant machine</li>
 <li><code>vagrant global-status</code> – outputs status of all vagrant machines</li>
@@ -992,15 +816,166 @@
 <li><code>vagrant push</code> – yes, vagrant can be configured to <a target="_blank" rel="noopener" href="http://docs.vagrantup.com/v2/push/index.html">deploy code</a>!</li>
 <li><code>vagrant up --provision | tee provision.log</code> – Runs <code>vagrant up</code>, forces provisioning and logs all output to a file</li>
 </ul>
-<h1 id="plugins">Plugins</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a> : <code>$ vagrant plugin install vagrant-hostsupdater</code> to update your <code>/etc/hosts</code> file automatically each time you start/stop your vagrant box.</li>
+<h1 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a> : <code>$ vagrant plugin install vagrant-hostsupdater</code> to update your <code>/etc/hosts</code> file automatically each time you start&#x2F;stop your vagrant box.</li>
 </ul>
-<h1 id="notes">Notes</h1>
-<ul>
+<h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><ul>
 <li>If you are using <a target="_blank" rel="noopener" href="https://github.com/varying-vagrant-vagrants/vvv/">VVV</a>, you can enable xdebug by running <code>vagrant ssh</code> and then <code>xdebug_on</code> from the virtual machine’s CLI.</li>
 </ul>
 
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/29/ceatsheet/virsh%20cheatsheet/" class="post-title-link" itemprop="url">virsh cheatsheet</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="启动与关闭"><a href="#启动与关闭" class="headerlink" title="启动与关闭"></a>启动与关闭</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>启动</strong></td>
+<td><code>virsh start &lt;虚拟机名&gt;</code></td>
+<td>启动一个处于关闭状态的虚拟机</td>
+</tr>
+<tr>
+<td><strong>正常关机</strong></td>
+<td><code>virsh shutdown &lt;虚拟机名&gt;</code></td>
+<td>模拟按下电源键，优雅关机（推荐）</td>
+</tr>
+<tr>
+<td><strong>强制关闭</strong></td>
+<td><code>virsh destroy &lt;虚拟机名&gt;</code></td>
+<td>相当于直接拔掉电源，仅在卡死时使用</td>
+</tr>
+<tr>
+<td><strong>重启</strong></td>
+<td><code>virsh reboot &lt;虚拟机名&gt;</code></td>
+<td>重启虚拟机</td>
+</tr>
+<tr>
+<td><strong>强制重置</strong></td>
+<td><code>virsh reset &lt;虚拟机名&gt;</code></td>
+<td>强制硬重启</td>
+</tr>
+</tbody></table>
+<h2 id="挂起与恢复"><a href="#挂起与恢复" class="headerlink" title="挂起与恢复"></a>挂起与恢复</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>挂起</strong></td>
+<td><code>virsh suspend &lt;虚拟机名&gt;</code></td>
+<td>暂停虚拟机，内存数据保留在主机</td>
+</tr>
+<tr>
+<td><strong>恢复</strong></td>
+<td><code>virsh resume &lt;虚拟机名&gt;</code></td>
+<td>从挂起状态恢复运行</td>
+</tr>
+</tbody></table>
+<h2 id="自启动配置"><a href="#自启动配置" class="headerlink" title="自启动配置"></a>自启动配置</h2><ul>
+<li>设置开机自启： <code>virsh autostart &lt;虚拟机名&gt;</code></li>
+<li>取消开机自启： <code>virsh autostart --disable &lt;虚拟机名&gt;</code></li>
+<li>查看自启列表： <code>virsh autostart --list</code></li>
+</ul>
+<h1 id="虚拟机信息查询"><a href="#虚拟机信息查询" class="headerlink" title="虚拟机信息查询"></a>虚拟机信息查询</h1><h2 id="基本状态查询"><a href="#基本状态查询" class="headerlink" title="基本状态查询"></a>基本状态查询</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="配置与连接信息"><a href="#配置与连接信息" class="headerlink" title="配置与连接信息"></a>配置与连接信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="资源监控"><a href="#资源监控" class="headerlink" title="资源监控"></a>资源监控</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="虚拟机配置管理"><a href="#虚拟机配置管理" class="headerlink" title="虚拟机配置管理"></a>虚拟机配置管理</h1><h2 id="XML配置编辑（核心）"><a href="#XML配置编辑（核心）" class="headerlink" title="XML配置编辑（核心）"></a>XML配置编辑（核心）</h2><p>KVM的所有配置都存储在XML文件中：</p>
+<p><strong>编辑配置（推荐）</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 &#x2F;etc&#x2F;libvirt&#x2F;qemu&#x2F; 下的文件，容易出错。</p>
+</blockquote>
+<p><strong>备份配置</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh dumpxml &lt;虚拟机名&gt; &gt; vm-config.xml</span><br></pre></td></tr></table></figure>
+
+<p><strong>从XML恢复&#x2F;定义</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除与重命名"><a href="#删除与重命名" class="headerlink" title="删除与重命名"></a>删除与重命名</h2><p><strong>取消定义（删除配置）</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此命令只删除配置文件，不会删除虚拟磁盘文件！<br><strong>彻底删除（配置+磁盘）</strong>：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
+</blockquote>
+<p><strong>重命名虚拟机</strong>：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -1068,12 +1043,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="sheet1">sheet1</h1>
-<p><img src="arm64-cheatsheet.png" /></p>
-<h1 id="sheet2">sheet2</h1>
-<p><img src="arm64v8-1.png" /> <img src="arm64v8-2.png" /> <img src="arm64v8-3.png" /></p>
-<h1 id="sheet3">sheet3</h1>
-<p><img src="ARMquick1.png" /> <img src="ARMquick2.png" /> <img src="ARMquick3.png" /> <img src="ARMquick4.png" /> <img src="ARMquick5.png" /> <img src="ARMquick6.png" /></p>
+          <h1 id="sheet1"><a href="#sheet1" class="headerlink" title="sheet1"></a>sheet1</h1><p><img src="/arm64-cheatsheet.png"></p>
+<h1 id="sheet2"><a href="#sheet2" class="headerlink" title="sheet2"></a>sheet2</h1><p><img src="/arm64v8-1.png"><br><img src="/arm64v8-2.png"><br><img src="/arm64v8-3.png"></p>
+<h1 id="sheet3"><a href="#sheet3" class="headerlink" title="sheet3"></a>sheet3</h1><p><img src="/ARMquick1.png"><br><img src="/ARMquick2.png"><br><img src="/ARMquick3.png"><br><img src="/ARMquick4.png"><br><img src="/ARMquick5.png"><br><img src="/ARMquick6.png"></p>
 
       
     </div>
@@ -1142,7 +1114,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img src="bpfcheatsheet1.png" /> <img src="bpfcheatsheet2.png" /> <img src="bpfcheatsheet3.png" /></p>
+          <p><img src="/bpfcheatsheet1.png"><br><img src="/bpfcheatsheet2.png"><br><img src="/bpfcheatsheet3.png"></p>
 
       
     </div>
@@ -1211,26 +1183,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="状态检查与配置">状态检查与配置</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">IB设备的状态</span></span><br><span class="line">ibstat</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">IB设备的细节</span></span><br><span class="line">ibv_devinfo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有的IB设备</span></span><br><span class="line">ibdevices</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查IB设备端口状态</span></span><br><span class="line">iblinkinfo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看IB地址配置</span></span><br><span class="line">ibaddr</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示IB端口状态细节信息</span></span><br><span class="line">ibportstate</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示IB端口统计信息</span></span><br><span class="line">ibportinfo</span><br></pre></td></tr></table></figure>
-<h1 id="配置和管理">配置和管理</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置IB设备，显示IB和以太设备的映射关系</span></span><br><span class="line">ibdev2netdev</span><br><span class="line">ibdev2netdev -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB设备到一个特定的驱动</span></span><br><span class="line">ibdriver</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新IB设备固件</span></span><br><span class="line">mstflint -d &lt;device&gt; qflash &lt;firmware_file.bin&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出IB设备所有可获取的路径</span></span><br><span class="line">ibpathln</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点间所有的IB连接</span></span><br><span class="line">ibnetdiscover</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询固件参数</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; q</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置端1为以太模式，端口2为IB模式</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; set LINK_TYPE_P1=2 LINK_TYPE_P2=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置设置的SRIOV开启和个数</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; set SRIOV_EN=1 NUM_OF_VFS=8</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置链路聚合模式，队列亲和性</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; s LAG_RESOURCE_ALLOCATION=0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">允许压缩CQE（小包调优，其他可能性能劣化）</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; s CQE_COMPRESSION=1</span><br></pre></td></tr></table></figure>
-<h1 id="固件更新">固件更新</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新NIC卡固件（非OEM卡）</span></span><br><span class="line">mlxfwmanager</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">常用的固件烧录命令（卡和包PSID要一致）</span></span><br><span class="line">mstflint -d &quot;$&#123;PCI_ID&#125;&quot; -i &quot;$&#123;NEW_FIRMWARE_BIN&#125;&quot; burn</span><br><span class="line">flint -d &quot;$&#123;PCI_ID&#125;&quot; -i &quot;$&#123;NEW_FIRMWARE_BIN&#125;&quot; burn</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询固件的全量信息</span></span><br><span class="line">mstflint -d $&#123;PCI_ID&#125; query full</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略PSID强制烧入固件</span></span><br><span class="line">mstflint -d &quot;$&#123;PCI_ID&#125;&quot; -i &quot;$&#123;NEW_FIRMWARE_BIN&#125;&quot; -allow_psid_change burn</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="性能测试和监控">性能测试和监控</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试两设备见IB性能（时延和带宽）</span></span><br><span class="line">ib_send_bw &lt;device&gt; &lt;destination&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试IB RDMA性能</span></span><br><span class="line">ib_send_lat &lt;device&gt; &lt;destination&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监控IB设备流量</span></span><br><span class="line">ibstat -i &lt;device&gt; -s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监控IB设备错误</span></span><br><span class="line">iberrdump</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mlnx调优</span></span><br><span class="line">mlnx_tune -h</span><br><span class="line">mlnx_tune -v</span><br><span class="line">mlnx_tune -q</span><br><span class="line">mlnx_tune -p HIGH_THROUGHPUT</span><br></pre></td></tr></table></figure>
-<h1 id="配置rdma">配置RDMA</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查RDMA配置</span></span><br><span class="line">rdma link</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB设备RDMA用途</span></span><br><span class="line">rdma_resolve_route</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试IB的RDMA性能</span></span><br><span class="line">ib_send_lat -D &lt;device&gt; &lt;destination&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查RDMA安全和权限</span></span><br><span class="line">rdma_sec</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置RDMA加密和安全</span></span><br><span class="line">rdma_auth</span><br></pre></td></tr></table></figure>
-<h1 id="定位问题">定位问题</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查多节点的IB配置</span></span><br><span class="line">ibnetdiscover</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dmesg显示ib 相关打印</span></span><br><span class="line">dmesg | grep -i ib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看IB日志</span></span><br><span class="line">tail -f /var/log/ib_log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查IB端口状态</span></span><br><span class="line">ibportstate</span><br></pre></td></tr></table></figure>
-<h1 id="配置和管理ib子网">配置和管理IB子网</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示IB网络信息</span></span><br><span class="line">ibnetdiscover -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB网络管理</span></span><br><span class="line">sm_profile</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查IB网口状态</span></span><br><span class="line">ibstat -s</span><br></pre></td></tr></table></figure>
-<h1 id="mellanox管理命令">Mellanox管理命令</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">网卡状态查询</span></span><br><span class="line">mst status -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启mst服务</span></span><br><span class="line">mst start</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置RDMA的Mellanox设备</span></span><br><span class="line">rdma_configure_device</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装配置Mellanox管理软件</span></span><br><span class="line">mstflint -d &lt;device&gt; qflash &lt;firmware_file.bin&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取网卡qos配置</span></span><br><span class="line">mlnx_qos -i eth2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置网卡端口的0~7 PFC优先级</span></span><br><span class="line">mlnx_qos -i eth2 -f 0,0,0,1,0,0,0,0</span><br></pre></td></tr></table></figure>
-<h1 id="配置ib-qos">配置IB QoS</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set quality of service policy <span class="keyword">for</span> InfiniBand</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB qos</span></span><br><span class="line">ib_qos_policy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置IB流优先级</span></span><br><span class="line">ib_flowcontrol</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查QoS配置和流优先级</span></span><br><span class="line">ib_qos_show</span><br></pre></td></tr></table></figure>
-<h2 id="参考">参考</h2>
-<ul>
+          <h1 id="状态检查与配置"><a href="#状态检查与配置" class="headerlink" title="状态检查与配置"></a>状态检查与配置</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">IB设备的状态</span></span><br><span class="line">ibstat</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">IB设备的细节</span></span><br><span class="line">ibv_devinfo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有的IB设备</span></span><br><span class="line">ibdevices</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查IB设备端口状态</span></span><br><span class="line">iblinkinfo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看IB地址配置</span></span><br><span class="line">ibaddr</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示IB端口状态细节信息</span></span><br><span class="line">ibportstate</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示IB端口统计信息</span></span><br><span class="line">ibportinfo</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置和管理"><a href="#配置和管理" class="headerlink" title="配置和管理"></a>配置和管理</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置IB设备，显示IB和以太设备的映射关系</span></span><br><span class="line">ibdev2netdev</span><br><span class="line">ibdev2netdev -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB设备到一个特定的驱动</span></span><br><span class="line">ibdriver</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新IB设备固件</span></span><br><span class="line">mstflint -d &lt;device&gt; qflash &lt;firmware_file.bin&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出IB设备所有可获取的路径</span></span><br><span class="line">ibpathln</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点间所有的IB连接</span></span><br><span class="line">ibnetdiscover</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询固件参数</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; q</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置端1为以太模式，端口2为IB模式</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; set LINK_TYPE_P1=2 LINK_TYPE_P2=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置设置的SRIOV开启和个数</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; set SRIOV_EN=1 NUM_OF_VFS=8</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置链路聚合模式，队列亲和性</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; s LAG_RESOURCE_ALLOCATION=0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">允许压缩CQE（小包调优，其他可能性能劣化）</span></span><br><span class="line">mlxconfig -d $&#123;PCI_ID&#125; s CQE_COMPRESSION=1</span><br></pre></td></tr></table></figure>
+
+<h1 id="固件更新"><a href="#固件更新" class="headerlink" title="固件更新"></a>固件更新</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新NIC卡固件（非OEM卡）</span></span><br><span class="line">mlxfwmanager</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">常用的固件烧录命令（卡和包PSID要一致）</span></span><br><span class="line">mstflint -d &quot;$&#123;PCI_ID&#125;&quot; -i &quot;$&#123;NEW_FIRMWARE_BIN&#125;&quot; burn</span><br><span class="line">flint -d &quot;$&#123;PCI_ID&#125;&quot; -i &quot;$&#123;NEW_FIRMWARE_BIN&#125;&quot; burn</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询固件的全量信息</span></span><br><span class="line">mstflint -d $&#123;PCI_ID&#125; query full</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略PSID强制烧入固件</span></span><br><span class="line">mstflint -d &quot;$&#123;PCI_ID&#125;&quot; -i &quot;$&#123;NEW_FIRMWARE_BIN&#125;&quot; -allow_psid_change burn</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="性能测试和监控"><a href="#性能测试和监控" class="headerlink" title="性能测试和监控"></a>性能测试和监控</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试两设备见IB性能（时延和带宽）</span></span><br><span class="line">ib_send_bw &lt;device&gt; &lt;destination&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试IB RDMA性能</span></span><br><span class="line">ib_send_lat &lt;device&gt; &lt;destination&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监控IB设备流量</span></span><br><span class="line">ibstat -i &lt;device&gt; -s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监控IB设备错误</span></span><br><span class="line">iberrdump</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mlnx调优</span></span><br><span class="line">mlnx_tune -h</span><br><span class="line">mlnx_tune -v</span><br><span class="line">mlnx_tune -q</span><br><span class="line">mlnx_tune -p HIGH_THROUGHPUT</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置RDMA"><a href="#配置RDMA" class="headerlink" title="配置RDMA"></a>配置RDMA</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查RDMA配置</span></span><br><span class="line">rdma link</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB设备RDMA用途</span></span><br><span class="line">rdma_resolve_route</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试IB的RDMA性能</span></span><br><span class="line">ib_send_lat -D &lt;device&gt; &lt;destination&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查RDMA安全和权限</span></span><br><span class="line">rdma_sec</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置RDMA加密和安全</span></span><br><span class="line">rdma_auth</span><br></pre></td></tr></table></figure>
+
+<h1 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查多节点的IB配置</span></span><br><span class="line">ibnetdiscover</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dmesg显示ib 相关打印</span></span><br><span class="line">dmesg | grep -i ib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看IB日志</span></span><br><span class="line">tail -f /var/log/ib_log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查IB端口状态</span></span><br><span class="line">ibportstate</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置和管理IB子网"><a href="#配置和管理IB子网" class="headerlink" title="配置和管理IB子网"></a>配置和管理IB子网</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示IB网络信息</span></span><br><span class="line">ibnetdiscover -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB网络管理</span></span><br><span class="line">sm_profile</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查IB网口状态</span></span><br><span class="line">ibstat -s</span><br></pre></td></tr></table></figure>
+
+<h1 id="Mellanox管理命令"><a href="#Mellanox管理命令" class="headerlink" title="Mellanox管理命令"></a>Mellanox管理命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">网卡状态查询</span></span><br><span class="line">mst status -v</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启mst服务</span></span><br><span class="line">mst start</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置RDMA的Mellanox设备</span></span><br><span class="line">rdma_configure_device</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装配置Mellanox管理软件</span></span><br><span class="line">mstflint -d &lt;device&gt; qflash &lt;firmware_file.bin&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取网卡qos配置</span></span><br><span class="line">mlnx_qos -i eth2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置网卡端口的0~7 PFC优先级</span></span><br><span class="line">mlnx_qos -i eth2 -f 0,0,0,1,0,0,0,0</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置IB-QoS"><a href="#配置IB-QoS" class="headerlink" title="配置IB QoS"></a>配置IB QoS</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set quality of service policy <span class="keyword">for</span> InfiniBand</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置IB qos</span></span><br><span class="line">ib_qos_policy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置IB流优先级</span></span><br><span class="line">ib_flowcontrol</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查QoS配置和流优先级</span></span><br><span class="line">ib_qos_show</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://gist.github.com/githubfoam/da75951b97e9aec21dcebadf68a6a360">https://gist.github.com/githubfoam/da75951b97e9aec21dcebadf68a6a360</a></li>
 <li></li>
 </ul>
@@ -1302,88 +1273,101 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="介绍">介绍</h1>
-<p>Ftrace 是一款内部跟踪器，旨在帮助系统开发人员和设计人员了解内核内部的运行情况。它可用于调试或分析用户空间之外发生的延迟和性能问题。</p>
-<h2 id="debugfs-文件结构">Debugfs 文件结构</h2>
-<p>Ftrace 使用 debugfs 文件系统来保存控制文件以及用于显示输出的文件。</p>
-<p>当 debugfs 配置到内核中时（选择任何 ftrace 选项都会执行此操作），将创建目录 /sys/kernel/debug。要挂载此目录，可以将其添加到 /etc/fstab 文件中： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/fstab</span></span><br><span class="line">debugfs /sys/kernel/debug debugfs default 0 0</span><br></pre></td></tr></table></figure> 或者，也可以在运行时使用以下命令挂载它： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t debugfs nodev /sys/kernel/debug</span><br></pre></td></tr></table></figure> 为了更快地访问该目录，可以创建一个指向它的软链接： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /sys/kernel/debug /debug</span><br></pre></td></tr></table></figure> ## function跟踪</p>
-<p>下表汇总了 <code>ftrace</code>最常用的操作命令，适用于直接操作 <code>/sys/kernel/debug/tracing</code>目录下的文件。</p>
+          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Ftrace 是一款内部跟踪器，旨在帮助系统开发人员和设计人员了解内核内部的运行情况。它可用于调试或分析用户空间之外发生的延迟和性能问题。</p>
+<h2 id="Debugfs-文件结构"><a href="#Debugfs-文件结构" class="headerlink" title="Debugfs 文件结构"></a>Debugfs 文件结构</h2><p>Ftrace 使用 debugfs 文件系统来保存控制文件以及用于显示输出的文件。</p>
+<p>当 debugfs 配置到内核中时（选择任何 ftrace 选项都会执行此操作），将创建目录 &#x2F;sys&#x2F;kernel&#x2F;debug。要挂载此目录，可以将其添加到 &#x2F;etc&#x2F;fstab 文件中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/fstab</span></span><br><span class="line">debugfs /sys/kernel/debug debugfs default 0 0</span><br></pre></td></tr></table></figure>
+<p>或者，也可以在运行时使用以下命令挂载它：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t debugfs nodev /sys/kernel/debug</span><br></pre></td></tr></table></figure>
+<p>为了更快地访问该目录，可以创建一个指向它的软链接：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /sys/kernel/debug /debug</span><br></pre></td></tr></table></figure>
+<h2 id="function跟踪"><a href="#function跟踪" class="headerlink" title="function跟踪"></a>function跟踪</h2><p>下表汇总了 <code>ftrace</code>最常用的操作命令，适用于直接操作 <code>/sys/kernel/debug/tracing</code>目录下的文件。</p>
 <table>
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 42%" />
-<col style="width: 46%" />
-</colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>操作目的</th>
 <th>命令示例</th>
 <th>简要说明</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><strong>查看可用跟踪器</strong>​</td>
 <td><code>cat available_tracers</code></td>
 <td>显示系统支持的所有跟踪器 。</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>设置当前跟踪器</strong>​</td>
 <td><code>echo function &gt; current_tracer</code></td>
 <td>设置跟踪器，如 <code>function</code>，<code>function_graph</code>，<code>sched_switch</code>等 。</td>
 </tr>
-<tr class="odd">
-<td><strong>开始/停止跟踪</strong>​</td>
-<td><code>echo 1 &gt; tracing_on</code> <br><code>echo 0 &gt; tracing_on</code></td>
+<tr>
+<td><strong>开始&#x2F;停止跟踪</strong>​</td>
+<td><code>echo 1 &gt; tracing_on</code>  <br><code>echo 0 &gt; tracing_on</code></td>
 <td>控制跟踪的启动和停止 。</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>查看跟踪结果</strong>​</td>
 <td><code>cat trace</code></td>
 <td>显示跟踪缓冲区的内容 。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>过滤跟踪函数</strong>​</td>
 <td><code>echo sys_* &gt; set_ftrace_filter</code></td>
 <td>只跟踪函数名匹配 <code>sys_*</code>的函数 。</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>过滤跟踪进程</strong>​</td>
 <td><code>echo 1234 &gt; set_ftrace_pid</code></td>
 <td>只跟踪 PID 为 1234 的进程 。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>跟踪特定模块</strong>​</td>
-<td><code>echo ':mod:ext4' &gt; set_ftrace_filter</code></td>
+<td><code>echo &#39;:mod:ext4&#39; &gt; set_ftrace_filter</code></td>
 <td>只跟踪 <code>ext4</code>模块内的函数 。</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>启用特定事件</strong>​</td>
 <td><code>echo 1 &gt; events/sched/sched_switch/enable</code></td>
 <td>启用 <code>sched_switch</code>调度事件 。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>清空跟踪缓冲区</strong>​</td>
 <td><code>echo &gt; trace</code></td>
 <td>清空当前跟踪缓冲区以便重新记录 。</td>
 </tr>
-</tbody>
-</table>
-<p>可通过调试文件系统启用函数跟踪器。确保已设置 ftrace_enabled；否则，此跟踪器将不执行任何操作。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">sysctl kernel.ftrace_enabled=1</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> <span class="keyword">function</span> &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">usleep 1</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: <span class="keyword">function</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#           TASK-PID   CPU#    TIMESTAMP  FUNCTION</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | |      |          |         |</span></span><br><span class="line">            bash-4003  [00]   123.638713: finish_task_switch &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638714: _spin_unlock_irq &lt;-finish_task_switch</span><br><span class="line">            bash-4003  [00]   123.638714: sub_preempt_count &lt;-_spin_unlock_irq</span><br><span class="line">            bash-4003  [00]   123.638715: hrtick_set &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638715: _spin_lock_irqsave &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638716: add_preempt_count &lt;-_spin_lock_irqsave</span><br><span class="line">            bash-4003  [00]   123.638716: _spin_unlock_irqrestore &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638717: sub_preempt_count &lt;-_spin_unlock_irqrestore</span><br><span class="line">            bash-4003  [00]   123.638717: hrtick_clear &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638718: sub_preempt_count &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638718: sub_preempt_count &lt;-preempt_schedule</span><br><span class="line">            bash-4003  [00]   123.638719: wait_for_completion &lt;-__stop_machine_run</span><br><span class="line">            bash-4003  [00]   123.638719: wait_for_common &lt;-wait_for_completion</span><br><span class="line">            bash-4003  [00]   123.638720: _spin_lock_irq &lt;-wait_for_common</span><br><span class="line">            bash-4003  [00]   123.638720: add_preempt_count &lt;-_spin_lock_irq</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure></p>
-<h2 id="irqoff跟踪">irqoff跟踪</h2>
-<p>当中断被关闭时，CPU 无法响应外部事件（如硬件中断），这会导致系统响应延迟。<code>irqsoff</code>跟踪器的工作原理是 ： - <strong>挂钩关键函数</strong>：它在 <code>local_irq_disable()</code>和 <code>local_irq_enable()</code>等关键函数中插入钩子。 - <strong>记录时间戳</strong>：当中断被关闭时开始计时，并在中断重新开启时停止计时。 - <strong>记录最大延迟</strong>：它会记录下中断关闭的最大时间，并将导致该延迟的调用路径信息保存下来，帮助开发者定位问题根源。</p>
+</tbody></table>
+<p>可通过调试文件系统启用函数跟踪器。确保已设置 ftrace_enabled；否则，此跟踪器将不执行任何操作。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">sysctl kernel.ftrace_enabled=1</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> <span class="keyword">function</span> &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">usleep 1</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: <span class="keyword">function</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#           TASK-PID   CPU#    TIMESTAMP  FUNCTION</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | |      |          |         |</span></span><br><span class="line">            bash-4003  [00]   123.638713: finish_task_switch &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638714: _spin_unlock_irq &lt;-finish_task_switch</span><br><span class="line">            bash-4003  [00]   123.638714: sub_preempt_count &lt;-_spin_unlock_irq</span><br><span class="line">            bash-4003  [00]   123.638715: hrtick_set &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638715: _spin_lock_irqsave &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638716: add_preempt_count &lt;-_spin_lock_irqsave</span><br><span class="line">            bash-4003  [00]   123.638716: _spin_unlock_irqrestore &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638717: sub_preempt_count &lt;-_spin_unlock_irqrestore</span><br><span class="line">            bash-4003  [00]   123.638717: hrtick_clear &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638718: sub_preempt_count &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638718: sub_preempt_count &lt;-preempt_schedule</span><br><span class="line">            bash-4003  [00]   123.638719: wait_for_completion &lt;-__stop_machine_run</span><br><span class="line">            bash-4003  [00]   123.638719: wait_for_common &lt;-wait_for_completion</span><br><span class="line">            bash-4003  [00]   123.638720: _spin_lock_irq &lt;-wait_for_common</span><br><span class="line">            bash-4003  [00]   123.638720: add_preempt_count &lt;-_spin_lock_irq</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<h2 id="irqoff跟踪"><a href="#irqoff跟踪" class="headerlink" title="irqoff跟踪"></a>irqoff跟踪</h2><p>当中断被关闭时，CPU 无法响应外部事件（如硬件中断），这会导致系统响应延迟。<code>irqsoff</code>跟踪器的工作原理是 ：</p>
+<ul>
+<li><strong>挂钩关键函数</strong>：它在 <code>local_irq_disable()</code>和 <code>local_irq_enable()</code>等关键函数中插入钩子。</li>
+<li><strong>记录时间戳</strong>：当中断被关闭时开始计时，并在中断重新开启时停止计时。</li>
+<li><strong>记录最大延迟</strong>：它会记录下中断关闭的最大时间，并将导致该延迟的调用路径信息保存下来，帮助开发者定位问题根源。</li>
+</ul>
 <p>当中断被禁用时，CPU 将无法响应任何其他外部事件（NMI 和 SMI 除外）。这会阻止定时器中断触发，或鼠标中断无法将新的鼠标事件告知内核。其结果是响应时间出现延迟。</p>
-<p><code>irqsoff</code> 跟踪器会跟踪中断被禁用的时间。当达到新的最大延迟时，跟踪器会保存达到该延迟点之前的跟踪记录，以便每次达到新的最大值时，都会丢弃旧的跟踪记录并保存新的跟踪记录。</p>
-<p>要重置最大值，请将 0 回显到 tracing_max_latency 中。以下是一个示例： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> irqsoff &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_max_latency</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">ls</span> -ltr</span></span><br><span class="line"> [...]</span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> latency_trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: irqsoff</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">	<span class="comment"># irqsoff latency trace v1.1.5 on 4.0.0</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--------------------------------------------------------------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">latency: 259 us, <span class="comment">#4/4, CPU#0 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:4)</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   -----------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   | task: ps-6143 (uid:0 <span class="built_in">nice</span>:0 policy:0 rt_prio:0)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   -----------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> =&gt; started at: __lock_task_sighand</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> =&gt; ended at:   _raw_spin_unlock_irqrestore</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                 _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               |||| /     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid   ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /      |||||  \    |   /</span></span><br><span class="line">    ps-6143    0d.h1    0us+: _raw_spin_lock_irqsave &lt;-__lock_task_sighand</span><br><span class="line">    ps-6143    0d.h.  259us : _raw_spin_unlock_irqrestore &lt;-__lock_task_sighand</span><br></pre></td></tr></table></figure> - <strong><code>latency: 259 us</code></strong>：这是最重要的信息，表示本次跟踪中发现的最大中断关闭延迟为 259 微秒 。 - <strong><code>task: ps-6143</code></strong>：发生该延迟时正在执行的进程是 <code>ps</code>（PID 为 6143）。 - <strong><code>started at</code>和 <code>ended at</code></strong>：指出了中断关闭开始和结束的函数位置 。 - <strong><code>irqs-off</code></strong>：<code>d</code>表示中断被关闭 。 - <strong><code>delay</code>符号</strong>：输出中可能使用特殊符号（如 <code>!</code>表示大于100ms）来直观表示延迟大小。 - <strong>函数调用栈</strong>：在跟踪条目下方，通常会显示导致此次延迟的完整函数调用栈，这对于定位问题代码至关重要 。</p>
-<p>请注意，上面的示例中未设置 ftrace_enabled。如果我们设置了 ftrace_enabled，则会得到更大的输出： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: irqsoff</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">irqsoff latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #101/101, CPU#0 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: ls-4339 (uid:0 nice:0 policy:0 rt_prio:0)</span><br><span class="line">    -----------------</span><br><span class="line"> =&gt; started at: __alloc_pages_internal</span><br><span class="line"> =&gt; ended at:   __alloc_pages_internal</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">      ls-4339  0...1    0us+: get_page_from_freelist (__alloc_pages_internal)</span><br><span class="line">      ls-4339  0d..1    3us : rmqueue_bulk (get_page_from_freelist)</span><br><span class="line">      ls-4339  0d..1    3us : _spin_lock (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..1    4us : add_preempt_count (_spin_lock)</span><br><span class="line">      ls-4339  0d..2    4us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    5us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2    5us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2    6us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    6us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2    7us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2    7us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    8us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">[...]</span><br><span class="line">      ls-4339  0d..2   46us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2   47us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2   47us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2   48us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2   48us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2   49us : _spin_unlock (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">      ls-4339  0d..1   50us : get_page_from_freelist (__alloc_pages_internal)</span><br><span class="line">      ls-4339  0d..2   51us : trace_hardirqs_on (__alloc_pages_internal)</span><br></pre></td></tr></table></figure> 这里我们追踪到了 50 微秒的延迟。但我们也看到了这段时间内调用的所有函数。请注意，启用函数追踪会增加额外的开销。这种开销可能会延长延迟时间。尽管如此，这次追踪仍然提供了一些非常有用的调试信息。</p>
-<h2 id="scdule-wakeup跟踪">scdule wakeup跟踪</h2>
-<p>在实时环境中，了解最高优先级任务从被唤醒到执行所需的唤醒时间至关重要。这也被称为“调度延迟”。</p>
+<p><code>irqsoff</code> 跟踪器会跟踪中断被禁用的时间。当达到新的最大延迟时，跟踪器会保存达到该延迟点之前的跟踪记录，以便每次达到新的最大值时，都会丢弃旧的跟踪记录并保存新的跟踪记录。<br>	<br>要重置最大值，请将 0 回显到 tracing_max_latency 中。以下是一个示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> irqsoff &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_max_latency</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">ls</span> -ltr</span></span><br><span class="line"> [...]</span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> latency_trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: irqsoff</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">	<span class="comment"># irqsoff latency trace v1.1.5 on 4.0.0</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--------------------------------------------------------------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">latency: 259 us, <span class="comment">#4/4, CPU#0 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:4)</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   -----------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   | task: ps-6143 (uid:0 <span class="built_in">nice</span>:0 policy:0 rt_prio:0)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   -----------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> =&gt; started at: __lock_task_sighand</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> =&gt; ended at:   _raw_spin_unlock_irqrestore</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                 _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               |||| /     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid   ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /      |||||  \    |   /</span></span><br><span class="line">    ps-6143    0d.h1    0us+: _raw_spin_lock_irqsave &lt;-__lock_task_sighand</span><br><span class="line">    ps-6143    0d.h.  259us : _raw_spin_unlock_irqrestore &lt;-__lock_task_sighand</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>latency: 259 us</code></strong>：这是最重要的信息，表示本次跟踪中发现的最大中断关闭延迟为 259 微秒 。</li>
+<li><strong><code>task: ps-6143</code></strong>：发生该延迟时正在执行的进程是 <code>ps</code>（PID 为 6143）。</li>
+<li><strong><code>started at</code>和 <code>ended at</code></strong>：指出了中断关闭开始和结束的函数位置 。</li>
+<li><strong><code>irqs-off</code></strong>：<code>d</code>表示中断被关闭 。</li>
+<li><strong><code>delay</code>符号</strong>：输出中可能使用特殊符号（如 <code>!</code>表示大于100ms）来直观表示延迟大小。</li>
+<li><strong>函数调用栈</strong>：在跟踪条目下方，通常会显示导致此次延迟的完整函数调用栈，这对于定位问题代码至关重要 。</li>
+</ul>
+<p>请注意，上面的示例中未设置 ftrace_enabled。如果我们设置了 ftrace_enabled，则会得到更大的输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: irqsoff</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">irqsoff latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #101/101, CPU#0 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: ls-4339 (uid:0 nice:0 policy:0 rt_prio:0)</span><br><span class="line">    -----------------</span><br><span class="line"> =&gt; started at: __alloc_pages_internal</span><br><span class="line"> =&gt; ended at:   __alloc_pages_internal</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">      ls-4339  0...1    0us+: get_page_from_freelist (__alloc_pages_internal)</span><br><span class="line">      ls-4339  0d..1    3us : rmqueue_bulk (get_page_from_freelist)</span><br><span class="line">      ls-4339  0d..1    3us : _spin_lock (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..1    4us : add_preempt_count (_spin_lock)</span><br><span class="line">      ls-4339  0d..2    4us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    5us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2    5us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2    6us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    6us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2    7us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2    7us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    8us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">[...]</span><br><span class="line">      ls-4339  0d..2   46us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2   47us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2   47us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2   48us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2   48us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2   49us : _spin_unlock (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">      ls-4339  0d..1   50us : get_page_from_freelist (__alloc_pages_internal)</span><br><span class="line">      ls-4339  0d..2   51us : trace_hardirqs_on (__alloc_pages_internal)</span><br></pre></td></tr></table></figure>
+<p>这里我们追踪到了 50 微秒的延迟。但我们也看到了这段时间内调用的所有函数。请注意，启用函数追踪会增加额外的开销。这种开销可能会延长延迟时间。尽管如此，这次追踪仍然提供了一些非常有用的调试信息。</p>
+<h2 id="scdule-wakeup跟踪"><a href="#scdule-wakeup跟踪" class="headerlink" title="scdule wakeup跟踪"></a>scdule wakeup跟踪</h2><p>在实时环境中，了解最高优先级任务从被唤醒到执行所需的唤醒时间至关重要。这也被称为“调度延迟”。</p>
 <p>实时环境关注的是最大延迟，也就是事件发生所需的最长延迟，而不是平均延迟。我们可以拥有一个速度非常快的调度器，它可能只是偶尔出现较大的延迟，但这并不适用于实时任务。唤醒跟踪器旨在记录实时任务的最大唤醒延迟。非实时任务不会被记录，因为跟踪器只记录一个最大延迟，而跟踪不可预测的非实时任务会覆盖实时任务的最大延迟。</p>
 <p>由于此追踪器仅处理实时任务，因此我们将采用与之前追踪器略有不同的运行方式。我们不会执行“ls”命令，而是在“chrt”命令下运行“sleep 1”命令，这将改变任务的优先级。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> wakeup &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_max_latency</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">chrt -f 5 <span class="built_in">sleep</span> 1</span></span><br><span class="line"><span class="meta prompt_">	 # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> latency_trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: wakeup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">wakeup latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 4 us, #2/2, CPU#1 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: sleep-4901 (uid:0 nice:0 policy:1 rt_prio:5)</span><br><span class="line">    -----------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">  &lt;idle&gt;-0     1d.h4    0us+: try_to_wake_up (wake_up_process)</span><br><span class="line">  &lt;idle&gt;-0     1d..4    4us : schedule (cpu_idle)</span><br></pre></td></tr></table></figure>
 <p>在空闲系统上运行此程序，我们发现任务切换仅耗时 4 微秒。请注意，由于调度中的跟踪标记位于实际“切换”之前，因此当记录的任务即将调度时，我们会停止跟踪。如果我们在调度程序末尾添加新的标记，则此情况可能会发生变化。</p>
 <p>请注意，记录的任务是“sleep”，进程 ID 为 4901，其 rt_prio 为 5。此优先级为用户空间优先级，而非内核内部优先级。策略为：SCHED_FIFO 为 1，SCHED_RR 为 2。</p>
-<p>使用 chrt -r 5 和 ftrace_enabled set 执行相同的操作。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: wakeup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">wakeup latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #60/60, CPU#1 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: sleep-4068 (uid:0 nice:0 policy:2 rt_prio:5)</span><br><span class="line">    -----------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">ksoftirq-7     1d.H3    0us : try_to_wake_up (wake_up_process)</span><br><span class="line">ksoftirq-7     1d.H4    1us : sub_preempt_count (marker_probe_cb)</span><br><span class="line">ksoftirq-7     1d.H3    2us : check_preempt_wakeup (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    3us : update_curr (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    4us : calc_delta_mine (update_curr)</span><br><span class="line">ksoftirq-7     1d.H3    5us : __resched_task (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    6us : task_wake_up_rt (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    7us : _spin_unlock_irqrestore (try_to_wake_up)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d.H2   17us : irq_exit (smp_apic_timer_interrupt)</span><br><span class="line">ksoftirq-7     1d.H2   18us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1d.s3   19us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1..s2   20us : rcu_process_callbacks (__do_softirq)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1..s2   26us : __rcu_process_callbacks (rcu_process_callbacks)</span><br><span class="line">ksoftirq-7     1d.s2   27us : _local_bh_enable (__do_softirq)</span><br><span class="line">ksoftirq-7     1d.s2   28us : sub_preempt_count (_local_bh_enable)</span><br><span class="line">ksoftirq-7     1.N.3   29us : sub_preempt_count (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   30us : _cond_resched (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   31us : __cond_resched (_cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   32us : add_preempt_count (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : schedule (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : add_preempt_count (schedule)</span><br><span class="line">ksoftirq-7     1.N.3   34us : hrtick_clear (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   35us : _spin_lock (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   36us : add_preempt_count (_spin_lock)</span><br><span class="line">ksoftirq-7     1d..4   37us : put_prev_task_fair (schedule)</span><br><span class="line">ksoftirq-7     1d..4   38us : update_curr (put_prev_task_fair)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d..5   47us : _spin_trylock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..5   48us : add_preempt_count (_spin_trylock)</span><br><span class="line">ksoftirq-7     1d..6   49us : _spin_unlock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..6   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">ksoftirq-7     1d..4   50us : schedule (__cond_resched)</span><br></pre></td></tr></table></figure> 中断发生在 ksoftirqd 运行期间。该任务运行在 SCHED_OTHER 调度级别。为什么我们没有提前看到“N”被置位？这可能是 x86_32 架构和 4K 堆栈的一个无害 bug。在配置了 4K 堆栈的 x86_32 架构上，中断和软中断使用它们自己的堆栈运行。一些信息保存在任务堆栈的顶部（need_resched 和 preempt_count 都存储在那里）。NEED_RESCHED 位的设置直接作用于任务堆栈，但读取 NEED_RESCHED 位是通过查看当前堆栈完成的，在本例中，当前堆栈是硬中断的堆栈。这隐藏了 NEED_RESCHED 已被设置的事实。直到我们切换回任务分配的堆栈，才能看到“N”。</p>
+<p>使用 chrt -r 5 和 ftrace_enabled set 执行相同的操作。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: wakeup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">wakeup latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #60/60, CPU#1 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: sleep-4068 (uid:0 nice:0 policy:2 rt_prio:5)</span><br><span class="line">    -----------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">ksoftirq-7     1d.H3    0us : try_to_wake_up (wake_up_process)</span><br><span class="line">ksoftirq-7     1d.H4    1us : sub_preempt_count (marker_probe_cb)</span><br><span class="line">ksoftirq-7     1d.H3    2us : check_preempt_wakeup (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    3us : update_curr (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    4us : calc_delta_mine (update_curr)</span><br><span class="line">ksoftirq-7     1d.H3    5us : __resched_task (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    6us : task_wake_up_rt (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    7us : _spin_unlock_irqrestore (try_to_wake_up)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d.H2   17us : irq_exit (smp_apic_timer_interrupt)</span><br><span class="line">ksoftirq-7     1d.H2   18us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1d.s3   19us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1..s2   20us : rcu_process_callbacks (__do_softirq)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1..s2   26us : __rcu_process_callbacks (rcu_process_callbacks)</span><br><span class="line">ksoftirq-7     1d.s2   27us : _local_bh_enable (__do_softirq)</span><br><span class="line">ksoftirq-7     1d.s2   28us : sub_preempt_count (_local_bh_enable)</span><br><span class="line">ksoftirq-7     1.N.3   29us : sub_preempt_count (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   30us : _cond_resched (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   31us : __cond_resched (_cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   32us : add_preempt_count (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : schedule (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : add_preempt_count (schedule)</span><br><span class="line">ksoftirq-7     1.N.3   34us : hrtick_clear (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   35us : _spin_lock (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   36us : add_preempt_count (_spin_lock)</span><br><span class="line">ksoftirq-7     1d..4   37us : put_prev_task_fair (schedule)</span><br><span class="line">ksoftirq-7     1d..4   38us : update_curr (put_prev_task_fair)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d..5   47us : _spin_trylock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..5   48us : add_preempt_count (_spin_trylock)</span><br><span class="line">ksoftirq-7     1d..6   49us : _spin_unlock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..6   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">ksoftirq-7     1d..4   50us : schedule (__cond_resched)</span><br></pre></td></tr></table></figure>
+<p>中断发生在 ksoftirqd 运行期间。该任务运行在 SCHED_OTHER 调度级别。为什么我们没有提前看到“N”被置位？这可能是 x86_32 架构和 4K 堆栈的一个无害 bug。在配置了 4K 堆栈的 x86_32 架构上，中断和软中断使用它们自己的堆栈运行。一些信息保存在任务堆栈的顶部（need_resched 和 preempt_count 都存储在那里）。NEED_RESCHED 位的设置直接作用于任务堆栈，但读取 NEED_RESCHED 位是通过查看当前堆栈完成的，在本例中，当前堆栈是硬中断的堆栈。这隐藏了 NEED_RESCHED 已被设置的事实。直到我们切换回任务分配的堆栈，才能看到“N”。</p>
 
       
     </div>
@@ -1410,7 +1394,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -1428,7 +1412,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">TCP拥塞控制</a>
+          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" class="post-title-link" itemprop="url">TCP报文格式</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1452,158 +1436,204 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="tcp几个窗口概念">TCP几个窗口概念</h1>
-<p>TCP窗口大小的单位是<strong>字节</strong>​ 。这意味着窗口大小衡量的是可以发送的<strong>数据字节数</strong>，而不是报文段或帧的数量。</p>
-<p>下表总结了TCP通信中几个关键的窗口类型：</p>
+          <h1 id="报文格式"><a href="#报文格式" class="headerlink" title="报文格式"></a>报文格式</h1><h2 id="以太网物理帧"><a href="#以太网物理帧" class="headerlink" title="以太网物理帧"></a>以太网物理帧</h2><pre><code class="highlight mermaid">packet-beta
+title 以太网物理层头
+0-11: &quot;Inter Frame Gap（至少12Byte）&quot;
+12-18: &quot;Preamble&quot;
+19-20: &quot;FSD&quot;</code></pre>
+
 <table>
 <thead>
-<tr class="header">
-<th>窗口类型</th>
-<th>英文全称</th>
-<th>控制方</th>
-<th>核心作用</th>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td><strong>接收窗口 (RWND)</strong>​</td>
-<td>Receiver Window</td>
-<td>接收端</td>
-<td>流量控制，反映接收方应用程序的缓存剩余空间</td>
+<tbody><tr>
+<td>帧间隙</td>
+<td>至少12字节</td>
+<td>每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待一段时间才能再发另外一个帧，以便让帧接收者对接收的帧做必要的处理（如调整缓存的指针、更新计数、通知对报文进行处理等等）。在以太网标准中规定最小帧间隙是12个字节，其数据为全1。对于个别的接口，可减少到64(GE)或40比特(10GE)，其他的接口都不应该小于12字节。</td>
 </tr>
-<tr class="even">
-<td><strong>拥塞窗口 (CWND)</strong>​</td>
-<td>Congestion Window</td>
-<td>发送端</td>
-<td>拥塞控制，根据网络状况动态调整，避免造成网络过载</td>
+<tr>
+<td>前同步码</td>
+<td>7字节</td>
+<td>以太网标准中规定前导码为10101010 10101010 10101010 10101010 10101010 10101010 10101010（二进制），共7字节。</td>
 </tr>
-<tr class="odd">
-<td><strong>发送窗口 (SWND)</strong>​</td>
-<td>Sender Window</td>
-<td>发送端</td>
-<td><strong>实际发送数据的上限</strong>，其大小由RWND和CWND共同决定</td>
+<tr>
+<td>帧开始定界符</td>
+<td>1字节</td>
+<td>以太网标准中规定帧开始定界符为10101011（二进制），共1字节。</td>
 </tr>
-</tbody>
-</table>
-<ul>
-<li><strong>为何以字节为单位</strong>：采用字节作为单位提供了极大的灵活性，允许TCP适应各种不同的应用需求（如大文件传输或短小交互命令），而不受底层网络数据包大小分割的限制 。核心目的是实现<strong>流量控制</strong>，确保发送方的发送速率不会超过接收方的处理能力 。</li>
-<li><strong>流量控制过程</strong>：接收方通过TCP报文首部中的16位“窗口大小”字段，动态地向发送方通告自己的接收窗口剩余容量 。如果接收方缓冲区已满，它会通告一个<strong>零窗口</strong>，此时发送方会暂停发送，并通过<strong>持续计时器</strong>定时发送窗口探测报文，以等待接收方缓冲区空出后恢复传输 。</li>
-<li><strong>窗口大小的限制与扩展</strong>：由于窗口字段是16位，理论上最大窗口值为65535字节。对于高带宽、高延迟的网络（如卫星链路），这可能成为瓶颈。因此，TCP使用了<strong>窗口缩放选项</strong>，通过一个缩放因子，可以将实际窗口大小最大扩展到约1GB，从而显著提高吞吐量 。</li>
-</ul>
-<h1 id="窗口之间的关系">窗口之间的关系</h1>
-<p><span class="math display"><em>S</em><em>W</em><em>N</em><em>D</em> = min (<em>C</em><em>W</em><em>N</em><em>D</em>,<em>R</em><em>W</em><em>N</em><em>D</em>)</span></p>
-<h1 id="cwnd">CWND</h1>
-<p>CWND是为了避免TCP拥塞产生的，以“不清楚网络情况”为前提，使用几种算法来探测和避免拥塞的。</p>
-<ul>
-<li>慢启动</li>
-<li>拥塞避免</li>
-<li>快速恢复</li>
-</ul>
-<h2 id="慢启动">慢启动</h2>
-<p>收到一个ACK，就将CWND的值增加一个MSS。那么在几轮RTT的表现下，CWND的增加呈现指数级增长。</p>
-<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em></span></p>
-<pre><code class="highlight mermaid">xychart-beta
-        title &quot;慢启动&quot;
-        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6]
-        y-axis &quot;CWND&quot; 
-        line [1, 2, 4, 8, 16, 32, 64]</code></pre>
-<h2 id="拥塞避免">拥塞避免</h2>
-<p>TCP的拥塞避免是TCP拥塞控制算法的核心阶段之一，其主要目的是在网络接近饱和时，平稳地利用带宽，避免因数据注入过快而导致网络拥塞。</p>
-<p><span class="math display"><em>C</em><em>W</em><em>N</em><em>D</em> = <em>C</em><em>W</em><em>N</em><em>D</em> + <em>M</em><em>S</em><em>S</em>/<em>C</em><em>W</em><em>N</em><em>D</em></span> 比如原始的cwnd为8时发生了拥塞和重传，那么RTT-cwnd的图如下 <pre><code class="highlight mermaid">xychart-beta
-        title &quot;拥塞避免&quot;
-        x-axis &quot;RTT&quot; [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]
-        y-axis &quot;CWND&quot; 
-        line [0, 1, 2, 4, 8, 8, 8, 1, 2, 4, 5, 6, 7, 8, 9]</code></pre></p>
-<h2 id="快速恢复">快速恢复</h2>
-<p>TCP快速恢复是拥塞控制中一项关键机制，它的核心目标是在检测到数据包丢失后（通常是收到三个重复确认ACK），<strong>避免让连接退回到慢启动阶段</strong>，从而维持较高的网络吞吐量。下面这个表格可以快速抓住演进的精髓。</p>
+</tbody></table>
+<h2 id="以太网帧头"><a href="#以太网帧头" class="headerlink" title="以太网帧头"></a>以太网帧头</h2><pre><code class="highlight mermaid">packet-beta
+title Ethernet II
+0-5: &quot;DMAC&quot;
+6-11: &quot;SMAC&quot;
+12-20: &quot;Data(46~1500)&quot;
+21-24: &quot;FCS&quot;</code></pre>
+
 <table>
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 22%" />
-<col style="width: 30%" />
-<col style="width: 21%" />
-<col style="width: 18%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th>特性</th>
-<th>TCP Tahoe</th>
-<th>TCP Reno</th>
-<th>TCP NewReno</th>
-<th>TCP with SACK</th>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td><strong>核心机制</strong>​</td>
-<td>仅有快速重传</td>
-<td>快速重传 + 基础快速恢复</td>
-<td>改进的快速恢复（应对多包丢失）</td>
-<td>选择性确认 + 更精确的恢复</td>
+<tbody><tr>
+<td>DMAC</td>
+<td>6字节</td>
+<td>目的MAC地址，IPv4为6字节，该字段标识帧的接收者。</td>
 </tr>
-<tr class="even">
-<td><strong>触发条件</strong>​</td>
-<td>3个重复ACK或超时</td>
-<td>3个重复ACK</td>
-<td>3个重复ACK</td>
-<td>3个重复ACK（利用SACK信息）</td>
+<tr>
+<td>SMAC</td>
+<td>6字节</td>
+<td>源MAC地址，IPv4为6字节，该字段标识帧的发送者。</td>
 </tr>
-<tr class="odd">
-<td><strong>主要动作</strong>​</td>
-<td><code>ssthresh = cwnd/2</code>, <code>cwnd = 1</code>，进入慢启动</td>
-<td><code>ssthresh = cwnd/2</code>, <code>cwnd = ssthresh + 3</code>，进入快速恢复</td>
-<td><code>ssthresh = cwnd/2</code>，持续重传直至所有丢失包被确认</td>
-<td>基于SACK信息精确重传丢失包，使用<code>pipe</code>变量控制发送</td>
+<tr>
+<td>Type</td>
+<td>2字节</td>
+<td>协议类型。<a target="_blank" rel="noopener" href="https://support.huawei.com/enterprise/zh/doc/EDOC1100174722/ea0a043c#ethII_tab_3">表1-3</a>列出了链路直接封装的协议类型。</td>
 </tr>
-<tr class="even">
-<td><strong>多包丢失处理</strong>​</td>
-<td>效率低，引发多次重置</td>
-<td>效率低，可能多次进入恢复或超时</td>
-<td><strong>显著改善</strong>，可在一次恢复期内重传多个丢失包</td>
-<td><strong>最优</strong>，能同时识别和重传多个丢失包</td>
+<tr>
+<td>Data</td>
+<td>46～1500字节</td>
+<td>数据字段，标识帧的负载（可能包含填充位）。<br><br>数据字段的最小长度必须为46字节以保证帧长至少为64字节，这意味着传输1字节信息也必须使用46字节的数据字段。<br><br>如果填入该字段的信息少于46字节，该字段的其余部分也必须进行填充。数据字段的最大长度为1500字节。<br><br>以太帧的长度必须为整数字节，因此帧的负载长度不足整数字节，需插入填充字段以保证数据帧的长度为整数字节。</td>
 </tr>
-<tr class="odd">
-<td><strong>主要优势</strong>​</td>
-<td>实现简单</td>
-<td>避免空窗，提升单包丢失恢复效率</td>
-<td>有效处理同一窗口内多个包丢失，减少超时</td>
-<td>恢复最精确、延迟最低，吞吐量高</td>
+<tr>
+<td>FCS</td>
+<td>4字节</td>
+<td>帧校验序列FCS（Frame Check Sequence）是为接收者提供判断是否传输错误的一种方法，如果发现错误，丢弃此帧。<br><br>FCS只是通用叫法，具体的FCS还可以细分多种校验方法。在以太帧中，FCS通常采用循环冗余码校验CRC（Cyclical Redundancy Check）。</td>
 </tr>
-<tr class="even">
-<td><strong>主要局限</strong>​</td>
-<td>网络利用率低，震荡大</td>
-<td>多包丢失时性能差，易致超时</td>
-<td>每个RTT只能恢复一个丢失包</td>
-<td>实现复杂，CPU开销相对高</td>
+</tbody></table>
+<h2 id="TCP报文头"><a href="#TCP报文头" class="headerlink" title="TCP报文头"></a>TCP报文头</h2><pre><code class="highlight mermaid">packet-beta
+title &quot;TCP Packet&quot;
+0-15: &quot;Source Port&quot;
+16-31: &quot;Destination Port&quot;
+32-63: &quot;Sequence Number&quot;
+64-95: &quot;Acknowledgment Number&quot;
+96-99: &quot;Data Offset&quot;
+100-105: &quot;Reserved&quot;
+106: &quot;URG&quot;
+107: &quot;ACK&quot;
+108: &quot;PSH&quot;
+109: &quot;RST&quot;
+110: &quot;SYN&quot;
+111: &quot;FIN&quot;
+112-127: &quot;Window&quot;
+128-143: &quot;Checksum&quot;
+144-159: &quot;Urgent Pointer&quot;
+160-191: &quot;(Options and Padding)&quot;
+192-255: &quot;Data (&lt;=MSS)&quot;</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
 </tr>
-</tbody>
-</table>
-<h3 id="深入理解工作原理">深入理解工作原理</h3>
-<p>快速恢复机制建立在几个关键原则和步骤之上： 1. <strong>触发与初始化</strong>：当发送端连续收到<strong>3个重复的ACK</strong>时，会推断有数据包丢失，从而触发快速恢复。随后，它会将慢启动阈值（<code>ssthresh</code>）设置为当前拥塞窗口（<code>cwnd</code>）的一半（但不小于2），为恢复阶段设定新的窗口上限。此时，拥塞窗口（<code>cwnd</code>）会被设置为新的 <code>ssthresh</code>值加上3个MSS（最大报文段长度），即 <code>cwnd = ssthresh + 3 * MSS</code>。加3是因为收到3个重复ACK，意味着有3个数据包已经离开网络，可以为新数据或重传数据腾出空间。 2. <strong>“数据包守恒”原则</strong>：这是快速恢复阶段的核心思想。在恢复期间，每收到一个重复的ACK，就意味着又有一个数据包被成功接收（尽管是乱序的），发送方就可以再发送一个新数据包（无论是重传丢失包还是发送新数据）。因此，<code>cwnd</code>会随着重复ACK的到达而线性增加（通常每个重复ACK使 <code>cwnd</code>增加1个MSS），以此维持网络中的数据流量，避免管道完全排空。 3. <strong>恢复完成与退出</strong>：当发送端收到一个<strong>确认了新数据的ACK</strong>（即序列号高于触发快速恢复的那个ACK）时，意味着此次丢失的数据包已被成功重传并确认，恢复阶段结束。此时，<code>cwnd</code>会被设置为 <code>ssthresh</code>的值，然后TCP连接进入<strong>拥塞避免</strong>阶段，<code>cwnd</code>开始线性增长。</p>
-<h3 id="算法演进与比较">算法演进与比较</h3>
-<p>不同的TCP版本对快速恢复的实现有所差异，了解其演进有助于理解为何NewReno和SACK更为高效：</p>
-<ul>
-<li><strong>Tahoe的局限</strong>：TCP Tahoe版本仅有快速重传而没有快速恢复。一旦检测到丢包（3个重复ACK或超时），无论原因为何，它都会将 <code>cwnd</code>重置为1，并重新进入慢启动阶段。这种“一刀切”的方式在非严重拥塞的随机丢包情况下会<strong>严重降低网络利用率</strong>，造成吞吐量急剧下降。</li>
-<li><strong>Reno的改进与不足</strong>：TCP Reno引入了快速恢复阶段，在单数据包丢失场景下表现良好。但其主要缺陷在于处理<strong>同一发送窗口内多个数据包丢失</strong>时显得力不从心。如果同一个窗口内有多个包丢失，Reno在收到第一个新数据的ACK（即部分确认，Partial ACK）后就会退出快速恢复。对于后续丢失的包，可能因为没有足够的重复ACK来再次触发快速重传，而不得不<strong>等待超时</strong>，这会导致性能下降。</li>
-<li><strong>NewReno的增强</strong>：TCP NewReno针对Reno的缺陷进行了关键改进。在快速恢复期间，即使收到部分确认（Partial ACK），它<strong>也不会立即退出快速恢复状态</strong>。而是会重传该部分确认指示的下一个丢失包，并继续停留在快速恢复阶段，直到该窗口内<strong>所有在快速恢复开始时未被确认的数据包都被成功确认</strong>后，才退出恢复。这确保了一次性能恢复多个丢失的数据包，显著减少了超时发生的概率。</li>
-<li><strong>SACK的精确控制</strong>：选择性确认（SACK）选项允许接收方明确告知发送方哪些数据块（包括不连续的）已经成功接收。这使得发送方能够<strong>精确知道哪些包真正丢失</strong>，从而在一个RTT内重传所有已知的丢失包，大大加快了恢复速度。SACK在快速恢复中使用一个名为 <code>pipe</code>的变量来估算网络中正在传输的数据包数量，从而更精细地控制发送时机。因此，SACK在处理多包丢失时效率最高。</li>
-</ul>
-<h3 id="例子">例子</h3>
-<h2 id="总结">总结</h2>
-<p>拥塞避免算法建立在以下几个关键概念之上：</p>
-<ul>
-<li><strong>核心目标</strong>：其核心思想是<strong>谨慎地探测网络剩余带宽</strong>。与慢启动阶段的指数增长不同，在拥塞避免阶段，发送方每收到一个确认（ACK），拥塞窗口（cwnd）大约增加 1/cwnd 个最大报文段（MSS）。这样，<strong>每个往返时延（RTT）内，cwnd仅线性增加1个MSS</strong>，增长曲线变得平缓，从而有效避免网络过载。</li>
-<li><strong>触发条件</strong>：当拥塞窗口（cwnd）达到或超过慢启动阈值（ssthresh） 时，TCP就会从慢启动阶段切换到拥塞避免阶段。这个ssthresh值并非固定不变，它会根据网络状况动态调整。</li>
-<li><strong>对拥塞的响应</strong>：当网络出现拥塞迹象（如发生超时或收到重复确认）时，TCP会采取行动。具体来说，会将ssthresh更新为<strong>发生拥塞时窗口值的一半</strong>（但不小于2个MSS），然后根据不同的拥塞指示进入不同的处理阶段。 <pre><code class="highlight mermaid">flowchart LR
-    A[TCP连接建立] --&gt; B[慢启动&lt;br&gt;cwnd指数增长]
-    B --&gt; C&#123;到达ssthresh?&#125;
-    C -- 是 --&gt; D[拥塞避免&lt;br&gt;cwnd线性增长]
-    D -- 收到3个重复ACK --&gt; E[快速重传]
-    E --&gt; F[快速恢复&lt;br&gt;ssthresh = cwnd/2&lt;br&gt;cwnd = ssthresh + 3]
-    F -- 收到新数据的ACK --&gt; D
-    D -- 超时重传 --&gt; G[ssthresh = cwnd/2&lt;br&gt;cwnd重置为1]
-    G --&gt; B</code></pre></li>
-</ul>
+</thead>
+<tbody><tr>
+<td>Source Port</td>
+<td>16比特</td>
+<td>源端口，标识哪个应用程序发送。</td>
+</tr>
+<tr>
+<td>Destination Port</td>
+<td>16比特</td>
+<td>目的端口，标识哪个应用程序接收。</td>
+</tr>
+<tr>
+<td>Sequence Number</td>
+<td>32比特</td>
+<td>序号字段。TCP链接中传输的数据流中每个字节都编上一个序号。序号字段的值指的是本报文段所发送的数据的第一个字节的序号。</td>
+</tr>
+<tr>
+<td>Acknowledgment Number</td>
+<td>32比特</td>
+<td>确认号，是期望收到对方的下一个报文段的数据的第1个字节的序号，即上次已成功接收到的数据字节序号加1。只有ACK标识为1，此字段有效。</td>
+</tr>
+<tr>
+<td>Data Offset</td>
+<td>4比特</td>
+<td>数据偏移，即首部长度，指出TCP报文段的数据起始处距离TCP报文段的起始处有多远，以32比特（4字节）为计算单位。最多有60字节的首部，若无选项字段，正常为20字节。</td>
+</tr>
+<tr>
+<td>Reserved</td>
+<td>4比特</td>
+<td>保留，必须填0。</td>
+</tr>
+<tr>
+<td>CWR</td>
+<td>1比特</td>
+<td>拥塞窗口减少标识</td>
+</tr>
+<tr>
+<td>ECE</td>
+<td>1比特</td>
+<td>ECN回声标识</td>
+</tr>
+<tr>
+<td>URG</td>
+<td>1比特</td>
+<td>紧急指针有效标识。它告诉系统此报文段中有紧急数据，应尽快传送（相当于高优先级的数据）。</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>1比特</td>
+<td>确认序号有效标识。只有当ACK&#x3D;1时确认号字段才有效。当ACK&#x3D;0时，确认号无效。</td>
+</tr>
+<tr>
+<td>PSH</td>
+<td>1比特</td>
+<td>标识接收方应该尽快将这个报文段交给应用层。接收到PSH &#x3D; 1的TCP报文段，应尽快的交付接收应用进程，而不再等待整个缓存都填满了后再向上交付。</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>1比特</td>
+<td>重建连接标识。当RST&#x3D;1时，表明TCP连接中出现严重错误（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立连接。</td>
+</tr>
+<tr>
+<td>SYN</td>
+<td>1比特</td>
+<td>同步序号标识，用来发起一个连接。SYN&#x3D;1表示这是一个连接请求或连接接受请求。</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>1比特</td>
+<td>发端完成发送任务标识。用来释放一个连接。FIN&#x3D;1表明此报文段的发送端的数据已经发送完毕，并要求释放连接。</td>
+</tr>
+<tr>
+<td>Window</td>
+<td>16比特</td>
+<td>窗口：TCP的流量控制，窗口起始于确认序号字段指明的值，这个值是接收端期望接收的字节数。窗口最大为65535字节。</td>
+</tr>
+<tr>
+<td>Checksum</td>
+<td>16比特</td>
+<td>校验字段，包括TCP首部和TCP数据，是一个强制性的字段，一定是由发端计算和存储，并由收端进行验证。在计算检验和时，要在TCP报文段的前面加上12字节的伪首部。</td>
+</tr>
+<tr>
+<td>Urgent Pointer</td>
+<td>16比特</td>
+<td>紧急指针，只有当URG标志置1时紧急指针才有效。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。紧急指针指出在本报文段中紧急数据共有多少个字节（紧急数据放在本报文段数据的最前面）。</td>
+</tr>
+<tr>
+<td>Options</td>
+<td>可变</td>
+<td>选项字段。TCP协议最初只规定了一种选项，即最长报文段长度（只包含数据字段，不包括TCP首部），又称为MSS。MSS告诉对方TCP“我的缓存所能接收的报文段的数据字段的最大长度是MSS个字节”。<br><br>新的RFC规定有以下几种选型：选项表结束，空操作，最大报文段长度，窗口扩大因子，时间戳。<br><br>-  选项表结束。<br>- 空操作：没有特殊含义，一般用于将TCP选项的总长度填充为4字节的整数倍。<br>- 最大报文段长度：又称为MSS，只包含数据字段，不包括TCP首部。<br>- 窗口扩大因子：3字节，其中一个字节表示偏移值S。新的窗口值等于TCP首部中的窗口位数增大到（16+S），相当于把窗口值向左移动S位后获得实际的窗口大小。<br>- 时间戳：10字节，其中最主要的字段是时间戳值（4字节）和时间戳回送应答字段（4字节）。</td>
+</tr>
+<tr>
+<td>data</td>
+<td>可变</td>
+<td>TCP负载。小于等于MSS</td>
+</tr>
+</tbody></table>
+<h1 id="MTU、MSS、PMTU和分片"><a href="#MTU、MSS、PMTU和分片" class="headerlink" title="MTU、MSS、PMTU和分片"></a>MTU、MSS、PMTU和分片</h1><p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
+<p>$$<br>(P) MTU&#x3D;IP_head+TCP_head+MSS<br>$$</p>
+<p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
 
       
     </div>

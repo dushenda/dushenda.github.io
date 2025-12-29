@@ -19,28 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="协议流程 直接DHCP DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。 当客户端发送广播DISCOVER包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的OFFER报文。 客户机用一个REQUEST包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确">
+    <meta name="description" content="协议流程直接DHCPDHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。 当客户端发送广播DISCOVER包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的OFFER报文。 客户机用一个REQUEST包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确认的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DHCP协议分析">
 <meta property="og:url" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="协议流程 直接DHCP DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。 当客户端发送广播DISCOVER包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的OFFER报文。 客户机用一个REQUEST包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确">
+<meta property="og:description" content="协议流程直接DHCPDHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。 当客户端发送广播DISCOVER包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的OFFER报文。 客户机用一个REQUEST包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确认的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/dhcp%E5%8E%9F%E7%90%86.jpg">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/dhcp%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B1.jpg">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/dhcp%E5%8E%9F%E7%90%862-%E4%B8%AD%E7%BB%A7.jpg">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/Pastedimage20231215004144.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/Pastedimage20231215004416.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/Pastedimage20231215005008.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/Pastedimage20231215010535.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/Pastedimage20231215010615.png">
+<meta property="og:image" content="https://dushenda.github.io/dhcp%E5%8E%9F%E7%90%86.jpg">
+<meta property="og:image" content="https://dushenda.github.io/dhcp%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B1.jpg">
+<meta property="og:image" content="https://dushenda.github.io/dhcp%E5%8E%9F%E7%90%862-%E4%B8%AD%E7%BB%A7.jpg">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20231215004144.png">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20231215004416.png">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20231215005008.png">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20231215010535.png">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20231215010615.png">
 <meta property="article:published_time" content="2024-01-14T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:49:57.163Z">
+<meta property="article:modified_time" content="2025-12-29T16:00:45.555Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="协议">
 <meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/dhcp%E5%8E%9F%E7%90%86.jpg">
+<meta name="twitter:image" content="https://dushenda.github.io/dhcp%E5%8E%9F%E7%90%86.jpg">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2024/01/14/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/DHCP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/">
@@ -179,7 +179,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">协议流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5dhcp"><span class="nav-number">1.1.</span> <span class="nav-text">直接DHCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E7%BB%A7dhcp"><span class="nav-number">1.2.</span> <span class="nav-text">中继DHCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.3.</span> <span class="nav-text">仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E7%BD%91"><span class="nav-number">1.3.1.</span> <span class="nav-text">组网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">路由设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%93%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp-discover"><span class="nav-number">1.4.1.</span> <span class="nav-text">dhcp discover</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp-offer"><span class="nav-number">1.4.2.</span> <span class="nav-text">dhcp offer</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">协议流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5DHCP"><span class="nav-number">1.1.</span> <span class="nav-text">直接DHCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E7%BB%A7DHCP"><span class="nav-number">1.2.</span> <span class="nav-text">中继DHCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.3.</span> <span class="nav-text">仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E7%BD%91"><span class="nav-number">1.3.1.</span> <span class="nav-text">组网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">路由设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%93%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp-discover"><span class="nav-number">1.4.1.</span> <span class="nav-text">dhcp discover</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp-offer"><span class="nav-number">1.4.2.</span> <span class="nav-text">dhcp offer</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -282,34 +282,27 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="协议流程">协议流程</h1>
-<h2 id="直接dhcp">直接DHCP</h2>
-<p>DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="协议流程"><a href="#协议流程" class="headerlink" title="协议流程"></a>协议流程</h1><h2 id="直接DHCP"><a href="#直接DHCP" class="headerlink" title="直接DHCP"></a>直接DHCP</h2><p>DHCP允许系统管理员在服务器上集中定义设备配置，当这些设备启动时，可以请求这些配置参数。</p>
 <p>当客户端发送广播<strong>DISCOVER</strong>包时，DHCP 进程开始，本质上是说“外面有任何 DHCP 服务器吗?” 这就是我正在寻找的信息。” 然后 DHCP 服务器回复一个包含所有信息的<strong>OFFER</strong>报文。 客户机用一个<strong>REQUEST</strong>包进行响应，这个包的名称似乎很奇怪——实际上，客户机只是通过确认的方式，发送它刚刚从服务器返回的信息。 然后，服务器发送最后的<strong>ACKNOWLEDGEMENT</strong>数据包，同样带有相同的信息，再次确认它。</p>
 <p>这是通常称为<strong>DORA</strong>序列(<strong>发现、提供、请求、确认</strong>)，通常是这样描述的:</p>
-<p><img src="dhcp原理.jpg" /></p>
+<p><img src="/dhcp%E5%8E%9F%E7%90%86.jpg"></p>
 <p>因为这些都是 UDP 数据包，请记住 UDP 协议中没有任何会话信息，那么是什么将这四个数据包绑定到一个“会话”中呢? 因此，最初的 Discover 报文有一个事务 ID，在随后的三个报文中匹配- Wireshark 跟踪如下所示:</p>
-<p><img src="dhcp报文示例1.jpg" /></p>
+<p><img src="/dhcp%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B1.jpg"></p>
 <p>实际上，客户端直到第四个包才有一个地址，所以 Discover 和 Request 包是从 IP 为<code>0.0.0.0</code>的客户端的 MAC 地址到<code>255.255.255.255</code>的广播地址(即到整个局域网)。</p>
-<h2 id="中继dhcp">中继DHCP</h2>
-<p>在许多公司网络中，服务器在它们自己的子网中——分离服务器和工作站是相当普遍的做法。 这种情况下 DHCP 顺序如何工作? DORA 序列的前三个数据包被发送到广播地址，因此它们只能到达同一 VLAN 上的其他主机。</p>
-<p>我们通过在客户端子网中的主机上放置一个 DHCP“转发器”或“中继”进程来完成这项工作。 该进程接收本地广播，然后将其以单播形式转发给 DHCP 服务器。 当服务器应答时(以单播方式向转发器主机)，转发器将包“转换”为客户机所期望的广播应答。 几乎总是，这个转发器功能是在客户端子网上的路由器或交换机 IP 地址上完成的——换句话说，接口最终将成为客户端的默认网关。 这个函数在技术上不需要在那个接口上，但它是一个我们知道会在那里的接口，而且这个函数几乎总是可供我们使用。 另外，如果我们将其作为一种不成文的惯例，当我们以后需要更改它时，它将更容易找到该命令! 在 Cisco 路由器或交换机上，这个命令看起来像这样: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface VLAN &lt;x&gt;  ip helper-address 10.10.10.10</span><br></pre></td></tr></table></figure></p>
-<p>这里，<code>10.10.10.10</code>是我们 DHCP 服务器的 IP 地址。</p>
-<p>在操作中，这改变了我们在大多数家庭网络上拥有的简单的广播操作： <img src="dhcp原理2-中继.jpg" /> 这如何修改我们的 DORA 序列? 简单的回答是，它实际上不会修改任何数据包的 DHCP 内容。 它所做的是修改数据包中的上层“IP 地址”字段-路由器和服务器之间修改的数据包有“真实的”源和目的 IP 地址。 但是，客户端看到的包内容保持不变。 如果你深入研究 DHCP 报文，你会发现不管是否有中继，DHCP 客户端的 MAC 地址和 DHCP 服务器的 IP 地址实际上包含在 7 层 DHCP 协议的数据字段中。</p>
-<p>现在我们开始为基本配置 DHCP 服务器工作站操作,但在我们到达之前,我们要考虑我们需要的专用设备,如 iphone,<strong>无线访问点</strong>(<strong>WAP), 或者甚至是</strong>预执行环境(PXE)设备，可以从 DHCP 信息加载其整个操作系统。</p>
-<h2 id="仿真">仿真</h2>
-<h3 id="组网">组网</h3>
-<p><img src="Pastedimage20231215004144.png" /></p>
-<h3 id="路由设置">路由设置</h3>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20231215004416.png" /></p>
-<h2 id="抓包">抓包</h2>
-<p><img src="Pastedimage20231215005008.png" /></p>
-<h3 id="dhcp-discover">dhcp discover</h3>
-<p><img src="Pastedimage20231215010535.png" /></p>
-<p><img src="Pastedimage20231215010615.png" /></p>
-<h3 id="dhcp-offer">dhcp offer</h3>
+<h2 id="中继DHCP"><a href="#中继DHCP" class="headerlink" title="中继DHCP"></a>中继DHCP</h2><p>在许多公司网络中，服务器在它们自己的子网中——分离服务器和工作站是相当普遍的做法。 这种情况下 DHCP 顺序如何工作? DORA 序列的前三个数据包被发送到广播地址，因此它们只能到达同一 VLAN 上的其他主机。</p>
+<p>我们通过在客户端子网中的主机上放置一个 DHCP“转发器”或“中继”进程来完成这项工作。 该进程接收本地广播，然后将其以单播形式转发给 DHCP 服务器。 当服务器应答时(以单播方式向转发器主机)，转发器将包“转换”为客户机所期望的广播应答。 几乎总是，这个转发器功能是在客户端子网上的路由器或交换机 IP 地址上完成的——换句话说，接口最终将成为客户端的默认网关。 这个函数在技术上不需要在那个接口上，但它是一个我们知道会在那里的接口，而且这个函数几乎总是可供我们使用。 另外，如果我们将其作为一种不成文的惯例，当我们以后需要更改它时，它将更容易找到该命令! 在 Cisco 路由器或交换机上，这个命令看起来像这样:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface VLAN &lt;x&gt;  ip helper-address 10.10.10.10</span><br></pre></td></tr></table></figure>
 
+<p>这里，<code>10.10.10.10</code>是我们 DHCP 服务器的 IP 地址。</p>
+<p>在操作中，这改变了我们在大多数家庭网络上拥有的简单的广播操作：<br><img src="/dhcp%E5%8E%9F%E7%90%862-%E4%B8%AD%E7%BB%A7.jpg"><br>这如何修改我们的 DORA 序列? 简单的回答是，它实际上不会修改任何数据包的 DHCP 内容。 它所做的是修改数据包中的上层“IP 地址”字段-路由器和服务器之间修改的数据包有“真实的”源和目的 IP 地址。 但是，客户端看到的包内容保持不变。 如果你深入研究 DHCP 报文，你会发现不管是否有中继，DHCP 客户端的 MAC 地址和 DHCP 服务器的 IP 地址实际上包含在 7 层 DHCP 协议的数据字段中。</p>
+<p>现在我们开始为基本配置 DHCP 服务器工作站操作,但在我们到达之前,我们要考虑我们需要的专用设备,如 iphone,<strong>无线访问点</strong>(<strong>WAP), 或者甚至是</strong>预执行环境(PXE)设备，可以从 DHCP 信息加载其整个操作系统。</p>
+<h2 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h2><h3 id="组网"><a href="#组网" class="headerlink" title="组网"></a>组网</h3><p><img src="/Pastedimage20231215004144.png"></p>
+<h3 id="路由设置"><a href="#路由设置" class="headerlink" title="路由设置"></a>路由设置</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Huawei&gt;sys</span><br><span class="line">[Huawei]sysname AR1</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]ip adderss 1.1.1.200 24</span><br><span class="line">[AR1]dhcp enable</span><br><span class="line">[AR1]ip pool ip_pool1</span><br><span class="line">[AR1-ip-pool-ip_pool1]network 1.1.1.0 24</span><br><span class="line">[AR1-ip-pool-ip_pool1]gateway-list 1.1.1.200</span><br><span class="line">[AR1-ip-pool-ip_pool1]lease day 3</span><br><span class="line">[AR1]int g0/0/0</span><br><span class="line">[AR1-GigabitEthernet0/0/0]dhcp select global</span><br></pre></td></tr></table></figure>
+<p><img src="/Pastedimage20231215004416.png"></p>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><p><img src="/Pastedimage20231215005008.png"></p>
+<h3 id="dhcp-discover"><a href="#dhcp-discover" class="headerlink" title="dhcp discover"></a>dhcp discover</h3><p><img src="/Pastedimage20231215010535.png"></p>
+<p><img src="/Pastedimage20231215010615.png"></p>
+<h3 id="dhcp-offer"><a href="#dhcp-offer" class="headerlink" title="dhcp offer"></a>dhcp offer</h3>
     </div>
 
     

@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="qemu cheatsheet 一、基本虚拟机启动 1. 基本启动虚拟机 启动x86_64虚拟机加载镜像（基本用法）。 1qemu-system-x86_64 -drive file&#x3D;disk.img,if&#x3D;virtio 2. 无图形界面启动 无头模式启动VM（-nographic）。 1qemu-system-x86_64 -nographic -drive file&#x3D;disk.img 3. 指">
+    <meta name="description" content="qemu cheatsheet一、基本虚拟机启动1. 基本启动虚拟机启动x86_64虚拟机加载镜像（基本用法）。 1qemu-system-x86_64 -drive file&#x3D;disk.img,if&#x3D;virtio  2. 无图形界面启动无头模式启动VM（-nographic）。 1qemu-system-x86_64 -nographic -drive file&#x3D;disk.img  3. 指定C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="qemu cheatsheet">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/29/ceatsheet/qemu%20cheatsheet/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="qemu cheatsheet 一、基本虚拟机启动 1. 基本启动虚拟机 启动x86_64虚拟机加载镜像（基本用法）。 1qemu-system-x86_64 -drive file&#x3D;disk.img,if&#x3D;virtio 2. 无图形界面启动 无头模式启动VM（-nographic）。 1qemu-system-x86_64 -nographic -drive file&#x3D;disk.img 3. 指">
+<meta property="og:description" content="qemu cheatsheet一、基本虚拟机启动1. 基本启动虚拟机启动x86_64虚拟机加载镜像（基本用法）。 1qemu-system-x86_64 -drive file&#x3D;disk.img,if&#x3D;virtio  2. 无图形界面启动无头模式启动VM（-nographic）。 1qemu-system-x86_64 -nographic -drive file&#x3D;disk.img  3. 指定C">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-29T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:49:57.103Z">
+<meta property="article:modified_time" content="2025-12-29T16:00:45.489Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="datasheet">
 <meta property="article:tag" content="qemu">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#qemu-cheatsheet"><span class="nav-number">1.</span> <span class="nav-text">qemu cheatsheet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%9F%BA%E6%9C%AC%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">一、基本虚拟机启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%90%AF%E5%8A%A8%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 基本启动虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 无图形界面启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E6%95%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 指定CPU核心数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 指定内存大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8kvm%E5%8A%A0%E9%80%9F"><span class="nav-number">1.1.5.</span> <span class="nav-text">5. 启用KVM加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E6%9C%BA%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.6.</span> <span class="nav-text">6. 指定机器类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%AF%BC%E9%A1%BA%E5%BA%8F%E6%8C%87%E5%AE%9A"><span class="nav-number">1.1.7.</span> <span class="nav-text">7. 引导顺序指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd-rom%E9%95%9C%E5%83%8F%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.8.</span> <span class="nav-text">8. CD-ROM镜像启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usb%E8%AE%BE%E5%A4%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.1.9.</span> <span class="nav-text">9. USB设备模拟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%BC%8F%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.10.</span> <span class="nav-text">10. 守护进程模式启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.</span> <span class="nav-text">二、设备配置与直通</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#virtio%E7%A3%81%E7%9B%98%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">11. VirtIO磁盘配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pci%E8%AE%BE%E5%A4%87%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">12. PCI设备直通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usb%E4%B8%BB%E6%9C%BA%E8%AE%BE%E5%A4%87%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.3.</span> <span class="nav-text">13. USB主机设备直通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.4.</span> <span class="nav-text">14. 网络设备配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.5.</span> <span class="nav-text">15. 桥接网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tap%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.6.</span> <span class="nav-text">16. TAP网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vfio-gpu%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.7.</span> <span class="nav-text">17. VFIO GPU直通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%A3%81%E7%9B%98%E9%99%84%E5%8A%A0"><span class="nav-number">1.2.8.</span> <span class="nav-text">18. 多磁盘附加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.9.</span> <span class="nav-text">19. 串口设备配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87%E7%BC%93%E5%AD%98%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.10.</span> <span class="nav-text">20. 块设备缓存模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%BD%91%E7%BB%9C%E4%B8%8E%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.</span> <span class="nav-text">三、网络与迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">21. 多网卡配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vlan%E7%BD%91%E7%BB%9C%E9%9A%94%E7%A6%BB"><span class="nav-number">1.3.2.</span> <span class="nav-text">22. VLAN网络隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E8%BF%81%E7%A7%BBvm"><span class="nav-number">1.3.3.</span> <span class="nav-text">23. 实时迁移VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E5%8E%8B%E7%BC%A9%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.4.</span> <span class="nav-text">24. 迁移压缩优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.5.</span> <span class="nav-text">25. 多线程迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="nav-number">1.3.6.</span> <span class="nav-text">26. 网络端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smb%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB"><span class="nav-number">1.3.7.</span> <span class="nav-text">27. SMB网络共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vde%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.8.</span> <span class="nav-text">28. VDE网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%99%90%E9%80%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.9.</span> <span class="nav-text">29. 网络限速配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E5%BF%AB%E7%85%A7%E9%93%BE"><span class="nav-number">1.3.10.</span> <span class="nav-text">30. 迁移快照链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%9B%BE%E5%BD%A2%E4%B8%8E%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">1.4.</span> <span class="nav-text">四、图形与输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vnc%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="nav-number">1.4.1.</span> <span class="nav-text">31. VNC图形界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spice%E5%9B%BE%E5%BD%A2%E5%8A%A0%E9%80%9F"><span class="nav-number">1.4.2.</span> <span class="nav-text">32. SPICE图形加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sdl%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="nav-number">1.4.3.</span> <span class="nav-text">33. SDL图形界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80%E6%8C%87%E5%AE%9A"><span class="nav-number">1.4.4.</span> <span class="nav-text">34. 键盘布局指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E8%BE%93%E5%85%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.5.</span> <span class="nav-text">35. 鼠标输入配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%88%86%E8%BE%A8%E7%8E%87%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.4.6.</span> <span class="nav-text">36. 图形分辨率设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%9B%91%E8%A7%86%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.7.</span> <span class="nav-text">37. 多监视器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.4.8.</span> <span class="nav-text">38. 音频设备模拟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E8%B4%B4%E6%9D%BF%E5%85%B1%E4%BA%AB"><span class="nav-number">1.4.9.</span> <span class="nav-text">39. 剪贴板共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%8A%A0%E9%80%9Fvirgl"><span class="nav-number">1.4.10.</span> <span class="nav-text">40. 图形加速Virgl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E8%B0%83%E8%AF%95%E4%B8%8E%E7%9B%91%E8%A7%86"><span class="nav-number">1.5.</span> <span class="nav-text">五、调试与监视</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.5.1.</span> <span class="nav-text">41. GDB调试连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E8%A7%86%E5%99%A8%E6%8E%A7%E5%88%B6%E5%8F%B0"><span class="nav-number">1.5.2.</span> <span class="nav-text">42. 监视器控制台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qmp%E5%A5%97%E6%8E%A5%E5%AD%97%E7%9B%91%E8%A7%86"><span class="nav-number">1.5.3.</span> <span class="nav-text">43. QMP套接字监视</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E8%B7%9F%E8%B8%AA"><span class="nav-number">1.5.4.</span> <span class="nav-text">44. 性能跟踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA"><span class="nav-number">1.5.5.</span> <span class="nav-text">45. 日志文件输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.6.</span> <span class="nav-text">46. 内核调试模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%BD%AC%E5%82%A8"><span class="nav-number">1.5.7.</span> <span class="nav-text">47. 内存转储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E8%A7%86%E8%84%9A%E6%9C%AC"><span class="nav-number">1.5.8.</span> <span class="nav-text">48. 事件监视脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cpu%E7%83%AD%E6%8F%92%E6%8B%94%E7%9B%91%E8%A7%86"><span class="nav-number">1.5.9.</span> <span class="nav-text">49. CPU热插拔监视</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%AC%A6%E5%8F%B7%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.5.10.</span> <span class="nav-text">50. 调试符号加载</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#qemu-cheatsheet"><span class="nav-number">1.</span> <span class="nav-text">qemu cheatsheet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">一、基本虚拟机启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%90%AF%E5%8A%A8%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 基本启动虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%97%A0%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 无图形界面启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8C%87%E5%AE%9ACPU%E6%A0%B8%E5%BF%83%E6%95%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 指定CPU核心数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%8C%87%E5%AE%9A%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 指定内存大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%90%AF%E7%94%A8KVM%E5%8A%A0%E9%80%9F"><span class="nav-number">1.1.5.</span> <span class="nav-text">5. 启用KVM加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8C%87%E5%AE%9A%E6%9C%BA%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.6.</span> <span class="nav-text">6. 指定机器类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%BC%95%E5%AF%BC%E9%A1%BA%E5%BA%8F%E6%8C%87%E5%AE%9A"><span class="nav-number">1.1.7.</span> <span class="nav-text">7. 引导顺序指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-CD-ROM%E9%95%9C%E5%83%8F%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.8.</span> <span class="nav-text">8. CD-ROM镜像启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-USB%E8%AE%BE%E5%A4%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.1.9.</span> <span class="nav-text">9. USB设备模拟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%BC%8F%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.10.</span> <span class="nav-text">10. 守护进程模式启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.</span> <span class="nav-text">二、设备配置与直通</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-VirtIO%E7%A3%81%E7%9B%98%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">11. VirtIO磁盘配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-PCI%E8%AE%BE%E5%A4%87%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">12. PCI设备直通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-USB%E4%B8%BB%E6%9C%BA%E8%AE%BE%E5%A4%87%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.3.</span> <span class="nav-text">13. USB主机设备直通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.4.</span> <span class="nav-text">14. 网络设备配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-%E6%A1%A5%E6%8E%A5%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.5.</span> <span class="nav-text">15. 桥接网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-TAP%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.6.</span> <span class="nav-text">16. TAP网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-VFIO-GPU%E7%9B%B4%E9%80%9A"><span class="nav-number">1.2.7.</span> <span class="nav-text">17. VFIO GPU直通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-%E5%A4%9A%E7%A3%81%E7%9B%98%E9%99%84%E5%8A%A0"><span class="nav-number">1.2.8.</span> <span class="nav-text">18. 多磁盘附加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-%E4%B8%B2%E5%8F%A3%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.9.</span> <span class="nav-text">19. 串口设备配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-%E5%9D%97%E8%AE%BE%E5%A4%87%E7%BC%93%E5%AD%98%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.10.</span> <span class="nav-text">20. 块设备缓存模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BD%91%E7%BB%9C%E4%B8%8E%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.</span> <span class="nav-text">三、网络与迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#21-%E5%A4%9A%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">21. 多网卡配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-VLAN%E7%BD%91%E7%BB%9C%E9%9A%94%E7%A6%BB"><span class="nav-number">1.3.2.</span> <span class="nav-text">22. VLAN网络隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-%E5%AE%9E%E6%97%B6%E8%BF%81%E7%A7%BBVM"><span class="nav-number">1.3.3.</span> <span class="nav-text">23. 实时迁移VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-%E8%BF%81%E7%A7%BB%E5%8E%8B%E7%BC%A9%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.4.</span> <span class="nav-text">24. 迁移压缩优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.5.</span> <span class="nav-text">25. 多线程迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="nav-number">1.3.6.</span> <span class="nav-text">26. 网络端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27-SMB%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB"><span class="nav-number">1.3.7.</span> <span class="nav-text">27. SMB网络共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-VDE%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.8.</span> <span class="nav-text">28. VDE网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-%E7%BD%91%E7%BB%9C%E9%99%90%E9%80%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.9.</span> <span class="nav-text">29. 网络限速配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#30-%E8%BF%81%E7%A7%BB%E5%BF%AB%E7%85%A7%E9%93%BE"><span class="nav-number">1.3.10.</span> <span class="nav-text">30. 迁移快照链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9B%BE%E5%BD%A2%E4%B8%8E%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">1.4.</span> <span class="nav-text">四、图形与输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#31-VNC%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="nav-number">1.4.1.</span> <span class="nav-text">31. VNC图形界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32-SPICE%E5%9B%BE%E5%BD%A2%E5%8A%A0%E9%80%9F"><span class="nav-number">1.4.2.</span> <span class="nav-text">32. SPICE图形加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-SDL%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="nav-number">1.4.3.</span> <span class="nav-text">33. SDL图形界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80%E6%8C%87%E5%AE%9A"><span class="nav-number">1.4.4.</span> <span class="nav-text">34. 键盘布局指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#35-%E9%BC%A0%E6%A0%87%E8%BE%93%E5%85%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.5.</span> <span class="nav-text">35. 鼠标输入配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#36-%E5%9B%BE%E5%BD%A2%E5%88%86%E8%BE%A8%E7%8E%87%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.4.6.</span> <span class="nav-text">36. 图形分辨率设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#37-%E5%A4%9A%E7%9B%91%E8%A7%86%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.7.</span> <span class="nav-text">37. 多监视器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#38-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">1.4.8.</span> <span class="nav-text">38. 音频设备模拟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#39-%E5%89%AA%E8%B4%B4%E6%9D%BF%E5%85%B1%E4%BA%AB"><span class="nav-number">1.4.9.</span> <span class="nav-text">39. 剪贴板共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#40-%E5%9B%BE%E5%BD%A2%E5%8A%A0%E9%80%9FVirgl"><span class="nav-number">1.4.10.</span> <span class="nav-text">40. 图形加速Virgl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%B0%83%E8%AF%95%E4%B8%8E%E7%9B%91%E8%A7%86"><span class="nav-number">1.5.</span> <span class="nav-text">五、调试与监视</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#41-GDB%E8%B0%83%E8%AF%95%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.5.1.</span> <span class="nav-text">41. GDB调试连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#42-%E7%9B%91%E8%A7%86%E5%99%A8%E6%8E%A7%E5%88%B6%E5%8F%B0"><span class="nav-number">1.5.2.</span> <span class="nav-text">42. 监视器控制台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#43-QMP%E5%A5%97%E6%8E%A5%E5%AD%97%E7%9B%91%E8%A7%86"><span class="nav-number">1.5.3.</span> <span class="nav-text">43. QMP套接字监视</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#44-%E6%80%A7%E8%83%BD%E8%B7%9F%E8%B8%AA"><span class="nav-number">1.5.4.</span> <span class="nav-text">44. 性能跟踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#45-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA"><span class="nav-number">1.5.5.</span> <span class="nav-text">45. 日志文件输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#46-%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.6.</span> <span class="nav-text">46. 内核调试模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#47-%E5%86%85%E5%AD%98%E8%BD%AC%E5%82%A8"><span class="nav-number">1.5.7.</span> <span class="nav-text">47. 内存转储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#48-%E4%BA%8B%E4%BB%B6%E7%9B%91%E8%A7%86%E8%84%9A%E6%9C%AC"><span class="nav-number">1.5.8.</span> <span class="nav-text">48. 事件监视脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#49-CPU%E7%83%AD%E6%8F%92%E6%8B%94%E7%9B%91%E8%A7%86"><span class="nav-number">1.5.9.</span> <span class="nav-text">49. CPU热插拔监视</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#50-%E8%B0%83%E8%AF%95%E7%AC%A6%E5%8F%B7%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.5.10.</span> <span class="nav-text">50. 调试符号加载</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -273,164 +273,158 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="qemu-cheatsheet">qemu cheatsheet</h1>
-<h2 id="一基本虚拟机启动">一、基本虚拟机启动</h2>
-<h3 id="基本启动虚拟机">1. 基本启动虚拟机</h3>
-<p>启动x86_64虚拟机加载镜像（基本用法）。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="qemu-cheatsheet"><a href="#qemu-cheatsheet" class="headerlink" title="qemu cheatsheet"></a>qemu cheatsheet</h1><h2 id="一、基本虚拟机启动"><a href="#一、基本虚拟机启动" class="headerlink" title="一、基本虚拟机启动"></a>一、基本虚拟机启动</h2><h3 id="1-基本启动虚拟机"><a href="#1-基本启动虚拟机" class="headerlink" title="1. 基本启动虚拟机"></a>1. 基本启动虚拟机</h3><p>启动x86_64虚拟机加载镜像（基本用法）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,if=virtio</span><br></pre></td></tr></table></figure>
-<h3 id="无图形界面启动">2. 无图形界面启动</h3>
-<p>无头模式启动VM（-nographic）。</p>
+
+<h3 id="2-无图形界面启动"><a href="#2-无图形界面启动" class="headerlink" title="2. 无图形界面启动"></a>2. 无图形界面启动</h3><p>无头模式启动VM（-nographic）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -nographic -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="指定cpu核心数">3. 指定CPU核心数</h3>
-<p>指定4核CPU启动（-smp 4）。</p>
+
+<h3 id="3-指定CPU核心数"><a href="#3-指定CPU核心数" class="headerlink" title="3. 指定CPU核心数"></a>3. 指定CPU核心数</h3><p>指定4核CPU启动（-smp 4）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -smp 4 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="指定内存大小">4. 指定内存大小</h3>
-<p>分配2GB内存启动（-m 2G）。</p>
+
+<h3 id="4-指定内存大小"><a href="#4-指定内存大小" class="headerlink" title="4. 指定内存大小"></a>4. 指定内存大小</h3><p>分配2GB内存启动（-m 2G）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -m 2G -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="启用kvm加速">5. 启用KVM加速</h3>
-<p>启用KVM硬件加速（-enable-kvm）。</p>
+
+<h3 id="5-启用KVM加速"><a href="#5-启用KVM加速" class="headerlink" title="5. 启用KVM加速"></a>5. 启用KVM加速</h3><p>启用KVM硬件加速（-enable-kvm）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -enable-kvm -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="指定机器类型">6. 指定机器类型</h3>
-<p>指定q35机器类型启动（-machine q35）。</p>
+
+<h3 id="6-指定机器类型"><a href="#6-指定机器类型" class="headerlink" title="6. 指定机器类型"></a>6. 指定机器类型</h3><p>指定q35机器类型启动（-machine q35）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -machine q35 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="引导顺序指定">7. 引导顺序指定</h3>
-<p>指定从硬盘引导（-boot order=c）。</p>
+
+<h3 id="7-引导顺序指定"><a href="#7-引导顺序指定" class="headerlink" title="7. 引导顺序指定"></a>7. 引导顺序指定</h3><p>指定从硬盘引导（-boot order&#x3D;c）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -boot order=c -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="cd-rom镜像启动">8. CD-ROM镜像启动</h3>
-<p>附加CD-ROM镜像启动（-cdrom）。</p>
+
+<h3 id="8-CD-ROM镜像启动"><a href="#8-CD-ROM镜像启动" class="headerlink" title="8. CD-ROM镜像启动"></a>8. CD-ROM镜像启动</h3><p>附加CD-ROM镜像启动（-cdrom）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -cdrom iso.img -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="usb设备模拟">9. USB设备模拟</h3>
-<p>模拟USB设备启动（-usb）。</p>
+
+<h3 id="9-USB设备模拟"><a href="#9-USB设备模拟" class="headerlink" title="9. USB设备模拟"></a>9. USB设备模拟</h3><p>模拟USB设备启动（-usb）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="守护进程模式启动">10. 守护进程模式启动</h3>
-<p>后台守护进程启动VM（-daemonize）。</p>
+
+<h3 id="10-守护进程模式启动"><a href="#10-守护进程模式启动" class="headerlink" title="10. 守护进程模式启动"></a>10. 守护进程模式启动</h3><p>后台守护进程启动VM（-daemonize）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -daemonize -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h2 id="二设备配置与直通">二、设备配置与直通</h2>
-<h3 id="virtio磁盘配置">11. VirtIO磁盘配置</h3>
-<p>使用VirtIO SCSI磁盘（-drive if=virtio）。</p>
+
+<h2 id="二、设备配置与直通"><a href="#二、设备配置与直通" class="headerlink" title="二、设备配置与直通"></a>二、设备配置与直通</h2><h3 id="11-VirtIO磁盘配置"><a href="#11-VirtIO磁盘配置" class="headerlink" title="11. VirtIO磁盘配置"></a>11. VirtIO磁盘配置</h3><p>使用VirtIO SCSI磁盘（-drive if&#x3D;virtio）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,if=virtio,format=qcow2</span><br></pre></td></tr></table></figure>
-<h3 id="pci设备直通">12. PCI设备直通</h3>
-<p>直通主机PCI设备到VM（-device vfio-pci）。</p>
+
+<h3 id="12-PCI设备直通"><a href="#12-PCI设备直通" class="headerlink" title="12. PCI设备直通"></a>12. PCI设备直通</h3><p>直通主机PCI设备到VM（-device vfio-pci）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device vfio-pci,host=0000:01:00.0 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="usb主机设备直通">13. USB主机设备直通</h3>
-<p>直通USB设备（-usbdevice host）。</p>
+
+<h3 id="13-USB主机设备直通"><a href="#13-USB主机设备直通" class="headerlink" title="13. USB主机设备直通"></a>13. USB主机设备直通</h3><p>直通USB设备（-usbdevice host）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -device usb-host,vendorid=0x1234,productid=0x5678 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="网络设备配置">14. 网络设备配置</h3>
-<p>配置用户模式网络（-netdev user）。</p>
+
+<h3 id="14-网络设备配置"><a href="#14-网络设备配置" class="headerlink" title="14. 网络设备配置"></a>14. 网络设备配置</h3><p>配置用户模式网络（-netdev user）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev user,id=mynet -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="桥接网络配置">15. 桥接网络配置</h3>
-<p>桥接主机网络接口（-netdev bridge）。</p>
+
+<h3 id="15-桥接网络配置"><a href="#15-桥接网络配置" class="headerlink" title="15. 桥接网络配置"></a>15. 桥接网络配置</h3><p>桥接主机网络接口（-netdev bridge）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev bridge,id=mynet,br=br0 -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="tap网络配置">16. TAP网络配置</h3>
-<p>使用TAP接口网络（-netdev tap）。</p>
+
+<h3 id="16-TAP网络配置"><a href="#16-TAP网络配置" class="headerlink" title="16. TAP网络配置"></a>16. TAP网络配置</h3><p>使用TAP接口网络（-netdev tap）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev tap,id=mynet,ifname=tap0 -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="vfio-gpu直通">17. VFIO GPU直通</h3>
-<p>直通GPU设备并配置VGA（-vfio-pci -vga none）。</p>
+
+<h3 id="17-VFIO-GPU直通"><a href="#17-VFIO-GPU直通" class="headerlink" title="17. VFIO GPU直通"></a>17. VFIO GPU直通</h3><p>直通GPU设备并配置VGA（-vfio-pci -vga none）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device vfio-pci,host=0000:01:00.0 -vga none -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="多磁盘附加">18. 多磁盘附加</h3>
-<p>附加多个磁盘设备（-drive 多行）。</p>
+
+<h3 id="18-多磁盘附加"><a href="#18-多磁盘附加" class="headerlink" title="18. 多磁盘附加"></a>18. 多磁盘附加</h3><p>附加多个磁盘设备（-drive 多行）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk1.img,if=virtio -drive file=disk2.img,if=virtio -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="串口设备配置">19. 串口设备配置</h3>
-<p>配置串口重定向到stdio（-serial stdio）。</p>
+
+<h3 id="19-串口设备配置"><a href="#19-串口设备配置" class="headerlink" title="19. 串口设备配置"></a>19. 串口设备配置</h3><p>配置串口重定向到stdio（-serial stdio）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -serial stdio -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="块设备缓存模式">20. 块设备缓存模式</h3>
-<p>指定磁盘缓存模式为none（cache=none）。</p>
+
+<h3 id="20-块设备缓存模式"><a href="#20-块设备缓存模式" class="headerlink" title="20. 块设备缓存模式"></a>20. 块设备缓存模式</h3><p>指定磁盘缓存模式为none（cache&#x3D;none）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,cache=none,if=virtio</span><br></pre></td></tr></table></figure>
-<h2 id="三网络与迁移">三、网络与迁移</h2>
-<h3 id="多网卡配置">21. 多网卡配置</h3>
-<p>配置多个网卡接口（-netdev 多行）。</p>
+
+<h2 id="三、网络与迁移"><a href="#三、网络与迁移" class="headerlink" title="三、网络与迁移"></a>三、网络与迁移</h2><h3 id="21-多网卡配置"><a href="#21-多网卡配置" class="headerlink" title="21. 多网卡配置"></a>21. 多网卡配置</h3><p>配置多个网卡接口（-netdev 多行）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev user,id=net1 -device virtio-net,netdev=net1 -netdev user,id=net2 -device virtio-net,netdev=net2 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="vlan网络隔离">22. VLAN网络隔离</h3>
-<p>使用VLAN隔离网卡（-net vlan=1）。</p>
+
+<h3 id="22-VLAN网络隔离"><a href="#22-VLAN网络隔离" class="headerlink" title="22. VLAN网络隔离"></a>22. VLAN网络隔离</h3><p>使用VLAN隔离网卡（-net vlan&#x3D;1）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,vlan=1 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="实时迁移vm">23. 实时迁移VM</h3>
-<p>迁移VM到远程主机（-incoming tcp）。</p>
+
+<h3 id="23-实时迁移VM"><a href="#23-实时迁移VM" class="headerlink" title="23. 实时迁移VM"></a>23. 实时迁移VM</h3><p>迁移VM到远程主机（-incoming tcp）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 源: qemu-system-x86_64 -drive file=disk.img -incoming tcp:0:4444 (目标先启动)# 目标: migrate -d tcp:remote-host:4444</span><br></pre></td></tr></table></figure>
-<h3 id="迁移压缩优化">24. 迁移压缩优化</h3>
-<p>启用迁移压缩加速（-comp xbzrle）。</p>
+
+<h3 id="24-迁移压缩优化"><a href="#24-迁移压缩优化" class="headerlink" title="24. 迁移压缩优化"></a>24. 迁移压缩优化</h3><p>启用迁移压缩加速（-comp xbzrle）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img -enable-kvm -comp xbzrle</span><br></pre></td></tr></table></figure>
-<h3 id="多线程迁移">25. 多线程迁移</h3>
-<p>启用多线程迁移（-thread multi）。</p>
+
+<h3 id="25-多线程迁移"><a href="#25-多线程迁移" class="headerlink" title="25. 多线程迁移"></a>25. 多线程迁移</h3><p>启用多线程迁移（-thread multi）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img -thread multi</span><br></pre></td></tr></table></figure>
-<h3 id="网络端口转发">26. 网络端口转发</h3>
-<p>转发主机端口到VM（-net user,hostfwd）。</p>
+
+<h3 id="26-网络端口转发"><a href="#26-网络端口转发" class="headerlink" title="26. 网络端口转发"></a>26. 网络端口转发</h3><p>转发主机端口到VM（-net user,hostfwd）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,hostfwd=tcp::8080-:80 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="smb网络共享">27. SMB网络共享</h3>
-<p>配置SMB网络共享到VM（-net user,smb）。</p>
+
+<h3 id="27-SMB网络共享"><a href="#27-SMB网络共享" class="headerlink" title="27. SMB网络共享"></a>27. SMB网络共享</h3><p>配置SMB网络共享到VM（-net user,smb）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,smb=/path/to/share -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="vde网络配置">28. VDE网络配置</h3>
-<p>使用VDE交换机网络（-net vde）。</p>
+
+<h3 id="28-VDE网络配置"><a href="#28-VDE网络配置" class="headerlink" title="28. VDE网络配置"></a>28. VDE网络配置</h3><p>使用VDE交换机网络（-net vde）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net vde,sock=/tmp/vde.sock -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="网络限速配置">29. 网络限速配置</h3>
-<p>限制网络带宽（-net user,throttle）。</p>
+
+<h3 id="29-网络限速配置"><a href="#29-网络限速配置" class="headerlink" title="29. 网络限速配置"></a>29. 网络限速配置</h3><p>限制网络带宽（-net user,throttle）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,throttle=100 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="迁移快照链">30. 迁移快照链</h3>
-<p>迁移时处理快照链（-drive snapshot=on）。</p>
+
+<h3 id="30-迁移快照链"><a href="#30-迁移快照链" class="headerlink" title="30. 迁移快照链"></a>30. 迁移快照链</h3><p>迁移时处理快照链（-drive snapshot&#x3D;on）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,snapshot=on</span><br></pre></td></tr></table></figure>
-<h2 id="四图形与输入输出">四、图形与输入输出</h2>
-<h3 id="vnc图形界面">31. VNC图形界面</h3>
-<p>启用VNC远程桌面（-vnc）。</p>
+
+<h2 id="四、图形与输入输出"><a href="#四、图形与输入输出" class="headerlink" title="四、图形与输入输出"></a>四、图形与输入输出</h2><h3 id="31-VNC图形界面"><a href="#31-VNC图形界面" class="headerlink" title="31. VNC图形界面"></a>31. VNC图形界面</h3><p>启用VNC远程桌面（-vnc）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -vnc :0 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="spice图形加速">32. SPICE图形加速</h3>
-<p>使用SPICE协议图形（-spice）。</p>
+
+<h3 id="32-SPICE图形加速"><a href="#32-SPICE图形加速" class="headerlink" title="32. SPICE图形加速"></a>32. SPICE图形加速</h3><p>使用SPICE协议图形（-spice）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -spice port=5900,disable-ticketing=on -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="sdl图形界面">33. SDL图形界面</h3>
-<p>使用SDL库图形输出（-sdl）。</p>
+
+<h3 id="33-SDL图形界面"><a href="#33-SDL图形界面" class="headerlink" title="33. SDL图形界面"></a>33. SDL图形界面</h3><p>使用SDL库图形输出（-sdl）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -sdl -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="键盘布局指定">34. 键盘布局指定</h3>
-<p>指定键盘布局为en-us（-k en-us）。</p>
+
+<h3 id="34-键盘布局指定"><a href="#34-键盘布局指定" class="headerlink" title="34. 键盘布局指定"></a>34. 键盘布局指定</h3><p>指定键盘布局为en-us（-k en-us）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -k en-us -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="鼠标输入配置">35. 鼠标输入配置</h3>
-<p>配置绝对鼠标输入（-usbdevice tablet）。</p>
+
+<h3 id="35-鼠标输入配置"><a href="#35-鼠标输入配置" class="headerlink" title="35. 鼠标输入配置"></a>35. 鼠标输入配置</h3><p>配置绝对鼠标输入（-usbdevice tablet）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -device usb-tablet -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="图形分辨率设置">36. 图形分辨率设置</h3>
-<p>设置VGA分辨率（-vga std -full-screen）。</p>
+
+<h3 id="36-图形分辨率设置"><a href="#36-图形分辨率设置" class="headerlink" title="36. 图形分辨率设置"></a>36. 图形分辨率设置</h3><p>设置VGA分辨率（-vga std -full-screen）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -vga std -full-screen -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="多监视器配置">37. 多监视器配置</h3>
-<p>配置多个图形输出（-device virtio-gpu）。</p>
+
+<h3 id="37-多监视器配置"><a href="#37-多监视器配置" class="headerlink" title="37. 多监视器配置"></a>37. 多监视器配置</h3><p>配置多个图形输出（-device virtio-gpu）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device virtio-gpu -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="音频设备模拟">38. 音频设备模拟</h3>
-<p>模拟音频设备输出（-soundhw ac97）。</p>
+
+<h3 id="38-音频设备模拟"><a href="#38-音频设备模拟" class="headerlink" title="38. 音频设备模拟"></a>38. 音频设备模拟</h3><p>模拟音频设备输出（-soundhw ac97）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -soundhw ac97 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="剪贴板共享">39. 剪贴板共享</h3>
-<p>启用SPICE剪贴板共享（-spice clipboard=on）。</p>
+
+<h3 id="39-剪贴板共享"><a href="#39-剪贴板共享" class="headerlink" title="39. 剪贴板共享"></a>39. 剪贴板共享</h3><p>启用SPICE剪贴板共享（-spice clipboard&#x3D;on）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -spice port=5900,clipboard=on -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="图形加速virgl">40. 图形加速Virgl</h3>
-<p>启用Virgl 3D加速（-device virtio-gpu-virgl）。</p>
+
+<h3 id="40-图形加速Virgl"><a href="#40-图形加速Virgl" class="headerlink" title="40. 图形加速Virgl"></a>40. 图形加速Virgl</h3><p>启用Virgl 3D加速（-device virtio-gpu-virgl）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device virtio-gpu-virgl -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h2 id="五调试与监视">五、调试与监视</h2>
-<h3 id="gdb调试连接">41. GDB调试连接</h3>
-<p>启用GDB调试服务器（-s -S）。</p>
+
+<h2 id="五、调试与监视"><a href="#五、调试与监视" class="headerlink" title="五、调试与监视"></a>五、调试与监视</h2><h3 id="41-GDB调试连接"><a href="#41-GDB调试连接" class="headerlink" title="41. GDB调试连接"></a>41. GDB调试连接</h3><p>启用GDB调试服务器（-s -S）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -s -S -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="监视器控制台">42. 监视器控制台</h3>
-<p>启用QMP监视器（-monitor stdio）。</p>
+
+<h3 id="42-监视器控制台"><a href="#42-监视器控制台" class="headerlink" title="42. 监视器控制台"></a>42. 监视器控制台</h3><p>启用QMP监视器（-monitor stdio）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -monitor stdio -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="qmp套接字监视">43. QMP套接字监视</h3>
-<p>使用UNIX套接字QMP监视（-qmp unix）。</p>
+
+<h3 id="43-QMP套接字监视"><a href="#43-QMP套接字监视" class="headerlink" title="43. QMP套接字监视"></a>43. QMP套接字监视</h3><p>使用UNIX套接字QMP监视（-qmp unix）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -qmp unix:/tmp/qmp.sock,server,nowait -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="性能跟踪">44. 性能跟踪</h3>
-<p>启用性能跟踪日志（-d cpu）。</p>
+
+<h3 id="44-性能跟踪"><a href="#44-性能跟踪" class="headerlink" title="44. 性能跟踪"></a>44. 性能跟踪</h3><p>启用性能跟踪日志（-d cpu）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -d cpu -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="日志文件输出">45. 日志文件输出</h3>
-<p>输出日志到文件（-D logfile）。</p>
+
+<h3 id="45-日志文件输出"><a href="#45-日志文件输出" class="headerlink" title="45. 日志文件输出"></a>45. 日志文件输出</h3><p>输出日志到文件（-D logfile）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -D qemu.log -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="内核调试模式">46. 内核调试模式</h3>
-<p>调试Linux内核（-kernel -initrd -append）。</p>
+
+<h3 id="46-内核调试模式"><a href="#46-内核调试模式" class="headerlink" title="46. 内核调试模式"></a>46. 内核调试模式</h3><p>调试Linux内核（-kernel -initrd -append）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -kernel bzImage -initrd initrd.img -append &quot;console=ttyS0&quot; -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="内存转储">47. 内存转储</h3>
-<p>转储VM内存到文件（-mem-path）。</p>
+
+<h3 id="47-内存转储"><a href="#47-内存转储" class="headerlink" title="47. 内存转储"></a>47. 内存转储</h3><p>转储VM内存到文件（-mem-path）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -mem-path /tmp/mem.dump -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="事件监视脚本">48. 事件监视脚本</h3>
-<p>使用脚本监视事件（-trace events=events.txt）。</p>
+
+<h3 id="48-事件监视脚本"><a href="#48-事件监视脚本" class="headerlink" title="48. 事件监视脚本"></a>48. 事件监视脚本</h3><p>使用脚本监视事件（-trace events&#x3D;events.txt）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -trace events=events.txt -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="cpu热插拔监视">49. CPU热插拔监视</h3>
-<p>启用CPU热插拔并监视（-smp 1,maxcpus=4）。</p>
+
+<h3 id="49-CPU热插拔监视"><a href="#49-CPU热插拔监视" class="headerlink" title="49. CPU热插拔监视"></a>49. CPU热插拔监视</h3><p>启用CPU热插拔并监视（-smp 1,maxcpus&#x3D;4）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -smp 1,maxcpus=4 -drive file=disk.img</span><br></pre></td></tr></table></figure>
-<h3 id="调试符号加载">50. 调试符号加载</h3>
-<p>加载调试符号启动（-gdb tcp::1234）。</p>
+
+<h3 id="50-调试符号加载"><a href="#50-调试符号加载" class="headerlink" title="50. 调试符号加载"></a>50. 调试符号加载</h3><p>加载调试符号启动（-gdb tcp::1234）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -gdb tcp::1234 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3MDQ4MjA2Mg==&amp;mid=2247487183&amp;idx=1&amp;sn=984b50f454c454d3233bb40eaf613691&amp;chksm=cf5f692e87f39bdcd3f8f4569f6d5dcb891c920298d3ecf95b14595cf419a5114ecdbbaeea6a&amp;mpshare=1&amp;scene=24&amp;srcid=1218C6PzHMIsmMxnl4EutIig&amp;sharer_shareinfo=2ff91c68bc0949e2282bcdf00a7bacd8&amp;sharer_shareinfo_first=2ff91c68bc0949e2282bcdf00a7bacd8#rd">常见QEMU语句</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3MDQ4MjA2Mg==&mid=2247487183&idx=1&sn=984b50f454c454d3233bb40eaf613691&chksm=cf5f692e87f39bdcd3f8f4569f6d5dcb891c920298d3ecf95b14595cf419a5114ecdbbaeea6a&mpshare=1&scene=24&srcid=1218C6PzHMIsmMxnl4EutIig&sharer_shareinfo=2ff91c68bc0949e2282bcdf00a7bacd8&sharer_shareinfo_first=2ff91c68bc0949e2282bcdf00a7bacd8#rd">常见QEMU语句</a></p>
 </blockquote>
 
     </div>
@@ -449,8 +443,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/29/ceatsheet/virsh%20cheatsheet/" rel="prev" title="virsh cheatsheet">
-                  <i class="fa fa-angle-left"></i> virsh cheatsheet
+                <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" rel="prev" title="vagrant cheatsheet">
+                  <i class="fa fa-angle-left"></i> vagrant cheatsheet
                 </a>
             </div>
             <div class="post-nav-item">

@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="常用命令 启动与关闭    操作 命令 说明     启动 virsh start &lt;虚拟机名&gt; 启动一个处于关闭状态的虚拟机   正常关机 virsh shutdown &lt;虚拟机名&gt; 模拟按下电源键，优雅关机（推荐）   强制关闭 virsh destroy &lt;虚拟机名&gt; 相当于直接拔掉电源，仅在卡死时使用   重启 virsh reboot &lt;虚拟机名">
+    <meta name="description" content="常用命令启动与关闭   操作 命令 说明    启动 virsh start &lt;虚拟机名&gt; 启动一个处于关闭状态的虚拟机   正常关机 virsh shutdown &lt;虚拟机名&gt; 模拟按下电源键，优雅关机（推荐）   强制关闭 virsh destroy &lt;虚拟机名&gt; 相当于直接拔掉电源，仅在卡死时使用   重启 virsh reboot &lt;虚拟机名&amp;gt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="virsh cheatsheet">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="常用命令 启动与关闭    操作 命令 说明     启动 virsh start &lt;虚拟机名&gt; 启动一个处于关闭状态的虚拟机   正常关机 virsh shutdown &lt;虚拟机名&gt; 模拟按下电源键，优雅关机（推荐）   强制关闭 virsh destroy &lt;虚拟机名&gt; 相当于直接拔掉电源，仅在卡死时使用   重启 virsh reboot &lt;虚拟机名">
+<meta property="og:description" content="常用命令启动与关闭   操作 命令 说明    启动 virsh start &lt;虚拟机名&gt; 启动一个处于关闭状态的虚拟机   正常关机 virsh shutdown &lt;虚拟机名&gt; 模拟按下电源键，优雅关机（推荐）   强制关闭 virsh destroy &lt;虚拟机名&gt; 相当于直接拔掉电源，仅在卡死时使用   重启 virsh reboot &lt;虚拟机名&amp;gt">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-29T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:49:57.112Z">
+<meta property="article:modified_time" content="2025-12-29T16:00:45.497Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="cheatsheet">
 <meta property="article:tag" content="virsh">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%85%B3%E9%97%AD"><span class="nav-number">1.1.</span> <span class="nav-text">启动与关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%B5%B7%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">1.2.</span> <span class="nav-text"> 挂起与恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text"> 自启动配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.</span> <span class="nav-text">虚拟机信息查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.1.</span> <span class="nav-text"> 基本状态查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">配置与连接信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7"><span class="nav-number">2.3.</span> <span class="nav-text">资源监控</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">虚拟机配置管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xml%E9%85%8D%E7%BD%AE%E7%BC%96%E8%BE%91%E6%A0%B8%E5%BF%83"><span class="nav-number">3.1.</span> <span class="nav-text">XML配置编辑（核心）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%8E%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">3.2.</span> <span class="nav-text">删除与重命名</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%85%B3%E9%97%AD"><span class="nav-number">1.1.</span> <span class="nav-text">启动与关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%B5%B7%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">1.2.</span> <span class="nav-text">挂起与恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">自启动配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.</span> <span class="nav-text">虚拟机信息查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.1.</span> <span class="nav-text">基本状态查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">配置与连接信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7"><span class="nav-number">2.3.</span> <span class="nav-text">资源监控</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">虚拟机配置管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML%E9%85%8D%E7%BD%AE%E7%BC%96%E8%BE%91%EF%BC%88%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">XML配置编辑（核心）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%8E%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">3.2.</span> <span class="nav-text">删除与重命名</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -273,96 +273,92 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="常用命令">常用命令</h1>
-<h2 id="启动与关闭">启动与关闭</h2>
-<table>
+    <div class="post-body" itemprop="articleBody"><h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="启动与关闭"><a href="#启动与关闭" class="headerlink" title="启动与关闭"></a>启动与关闭</h2><table>
 <thead>
-<tr class="header">
+<tr>
 <th>操作</th>
 <th>命令</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><strong>启动</strong></td>
 <td><code>virsh start &lt;虚拟机名&gt;</code></td>
 <td>启动一个处于关闭状态的虚拟机</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>正常关机</strong></td>
 <td><code>virsh shutdown &lt;虚拟机名&gt;</code></td>
 <td>模拟按下电源键，优雅关机（推荐）</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>强制关闭</strong></td>
 <td><code>virsh destroy &lt;虚拟机名&gt;</code></td>
 <td>相当于直接拔掉电源，仅在卡死时使用</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>重启</strong></td>
 <td><code>virsh reboot &lt;虚拟机名&gt;</code></td>
 <td>重启虚拟机</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>强制重置</strong></td>
 <td><code>virsh reset &lt;虚拟机名&gt;</code></td>
 <td>强制硬重启</td>
 </tr>
-</tbody>
-</table>
-<h2 id="挂起与恢复"> 挂起与恢复</h2>
-<table>
+</tbody></table>
+<h2 id="挂起与恢复"><a href="#挂起与恢复" class="headerlink" title="挂起与恢复"></a>挂起与恢复</h2><table>
 <thead>
-<tr class="header">
+<tr>
 <th>操作</th>
 <th>命令</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td><strong>挂起</strong></td>
 <td><code>virsh suspend &lt;虚拟机名&gt;</code></td>
 <td>暂停虚拟机，内存数据保留在主机</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>恢复</strong></td>
 <td><code>virsh resume &lt;虚拟机名&gt;</code></td>
 <td>从挂起状态恢复运行</td>
 </tr>
-</tbody>
-</table>
-<h2 id="自启动配置"> 自启动配置</h2>
-<ul>
+</tbody></table>
+<h2 id="自启动配置"><a href="#自启动配置" class="headerlink" title="自启动配置"></a>自启动配置</h2><ul>
 <li>设置开机自启： <code>virsh autostart &lt;虚拟机名&gt;</code></li>
 <li>取消开机自启： <code>virsh autostart --disable &lt;虚拟机名&gt;</code></li>
 <li>查看自启列表： <code>virsh autostart --list</code></li>
 </ul>
-<h1 id="虚拟机信息查询">虚拟机信息查询</h1>
-<h2 id="基本状态查询"> 基本状态查询</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="配置与连接信息">配置与连接信息</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="资源监控">资源监控</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="虚拟机配置管理">虚拟机配置管理</h1>
-<h2 id="xml配置编辑核心">XML配置编辑（核心）</h2>
-<p>KVM的所有配置都存储在XML文件中：</p>
+<h1 id="虚拟机信息查询"><a href="#虚拟机信息查询" class="headerlink" title="虚拟机信息查询"></a>虚拟机信息查询</h1><h2 id="基本状态查询"><a href="#基本状态查询" class="headerlink" title="基本状态查询"></a>基本状态查询</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有虚拟机（运行中+已关闭）</span></span><br><span class="line">virsh list --all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟机详细信息（UUID、OS类型、最大内存等）</span></span><br><span class="line">virsh dominfo &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">仅查看虚拟机当前状态（running/shut off/paused）</span></span><br><span class="line">virsh domstate &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="配置与连接信息"><a href="#配置与连接信息" class="headerlink" title="配置与连接信息"></a>配置与连接信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出完整的XML配置（非常重要！）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">搜索特定配置（例如查看磁盘路径）</span></span><br><span class="line">virsh dumpxml &lt;虚拟机名&gt; | grep -A 5 &quot;&lt;source file&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看VNC远程连接端口</span></span><br><span class="line">virsh vncdisplay &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="资源监控"><a href="#资源监控" class="headerlink" title="资源监控"></a>资源监控</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看CPU使用统计</span></span><br><span class="line">virsh cpu-stats &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看内存使用详情</span></span><br><span class="line">virsh dommemstat &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看挂载的硬盘列表</span></span><br><span class="line">virsh domblklist &lt;虚拟机名&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看虚拟网卡列表及MAC地址</span></span><br><span class="line">virsh domiflist &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="虚拟机配置管理"><a href="#虚拟机配置管理" class="headerlink" title="虚拟机配置管理"></a>虚拟机配置管理</h1><h2 id="XML配置编辑（核心）"><a href="#XML配置编辑（核心）" class="headerlink" title="XML配置编辑（核心）"></a>XML配置编辑（核心）</h2><p>KVM的所有配置都存储在XML文件中：</p>
 <p><strong>编辑配置（推荐）</strong>：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 /etc/libvirt/qemu/ 下的文件，容易出错。</p>
+<p>使用此命令会自动检查XML语法，保存生效。不要直接去改 &#x2F;etc&#x2F;libvirt&#x2F;qemu&#x2F; 下的文件，容易出错。</p>
 </blockquote>
 <p><strong>备份配置</strong>：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh dumpxml &lt;虚拟机名&gt; &gt; vm-config.xml</span><br></pre></td></tr></table></figure>
-<p><strong>从XML恢复/定义</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
-<h2 id="删除与重命名">删除与重命名</h2>
-<p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
-<p><strong>重命名虚拟机</strong>：<br />
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
 
+<p><strong>从XML恢复&#x2F;定义</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh define vm-config.xml   # 注册虚拟机（不启动）</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除与重命名"><a href="#删除与重命名" class="headerlink" title="删除与重命名"></a>删除与重命名</h2><p><strong>取消定义（删除配置）</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此命令只删除配置文件，不会删除虚拟磁盘文件！<br><strong>彻底删除（配置+磁盘）</strong>：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
+</blockquote>
+<p><strong>重命名虚拟机</strong>：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -379,13 +375,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" rel="prev" title="vagrant cheatsheet">
-                  <i class="fa fa-angle-left"></i> vagrant cheatsheet
+                <a href="/2025/12/26/ceatsheet/ARM64%E6%B1%87%E7%BC%96-cheatsheet/" rel="prev" title="ARM64汇编-cheatsheet">
+                  <i class="fa fa-angle-left"></i> ARM64汇编-cheatsheet
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/12/29/ceatsheet/qemu%20cheatsheet/" rel="next" title="qemu cheatsheet">
-                  qemu cheatsheet <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" rel="next" title="vagrant cheatsheet">
+                  vagrant cheatsheet <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

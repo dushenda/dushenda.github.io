@@ -19,22 +19,22 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Ubuntu 设置如下的程序 123456789101112131415#include &lt;iostream&gt;#include &lt;string.h&gt;using namespace std;void crash_test()&#123;        char *str &#x3D;0;        strcpy(str,&quot;test&quot;); &#x2F;&#x2F; segment f">
+    <meta name="description" content="Ubuntu设置如下的程序 123456789101112131415#include &lt;iostream&gt;#include &lt;string.h&gt;using namespace std;void crash_test()&#123;        char *str &#x3D;0;        strcpy(str,&quot;test&quot;); &#x2F;&#x2F; segment fa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内核转储文件--应用程序崩溃分析">
 <meta property="og:url" content="https://dushenda.github.io/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="Ubuntu 设置如下的程序 123456789101112131415#include &lt;iostream&gt;#include &lt;string.h&gt;using namespace std;void crash_test()&#123;        char *str &#x3D;0;        strcpy(str,&quot;test&quot;); &#x2F;&#x2F; segment f">
+<meta property="og:description" content="Ubuntu设置如下的程序 123456789101112131415#include &lt;iostream&gt;#include &lt;string.h&gt;using namespace std;void crash_test()&#123;        char *str &#x3D;0;        strcpy(str,&quot;test&quot;); &#x2F;&#x2F; segment fa">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/Pastedimage20240113005115.png">
-<meta property="og:image" content="https://dushenda.github.io/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/Pastedimage20240113011447.png">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20240113005115.png">
+<meta property="og:image" content="https://dushenda.github.io/Pastedimage20240113011447.png">
 <meta property="article:published_time" content="2024-01-07T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:49:57.133Z">
+<meta property="article:modified_time" content="2025-12-29T16:00:45.521Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="kernel">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/Pastedimage20240113005115.png">
+<meta name="twitter:image" content="https://dushenda.github.io/Pastedimage20240113005115.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2024/01/07/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6--%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90/">
@@ -173,7 +173,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bcoredump%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80"><span class="nav-number">1.1.</span> <span class="nav-text">查看coredump是否打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E5%85%B3%E9%97%ADapport%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">注意关闭apport服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos"><span class="nav-number">2.</span> <span class="nav-text">CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91etcsecuritylimits.conf%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">编辑&#x2F;etc&#x2F;security&#x2F;limits.conf文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%B4%A9%E6%BA%83"><span class="nav-number">3.</span> <span class="nav-text">分析崩溃</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bcoredump%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80"><span class="nav-number">1.1.</span> <span class="nav-text">查看coredump是否打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%A7%84%E5%88%99"><span class="nav-number">1.2.</span> <span class="nav-text">配置规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E5%85%B3%E9%97%ADapport%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.</span> <span class="nav-text">注意关闭apport服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS"><span class="nav-number">2.</span> <span class="nav-text">CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91-etc-security-limits-conf%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">编辑&#x2F;etc&#x2F;security&#x2F;limits.conf文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%A7%84%E5%88%99-1"><span class="nav-number">2.2.</span> <span class="nav-text">配置规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reboot"><span class="nav-number">2.3.</span> <span class="nav-text">reboot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%B4%A9%E6%BA%83"><span class="nav-number">3.</span> <span class="nav-text">分析崩溃</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -276,31 +276,32 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="ubuntu">Ubuntu</h2>
-<p>设置如下的程序 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 以下就是生成了dump文件</p>
-<p><img src="Pastedimage20240113005115.png" /></p>
-<h3 id="查看coredump是否打开">查看coredump是否打开</h3>
-<p>查看命令：<code>ulimit -c</code></p>
+    <div class="post-body" itemprop="articleBody"><h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><p>设置如下的程序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">crash_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="type">char</span> *str =<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(str,<span class="string">&quot;test&quot;</span>); <span class="comment">// segment fault</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;crash test&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="built_in">crash_test</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下就是生成了dump文件</p>
+<p><img src="/Pastedimage20240113005115.png"></p>
+<h3 id="查看coredump是否打开"><a href="#查看coredump是否打开" class="headerlink" title="查看coredump是否打开"></a>查看coredump是否打开</h3><p>查看命令：<code>ulimit -c</code></p>
 <p>打开命令：<code>ulimit -c unlimited</code></p>
 <p>0：关闭</p>
-<p>unlimited：打开 ### 配置规则 主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
+<p>unlimited：打开</p>
+<h3 id="配置规则"><a href="#配置规则" class="headerlink" title="配置规则"></a>配置规则</h3><p>主要看内核参数<code>kernel.core_pattern</code>，路径为<code>/proc/sys/kernel/core_pattern</code>。</p>
 <p>所以修改有两种方法</p>
 <p>1、<code>sysctl -w kernel.core_pattern=/root/core/core-%e.%s.%p.%t</code></p>
-<p>2、<code>echo -e "/root/core/core-%e.%s.%p.%t" &gt; /proc/sys/kernel/core_pattern</code></p>
+<p>2、<code>echo -e &quot;/root/core/core-%e.%s.%p.%t&quot; &gt; /proc/sys/kernel/core_pattern</code></p>
 <blockquote>
 <p>%e：进程名称</p>
 <p>%s：崩溃时收到的信号</p>
 <p>%p：进程ID</p>
 <p>%t：时间戳</p>
 </blockquote>
-<h3 id="注意关闭apport服务">注意关闭apport服务</h3>
-<p>这个服务会读取core文件分析，不会保存源文件 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure></p>
-<h2 id="centos">CentOS</h2>
-<h3 id="编辑etcsecuritylimits.conf文件">编辑<code>/etc/security/limits.conf</code>文件</h3>
-<p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制 ### 配置规则 和Ubuntu一样 ### reboot</p>
-<h2 id="分析崩溃">分析崩溃</h2>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
-<p><img src="Pastedimage20240113011447.png" /></p>
+<h3 id="注意关闭apport服务"><a href="#注意关闭apport服务" class="headerlink" title="注意关闭apport服务"></a>注意关闭apport服务</h3><p>这个服务会读取core文件分析，不会保存源文件</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop apport.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="编辑-etc-security-limits-conf文件"><a href="#编辑-etc-security-limits-conf文件" class="headerlink" title="编辑/etc/security/limits.conf文件"></a>编辑<code>/etc/security/limits.conf</code>文件</h3><p>末尾增加<code>soft core unlimited</code>，表示应用程序生成的core文件不受大小限制</p>
+<h3 id="配置规则-1"><a href="#配置规则-1" class="headerlink" title="配置规则"></a>配置规则</h3><p>和Ubuntu一样</p>
+<h3 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h3><h2 id="分析崩溃"><a href="#分析崩溃" class="headerlink" title="分析崩溃"></a>分析崩溃</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb test  /root/corefile/core-test.11.6284.1705062175</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Pastedimage20240113011447.png"></p>
 <p>发现最后的出错函数位于strcpy这一处，源文件第8行。</p>
 
     </div>
