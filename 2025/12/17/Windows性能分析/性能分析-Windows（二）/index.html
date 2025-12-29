@@ -19,25 +19,25 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Overview介绍几款Windows下的性能分析工具。 工具介绍 Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。 Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMo">
+    <meta name="description" content="Overview 介绍几款Windows下的性能分析工具。 工具介绍  Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。 Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、Disk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="性能分析-Windows（二）">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="Overview介绍几款Windows下的性能分析工具。 工具介绍 Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。 Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMo">
+<meta property="og:description" content="Overview 介绍几款Windows下的性能分析工具。 工具介绍  Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。 Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、Disk">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/perfmon.png">
-<meta property="og:image" content="https://dushenda.github.io/sysinternal.png">
-<meta property="og:image" content="https://dushenda.github.io/wpa.png">
-<meta property="og:image" content="https://dushenda.github.io/perfview.png">
-<meta property="og:image" content="https://dushenda.github.io/sysinformer.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/perfmon.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/sysinternal.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/wpa.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/perfview.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/sysinformer.png">
 <meta property="article:published_time" content="2025-12-17T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:42:30.096Z">
+<meta property="article:modified_time" content="2025-12-29T15:49:57.053Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="windows">
 <meta property="article:tag" content="性能">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/perfmon.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/perfmon.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2025/12/17/Windows%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-Windows%EF%BC%88%E4%BA%8C%EF%BC%89/">
@@ -176,7 +176,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">工具介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%A6%82%E8%A7%88"><span class="nav-number">3.</span> <span class="nav-text">工具概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perfmon"><span class="nav-number">3.1.</span> <span class="nav-text">Perfmon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sysinternals"><span class="nav-number">3.2.</span> <span class="nav-text">Sysinternals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-Performance-Toolkit"><span class="nav-number">3.3.</span> <span class="nav-text">Windows Performance Toolkit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perfview"><span class="nav-number">3.4.</span> <span class="nav-text">perfview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Informer"><span class="nav-number">3.5.</span> <span class="nav-text">System Informer</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">工具介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%A6%82%E8%A7%88"><span class="nav-number">3.</span> <span class="nav-text">工具概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#perfmon"><span class="nav-number">3.1.</span> <span class="nav-text">Perfmon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysinternals"><span class="nav-number">3.2.</span> <span class="nav-text">Sysinternals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows-performance-toolkit"><span class="nav-number">3.3.</span> <span class="nav-text">Windows Performance Toolkit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perfview"><span class="nav-number">3.4.</span> <span class="nav-text">perfview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-informer"><span class="nav-number">3.5.</span> <span class="nav-text">System Informer</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -279,20 +279,28 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>介绍几款Windows下的性能分析工具。</p>
-<h1 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h1><ul>
+    <div class="post-body" itemprop="articleBody"><h1 id="overview">Overview</h1>
+<p>介绍几款Windows下的性能分析工具。</p>
+<h1 id="工具介绍">工具介绍</h1>
+<ul>
 <li>Perfmon（性能监视器）：是Windows自带的性能监控工具，可以通过它来查看CPU、内存、硬盘、网络等系统性能指标的实时数据，也可以将数据保存到文件中进行后续分析。</li>
 <li>Sysinternals Suite：是一个由微软官方提供的一组系统工具集合，其中包括了很多用于性能监控的工具，例如Process Monitor、DiskMon、TCPView等。</li>
 <li>Windows Performance Toolkit：是一组高级性能监控工具，可用于性能分析和故障排查，包括xperf、WPR、WPA等。</li>
 <li>perfview：Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。</li>
 <li>System Informer：系统资源监控工具，支持windows10、windows11。</li>
 </ul>
-<h1 id="工具概览"><a href="#工具概览" class="headerlink" title="工具概览"></a>工具概览</h1><h2 id="Perfmon"><a href="#Perfmon" class="headerlink" title="Perfmon"></a>Perfmon</h2><p>Windows自带的，详细使用方法，参考官方<a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a><br><img src="/perfmon.png"></p>
-<h2 id="Sysinternals"><a href="#Sysinternals" class="headerlink" title="Sysinternals"></a>Sysinternals</h2><p>下载后即可使用的工具集，官方下链接<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内<br><img src="/sysinternal.png"></p>
-<h2 id="Windows-Performance-Toolkit"><a href="#Windows-Performance-Toolkit" class="headerlink" title="Windows Performance Toolkit"></a>Windows Performance Toolkit</h2><p>这个是Windows下的性能工具合集，见<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
-<p>需要使用WPR收集数据，再使用WPA分析数据。<br><img src="/wpa.png"></p>
-<h2 id="perfview"><a href="#perfview" class="headerlink" title="perfview"></a>perfview</h2><p>perfview<a target="_blank" rel="noopener" href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。<br><img src="/perfview.png">  </p>
-<h2 id="System-Informer"><a href="#System-Informer" class="headerlink" title="System Informer"></a>System Informer</h2><p>系统资源监控工具，支持windows10、windows11，官网<a target="_blank" rel="noopener" href="https://systeminformer.sourceforge.io/">地址</a>。<br><img src="/sysinformer.png"></p>
+<h1 id="工具概览">工具概览</h1>
+<h2 id="perfmon">Perfmon</h2>
+<p>Windows自带的，详细使用方法，参考官方<a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/ask-the-performance-team/windows-performance-monitor-overview/ba-p/375481">链接</a> <img src="perfmon.png" /></p>
+<h2 id="sysinternals">Sysinternals</h2>
+<p>下载后即可使用的工具集，官方下链接<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/sysinternals/">下载</a>，如常用的process monitor也包括在内 <img src="sysinternal.png" /></p>
+<h2 id="windows-performance-toolkit">Windows Performance Toolkit</h2>
+<p>这个是Windows下的性能工具合集，见<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference">官网</a>，Windows 性能工具包包含两个独立的工具：Windows Performance Recorder (WPR) 和 Windows Performance Analyzer (WPA) 此外，还保留了对以前的命令行工具 Xperf 的支持。 但是，不再支持 Xperfview。 所有记录都必须使用 WPA 来打开和分析。</p>
+<p>需要使用WPR收集数据，再使用WPA分析数据。 <img src="wpa.png" /></p>
+<h2 id="perfview">perfview</h2>
+<p>perfview<a target="_blank" rel="noopener" href="https://github.com/microsoft/perfview">下载地址</a>。Perfview是一个开源的CPU和内存性能分析工具，也包括一些针对.NET的分析功能，例如GC分析，JIT分析，甚至ASP.NET中的请求统计等等。Perfview是一个Windows应用程序，但也能对在Linux系统上采集的数据进行分析（<a target="_blank" rel="noopener" href="https://blogs.msdn.microsoft.com/vancem/2016/02/20/analyzing-cpu-traces-from-linux-with-perfview/">参考</a>）。Perfview免安装，而且只是一个14M的.exe文件，非常容易部署到需要进行性能分析的机器上，例如生产环境的服务器。而且在性能数据收集的过程中不需要重启应用程序或者服务器，而且收集的性能数据日志（.etl文件）可以被拷贝到其他Windows机器上，再进行分析工作，对业务的影响非常少。 <img src="perfview.png" /></p>
+<h2 id="system-informer">System Informer</h2>
+<p>系统资源监控工具，支持windows10、windows11，官网<a target="_blank" rel="noopener" href="https://systeminformer.sourceforge.io/">地址</a>。 <img src="sysinformer.png" /></p>
 
     </div>
 

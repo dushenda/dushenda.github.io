@@ -19,26 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="快速分析使用命令组合 123456789101112# 安装工具yum install blktrace -y# 采集数据：（监控30秒）blktrace -d &#x2F;dev&#x2F;nvme0n1 -w 30# 合并数据：blkparse -i nvme0n1 -d nvme_trace.bin。# 解析分析：，重点查看 &quot;ALL&quot; 统计区和 &quot;Device Overhead&amp;">
+    <meta name="description" content="快速分析 使用命令组合 123456789101112# 安装工具yum install blktrace -y# 采集数据：（监控30秒）blktrace -d &#x2F;dev&#x2F;nvme0n1 -w 30# 合并数据：blkparse -i nvme0n1 -d nvme_trace.bin。# 解析分析：，重点查看 &quot;ALL&quot; 统计区和 &quot;Device Overhead">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux性能IO-blktrace工具">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="快速分析使用命令组合 123456789101112# 安装工具yum install blktrace -y# 采集数据：（监控30秒）blktrace -d &#x2F;dev&#x2F;nvme0n1 -w 30# 合并数据：blkparse -i nvme0n1 -d nvme_trace.bin。# 解析分析：，重点查看 &quot;ALL&quot; 统计区和 &quot;Device Overhead&amp;">
+<meta property="og:description" content="快速分析 使用命令组合 123456789101112# 安装工具yum install blktrace -y# 采集数据：（监控30秒）blktrace -d &#x2F;dev&#x2F;nvme0n1 -w 30# 合并数据：blkparse -i nvme0n1 -d nvme_trace.bin。# 解析分析：，重点查看 &quot;ALL&quot; 统计区和 &quot;Device Overhead">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dushenda.github.io/Linux-storage-stack-diagram_v4.0.png">
-<meta property="og:image" content="https://dushenda.github.io/io_path_simple.png">
-<meta property="og:image" content="https://dushenda.github.io/blktrace_architecture.png">
-<meta property="og:image" content="https://dushenda.github.io/blktrace_out.png">
-<meta property="og:image" content="https://dushenda.github.io/latency_distribution_table.png">
-<meta property="og:image" content="https://dushenda.github.io/ioflow.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/Linux-storage-stack-diagram_v4.0.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/io_path_simple.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/blktrace_architecture.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/blktrace_out.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/latency_distribution_table.png">
+<meta property="og:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/ioflow.png">
 <meta property="article:published_time" content="2025-12-11T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:42:30.063Z">
+<meta property="article:modified_time" content="2025-12-29T15:49:57.020Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="性能">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dushenda.github.io/Linux-storage-stack-diagram_v4.0.png">
+<meta name="twitter:image" content="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/Linux-storage-stack-diagram_v4.0.png">
 
 
 <link rel="canonical" href="https://dushenda.github.io/2025/12/11/Linux%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/Linux%E6%80%A7%E8%83%BDIO-blktrace%E5%B7%A5%E5%85%B7/">
@@ -177,7 +177,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">快速分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">理论分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">工具使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%AA%E9%98%B6%E6%AE%B5%E7%9A%84%E5%BB%B6%E8%BF%9F%E4%BF%A1%E6%81%AF"><span class="nav-number">4.</span> <span class="nav-text">获取个阶段的延迟信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83-%E6%90%AC%E8%BF%90"><span class="nav-number">5.</span> <span class="nav-text">参考&#x2F;搬运</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">快速分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">理论分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%AA%E9%98%B6%E6%AE%B5%E7%9A%84%E5%BB%B6%E8%BF%9F%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">获取个阶段的延迟信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%90%AC%E8%BF%90"><span class="nav-number">4.</span> <span class="nav-text">参考&#x2F;搬运</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -280,23 +280,21 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="快速分析"><a href="#快速分析" class="headerlink" title="快速分析"></a>快速分析</h1><p>使用命令组合</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装工具</span></span><br><span class="line">yum install blktrace -y</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">采集数据：（监控30秒）</span></span><br><span class="line">blktrace -d /dev/nvme0n1 -w 30</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">合并数据：</span></span><br><span class="line">blkparse -i nvme0n1 -d nvme_trace.bin。</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解析分析：，重点查看 <span class="string">&quot;ALL&quot;</span> 统计区和 <span class="string">&quot;Device Overhead&quot;</span> 分布</span></span><br><span class="line">btt -i nvme_trace.bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">组合命令</span></span><br><span class="line">blktrace -d /dev/sdf -w 5 -o - | blkparse -i - -d btt.bin &gt; blkparse.txt</span><br><span class="line">btt -i btt.bin</span><br></pre></td></tr></table></figure>
-<p>btrace组合</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">追踪设备/dev/sda并输出blkparse数据</span></span><br><span class="line">btrace /dev/sda</span><br></pre></td></tr></table></figure>
-
+    <div class="post-body" itemprop="articleBody"><h1 id="快速分析">快速分析</h1>
+<p>使用命令组合 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装工具</span></span><br><span class="line">yum install blktrace -y</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">采集数据：（监控30秒）</span></span><br><span class="line">blktrace -d /dev/nvme0n1 -w 30</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">合并数据：</span></span><br><span class="line">blkparse -i nvme0n1 -d nvme_trace.bin。</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解析分析：，重点查看 <span class="string">&quot;ALL&quot;</span> 统计区和 <span class="string">&quot;Device Overhead&quot;</span> 分布</span></span><br><span class="line">btt -i nvme_trace.bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">组合命令</span></span><br><span class="line">blktrace -d /dev/sdf -w 5 -o - | blkparse -i - -d btt.bin &gt; blkparse.txt</span><br><span class="line">btt -i btt.bin</span><br></pre></td></tr></table></figure> btrace组合 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">追踪设备/dev/sda并输出blkparse数据</span></span><br><span class="line">btrace /dev/sda</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>实际上btrace是调用了blktarce和blkparse组合出来的脚本文件，位于&#x2F;usr&#x2F;bin&#x2F;btrace</p>
+<p>实际上btrace是调用了blktarce和blkparse组合出来的脚本文件，位于/usr/bin/btrace</p>
 </blockquote>
-<h1 id="理论分析"><a href="#理论分析" class="headerlink" title="理论分析"></a>理论分析</h1><p>一个I&#x2F;O请求，从应用层到底层块设备，路径如下图所示：<br><img src="/Linux-storage-stack-diagram_v4.0.png"><br>我们将IO路径简化一下：<br><img src="/io_path_simple.png"><br>一个I&#x2F;O请求进入block layer之后，可能会经历下面的过程：</p>
+<h1 id="理论分析">理论分析</h1>
+<p>一个I/O请求，从应用层到底层块设备，路径如下图所示： <img src="Linux-storage-stack-diagram_v4.0.png" /> 我们将IO路径简化一下： <img src="io_path_simple.png" /> 一个I/O请求进入block layer之后，可能会经历下面的过程：</p>
 <ul>
 <li>Remap: 可能被DM(Device Mapper)或MD(Multiple Device, Software RAID) remap到其它设备</li>
-<li>Split: 可能会因为I&#x2F;O请求与扇区边界未对齐、或者size太大而被分拆(split)成多个物理I&#x2F;O</li>
-<li>Merge: 可能会因为与其它I&#x2F;O请求的物理位置相邻而合并(merge)成一个I&#x2F;O</li>
+<li>Split: 可能会因为I/O请求与扇区边界未对齐、或者size太大而被分拆(split)成多个物理I/O</li>
+<li>Merge: 可能会因为与其它I/O请求的物理位置相邻而合并(merge)成一个I/O</li>
 <li>被IO Scheduler依照调度策略发送给driver</li>
 <li>被driver提交给硬件，经过HBA、电缆（光纤、网线等）、交换机（SAN或网络）、最后到达存储设备，设备完成IO请求之后再把结果发回。</li>
 </ul>
-<p>blktrace 能够记录下IO所经历的各个步骤:<br><img src="/blktrace_architecture.png"><br>我们一起看下blktrace的输出长什么样子：<br><img src="/blktrace_out.png"></p>
+<p>blktrace 能够记录下IO所经历的各个步骤: <img src="blktrace_architecture.png" /> 我们一起看下blktrace的输出长什么样子： <img src="blktrace_out.png" /></p>
 <ul>
 <li>第一个字段：8,0 这个字段是设备号 major device ID和minor device ID。</li>
 <li>第二个字段：3 表示CPU</li>
@@ -308,143 +306,142 @@
 <li>第八个字段：223490+56，表示的是起始block number 和 number of blocks，即我们常说的Offset 和 Size</li>
 <li>第九个字段： 进程名</li>
 </ul>
-<p><code>blkparse</code>的输出包含了每个 I&#x2F;O 请求事件的详细信息，理解这些字段是分析的关键：</p>
+<p><code>blkparse</code>的输出包含了每个 I/O 请求事件的详细信息，理解这些字段是分析的关键：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>字段</th>
 <th>含义说明</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>**设备号 (Major, Minor)**​</td>
+<tbody>
+<tr class="odd">
+<td><strong>设备号 (Major, Minor)</strong>​</td>
 <td>如 <code>8,0</code>通常指 <code>/dev/sda</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>CPU ID</strong>​</td>
 <td>处理此事件的 CPU 核心编号</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>序列号</strong>​</td>
 <td>事件的序列号</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>时间戳</strong>​</td>
 <td>事件发生的时间（通常为相对时间）</td>
 </tr>
-<tr>
-<td>**进程ID (PID)**​</td>
-<td>发起 I&#x2F;O 操作的进程 ID</td>
+<tr class="odd">
+<td><strong>进程ID (PID)</strong>​</td>
+<td>发起 I/O 操作的进程 ID</td>
 </tr>
-<tr>
-<td>**事件类型 (Action)**​</td>
-<td><strong>核心字段</strong>，表示 I&#x2F;O 请求所处的阶段</td>
+<tr class="even">
+<td><strong>事件类型 (Action)</strong>​</td>
+<td><strong>核心字段</strong>，表示 I/O 请求所处的阶段</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>RWBS 描述符</strong>​</td>
-<td>描述 I&#x2F;O 类型：R(读)&#x2F;W(写)&#x2F;B(屏障)&#x2F;S(同步)</td>
+<td>描述 I/O 类型：R(读)/W(写)/B(屏障)/S(同步)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>扇区信息</strong>​</td>
 <td>如 <code>2048 + 8</code>，表示起始扇区号及连续扇区数</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>进程名</strong>​</td>
-<td>发起 I&#x2F;O 的进程名称</td>
+<td>发起 I/O 的进程名称</td>
 </tr>
-</tbody></table>
-<p>其中，**事件类型 (Action)**​ 是理解 I&#x2F;O 路径的关键，它记录了请求从产生到完成的各个阶段：</p>
+</tbody>
+</table>
+<p>其中，<strong>事件类型 (Action)</strong>​ 是理解 I/O 路径的关键，它记录了请求从产生到完成的各个阶段：</p>
 <ul>
-<li><strong>Q</strong>​ (Queued): I&#x2F;O 请求进入块层。</li>
+<li><strong>Q</strong>​ (Queued): I/O 请求进入块层。</li>
 <li><strong>G</strong>​ (Get request): 分配请求结构。</li>
-<li><strong>I</strong>​ (Inserted): 请求插入 I&#x2F;O 调度器队列。</li>
+<li><strong>I</strong>​ (Inserted): 请求插入 I/O 调度器队列。</li>
 <li><strong>D</strong>​ (Issued): 请求提交给设备驱动。</li>
 <li><strong>C</strong>​ (Completed): 请求完成。</li>
 </ul>
-<p>根据这些事件的时间戳，可以计算出 I&#x2F;O 路径各阶段的耗时，例如：</p>
+<p>根据这些事件的时间戳，可以计算出 I/O 路径各阶段的耗时，例如：</p>
 <ul>
 <li><strong>D2C</strong>: 请求在驱动和硬件上消耗的时间，是评估<strong>硬件性能</strong>的关键指标。</li>
-<li><strong>I2D</strong>: 请求在 I&#x2F;O 调度队列中等待的时间，反映<strong>调度器性能</strong>。</li>
-<li><strong>Q2C</strong>: 整个 I&#x2F;O 请求的总时间，近似于 <code>iostat</code>中的 <code>await</code>。</li>
+<li><strong>I2D</strong>: 请求在 I/O 调度队列中等待的时间，反映<strong>调度器性能</strong>。</li>
+<li><strong>Q2C</strong>: 整个 I/O 请求的总时间，近似于 <code>iostat</code>中的 <code>await</code>。</li>
 </ul>
-<p>其中第六个字段非常有用：每一个字母都代表了IO请求所经历的某个阶段。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Q – 即将生成IO请求</span><br><span class="line">|</span><br><span class="line">G – IO请求生成</span><br><span class="line">|</span><br><span class="line">I – IO请求进入IO Scheduler队列</span><br><span class="line">|</span><br><span class="line">D – IO请求进入driver</span><br><span class="line">|</span><br><span class="line">C – IO请求执行完毕</span><br></pre></td></tr></table></figure>
-<p>注意，整个IO路径，分成很多段，每一段开始的时候，都会有一个时间戳，根据上一段开始的时间和下一段开始的时间，就可以得到IO 路径各段花费的时间。</p>
+<p>其中第六个字段非常有用：每一个字母都代表了IO请求所经历的某个阶段。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Q – 即将生成IO请求</span><br><span class="line">|</span><br><span class="line">G – IO请求生成</span><br><span class="line">|</span><br><span class="line">I – IO请求进入IO Scheduler队列</span><br><span class="line">|</span><br><span class="line">D – IO请求进入driver</span><br><span class="line">|</span><br><span class="line">C – IO请求执行完毕</span><br></pre></td></tr></table></figure> 注意，整个IO路径，分成很多段，每一段开始的时候，都会有一个时间戳，根据上一段开始的时间和下一段开始的时间，就可以得到IO 路径各段花费的时间。</p>
 <p>注意，我们心心念念的service time，也就是反应块设备处理能力的指标，就是从D到C所花费的时间，简称D2C。</p>
 <p>而iostat输出中的await，即整个IO从生成请求到IO请求执行完毕，即从Q到C所花费的时间，我们简称Q2C。</p>
-<p>我们知道Linux 有I&#x2F;O scheduler，调度器的效率如何，I2D是重要的指标。</p>
+<p>我们知道Linux 有I/O scheduler，调度器的效率如何，I2D是重要的指标。</p>
 <p>注意，这只是blktrace输出的一个部分，很明显，我们还能拿到offset和size，根据offset，我们能拿到某一段时间里，应用程序都访问了整个块设备的那些block，从而绘制出块设备访问轨迹图。</p>
-<p>另外还有size和第七个字段（Read or Write），我们可以知道IO size的分布直方图。对于本文来讲，我们就是要根据blktrace来获取这些信息。</p>
-<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><p>我们接下来简单介绍这些工具的使用，其中这三个命令都是属于blktrace这个包的，他们是一家人。</p>
+<p>另外还有size和第七个字段（Read or Write），我们可以知道IO size的分布直方图。对于本文来讲，我们就是要根据blktrace来获取这些信息。 # 工具使用</p>
+<p>我们接下来简单介绍这些工具的使用，其中这三个命令都是属于blktrace这个包的，他们是一家人。</p>
 <p>首先通过如下命令，可以查看磁盘上的实时信息：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blktrace -d /dev/sdb -o – | blkparse -i –</span><br></pre></td></tr></table></figure>
-
 <p>这个命令会连绵不绝地出现很多输出，当你输入ctrl＋C的时候，会停止。</p>
 <p>当然了，你也可以先用如下命令采集信息，待所有信息采集完毕后，统一分析所有采集到的数据。搜集信息的命令如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blktrace -d /dev/sdb</span><br></pre></td></tr></table></figure>
-
 <p>注意，这个命令并不是只输出一个文件，他会根据CPU的个数上，每一个CPU都会输出一个文件，如下所示：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">-rw-r--r-- 1 manu manu  1.3M Jul  6 19:58 sdb.blktrace.0</span><br><span class="line">-rw-r--r-- 1 manu manu  823K Jul  6 19:58 sdb.blktrace.1</span><br><span class="line">-rw-r--r-- 1 manu manu  2.8M Jul  6 19:58 sdb.blktrace.10</span><br><span class="line">-rw-r--r-- 1 manu manu  1.9M Jul  6 19:58 sdb.blktrace.11</span><br><span class="line">-rw-r--r-- 1 manu manu  474K Jul  6 19:58 sdb.blktrace.12</span><br><span class="line">-rw-r--r-- 1 manu manu  271K Jul  6 19:58 sdb.blktrace.13</span><br><span class="line">-rw-r--r-- 1 manu manu  578K Jul  6 19:58 sdb.blktrace.14</span><br><span class="line">-rw-r--r-- 1 manu manu  375K Jul  6 19:58 sdb.blktrace.15</span><br><span class="line">-rw-r--r-- 1 manu manu  382K Jul  6 19:58 sdb.blktrace.16</span><br><span class="line">-rw-r--r-- 1 manu manu  478K Jul  6 19:58 sdb.blktrace.17</span><br><span class="line">-rw-r--r-- 1 manu manu  839K Jul  6 19:58 sdb.blktrace.18</span><br><span class="line">-rw-r--r-- 1 manu manu  848K Jul  6 19:58 sdb.blktrace.19</span><br><span class="line">-rw-r--r-- 1 manu manu  1.6M Jul  6 19:58 sdb.blktrace.2</span><br><span class="line">-rw-r--r-- 1 manu manu  652K Jul  6 19:58 sdb.blktrace.20</span><br><span class="line">-rw-r--r-- 1 manu manu  738K Jul  6 19:58 sdb.blktrace.21</span><br><span class="line">-rw-r--r-- 1 manu manu  594K Jul  6 19:58 sdb.blktrace.22</span><br><span class="line">-rw-r--r-- 1 manu manu  527K Jul  6 19:58 sdb.blktrace.23</span><br><span class="line">-rw-r--r-- 1 manu manu 1005K Jul  6 19:58 sdb.blktrace.3</span><br><span class="line">-rw-r--r-- 1 manu manu  1.2M Jul  6 19:58 sdb.blktrace.4</span><br><span class="line">-rw-r--r-- 1 manu manu  511K Jul  6 19:58 sdb.blktrace.5</span><br><span class="line">-rw-r--r-- 1 manu manu  2.3M Jul  6 19:58 sdb.blktrace.6</span><br><span class="line">-rw-r--r-- 1 manu manu  1.3M Jul  6 19:58 sdb.blktrace.7</span><br><span class="line">-rw-r--r-- 1 manu manu  2.1M Jul  6 19:58 sdb.blktrace.8</span><br><span class="line">-rw-r--r-- 1 manu manu  1.1M Jul  6 19:58 sdb.blktrace.9</span><br></pre></td></tr></table></figure>
-
 <p>有了输出，我们可以通过blkparse -i sdb来分析采集的数据：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">8,16   7     2147     0.999400390 630169  I   W 447379872 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2148     0.999400653 630169  I   W 447380040 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2149     0.999401057 630169  I   W 447380088 + 16 [kworker/u482:0]</span><br><span class="line">8,16   7     2150     0.999401364 630169  I   W 447380176 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2151     0.999401521 630169  I   W 453543312 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2152     0.999401843 630169  I   W 453543328 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2153     0.999402195 630169  U   N [kworker/u482:0] 14</span><br><span class="line">8,16   6     5648     0.999403047 16921  C   W 347875880 + 8 [0]</span><br><span class="line">8,16   6     5649     0.999406293 16921  D   W 301856632 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5650     0.999421040 16921  C   W 354834456 + 8 [0]</span><br><span class="line">8,16   6     5651     0.999423900 16921  D   W 301857280 + 8 [ceph-osd]</span><br><span class="line">8,16   7     2154     0.999442195 630169  A   W 425409840 + 8 &lt;- (8,22) 131806512</span><br><span class="line">8,16   7     2155     0.999442601 630169  Q   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2156     0.999444277 630169  G   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2157     0.999445177 630169  P   N [kworker/u482:0]</span><br><span class="line">8,16   7     2158     0.999446341 630169  I   W 425409840 + 8 [kworker/u482:0]</span><br><span class="line">8,16   7     2159     0.999446773 630169 UT   N [kworker/u482:0] 1</span><br><span class="line">8,16   6     5652     0.999452685 16921  C   W 354834520 + 8 [0]</span><br><span class="line">8,16   6     5653     0.999455613 16921  D   W 301857336 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5654     0.999470425 16921  C   W 393228176 + 8 [0]</span><br><span class="line">8,16   6     5655     0.999474127 16921  D   W 411554968 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5656     0.999488551 16921  C   W 393228560 + 8 [0]</span><br><span class="line">8,16   6     5657     0.999491549 16921  D   W 411556112 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5658     0.999594849 16923  C   W 393230152 + 16 [0]</span><br><span class="line">8,16   6     5659     0.999604038 16923  D   W 432877368 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5660     0.999610322 16923  C   W 487390128 + 8 [0]</span><br><span class="line">8,16   6     5661     0.999614654 16923  D   W 432879632 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5662     0.999628284 16923  C   W 487391344 + 8 [0]</span><br><span class="line">8,16   6     5663     0.999632014 16923  D   W 432879680 + 8 [ceph-osd]</span><br><span class="line">8,16   6     5664     0.999646122 16923  C   W 293759504 + 8 [0]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>注意，blkparse仅仅是将blktrace输出的信息转化成人可以阅读和理解的输出，但是，信息太多，太杂，人完全没法得到关键信息。 这时候btt就横空出世了，这个工具可以将blktrace采集回来的数据，进行分析，得到对人更有用的信息。事实上，btt也是我们的终点。</p>
-<h1 id="获取个阶段的延迟信息"><a href="#获取个阶段的延迟信息" class="headerlink" title="获取个阶段的延迟信息"></a>获取个阶段的延迟信息</h1><p>注意，btt已经可以很自如地生成这部分统计信息，我们可以很容易得到如下的表格：<br><img src="/latency_distribution_table.png"><br><img src="/ioflow.png"></p>
+<h1 id="获取个阶段的延迟信息">获取个阶段的延迟信息</h1>
+<p>注意，btt已经可以很自如地生成这部分统计信息，我们可以很容易得到如下的表格： <img src="latency_distribution_table.png" /> <img src="ioflow.png" /></p>
 <table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 50%" />
+<col style="width: 46%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>阶段缩写</th>
 <th>全称与含义</th>
 <th>性能指标解读</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><strong>Q2Q</strong>​</td>
-<td><strong>Queue to Queue</strong>  <br>衡量上一个I&#x2F;O完成到当前I&#x2F;O抵达块层的<strong>时间间隔</strong>，反映了I&#x2F;O请求的<strong>到达速率</strong>。</td>
-<td>间隔时间短表示I&#x2F;O负载很重，请求密集；间隔时间长则表示I&#x2F;O负载较轻<br><br>。</td>
+<td><strong>Queue to Queue</strong> <br>衡量上一个I/O完成到当前I/O抵达块层的<strong>时间间隔</strong>，反映了I/O请求的<strong>到达速率</strong>。</td>
+<td>间隔时间短表示I/O负载很重，请求密集；间隔时间长则表示I/O负载较轻<br><br>。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Q2G</strong>​</td>
-<td><strong>Queue to Get</strong>  <br>I&#x2F;O请求进入块层后，等待系统为其分配一个<code>request</code>结构体的时间。</td>
+<td><strong>Queue to Get</strong> <br>I/O请求进入块层后，等待系统为其分配一个<code>request</code>结构体的时间。</td>
 <td>此阶段通常极短。如果时间较长，可能表示系统内存紧张或内核在分配数据结构时遇到瓶颈。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>G2I</strong>​</td>
-<td><strong>Get to Insert</strong>  <br>获取<code>request</code>结构体后，准备并将其插入到I&#x2F;O调度器队列所花费的时间。</td>
-<td>此阶段也非常短暂。它反映了I&#x2F;O调度器处理请求的初始开销。</td>
+<td><strong>Get to Insert</strong> <br>获取<code>request</code>结构体后，准备并将其插入到I/O调度器队列所花费的时间。</td>
+<td>此阶段也非常短暂。它反映了I/O调度器处理请求的初始开销。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>I2D</strong>​</td>
-<td><strong>Insert to Issue</strong>  <br>请求在<strong>I&#x2F;O调度器队列</strong>中等待以及被调度（合并、排序）后，派发（Issue）到设备驱动程序的时间。这是分析<strong>操作系统层面瓶颈</strong>的关键指标<br><br>。</td>
-<td><strong>这是判断I&#x2F;O调度器和系统负载的关键指标</strong>。如果I2D时间很长，说明：  <br>1. 存储设备速度跟不上请求速率，队列中有大量请求在排队。  <br>2. I&#x2F;O调度策略可能不适合当前负载。</td>
+<td><strong>Insert to Issue</strong> <br>请求在<strong>I/O调度器队列</strong>中等待以及被调度（合并、排序）后，派发（Issue）到设备驱动程序的时间。这是分析<strong>操作系统层面瓶颈</strong>的关键指标<br><br>。</td>
+<td><strong>这是判断I/O调度器和系统负载的关键指标</strong>。如果I2D时间很长，说明： <br>1. 存储设备速度跟不上请求速率，队列中有大量请求在排队。 <br>2. I/O调度策略可能不适合当前负载。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>D2C</strong>​</td>
-<td><strong>Issue to Complete</strong>  <br>请求被提交给设备驱动后，在<strong>物理硬件上真正执行</strong>所花费的时间（包括在设备自身的缓存和介质上的读写时间）。这是评估<strong>硬件性能</strong>最直接的指标<br><br>。</td>
-<td><strong>这是判断硬件瓶颈的核心指标</strong>。如果D2C时间很长，通常意味着：  <br>1. <strong>存储设备本身性能不足</strong>（如机械硬盘随机读写慢）。  <br>2. 设备可能处于高负载或存在故障。</td>
+<td><strong>Issue to Complete</strong> <br>请求被提交给设备驱动后，在<strong>物理硬件上真正执行</strong>所花费的时间（包括在设备自身的缓存和介质上的读写时间）。这是评估<strong>硬件性能</strong>最直接的指标<br><br>。</td>
+<td><strong>这是判断硬件瓶颈的核心指标</strong>。如果D2C时间很长，通常意味着： <br>1. <strong>存储设备本身性能不足</strong>（如机械硬盘随机读写慢）。 <br>2. 设备可能处于高负载或存在故障。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Q2C</strong>​</td>
-<td><strong>Queue to Complete</strong>  <br>一个I&#x2F;O请求在块层处理的<strong>总时间</strong>。它近似等于 <code>Q2I + I2D + D2C</code>（Q2I可再细分为Q2G+G2I）<br><br>。</td>
-<td>这大致相当于 <code>iostat</code>命令输出的 <code>await</code>值。反映了一个I&#x2F;O请求从进入系统到完成的总延迟<br><br>。</td>
+<td><strong>Queue to Complete</strong> <br>一个I/O请求在块层处理的<strong>总时间</strong>。它近似等于 <code>Q2I + I2D + D2C</code>（Q2I可再细分为Q2G+G2I）<br><br>。</td>
+<td>这大致相当于 <code>iostat</code>命令输出的 <code>await</code>值。反映了一个I/O请求从进入系统到完成的总延迟<br><br>。</td>
 </tr>
-<tr>
-<td>方法如下：</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+<p>方法如下：</p>
 <p>首先blkparse可以将对应不同cpu的多个文件聚合成一个文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blkparse -i sdb -d sdb.blktrace.bin</span><br></pre></td></tr></table></figure>
-
 <p>然后btt就可以分析这个sdb.blktrace.bin了：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">==================== All Devices ====================</span><br><span class="line"></span><br><span class="line">            ALL           MIN           AVG           MAX           N</span><br><span class="line">--------------- ------------- ------------- ------------- -----------</span><br><span class="line"></span><br><span class="line">Q2Q               0.000000001   0.000159747   0.025292639       62150</span><br><span class="line">Q2G               0.000000233   0.000001380   0.000056343       52423</span><br><span class="line">G2I               0.000000146   0.000027084   0.005031317       48516</span><br><span class="line">Q2M               0.000000142   0.000000751   0.000021613        9728</span><br><span class="line">I2D               0.000000096   0.001534463   0.022469688       52423</span><br><span class="line">M2D               0.000000647   0.002617691   0.022445412        5821</span><br><span class="line">D2C               0.000046189   0.000779355   0.007860766       62151</span><br><span class="line">Q2C               0.000051089   0.002522832   0.026096657       62151</span><br><span class="line"></span><br><span class="line">==================== Device Overhead ====================</span><br><span class="line"></span><br><span class="line">       DEV |       Q2G       G2I       Q2M       I2D       D2C</span><br><span class="line">---------- | --------- --------- --------- --------- ---------</span><br><span class="line"> (  8, 16) |   0.0461%   0.8380%   0.0047%  51.3029%  30.8921%</span><br><span class="line">---------- | --------- --------- --------- --------- ---------</span><br><span class="line">   Overall |   0.0461%   0.8380%   0.0047%  51.3029%  30.8921%</span><br><span class="line"></span><br><span class="line">==================== Device Merge Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |       #Q       #D   Ratio |   BLKmin   BLKavg   BLKmax    Total</span><br><span class="line">---------- | -------- -------- ------- | -------- -------- -------- --------</span><br><span class="line"> (  8, 16) |    62151    52246     1.2 |        1       20      664  1051700</span><br><span class="line"></span><br><span class="line">==================== Device Q2Q Seek Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line"> (  8, 16) |           62151      42079658.0               0 | 0(17159)</span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line">   Overall |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">   Average |           62151      42079658.0               0 | 0(17159)</span><br><span class="line"></span><br><span class="line">==================== Device D2D Seek Information ====================</span><br><span class="line"></span><br><span class="line">       DEV |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line"> (  8, 16) |           52246      39892356.2               0 | 0(9249)</span><br><span class="line">---------- | --------------- --------------- --------------- | ---------------</span><br><span class="line">   Overall |          NSEEKS            MEAN          MEDIAN | MODE           </span><br><span class="line">   Average |           52246      39892356.2               0 | 0(9249)</span><br></pre></td></tr></table></figure>
-
 <p>注意： D2C和Q2C，一个是表征块设备性能的关键指标，另一个是客户发起请求到收到响应的时间，我们可以看出，</p>
 <p>D2C 平均在0.000779355 秒，即0.7毫秒 Q2C 平均在0.002522832 秒，即2.5毫秒，</p>
 <p>无论是service time 还是客户感知到的await time，都是非常短的，表现非常不俗。但是D2C花费的时间只占整个Q2C的30%， 51%以上的时间花费在I2D。</p>
-<h1 id="参考-搬运"><a href="#参考-搬运" class="headerlink" title="参考&#x2F;搬运"></a>参考&#x2F;搬运</h1><p><a target="_blank" rel="noopener" href="https://bean-li.github.io/blktrace-to-report/">https://bean-li.github.io/blktrace-to-report/</a></p>
+<h1 id="参考搬运">参考/搬运</h1>
+<p>https://bean-li.github.io/blktrace-to-report/</p>
 
     </div>
 
@@ -462,8 +459,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/" rel="prev" title="Linux-网络抓包">
-                  <i class="fa fa-angle-left"></i> Linux-网络抓包
+                <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="prev" title="bpftrace技术1-常用命令">
+                  <i class="fa fa-angle-left"></i> bpftrace技术1-常用命令
                 </a>
             </div>
             <div class="post-nav-item">

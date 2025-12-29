@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Map 的核心概念与用途在 bpftrace 中，符号 @用于定义和操作 Map 变量（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的迷你数据库 Map 的主要作用是在不同的事件探针（probe）之间存储、共享和聚合数据。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂">
+    <meta name="description" content="Map 的核心概念与用途 在 bpftrace 中，符号 @用于定义和操作 Map 变量（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的迷你数据库 Map 的主要作用是在不同的事件探针（probe）之间存储、共享和聚合数据。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bpftrace技术2-map变量和map函数">
 <meta property="og:url" content="https://dushenda.github.io/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF2-map%E5%8F%98%E9%87%8F%E5%92%8Cmap%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="dushenda">
-<meta property="og:description" content="Map 的核心概念与用途在 bpftrace 中，符号 @用于定义和操作 Map 变量（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的迷你数据库 Map 的主要作用是在不同的事件探针（probe）之间存储、共享和聚合数据。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂">
+<meta property="og:description" content="Map 的核心概念与用途 在 bpftrace 中，符号 @用于定义和操作 Map 变量（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的迷你数据库 Map 的主要作用是在不同的事件探针（probe）之间存储、共享和聚合数据。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-10T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-29T15:42:30.053Z">
+<meta property="article:modified_time" content="2025-12-29T15:49:57.010Z">
 <meta property="article:author" content="dushenda">
 <meta property="article:tag" content="bpftrace">
 <meta property="article:tag" content="linux">
@@ -170,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Map-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%94%A8%E9%80%94"><span class="nav-number">1.</span> <span class="nav-text">Map 的核心概念与用途</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Map-%E7%9A%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E4%B8%8E%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">Map 的常见操作与示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">与其他变量的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map%E5%87%BD%E6%95%B0%E5%8F%82%E8%80%83%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">map函数参考表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">5.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#count-%E7%BB%9F%E8%AE%A1%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E6%AC%A1%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">count()- 统计系统调用次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-int-n-%E8%AE%A1%E7%AE%97%E8%AF%BB%E5%8F%96%E7%9A%84%E6%80%BB%E5%AD%97%E8%8A%82%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">sum(int n)- 计算读取的总字节数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avg-int-n-%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%9D%87%E8%AF%BB%E5%8F%96%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.3.</span> <span class="nav-text">avg(int n)- 计算平均读取大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stats-int-n-%E8%8E%B7%E5%8F%96%E5%AE%8C%E6%95%B4%E7%9A%84%E7%BB%9F%E8%AE%A1%E6%91%98%E8%A6%81"><span class="nav-number">5.4.</span> <span class="nav-text">stats(int n)- 获取完整的统计摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hist-int-n-%E5%88%86%E6%9E%90%E8%AF%BB%E5%8F%96%E5%AD%97%E8%8A%82%E6%95%B0%E7%9A%84%E5%AF%B9%E6%95%B0%E5%88%86%E5%B8%83"><span class="nav-number">5.5.</span> <span class="nav-text">hist(int n)- 分析读取字节数的对数分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lhist-int-n-int-min-int-max-int-step-%E5%88%86%E6%9E%90%E8%AF%BB%E5%8F%96%E5%AD%97%E8%8A%82%E6%95%B0%E7%9A%84%E7%BA%BF%E6%80%A7%E5%88%86%E5%B8%83"><span class="nav-number">5.6.</span> <span class="nav-text">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delete-m-key-%E6%B8%85%E7%90%86%E4%B8%B4%E6%97%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">5.7.</span> <span class="nav-text">delete(@m[key])- 清理临时数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clear-m-%E5%92%8C-zero-m-%E9%87%8D%E7%BD%AE-Map"><span class="nav-number">5.8.</span> <span class="nav-text">clear(@m)和 zero(@m)- 重置 Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map%E7%89%B9%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">map特点</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#map-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%94%A8%E9%80%94"><span class="nav-number">1.</span> <span class="nav-text">Map 的核心概念与用途</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map-%E7%9A%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E4%B8%8E%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text"> Map 的常见操作与示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text"> 与其他变量的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map%E5%87%BD%E6%95%B0%E5%8F%82%E8%80%83%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">map函数参考表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">5.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#count--%E7%BB%9F%E8%AE%A1%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E6%AC%A1%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">count()- 统计系统调用次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sumint-n--%E8%AE%A1%E7%AE%97%E8%AF%BB%E5%8F%96%E7%9A%84%E6%80%BB%E5%AD%97%E8%8A%82%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">sum(int n)- 计算读取的总字节数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avgint-n--%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%9D%87%E8%AF%BB%E5%8F%96%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.3.</span> <span class="nav-text">avg(int n)- 计算平均读取大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#statsint-n--%E8%8E%B7%E5%8F%96%E5%AE%8C%E6%95%B4%E7%9A%84%E7%BB%9F%E8%AE%A1%E6%91%98%E8%A6%81"><span class="nav-number">5.4.</span> <span class="nav-text">stats(int n)- 获取完整的统计摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#histint-n--%E5%88%86%E6%9E%90%E8%AF%BB%E5%8F%96%E5%AD%97%E8%8A%82%E6%95%B0%E7%9A%84%E5%AF%B9%E6%95%B0%E5%88%86%E5%B8%83"><span class="nav-number">5.5.</span> <span class="nav-text">hist(int n)- 分析读取字节数的对数分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lhistint-n-int-min-int-max-int-step--%E5%88%86%E6%9E%90%E8%AF%BB%E5%8F%96%E5%AD%97%E8%8A%82%E6%95%B0%E7%9A%84%E7%BA%BF%E6%80%A7%E5%88%86%E5%B8%83"><span class="nav-number">5.6.</span> <span class="nav-text">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deletemkey--%E6%B8%85%E7%90%86%E4%B8%B4%E6%97%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">5.7.</span> <span class="nav-text">delete(@m[key])- 清理临时数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clearm%E5%92%8C-zerom--%E9%87%8D%E7%BD%AE-map"><span class="nav-number">5.8.</span> <span class="nav-text">clear(@m)和 zero(@m)- 重置 Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map%E7%89%B9%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">map特点</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -273,231 +273,245 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Map-的核心概念与用途"><a href="#Map-的核心概念与用途" class="headerlink" title="Map 的核心概念与用途"></a>Map 的核心概念与用途</h1><p>在 bpftrace 中，符号 <code>@</code>用于定义和操作 <strong>Map 变量</strong>（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的<strong>迷你数据库</strong></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="map-的核心概念与用途">Map 的核心概念与用途</h1>
+<p>在 bpftrace 中，符号 <code>@</code>用于定义和操作 <strong>Map 变量</strong>（或称映射变量）。这是 bpftrace 实现高效数据聚合的核心机制，你可以把它理解为一个在内核中运行的、功能强大的<strong>迷你数据库</strong></p>
 <p>Map 的主要作用是在不同的事件探针（probe）之间<strong>存储、共享和聚合数据</strong>。当某个事件触发时，你可以将数据记录到 Map 中；当另一个相关事件触发时，再从中读取或更新数据。这使得实现复杂的追踪逻辑成为可能。</p>
 <table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 90%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>特性</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><strong>数据持久化</strong>​</td>
 <td>Map 中的数据在多个探针事件之间保持存在，不像普通变量那样每次事件触发后就被重置。（全局变量）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>键值对结构</strong>​</td>
 <td>Map 使用键（key）来索引值（value），格式为 <code>@map_name[key] = value</code>。键可以是单一值，也可以是多个值的组合（如 <code>@a[pid, comm]</code>）。kv结构</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>自动输出</strong>​</td>
 <td>默认情况下，当 bpftrace 程序退出时（例如你按下 <code>Ctrl-C</code>），所有非空的 Map 内容会自动打印到屏幕上。</td>
 </tr>
-</tbody></table>
-<h1 id="Map-的常见操作与示例"><a href="#Map-的常见操作与示例" class="headerlink" title="Map 的常见操作与示例"></a>Map 的常见操作与示例</h1><table>
+</tbody>
+</table>
+<h1 id="map-的常见操作与示例"> Map 的常见操作与示例</h1>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 24%" />
+<col style="width: 47%" />
+</colgroup>
 <thead>
-<tr>
-<th>操作&#x2F;函数</th>
+<tr class="header">
+<th>操作/函数</th>
 <th>说明</th>
 <th>示例</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><strong>赋值</strong>​</td>
 <td>直接给 Map 赋值。</td>
 <td><code>@start_time[tid] = nsecs</code>(记录线程的开始时间)</td>
 </tr>
-<tr>
-<td>**计数 (<code>count()</code>)**​</td>
+<tr class="even">
+<td><strong>计数 (<code>count()</code>)</strong>​</td>
 <td>统计事件发生的次数。</td>
 <td><code>@syscall_count[comm] = count()</code>(统计每个进程名的系统调用次数)</td>
 </tr>
-<tr>
-<td>**求和 (<code>sum()</code>)**​</td>
+<tr class="odd">
+<td><strong>求和 (<code>sum()</code>)</strong>​</td>
 <td>对数值进行累加。</td>
 <td><code>@total_bytes[pid] = sum(args-&gt;ret)</code>(累计每个进程读取的总字节数)</td>
 </tr>
-<tr>
-<td>**统计 (<code>avg()</code>, <code>min()</code>, <code>max()</code>)**​</td>
+<tr class="even">
+<td><strong>统计 (<code>avg()</code>, <code>min()</code>, <code>max()</code>)</strong>​</td>
 <td>计算平均值、最小值、最大值。</td>
 <td><code>@response_time = avg($latency)</code></td>
 </tr>
-<tr>
-<td>**直方图 (<code>hist()</code>)**​</td>
+<tr class="odd">
+<td><strong>直方图 (<code>hist()</code>)</strong>​</td>
 <td><strong>非常实用</strong>，生成2的幂次方的直方图，直观展示数据分布。</td>
 <td><code>@latency_ns = hist(nsecs - @start[tid])</code>(可视化读操作的延迟分布)</td>
 </tr>
-<tr>
-<td>**线性直方图 (<code>lhist()</code>)**​</td>
+<tr class="even">
+<td><strong>线性直方图 (<code>lhist()</code>)</strong>​</td>
 <td>生成自定义区间的线性直方图。</td>
 <td><code>@read_sizes = lhist(args-&gt;ret, 0, 10000, 1000)</code>(统计读取大小的分布)</td>
 </tr>
-<tr>
-<td>**数据清理 (<code>delete()</code>)**​</td>
+<tr class="odd">
+<td><strong>数据清理 (<code>delete()</code>)</strong>​</td>
 <td>从 Map 中删除特定的键值对，防止内存无限增长。</td>
 <td><code>delete(@start_time[tid])</code>(在处理完一个事件后清理对应的开始时间)</td>
 </tr>
-</tbody></table>
-<h1 id="与其他变量的区别"><a href="#与其他变量的区别" class="headerlink" title="与其他变量的区别"></a>与其他变量的区别</h1><table>
+</tbody>
+</table>
+<h1 id="与其他变量的区别"> 与其他变量的区别</h1>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>变量类型</th>
 <th>前缀</th>
 <th>作用域与用途</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><strong>Map 变量</strong>​</td>
 <td><code>@</code></td>
 <td><strong>全局</strong>。用于在探针之间持久化存储和聚合数据。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>内置变量</strong>​</td>
 <td>无</td>
 <td><strong>只读</strong>。提供事件上下文信息，如 <code>pid</code>(进程ID)、<code>comm</code>(命令名)、<code>retval</code>(函数返回值)等。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>暂存变量</strong>​</td>
 <td><code>$</code></td>
 <td><strong>局部临时</strong>。用于单次探针触发过程中的中间计算，例如 <code>$duration = nsecs - @start[tid]</code>。</td>
 </tr>
-</tbody></table>
-<h1 id="map函数参考表"><a href="#map函数参考表" class="headerlink" title="map函数参考表"></a>map函数参考表</h1><table>
+</tbody>
+</table>
+<h1 id="map函数参考表">map函数参考表</h1>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 36%" />
+<col style="width: 31%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>函数原型</th>
 <th>核心作用与参数说明</th>
 <th>典型应用场景</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>**<code>count()</code>**​</td>
+<tbody>
+<tr class="odd">
+<td><strong><code>count()</code></strong>​</td>
 <td><strong>计数</strong>。统计事件被触发的次数。无参数。</td>
 <td>统计系统调用次数、函数调用次数等。</td>
 </tr>
-<tr>
-<td>**<code>sum(int n)</code>**​</td>
+<tr class="even">
+<td><strong><code>sum(int n)</code></strong>​</td>
 <td><strong>求和</strong>。对参数 <code>n</code>的值进行累加。</td>
 <td>计算总的字节读写量、总耗时等。</td>
 </tr>
-<tr>
-<td>**<code>avg(int n)</code>**​</td>
+<tr class="odd">
+<td><strong><code>avg(int n)</code></strong>​</td>
 <td><strong>求平均值</strong>。计算参数 <code>n</code>的平均值。</td>
 <td>计算平均延迟、平均数据包大小等。</td>
 </tr>
-<tr>
-<td>**<code>min(int n)</code>**​</td>
+<tr class="even">
+<td><strong><code>min(int n)</code></strong>​</td>
 <td><strong>求最小值</strong>。记录参数 <code>n</code>的最小值。</td>
 <td>追踪最小延迟、最小数据块大小。</td>
 </tr>
-<tr>
-<td>**<code>max(int n)</code>**​</td>
+<tr class="odd">
+<td><strong><code>max(int n)</code></strong>​</td>
 <td><strong>求最大值</strong>。记录参数 <code>n</code>的最大值。</td>
 <td>追踪最大延迟、最大数据块大小。</td>
 </tr>
-<tr>
-<td>**<code>stats(int n)</code>**​</td>
+<tr class="even">
+<td><strong><code>stats(int n)</code></strong>​</td>
 <td><strong>统计摘要</strong>。返回参数 <code>n</code>的计数、平均值、总和、最小值、最大值。</td>
 <td>获取一个指标的全面统计信息。</td>
 </tr>
-<tr>
-<td>**<code>hist(int n)</code>**​</td>
+<tr class="odd">
+<td><strong><code>hist(int n)</code></strong>​</td>
 <td><strong>对数直方图</strong>。按2的幂次方区间（如 <code>[4-8)</code>, <code>[8-16)</code>）展示参数 <code>n</code>的分布。</td>
 <td>直观展示延迟、数据大小的分布情况，易于发现模式。</td>
 </tr>
-<tr>
-<td>**<code>lhist(int n, int min, int max, int step)</code>**​</td>
+<tr class="even">
+<td><strong><code>lhist(int n, int min, int max, int step)</code></strong>​</td>
 <td><strong>线性直方图</strong>。在指定的线性区间（<code>min</code>到<code>max</code>，步长为<code>step</code>）内展示参数 <code>n</code>的分布。</td>
 <td>当需要自定义固定区间进行分析时使用。</td>
 </tr>
-<tr>
-<td>**<code>delete(@m[key])</code>**​</td>
+<tr class="odd">
+<td><strong><code>delete(@m[key])</code></strong>​</td>
 <td><strong>删除键值对</strong>。从 Map <code>@m</code>中删除指定的 <code>key</code>及其对应的值。</td>
-<td>清理临时数据，防止 Map 无限增长，常用于配对探针（如 kprobe&#x2F;kretprobe）。</td>
+<td>清理临时数据，防止 Map 无限增长，常用于配对探针（如 kprobe/kretprobe）。</td>
 </tr>
-<tr>
-<td>**<code>clear(@m)</code>**​</td>
+<tr class="even">
+<td><strong><code>clear(@m)</code></strong>​</td>
 <td><strong>清空 Map</strong>。清除 Map <code>@m</code>中的所有键值对。</td>
 <td>在定时器（如 <code>interval</code>）中定期重置统计。</td>
 </tr>
-<tr>
-<td>**<code>zero(@m)</code>**​</td>
+<tr class="odd">
+<td><strong><code>zero(@m)</code></strong>​</td>
 <td><strong>归零 Map</strong>。将 Map <code>@m</code>中所有键的值重置为 0。</td>
 <td>重置计数或求和等数据，但保留键的结构。</td>
 </tr>
-</tbody></table>
-<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="count-统计系统调用次数"><a href="#count-统计系统调用次数" class="headerlink" title="count()- 统计系统调用次数"></a>count()- 统计系统调用次数</h2><p>统计每个进程调用的系统调用次数</p>
-<p><code>bpftrace -e &#39;tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }&#39;</code></p>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@count[bash]: 15</span><br><span class="line">@count[sshd]: 28</span><br><span class="line">@count[snmpd]: 102</span><br></pre></td></tr></table></figure>
-
+</tbody>
+</table>
+<h1 id="例子">例子</h1>
+<h2 id="count--统计系统调用次数">count()- 统计系统调用次数</h2>
+<p>统计每个进程调用的系统调用次数</p>
+<p><code>bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@count[bash]: 15</span><br><span class="line">@count[sshd]: 28</span><br><span class="line">@count[snmpd]: 102</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>@[comm]：以进程名 comm为键（key）。</li>
 <li>count()：每次事件触发，对应键的值加 1</li>
 </ul>
-<h2 id="sum-int-n-计算读取的总字节数"><a href="#sum-int-n-计算读取的总字节数" class="headerlink" title="sum(int n)- 计算读取的总字节数"></a>sum(int n)- 计算读取的总字节数</h2><p>累计所有进程通过 read 系统调用成功读取的字节数</p>
-<p><code>bpftrace -e &#39;tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @bytes = sum(args-&gt;ret); }&#39;</code></p>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@bytes: 1048576</span><br></pre></td></tr></table></figure>
-
+<h2 id="sumint-n--计算读取的总字节数">sum(int n)- 计算读取的总字节数</h2>
+<p>累计所有进程通过 read 系统调用成功读取的字节数</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @bytes = sum(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@bytes: 1048576</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>&#x2F;args-&gt;ret &gt; 0&#x2F;：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
 <li>sum(args-&gt;ret)：对返回值（读取的字节数）进行累加</li>
 </ul>
-<h2 id="avg-int-n-计算平均读取大小"><a href="#avg-int-n-计算平均读取大小" class="headerlink" title="avg(int n)- 计算平均读取大小"></a>avg(int n)- 计算平均读取大小</h2><p>计算每次 <code>read</code>系统调用成功读取的平均字节数。</p>
-<p><code>bpftrace -e &#39;tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @avg_size = avg(args-&gt;ret); }&#39;</code></p>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@avg_size: 512</span><br></pre></td></tr></table></figure>
-
+<h2 id="avgint-n--计算平均读取大小">avg(int n)- 计算平均读取大小</h2>
+<p>计算每次 <code>read</code>系统调用成功读取的平均字节数。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @avg_size = avg(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@avg_size: 512</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>&#x2F;args-&gt;ret &gt; 0&#x2F;：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
 <li>avg(args-&gt;ret)：对返回值（读取的字节数）求平均</li>
 </ul>
-<h2 id="stats-int-n-获取完整的统计摘要"><a href="#stats-int-n-获取完整的统计摘要" class="headerlink" title="stats(int n)- 获取完整的统计摘要"></a>stats(int n)- 获取完整的统计摘要</h2><p>对 <code>read</code>系统调用的返回值进行全面的统计。</p>
-<p><code>bpftrace -e &#39;tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @s = stats(args-&gt;ret); }&#39;</code></p>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@s: count 100, average 4096, total 409600, min 1, max 8192</span><br></pre></td></tr></table></figure>
-
+<h2 id="statsint-n--获取完整的统计摘要">stats(int n)- 获取完整的统计摘要</h2>
+<p>对 <code>read</code>系统调用的返回值进行全面的统计。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read /args-&gt;ret &gt; 0/ { @s = stats(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@s: count 100, average 4096, total 409600, min 1, max 8192</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>&#x2F;args-&gt;ret &gt; 0&#x2F;：过滤器，只处理成功读取（返回值大于0）的情况。</li>
+<li>/args-&gt;ret &gt; 0/：过滤器，只处理成功读取（返回值大于0）的情况。</li>
 <li>stats(args-&gt;ret)：求调用次数，对返回值（读取的字节数）求平均，求总数，求最大最小值</li>
 </ul>
-<h2 id="hist-int-n-分析读取字节数的对数分布"><a href="#hist-int-n-分析读取字节数的对数分布" class="headerlink" title="hist(int n)- 分析读取字节数的对数分布"></a>hist(int n)- 分析读取字节数的对数分布</h2><p>显示 <code>read</code>系统调用返回值的分布，区间按2的幂次方划分。</p>
-<p><code>bpftrace -e &#39;tracepoint:syscalls:sys_exit_read { @bytes = hist(args-&gt;ret); }&#39;</code></p>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">[0, 1]                12 |@@@@@@@@@@@@@@@@@@@@                                |</span><br><span class="line">[2, 4)                18 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |</span><br><span class="line">[4, 8)                 0 |                                                    |</span><br><span class="line">...</span><br><span class="line">[128, 256)             1 |@</span><br></pre></td></tr></table></figure>
-
+<h2 id="histint-n--分析读取字节数的对数分布">hist(int n)- 分析读取字节数的对数分布</h2>
+<p>显示 <code>read</code>系统调用返回值的分布，区间按2的幂次方划分。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = hist(args-&gt;ret); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">[0, 1]                12 |@@@@@@@@@@@@@@@@@@@@                                |</span><br><span class="line">[2, 4)                18 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |</span><br><span class="line">[4, 8)                 0 |                                                    |</span><br><span class="line">...</span><br><span class="line">[128, 256)             1 |@</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>hist(args-&gt;ret)：分为2^x ~2^y 大小的桶，统计每个桶的里面的数目个数</li>
 </ul>
-<h2 id="lhist-int-n-int-min-int-max-int-step-分析读取字节数的线性分布"><a href="#lhist-int-n-int-min-int-max-int-step-分析读取字节数的线性分布" class="headerlink" title="lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布"></a>lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</h2><p>使用线性直方图统计 <code>read</code>返回值，范围从0到2000，步长为200。</p>
-<p><code>bpftrace -e &#39;tracepoint:syscalls:sys_exit_read { @bytes = lhist(args-&gt;ret, 0, 2000, 200); }&#39;</code></p>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">(..., 0)                0 |                                                    |</span><br><span class="line">[0, 200)              66 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[200, 400)             2 |@                                                   |</span><br><span class="line">...</span><br><span class="line">[2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br></pre></td></tr></table></figure>
-
+<h2 id="lhistint-n-int-min-int-max-int-step--分析读取字节数的线性分布">lhist(int n, int min, int max, int step)- 分析读取字节数的线性分布</h2>
+<p>使用线性直方图统计 <code>read</code>返回值，范围从0到2000，步长为200。</p>
+<p><code>bpftrace -e 'tracepoint:syscalls:sys_exit_read { @bytes = lhist(args-&gt;ret, 0, 2000, 200); }'</code></p>
+<p>输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@bytes:</span><br><span class="line">(..., 0)                0 |                                                    |</span><br><span class="line">[0, 200)              66 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|</span><br><span class="line">[200, 400)             2 |@                                                   |</span><br><span class="line">...</span><br><span class="line">[2000, ...)            39 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>hist(args-&gt;ret)：分为0-200区间桶，统计每个桶的里面的数目个数</li>
 </ul>
-<h2 id="delete-m-key-清理临时数据"><a href="#delete-m-key-清理临时数据" class="headerlink" title="delete(@m[key])- 清理临时数据"></a>delete(@m[key])- 清理临时数据</h2><p>在计算函数耗时后，删除用于存储开始时间的临时键，避免 Map 无限增长。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read </span></span><br><span class="line"><span class="string">			&#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">			   kretprobe:vfs_read /@start[tid]/ </span></span><br><span class="line"><span class="string">			   &#123; $duration_ns = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">				 @us = hist($duration_ns); </span></span><br><span class="line"><span class="string">			     delete(@start[tid]); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="deletemkey--清理临时数据">delete(<span class="citation" data-cites="m">@m</span>[key])- 清理临时数据</h2>
+<p>在计算函数耗时后，删除用于存储开始时间的临时键，避免 Map 无限增长。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;kprobe:vfs_read </span></span><br><span class="line"><span class="string">			&#123; @start[tid] = nsecs; &#125; </span></span><br><span class="line"><span class="string">			   kretprobe:vfs_read /@start[tid]/ </span></span><br><span class="line"><span class="string">			   &#123; $duration_ns = nsecs - @start[tid]; </span></span><br><span class="line"><span class="string">				 @us = hist($duration_ns); </span></span><br><span class="line"><span class="string">			     delete(@start[tid]); &#125;&#x27;</span></span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>此函数通常用于配对操作的探针（如 <code>kprobe</code>和 <code>kretprobe</code>），在操作完成后及时清理资源</li>
 </ul>
-<h2 id="clear-m-和-zero-m-重置-Map"><a href="#clear-m-和-zero-m-重置-Map" class="headerlink" title="clear(@m)和 zero(@m)- 重置 Map"></a>clear(@m)和 zero(@m)- 重置 Map</h2><p>每5秒打印并清空一次系统调用计数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); clear(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@[Relay(89295)]: 3</span><br><span class="line">@[mini_init]: 4</span><br><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[systemd-udevd]: 37</span><br><span class="line">@[chronyd]: 40</span><br><span class="line">@[bpftrace]: 118</span><br></pre></td></tr></table></figure>
-
+<h2 id="clearm和-zerom--重置-map">clear(<span class="citation" data-cites="m">@m</span>)和 zero(<span class="citation" data-cites="m">@m</span>)- 重置 Map</h2>
+<p>每5秒打印并清空一次系统调用计数 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); clear(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@[Relay(89295)]: 3</span><br><span class="line">@[mini_init]: 4</span><br><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[systemd-udevd]: 37</span><br><span class="line">@[chronyd]: 40</span><br><span class="line">@[bpftrace]: 118</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><code>clear(@m)</code>会删除 Map 中的所有键值对。而 <code>zero(@m)</code>则将所有键的值重置为0，但保留键的结构</li>
+<li><code>clear(@m)</code>会删除 Map 中的所有键值对。而 <code>zero(@m)</code>则将所有键的值重置为0，但保留键的结构 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); zero(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure> 输出 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 9</span><br><span class="line">@[mini_init]: 12</span><br><span class="line">@[chronyd]: 44</span><br><span class="line">@[init]: 103</span><br><span class="line">@[bpftrace]: 114</span><br><span class="line">@[GnsPortTracker]: 242</span><br><span class="line">@[top]: 350</span><br><span class="line">@[grep]: 664</span><br><span class="line">@[sh]: 923</span><br><span class="line">@[Xwayland]: 1978</span><br><span class="line">@[ps]: 2778</span><br><span class="line">@[libuv-worker]: 4028</span><br><span class="line">@[ls]: 4256</span><br><span class="line">@[node]: 4722</span><br><span class="line">@[mini_init]: 0   &lt;---------主要看这个，明显没有调用，但是结构被保留下来了</span><br><span class="line">@[Relay(109)]: 3</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br></pre></td></tr></table></figure></li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bpftrace -e <span class="string">&#x27;tracepoint:raw_syscalls:sys_enter &#123; @[comm] = count(); &#125; interval:s:5 &#123; print(@); zero(@); &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@[gmain]: 5</span><br><span class="line">@[Relay(893)]: 6</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 9</span><br><span class="line">@[mini_init]: 12</span><br><span class="line">@[chronyd]: 44</span><br><span class="line">@[init]: 103</span><br><span class="line">@[bpftrace]: 114</span><br><span class="line">@[GnsPortTracker]: 242</span><br><span class="line">@[top]: 350</span><br><span class="line">@[grep]: 664</span><br><span class="line">@[sh]: 923</span><br><span class="line">@[Xwayland]: 1978</span><br><span class="line">@[ps]: 2778</span><br><span class="line">@[libuv-worker]: 4028</span><br><span class="line">@[ls]: 4256</span><br><span class="line">@[node]: 4722</span><br><span class="line">@[mini_init]: 0   &lt;---------主要看这个，明显没有调用，但是结构被保留下来了</span><br><span class="line">@[Relay(109)]: 3</span><br><span class="line">@[Relay(909)]: 6</span><br><span class="line">@[Relay(89295)]: 6</span><br><span class="line">@[Relay(893)]: 6</span><br></pre></td></tr></table></figure>
-
-<h1 id="map特点"><a href="#map特点" class="headerlink" title="map特点"></a>map特点</h1><ul>
+<h1 id="map特点">map特点</h1>
+<ul>
 <li><strong>自动打印</strong>：默认情况下，当 bpftrace 程序终止时（例如用户按下 <code>Ctrl-C</code>），所有非空的 Map 变量会自动打印出来。</li>
 <li><strong>过滤条件</strong>：使用 <code>/&lt;filter&gt;/</code>可以设置条件，只有满足条件时才会执行后面的动作，这能有效提升脚本效率和输出内容的针对性</li>
 <li><strong>结合变量</strong>：Map 函数常与内置变量（如 <code>comm</code>, <code>pid</code>, <code>nsecs</code>）或临时变量（以 <code>$</code>开头）结合使用，以实现复杂的追踪逻辑</li>
@@ -524,8 +538,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/12/10/Linux%20Debug/bpftrace%E6%8A%80%E6%9C%AF1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="bpftrace技术1-常用命令">
-                  bpftrace技术1-常用命令 <i class="fa fa-angle-right"></i>
+                <a href="/2025/12/10/Linux%20Debug/Linux-%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/" rel="next" title="Linux-网络抓包">
+                  Linux-网络抓包 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
