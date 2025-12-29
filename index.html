@@ -181,7 +181,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -218,6 +218,233 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/qemu%20cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/29/ceatsheet/qemu%20cheatsheet/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-29 11:10:15" itemprop="dateCreated datePublished" datetime="2025-12-29T11:10:15+00:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="常见qemu语句">常见QEMU语句</h1>
+<h2 id="一基本虚拟机启动">一、基本虚拟机启动</h2>
+<h3 id="基本启动虚拟机">1. 基本启动虚拟机</h3>
+<p>启动x86_64虚拟机加载镜像（基本用法）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,if=virtio</span><br></pre></td></tr></table></figure>
+<h3 id="无图形界面启动">2. 无图形界面启动</h3>
+<p>无头模式启动VM（-nographic）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -nographic -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="指定cpu核心数">3. 指定CPU核心数</h3>
+<p>指定4核CPU启动（-smp 4）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -smp 4 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="指定内存大小">4. 指定内存大小</h3>
+<p>分配2GB内存启动（-m 2G）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -m 2G -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="启用kvm加速">5. 启用KVM加速</h3>
+<p>启用KVM硬件加速（-enable-kvm）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -enable-kvm -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="指定机器类型">6. 指定机器类型</h3>
+<p>指定q35机器类型启动（-machine q35）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -machine q35 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="引导顺序指定">7. 引导顺序指定</h3>
+<p>指定从硬盘引导（-boot order=c）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -boot order=c -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="cd-rom镜像启动">8. CD-ROM镜像启动</h3>
+<p>附加CD-ROM镜像启动（-cdrom）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -cdrom iso.img -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="usb设备模拟">9. USB设备模拟</h3>
+<p>模拟USB设备启动（-usb）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="守护进程模式启动">10. 守护进程模式启动</h3>
+<p>后台守护进程启动VM（-daemonize）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -daemonize -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h2 id="二设备配置与直通">二、设备配置与直通</h2>
+<h3 id="virtio磁盘配置">11. VirtIO磁盘配置</h3>
+<p>使用VirtIO SCSI磁盘（-drive if=virtio）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,if=virtio,format=qcow2</span><br></pre></td></tr></table></figure>
+<h3 id="pci设备直通">12. PCI设备直通</h3>
+<p>直通主机PCI设备到VM（-device vfio-pci）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device vfio-pci,host=0000:01:00.0 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="usb主机设备直通">13. USB主机设备直通</h3>
+<p>直通USB设备（-usbdevice host）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -device usb-host,vendorid=0x1234,productid=0x5678 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="网络设备配置">14. 网络设备配置</h3>
+<p>配置用户模式网络（-netdev user）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev user,id=mynet -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="桥接网络配置">15. 桥接网络配置</h3>
+<p>桥接主机网络接口（-netdev bridge）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev bridge,id=mynet,br=br0 -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="tap网络配置">16. TAP网络配置</h3>
+<p>使用TAP接口网络（-netdev tap）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev tap,id=mynet,ifname=tap0 -device virtio-net,netdev=mynet -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="vfio-gpu直通">17. VFIO GPU直通</h3>
+<p>直通GPU设备并配置VGA（-vfio-pci -vga none）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device vfio-pci,host=0000:01:00.0 -vga none -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="多磁盘附加">18. 多磁盘附加</h3>
+<p>附加多个磁盘设备（-drive 多行）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk1.img,if=virtio -drive file=disk2.img,if=virtio -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="串口设备配置">19. 串口设备配置</h3>
+<p>配置串口重定向到stdio（-serial stdio）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -serial stdio -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="块设备缓存模式">20. 块设备缓存模式</h3>
+<p>指定磁盘缓存模式为none（cache=none）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,cache=none,if=virtio</span><br></pre></td></tr></table></figure>
+<h2 id="三网络与迁移">三、网络与迁移</h2>
+<h3 id="多网卡配置">21. 多网卡配置</h3>
+<p>配置多个网卡接口（-netdev 多行）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -netdev user,id=net1 -device virtio-net,netdev=net1 -netdev user,id=net2 -device virtio-net,netdev=net2 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="vlan网络隔离">22. VLAN网络隔离</h3>
+<p>使用VLAN隔离网卡（-net vlan=1）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,vlan=1 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="实时迁移vm">23. 实时迁移VM</h3>
+<p>迁移VM到远程主机（-incoming tcp）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 源: qemu-system-x86_64 -drive file=disk.img -incoming tcp:0:4444 (目标先启动)# 目标: migrate -d tcp:remote-host:4444</span><br></pre></td></tr></table></figure>
+<h3 id="迁移压缩优化">24. 迁移压缩优化</h3>
+<p>启用迁移压缩加速（-comp xbzrle）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img -enable-kvm -comp xbzrle</span><br></pre></td></tr></table></figure>
+<h3 id="多线程迁移">25. 多线程迁移</h3>
+<p>启用多线程迁移（-thread multi）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img -thread multi</span><br></pre></td></tr></table></figure>
+<h3 id="网络端口转发">26. 网络端口转发</h3>
+<p>转发主机端口到VM（-net user,hostfwd）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,hostfwd=tcp::8080-:80 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="smb网络共享">27. SMB网络共享</h3>
+<p>配置SMB网络共享到VM（-net user,smb）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,smb=/path/to/share -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="vde网络配置">28. VDE网络配置</h3>
+<p>使用VDE交换机网络（-net vde）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net vde,sock=/tmp/vde.sock -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="网络限速配置">29. 网络限速配置</h3>
+<p>限制网络带宽（-net user,throttle）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -net user,throttle=100 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="迁移快照链">30. 迁移快照链</h3>
+<p>迁移时处理快照链（-drive snapshot=on）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -drive file=disk.img,snapshot=on</span><br></pre></td></tr></table></figure>
+<h2 id="四图形与输入输出">四、图形与输入输出</h2>
+<h3 id="vnc图形界面">31. VNC图形界面</h3>
+<p>启用VNC远程桌面（-vnc）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -vnc :0 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="spice图形加速">32. SPICE图形加速</h3>
+<p>使用SPICE协议图形（-spice）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -spice port=5900,disable-ticketing=on -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="sdl图形界面">33. SDL图形界面</h3>
+<p>使用SDL库图形输出（-sdl）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -sdl -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="键盘布局指定">34. 键盘布局指定</h3>
+<p>指定键盘布局为en-us（-k en-us）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -k en-us -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="鼠标输入配置">35. 鼠标输入配置</h3>
+<p>配置绝对鼠标输入（-usbdevice tablet）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -usb -device usb-tablet -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="图形分辨率设置">36. 图形分辨率设置</h3>
+<p>设置VGA分辨率（-vga std -full-screen）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -vga std -full-screen -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="多监视器配置">37. 多监视器配置</h3>
+<p>配置多个图形输出（-device virtio-gpu）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device virtio-gpu -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="音频设备模拟">38. 音频设备模拟</h3>
+<p>模拟音频设备输出（-soundhw ac97）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -soundhw ac97 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="剪贴板共享">39. 剪贴板共享</h3>
+<p>启用SPICE剪贴板共享（-spice clipboard=on）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -spice port=5900,clipboard=on -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="图形加速virgl">40. 图形加速Virgl</h3>
+<p>启用Virgl 3D加速（-device virtio-gpu-virgl）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -device virtio-gpu-virgl -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h2 id="五调试与监视">五、调试与监视</h2>
+<h3 id="gdb调试连接">41. GDB调试连接</h3>
+<p>启用GDB调试服务器（-s -S）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -s -S -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="监视器控制台">42. 监视器控制台</h3>
+<p>启用QMP监视器（-monitor stdio）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -monitor stdio -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="qmp套接字监视">43. QMP套接字监视</h3>
+<p>使用UNIX套接字QMP监视（-qmp unix）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -qmp unix:/tmp/qmp.sock,server,nowait -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="性能跟踪">44. 性能跟踪</h3>
+<p>启用性能跟踪日志（-d cpu）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -d cpu -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="日志文件输出">45. 日志文件输出</h3>
+<p>输出日志到文件（-D logfile）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -D qemu.log -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="内核调试模式">46. 内核调试模式</h3>
+<p>调试Linux内核（-kernel -initrd -append）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -kernel bzImage -initrd initrd.img -append &quot;console=ttyS0&quot; -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="内存转储">47. 内存转储</h3>
+<p>转储VM内存到文件（-mem-path）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -mem-path /tmp/mem.dump -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="事件监视脚本">48. 事件监视脚本</h3>
+<p>使用脚本监视事件（-trace events=events.txt）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -trace events=events.txt -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="cpu热插拔监视">49. CPU热插拔监视</h3>
+<p>启用CPU热插拔并监视（-smp 1,maxcpus=4）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -smp 1,maxcpus=4 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<h3 id="调试符号加载">50. 调试符号加载</h3>
+<p>加载调试符号启动（-gdb tcp::1234）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 -gdb tcp::1234 -drive file=disk.img</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3MDQ4MjA2Mg==&amp;mid=2247487183&amp;idx=1&amp;sn=984b50f454c454d3233bb40eaf613691&amp;chksm=cf5f692e87f39bdcd3f8f4569f6d5dcb891c920298d3ecf95b14595cf419a5114ecdbbaeea6a&amp;mpshare=1&amp;scene=24&amp;srcid=1218C6PzHMIsmMxnl4EutIig&amp;sharer_shareinfo=2ff91c68bc0949e2282bcdf00a7bacd8&amp;sharer_shareinfo_first=2ff91c68bc0949e2282bcdf00a7bacd8#rd">常见QEMU语句</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1553,91 +1780,6 @@ title &quot;TCP Packet&quot;
 <p>https://jvns.ca/perf-cheat-sheet.pdf</p>
 </blockquote>
 <p><img src="perfcheatsheet.png" /></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/22/ceatsheet/iproute%20cheatsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/22/ceatsheet/iproute%20cheatsheet/" class="post-title-link" itemprop="url">iproute cheatsheet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-22 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-22T00:00:00+00:00">2025-12-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>https://paulgorman.org/technical/linux-iproute2-cheatsheet.html</p>
-<p>https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf</p>
-<p>https://linux-audit.com/cheat-sheets/ip/#subcommands</p>
-</blockquote>
-<h1 id="ip和ifconfig比较">ip和ifconfig比较</h1>
-<p><img src="compare.png" /></p>
-<h1 id="修改ip地址">修改ip地址</h1>
-<p><img src="modifyaddr.png" /></p>
-<h1 id="管理路由表">管理路由表</h1>
-<p><img src="routemanager.png" /></p>
-<h1 id="管理arp表">管理ARP表</h1>
-<p><img src="arpmanager.png" /></p>
-<h1 id="查询ip地址">查询ip地址</h1>
-<p><img src="query.png" /></p>
-<h1 id="多播管理">多播管理</h1>
-<p><img src="multicast.png" /></p>
 
       
     </div>
