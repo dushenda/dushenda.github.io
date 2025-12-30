@@ -90,6 +90,7 @@ xychart-beta
 5. 接收方收到M3后ACK M6，完成传输
 
 > 快重传的3个连续ACK时间要小于RTO
+
 ![](fast-retrans.png)
 
 
