@@ -181,12 +181,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -218,6 +218,104 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/21/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%B8%BB%E6%9C%BA%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%8Cip%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/21/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%B8%BB%E6%9C%BA%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%8Cip%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">主机同网段双ip问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-21T00:00:00+00:00">2025-12-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="现象">现象</h1>
+<p>因为两个网卡都在同一个网段，所以如果这个时候直接和我们的主机（IP192.168.0.2）进行ping，因为优先级的原因，会导致有一个网卡会无法ping通主机。</p>
+<p><img src="ips.png" /> <img src="route.png" /> <img src="ping1.png" /></p>
+<h1 id="反向路由检查">反向路由检查</h1>
+<p>您可以把这个机制想象成一个严格的“门卫”。当服务器从一个网络接口（比如<code>eth1</code>）收到一个数据包时，这个“门卫”会去查路由表，问：“<strong>要回复这个数据包，我们应该从哪个接口发出去？</strong>”</p>
+<ul>
+<li><strong>正常情况</strong>：如果查到的最佳出口恰好是数据包进来的接口（<code>eth1</code>），则验证通过，数据包被正常接收处理。</li>
+<li><strong>您遇到的情况</strong>：服务器上两个IP在同一LAN，网关可能只在一个接口上（或系统认为只有一个最佳路径）。当数据包从<code>eth1</code>进入，但路由表显示回复它的最佳路径是<code>eth0</code>，这时“门卫”就会拒绝这个数据包，导致ping不通 。关键在于，系统<strong>检查的是“反向路径”是否最优，而非是否可达</strong>​ 。 ## 问题诊断与解决步骤</li>
+</ul>
+<h4 id="确认-rp_filter-的当前设置">1. 确认 rp_filter 的当前设置</h4>
+<p>首先，您需要查看系统当前的反向路由检查设置。在终端中执行以下命令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/net/ipv4/conf/all/rp_filter</span><br><span class="line">cat /proc/sys/net/ipv4/conf/eth0/rp_filter  # 请将 eth0 替换为您的实际网卡名</span><br><span class="line">cat /proc/sys/net/ipv4/conf/eth1/rp_filter  # 请将 eth1 替换为您的实际网卡名</span><br></pre></td></tr></table></figure> <strong>参数值解读</strong>​ ： - <strong>0</strong>：关闭源地址验证。 - <strong>1</strong>：<strong>严格模式</strong>。只要反向路径不是最佳路径（即使有其他路径可达），数据包也会被丢弃。这通常是问题的根源。 - <strong>2</strong>：<strong>松散模式</strong>。只检查源地址是否可通过任意接口可达，而不要求是最佳路径。这在有多路径的环境中是更安全的选择。</p>
+<p>如果这些值被设置为 <code>1</code>（严格模式），那么它很可能就是导致您一个IP不通的原因。 ### 2. 关闭反向路由检查</p>
+<p><strong>重要提示</strong>：关闭此功能会降低系统对IP地址欺骗（IP Spoofing）的防御能力 。请确保您的服务器处于受信任的内网环境中。</p>
+<p><strong>方法一：临时关闭（重启后失效）</strong></p>
+<p>适用于快速验证问题。执行命令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 0 &gt; /proc/sys/net/ipv4/conf/all/rp_filter</span><br><span class="line">echo 0 &gt; /proc/sys/net/ipv4/conf/eth0/rp_filter</span><br><span class="line">echo 0 &gt; /proc/sys/net/ipv4/conf/eth1/rp_filter</span><br></pre></td></tr></table></figure> <strong>方法二：永久关闭（推荐配置）</strong></p>
+<p>通过修改系统配置文件，使设置永久生效。</p>
+<ol type="1">
+<li>编辑 <code>/etc/sysctl.conf</code>文件： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysctl.conf</span><br></pre></td></tr></table></figure></li>
+<li>在文件末尾添加或修改以下行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.conf.all.rp_filter = 0</span><br><span class="line">net.ipv4.conf.default.rp_filter = 0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果需要，也可以为每个网卡单独设置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">net.ipv4.conf.eth0.rp_filter = 0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">net.ipv4.conf.eth1.rp_filter = 0</span></span><br></pre></td></tr></table></figure></li>
+<li>使用以下命令使配置立即生效： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="折中方案采用松散模式">3. 折中方案：采用松散模式</h3>
+<p>如果担心完全关闭的安全风险，折中的办法是启用<strong>松散模式（Loose Mode）</strong>，将值设置为 <code>2</code>。这样既允许了非对称路径的存在（您的包从A进，从B出），又保留了基本的源地址验证 。修改方法同上，只需将配置文件中的值改为2： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.conf.all.rp_filter = 2</span><br><span class="line">net.ipv4.conf.default.rp_filter = 2</span><br></pre></td></tr></table></figure></p>
+<h2 id="其他可能性">其他可能性</h2>
+<p>虽然反向路由检查是最常见的原因，但如果调整后问题依旧，还可以关注以下几点：</p>
+<ul>
+<li><strong>防火墙规则</strong>：检查 iptables 或 firewalld 是否有规则阻止了特定IP的ICMP请求。</li>
+<li><strong>路由表本身</strong>：使用 <code>ip route show</code>或 <code>route -n</code>确认两个IP地址的路由表项是否正确。</li>
+<li><strong>ARP问题</strong>：在局域网中，使用 <code>arp -a</code>或 <code>ip neighbour</code>检查ARP表项是否正确 。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2630,80 +2728,6 @@ AMBA 总线协议</p>
 <li>argX与 args的区别：arg0, arg1…用于 kprobe/uprobe，它们是简单的整数参数。而 args是一个结构体，专用于 tracepoint，需要通过 args-&gt;字段名来访问其成员。</li>
 <li>查看 Tracepoint 参数：你可以使用 bpftrace -lv tracepoint:name命令来查看某个 tracepoint 有哪些参数可用。例如，要查看 write系统调用的参数，可以执行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ » bpftrace -lv tracepoint:syscalls:sys_enter_write</span><br><span class="line">tracepoint:syscalls:sys_enter_write</span><br><span class="line">    int __syscall_nr</span><br><span class="line">    unsigned int fd</span><br><span class="line">    const char * buf</span><br><span class="line">    size_t count</span><br></pre></td></tr></table></figure></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/10/xv6%E5%AD%A6%E4%B9%A0/xv6-vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">xv6-vscode调试</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-10T00:00:00+00:00">2025-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="gdbinit">.gdbinit</h2>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">set $lastcs = -1</span><br><span class="line"></span><br><span class="line">define hook-stop</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">There doesn<span class="string">&#x27;t seem to be a good way to detect if we&#x27;</span>re <span class="keyword">in</span> 16- or</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">32-bit mode, but <span class="keyword">in</span> 32-bit mode we always run with CS == 8 <span class="keyword">in</span> the</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">kernel and CS == 35 <span class="keyword">in</span> user space</span></span><br><span class="line">  if $cs == 8 || $cs == 35</span><br><span class="line">    if $lastcs != 8 &amp;&amp; $lastcs != 35</span><br><span class="line">      set architecture i386</span><br><span class="line">    end</span><br><span class="line">    x/i $pc</span><br><span class="line">  else</span><br><span class="line">    if $lastcs == -1 || $lastcs == 8 || $lastcs == 35</span><br><span class="line">      set architecture i8086</span><br><span class="line">    end</span><br><span class="line">    # Translate the segment:offset into a physical address</span><br><span class="line">    printf &quot;[%4x:%4x] &quot;, $cs, $eip</span><br><span class="line">    x/i $cs*16+$eip</span><br><span class="line">  end</span><br><span class="line">  set $lastcs = $cs</span><br><span class="line">end</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要注释掉</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">echo</span> + target remote localhost:25000\n</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">target remote localhost:25000</span></span><br><span class="line"></span><br><span class="line">echo + symbol-file kernel\n</span><br><span class="line">symbol-file kernel</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="launch.json">launch.json</h2>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug xv6 x86&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/kernel&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerServerAddress&quot;</span><span class="punctuation">:</span> <span class="string">&quot;localhost:25000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set architecture i386:x86-64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;set disassemble-next-line auto&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-print for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;logging&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;trace&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;traceResponse&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;engineLogging&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="tasks.json">tasks.json</h2>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xv6build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;isBackground&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make qemu-nox-gdb&quot;</span><span class="punctuation">,</span> </span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;regexp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;file&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;beginsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.* Now run &#x27;gdb&#x27;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;endsPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
       
     </div>

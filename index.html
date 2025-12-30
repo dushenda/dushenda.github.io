@@ -181,12 +181,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -218,6 +218,75 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/30/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%B5%81%E7%A8%8B%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/30/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%B5%81%E7%A8%8B%E5%9B%BE/" class="post-title-link" itemprop="url">TCP流程图</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-30 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-30T00:00:00+00:00">2025-12-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="tcp流程图.svg" /></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -742,133 +811,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/vagrant%20cheatsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" class="post-title-link" itemprop="url">vagrant cheatsheet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="vagrant-cheatsheet.png" /></p>
-<p>Typing <code>vagrant</code> from the command line will display a list of all available commands.</p>
-<p>Be sure that you are in the same directory as the Vagrantfile when running these commands!</p>
-<h1 id="creating-a-vm">Creating a VM</h1>
-<ul>
-<li><code>vagrant init</code> – Initialize Vagrant with a Vagrantfile and ./.vagrant directory, using no specified base image. Before you can do vagrant up, you’ll need to specify a base image in the Vagrantfile.</li>
-<li><code>vagrant init &lt;boxpath&gt;</code> – Initialize Vagrant with a specific box. To find a box, go to the <a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">public Vagrant box catalog</a>. When you find one you like, just replace it’s name with boxpath. For example, <code>vagrant init ubuntu/trusty64</code>.</li>
-</ul>
-<h1 id="starting-a-vm">Starting a VM</h1>
-<ul>
-<li><code>vagrant up</code> – starts vagrant environment (also provisions only on the FIRST vagrant up)</li>
-<li><code>vagrant resume</code> – resume a suspended machine (vagrant up works just fine for this as well)</li>
-<li><code>vagrant provision</code> – forces reprovisioning of the vagrant machine</li>
-<li><code>vagrant reload</code> – restarts vagrant machine, loads new Vagrantfile configuration</li>
-<li><code>vagrant reload --provision</code> – restart the virtual machine and force provisioning</li>
-</ul>
-<h1 id="getting-into-a-vm">Getting into a VM</h1>
-<ul>
-<li><code>vagrant ssh</code> – connects to machine via SSH</li>
-<li><code>vagrant ssh &lt;boxname&gt;</code> – If you give your box a name in your Vagrantfile, you can ssh into it with boxname. Works from any directory.</li>
-</ul>
-<h1 id="stopping-a-vm">Stopping a VM</h1>
-<ul>
-<li><code>vagrant halt</code> – stops the vagrant machine</li>
-<li><code>vagrant suspend</code> – suspends a virtual machine (remembers state)</li>
-</ul>
-<h1 id="cleaning-up-a-vm">Cleaning Up a VM</h1>
-<ul>
-<li><code>vagrant destroy</code> – stops and deletes all traces of the vagrant machine</li>
-<li><code>vagrant destroy -f</code> – same as above, without confirmation</li>
-</ul>
-<h1 id="boxes">Boxes</h1>
-<ul>
-<li><code>vagrant box list</code> – see a list of all installed boxes on your computer</li>
-<li><code>vagrant box add &lt;name&gt; &lt;url&gt;</code> – download a box image to your computer</li>
-<li><code>vagrant box outdated</code> – check for updates vagrant box update</li>
-<li><code>vagrant box remove &lt;name&gt;</code> – deletes a box from the machine</li>
-<li><code>vagrant package</code> – packages a running virtualbox env in a reusable box</li>
-</ul>
-<h1 id="saving-progress">Saving Progress</h1>
-<p>-<code>vagrant snapshot save [options] [vm-name] &lt;name&gt;</code> – vm-name is often <code>default</code>. Allows us to save so that we can rollback at a later time</p>
-<h1 id="tips">Tips</h1>
-<ul>
-<li><code>vagrant -v</code> – get the vagrant version</li>
-<li><code>vagrant status</code> – outputs status of the vagrant machine</li>
-<li><code>vagrant global-status</code> – outputs status of all vagrant machines</li>
-<li><code>vagrant global-status --prune</code> – same as above, but prunes invalid entries</li>
-<li><code>vagrant provision --debug</code> – use the debug flag to increase the verbosity of the output</li>
-<li><code>vagrant push</code> – yes, vagrant can be configured to <a target="_blank" rel="noopener" href="http://docs.vagrantup.com/v2/push/index.html">deploy code</a>!</li>
-<li><code>vagrant up --provision | tee provision.log</code> – Runs <code>vagrant up</code>, forces provisioning and logs all output to a file</li>
-</ul>
-<h1 id="plugins">Plugins</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a> : <code>$ vagrant plugin install vagrant-hostsupdater</code> to update your <code>/etc/hosts</code> file automatically each time you start/stop your vagrant box.</li>
-</ul>
-<h1 id="notes">Notes</h1>
-<ul>
-<li>If you are using <a target="_blank" rel="noopener" href="https://github.com/varying-vagrant-vagrants/vvv/">VVV</a>, you can enable xdebug by running <code>vagrant ssh</code> and then <code>xdebug_on</code> from the virtual machine’s CLI.</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1000,6 +942,133 @@
 <p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
 <p><strong>重命名虚拟机</strong>：<br />
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/vagrant%20cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" class="post-title-link" itemprop="url">vagrant cheatsheet</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="vagrant-cheatsheet.png" /></p>
+<p>Typing <code>vagrant</code> from the command line will display a list of all available commands.</p>
+<p>Be sure that you are in the same directory as the Vagrantfile when running these commands!</p>
+<h1 id="creating-a-vm">Creating a VM</h1>
+<ul>
+<li><code>vagrant init</code> – Initialize Vagrant with a Vagrantfile and ./.vagrant directory, using no specified base image. Before you can do vagrant up, you’ll need to specify a base image in the Vagrantfile.</li>
+<li><code>vagrant init &lt;boxpath&gt;</code> – Initialize Vagrant with a specific box. To find a box, go to the <a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">public Vagrant box catalog</a>. When you find one you like, just replace it’s name with boxpath. For example, <code>vagrant init ubuntu/trusty64</code>.</li>
+</ul>
+<h1 id="starting-a-vm">Starting a VM</h1>
+<ul>
+<li><code>vagrant up</code> – starts vagrant environment (also provisions only on the FIRST vagrant up)</li>
+<li><code>vagrant resume</code> – resume a suspended machine (vagrant up works just fine for this as well)</li>
+<li><code>vagrant provision</code> – forces reprovisioning of the vagrant machine</li>
+<li><code>vagrant reload</code> – restarts vagrant machine, loads new Vagrantfile configuration</li>
+<li><code>vagrant reload --provision</code> – restart the virtual machine and force provisioning</li>
+</ul>
+<h1 id="getting-into-a-vm">Getting into a VM</h1>
+<ul>
+<li><code>vagrant ssh</code> – connects to machine via SSH</li>
+<li><code>vagrant ssh &lt;boxname&gt;</code> – If you give your box a name in your Vagrantfile, you can ssh into it with boxname. Works from any directory.</li>
+</ul>
+<h1 id="stopping-a-vm">Stopping a VM</h1>
+<ul>
+<li><code>vagrant halt</code> – stops the vagrant machine</li>
+<li><code>vagrant suspend</code> – suspends a virtual machine (remembers state)</li>
+</ul>
+<h1 id="cleaning-up-a-vm">Cleaning Up a VM</h1>
+<ul>
+<li><code>vagrant destroy</code> – stops and deletes all traces of the vagrant machine</li>
+<li><code>vagrant destroy -f</code> – same as above, without confirmation</li>
+</ul>
+<h1 id="boxes">Boxes</h1>
+<ul>
+<li><code>vagrant box list</code> – see a list of all installed boxes on your computer</li>
+<li><code>vagrant box add &lt;name&gt; &lt;url&gt;</code> – download a box image to your computer</li>
+<li><code>vagrant box outdated</code> – check for updates vagrant box update</li>
+<li><code>vagrant box remove &lt;name&gt;</code> – deletes a box from the machine</li>
+<li><code>vagrant package</code> – packages a running virtualbox env in a reusable box</li>
+</ul>
+<h1 id="saving-progress">Saving Progress</h1>
+<p>-<code>vagrant snapshot save [options] [vm-name] &lt;name&gt;</code> – vm-name is often <code>default</code>. Allows us to save so that we can rollback at a later time</p>
+<h1 id="tips">Tips</h1>
+<ul>
+<li><code>vagrant -v</code> – get the vagrant version</li>
+<li><code>vagrant status</code> – outputs status of the vagrant machine</li>
+<li><code>vagrant global-status</code> – outputs status of all vagrant machines</li>
+<li><code>vagrant global-status --prune</code> – same as above, but prunes invalid entries</li>
+<li><code>vagrant provision --debug</code> – use the debug flag to increase the verbosity of the output</li>
+<li><code>vagrant push</code> – yes, vagrant can be configured to <a target="_blank" rel="noopener" href="http://docs.vagrantup.com/v2/push/index.html">deploy code</a>!</li>
+<li><code>vagrant up --provision | tee provision.log</code> – Runs <code>vagrant up</code>, forces provisioning and logs all output to a file</li>
+</ul>
+<h1 id="plugins">Plugins</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a> : <code>$ vagrant plugin install vagrant-hostsupdater</code> to update your <code>/etc/hosts</code> file automatically each time you start/stop your vagrant box.</li>
+</ul>
+<h1 id="notes">Notes</h1>
+<ul>
+<li>If you are using <a target="_blank" rel="noopener" href="https://github.com/varying-vagrant-vagrants/vvv/">VVV</a>, you can enable xdebug by running <code>vagrant ssh</code> and then <code>xdebug_on</code> from the virtual machine’s CLI.</li>
+</ul>
 
       
     </div>
@@ -1384,295 +1453,6 @@
 <p>在空闲系统上运行此程序，我们发现任务切换仅耗时 4 微秒。请注意，由于调度中的跟踪标记位于实际“切换”之前，因此当记录的任务即将调度时，我们会停止跟踪。如果我们在调度程序末尾添加新的标记，则此情况可能会发生变化。</p>
 <p>请注意，记录的任务是“sleep”，进程 ID 为 4901，其 rt_prio 为 5。此优先级为用户空间优先级，而非内核内部优先级。策略为：SCHED_FIFO 为 1，SCHED_RR 为 2。</p>
 <p>使用 chrt -r 5 和 ftrace_enabled set 执行相同的操作。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: wakeup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">wakeup latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #60/60, CPU#1 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: sleep-4068 (uid:0 nice:0 policy:2 rt_prio:5)</span><br><span class="line">    -----------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">ksoftirq-7     1d.H3    0us : try_to_wake_up (wake_up_process)</span><br><span class="line">ksoftirq-7     1d.H4    1us : sub_preempt_count (marker_probe_cb)</span><br><span class="line">ksoftirq-7     1d.H3    2us : check_preempt_wakeup (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    3us : update_curr (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    4us : calc_delta_mine (update_curr)</span><br><span class="line">ksoftirq-7     1d.H3    5us : __resched_task (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    6us : task_wake_up_rt (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    7us : _spin_unlock_irqrestore (try_to_wake_up)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d.H2   17us : irq_exit (smp_apic_timer_interrupt)</span><br><span class="line">ksoftirq-7     1d.H2   18us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1d.s3   19us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1..s2   20us : rcu_process_callbacks (__do_softirq)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1..s2   26us : __rcu_process_callbacks (rcu_process_callbacks)</span><br><span class="line">ksoftirq-7     1d.s2   27us : _local_bh_enable (__do_softirq)</span><br><span class="line">ksoftirq-7     1d.s2   28us : sub_preempt_count (_local_bh_enable)</span><br><span class="line">ksoftirq-7     1.N.3   29us : sub_preempt_count (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   30us : _cond_resched (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   31us : __cond_resched (_cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   32us : add_preempt_count (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : schedule (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : add_preempt_count (schedule)</span><br><span class="line">ksoftirq-7     1.N.3   34us : hrtick_clear (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   35us : _spin_lock (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   36us : add_preempt_count (_spin_lock)</span><br><span class="line">ksoftirq-7     1d..4   37us : put_prev_task_fair (schedule)</span><br><span class="line">ksoftirq-7     1d..4   38us : update_curr (put_prev_task_fair)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d..5   47us : _spin_trylock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..5   48us : add_preempt_count (_spin_trylock)</span><br><span class="line">ksoftirq-7     1d..6   49us : _spin_unlock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..6   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">ksoftirq-7     1d..4   50us : schedule (__cond_resched)</span><br></pre></td></tr></table></figure> 中断发生在 ksoftirqd 运行期间。该任务运行在 SCHED_OTHER 调度级别。为什么我们没有提前看到“N”被置位？这可能是 x86_32 架构和 4K 堆栈的一个无害 bug。在配置了 4K 堆栈的 x86_32 架构上，中断和软中断使用它们自己的堆栈运行。一些信息保存在任务堆栈的顶部（need_resched 和 preempt_count 都存储在那里）。NEED_RESCHED 位的设置直接作用于任务堆栈，但读取 NEED_RESCHED 位是通过查看当前堆栈完成的，在本例中，当前堆栈是硬中断的堆栈。这隐藏了 NEED_RESCHED 已被设置的事实。直到我们切换回任务分配的堆栈，才能看到“N”。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" class="post-title-link" itemprop="url">TCP报文格式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="报文格式">报文格式</h1>
-<h2 id="以太网物理帧">以太网物理帧</h2>
-<pre><code class="highlight mermaid">packet-beta
-title 以太网物理层头
-0-11: &quot;Inter Frame Gap（至少12Byte）&quot;
-12-18: &quot;Preamble&quot;
-19-20: &quot;FSD&quot;</code></pre>
-<table>
-<colgroup>
-<col style="width: 3%" />
-<col style="width: 3%" />
-<col style="width: 93%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>字段</th>
-<th>长度</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>帧间隙</td>
-<td>至少12字节</td>
-<td>每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待一段时间才能再发另外一个帧，以便让帧接收者对接收的帧做必要的处理（如调整缓存的指针、更新计数、通知对报文进行处理等等）。在以太网标准中规定最小帧间隙是12个字节，其数据为全1。对于个别的接口，可减少到64(GE)或40比特(10GE)，其他的接口都不应该小于12字节。</td>
-</tr>
-<tr class="even">
-<td>前同步码</td>
-<td>7字节</td>
-<td>以太网标准中规定前导码为10101010 10101010 10101010 10101010 10101010 10101010 10101010（二进制），共7字节。</td>
-</tr>
-<tr class="odd">
-<td>帧开始定界符</td>
-<td>1字节</td>
-<td>以太网标准中规定帧开始定界符为10101011（二进制），共1字节。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="以太网帧头">以太网帧头</h2>
-<pre><code class="highlight mermaid">packet-beta
-title Ethernet II
-0-5: &quot;DMAC&quot;
-6-11: &quot;SMAC&quot;
-12-20: &quot;Data(46~1500)&quot;
-21-24: &quot;FCS&quot;</code></pre>
-<table>
-<colgroup>
-<col style="width: 1%" />
-<col style="width: 4%" />
-<col style="width: 93%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>字段</th>
-<th>长度</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>DMAC</td>
-<td>6字节</td>
-<td>目的MAC地址，IPv4为6字节，该字段标识帧的接收者。</td>
-</tr>
-<tr class="even">
-<td>SMAC</td>
-<td>6字节</td>
-<td>源MAC地址，IPv4为6字节，该字段标识帧的发送者。</td>
-</tr>
-<tr class="odd">
-<td>Type</td>
-<td>2字节</td>
-<td>协议类型。<a target="_blank" rel="noopener" href="https://support.huawei.com/enterprise/zh/doc/EDOC1100174722/ea0a043c#ethII_tab_3">表1-3</a>列出了链路直接封装的协议类型。</td>
-</tr>
-<tr class="even">
-<td>Data</td>
-<td>46～1500字节</td>
-<td>数据字段，标识帧的负载（可能包含填充位）。<br><br>数据字段的最小长度必须为46字节以保证帧长至少为64字节，这意味着传输1字节信息也必须使用46字节的数据字段。<br><br>如果填入该字段的信息少于46字节，该字段的其余部分也必须进行填充。数据字段的最大长度为1500字节。<br><br>以太帧的长度必须为整数字节，因此帧的负载长度不足整数字节，需插入填充字段以保证数据帧的长度为整数字节。</td>
-</tr>
-<tr class="odd">
-<td>FCS</td>
-<td>4字节</td>
-<td>帧校验序列FCS（Frame Check Sequence）是为接收者提供判断是否传输错误的一种方法，如果发现错误，丢弃此帧。<br><br>FCS只是通用叫法，具体的FCS还可以细分多种校验方法。在以太帧中，FCS通常采用循环冗余码校验CRC（Cyclical Redundancy Check）。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="tcp报文头">TCP报文头</h2>
-<pre><code class="highlight mermaid">packet-beta
-title &quot;TCP Packet&quot;
-0-15: &quot;Source Port&quot;
-16-31: &quot;Destination Port&quot;
-32-63: &quot;Sequence Number&quot;
-64-95: &quot;Acknowledgment Number&quot;
-96-99: &quot;Data Offset&quot;
-100-105: &quot;Reserved&quot;
-106: &quot;URG&quot;
-107: &quot;ACK&quot;
-108: &quot;PSH&quot;
-109: &quot;RST&quot;
-110: &quot;SYN&quot;
-111: &quot;FIN&quot;
-112-127: &quot;Window&quot;
-128-143: &quot;Checksum&quot;
-144-159: &quot;Urgent Pointer&quot;
-160-191: &quot;(Options and Padding)&quot;
-192-255: &quot;Data (&lt;=MSS)&quot;</code></pre>
-<table>
-<colgroup>
-<col style="width: 5%" />
-<col style="width: 2%" />
-<col style="width: 92%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>字段</th>
-<th>长度</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Source Port</td>
-<td>16比特</td>
-<td>源端口，标识哪个应用程序发送。</td>
-</tr>
-<tr class="even">
-<td>Destination Port</td>
-<td>16比特</td>
-<td>目的端口，标识哪个应用程序接收。</td>
-</tr>
-<tr class="odd">
-<td>Sequence Number</td>
-<td>32比特</td>
-<td>序号字段。TCP链接中传输的数据流中每个字节都编上一个序号。序号字段的值指的是本报文段所发送的数据的第一个字节的序号。</td>
-</tr>
-<tr class="even">
-<td>Acknowledgment Number</td>
-<td>32比特</td>
-<td>确认号，是期望收到对方的下一个报文段的数据的第1个字节的序号，即上次已成功接收到的数据字节序号加1。只有ACK标识为1，此字段有效。</td>
-</tr>
-<tr class="odd">
-<td>Data Offset</td>
-<td>4比特</td>
-<td>数据偏移，即首部长度，指出TCP报文段的数据起始处距离TCP报文段的起始处有多远，以32比特（4字节）为计算单位。最多有60字节的首部，若无选项字段，正常为20字节。</td>
-</tr>
-<tr class="even">
-<td>Reserved</td>
-<td>4比特</td>
-<td>保留，必须填0。</td>
-</tr>
-<tr class="odd">
-<td>CWR</td>
-<td>1比特</td>
-<td>拥塞窗口减少标识</td>
-</tr>
-<tr class="even">
-<td>ECE</td>
-<td>1比特</td>
-<td>ECN回声标识</td>
-</tr>
-<tr class="odd">
-<td>URG</td>
-<td>1比特</td>
-<td>紧急指针有效标识。它告诉系统此报文段中有紧急数据，应尽快传送（相当于高优先级的数据）。</td>
-</tr>
-<tr class="even">
-<td>ACK</td>
-<td>1比特</td>
-<td>确认序号有效标识。只有当ACK=1时确认号字段才有效。当ACK=0时，确认号无效。</td>
-</tr>
-<tr class="odd">
-<td>PSH</td>
-<td>1比特</td>
-<td>标识接收方应该尽快将这个报文段交给应用层。接收到PSH = 1的TCP报文段，应尽快的交付接收应用进程，而不再等待整个缓存都填满了后再向上交付。</td>
-</tr>
-<tr class="even">
-<td>RST</td>
-<td>1比特</td>
-<td>重建连接标识。当RST=1时，表明TCP连接中出现严重错误（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立连接。</td>
-</tr>
-<tr class="odd">
-<td>SYN</td>
-<td>1比特</td>
-<td>同步序号标识，用来发起一个连接。SYN=1表示这是一个连接请求或连接接受请求。</td>
-</tr>
-<tr class="even">
-<td>FIN</td>
-<td>1比特</td>
-<td>发端完成发送任务标识。用来释放一个连接。FIN=1表明此报文段的发送端的数据已经发送完毕，并要求释放连接。</td>
-</tr>
-<tr class="odd">
-<td>Window</td>
-<td>16比特</td>
-<td>窗口：TCP的流量控制，窗口起始于确认序号字段指明的值，这个值是接收端期望接收的字节数。窗口最大为65535字节。</td>
-</tr>
-<tr class="even">
-<td>Checksum</td>
-<td>16比特</td>
-<td>校验字段，包括TCP首部和TCP数据，是一个强制性的字段，一定是由发端计算和存储，并由收端进行验证。在计算检验和时，要在TCP报文段的前面加上12字节的伪首部。</td>
-</tr>
-<tr class="odd">
-<td>Urgent Pointer</td>
-<td>16比特</td>
-<td>紧急指针，只有当URG标志置1时紧急指针才有效。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。紧急指针指出在本报文段中紧急数据共有多少个字节（紧急数据放在本报文段数据的最前面）。</td>
-</tr>
-<tr class="even">
-<td>Options</td>
-<td>可变</td>
-<td>选项字段。TCP协议最初只规定了一种选项，即最长报文段长度（只包含数据字段，不包括TCP首部），又称为MSS。MSS告诉对方TCP“我的缓存所能接收的报文段的数据字段的最大长度是MSS个字节”。<br><br>新的RFC规定有以下几种选型：选项表结束，空操作，最大报文段长度，窗口扩大因子，时间戳。<br><br>- 选项表结束。<br>- 空操作：没有特殊含义，一般用于将TCP选项的总长度填充为4字节的整数倍。<br>- 最大报文段长度：又称为MSS，只包含数据字段，不包括TCP首部。<br>- 窗口扩大因子：3字节，其中一个字节表示偏移值S。新的窗口值等于TCP首部中的窗口位数增大到（16+S），相当于把窗口值向左移动S位后获得实际的窗口大小。<br>- 时间戳：10字节，其中最主要的字段是时间戳值（4字节）和时间戳回送应答字段（4字节）。</td>
-</tr>
-<tr class="odd">
-<td>data</td>
-<td>可变</td>
-<td>TCP负载。小于等于MSS</td>
-</tr>
-</tbody>
-</table>
-<h1 id="mtumsspmtu和分片">MTU、MSS、PMTU和分片</h1>
-<p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
-<p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>T</em><em>C</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>M</em><em>S</em><em>S</em></span></p>
-<p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
 
       
     </div>

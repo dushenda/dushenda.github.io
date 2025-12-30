@@ -181,12 +181,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -218,6 +218,295 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/23/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" class="post-title-link" itemprop="url">TCP报文格式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="报文格式">报文格式</h1>
+<h2 id="以太网物理帧">以太网物理帧</h2>
+<pre><code class="highlight mermaid">packet-beta
+title 以太网物理层头
+0-11: &quot;Inter Frame Gap（至少12Byte）&quot;
+12-18: &quot;Preamble&quot;
+19-20: &quot;FSD&quot;</code></pre>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 3%" />
+<col style="width: 93%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>帧间隙</td>
+<td>至少12字节</td>
+<td>每个以太帧之间都要有帧间隙（Inter Frame Gap），即每发完一个帧后要等待一段时间才能再发另外一个帧，以便让帧接收者对接收的帧做必要的处理（如调整缓存的指针、更新计数、通知对报文进行处理等等）。在以太网标准中规定最小帧间隙是12个字节，其数据为全1。对于个别的接口，可减少到64(GE)或40比特(10GE)，其他的接口都不应该小于12字节。</td>
+</tr>
+<tr class="even">
+<td>前同步码</td>
+<td>7字节</td>
+<td>以太网标准中规定前导码为10101010 10101010 10101010 10101010 10101010 10101010 10101010（二进制），共7字节。</td>
+</tr>
+<tr class="odd">
+<td>帧开始定界符</td>
+<td>1字节</td>
+<td>以太网标准中规定帧开始定界符为10101011（二进制），共1字节。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="以太网帧头">以太网帧头</h2>
+<pre><code class="highlight mermaid">packet-beta
+title Ethernet II
+0-5: &quot;DMAC&quot;
+6-11: &quot;SMAC&quot;
+12-20: &quot;Data(46~1500)&quot;
+21-24: &quot;FCS&quot;</code></pre>
+<table>
+<colgroup>
+<col style="width: 1%" />
+<col style="width: 4%" />
+<col style="width: 93%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DMAC</td>
+<td>6字节</td>
+<td>目的MAC地址，IPv4为6字节，该字段标识帧的接收者。</td>
+</tr>
+<tr class="even">
+<td>SMAC</td>
+<td>6字节</td>
+<td>源MAC地址，IPv4为6字节，该字段标识帧的发送者。</td>
+</tr>
+<tr class="odd">
+<td>Type</td>
+<td>2字节</td>
+<td>协议类型。<a target="_blank" rel="noopener" href="https://support.huawei.com/enterprise/zh/doc/EDOC1100174722/ea0a043c#ethII_tab_3">表1-3</a>列出了链路直接封装的协议类型。</td>
+</tr>
+<tr class="even">
+<td>Data</td>
+<td>46～1500字节</td>
+<td>数据字段，标识帧的负载（可能包含填充位）。<br><br>数据字段的最小长度必须为46字节以保证帧长至少为64字节，这意味着传输1字节信息也必须使用46字节的数据字段。<br><br>如果填入该字段的信息少于46字节，该字段的其余部分也必须进行填充。数据字段的最大长度为1500字节。<br><br>以太帧的长度必须为整数字节，因此帧的负载长度不足整数字节，需插入填充字段以保证数据帧的长度为整数字节。</td>
+</tr>
+<tr class="odd">
+<td>FCS</td>
+<td>4字节</td>
+<td>帧校验序列FCS（Frame Check Sequence）是为接收者提供判断是否传输错误的一种方法，如果发现错误，丢弃此帧。<br><br>FCS只是通用叫法，具体的FCS还可以细分多种校验方法。在以太帧中，FCS通常采用循环冗余码校验CRC（Cyclical Redundancy Check）。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tcp报文头">TCP报文头</h2>
+<pre><code class="highlight mermaid">packet-beta
+title &quot;TCP Packet&quot;
+0-15: &quot;Source Port&quot;
+16-31: &quot;Destination Port&quot;
+32-63: &quot;Sequence Number&quot;
+64-95: &quot;Acknowledgment Number&quot;
+96-99: &quot;Data Offset&quot;
+100-105: &quot;Reserved&quot;
+106: &quot;URG&quot;
+107: &quot;ACK&quot;
+108: &quot;PSH&quot;
+109: &quot;RST&quot;
+110: &quot;SYN&quot;
+111: &quot;FIN&quot;
+112-127: &quot;Window&quot;
+128-143: &quot;Checksum&quot;
+144-159: &quot;Urgent Pointer&quot;
+160-191: &quot;(Options and Padding)&quot;
+192-255: &quot;Data (&lt;=MSS)&quot;</code></pre>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 2%" />
+<col style="width: 92%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Source Port</td>
+<td>16比特</td>
+<td>源端口，标识哪个应用程序发送。</td>
+</tr>
+<tr class="even">
+<td>Destination Port</td>
+<td>16比特</td>
+<td>目的端口，标识哪个应用程序接收。</td>
+</tr>
+<tr class="odd">
+<td>Sequence Number</td>
+<td>32比特</td>
+<td>序号字段。TCP链接中传输的数据流中每个字节都编上一个序号。序号字段的值指的是本报文段所发送的数据的第一个字节的序号。</td>
+</tr>
+<tr class="even">
+<td>Acknowledgment Number</td>
+<td>32比特</td>
+<td>确认号，是期望收到对方的下一个报文段的数据的第1个字节的序号，即上次已成功接收到的数据字节序号加1。只有ACK标识为1，此字段有效。</td>
+</tr>
+<tr class="odd">
+<td>Data Offset</td>
+<td>4比特</td>
+<td>数据偏移，即首部长度，指出TCP报文段的数据起始处距离TCP报文段的起始处有多远，以32比特（4字节）为计算单位。最多有60字节的首部，若无选项字段，正常为20字节。</td>
+</tr>
+<tr class="even">
+<td>Reserved</td>
+<td>4比特</td>
+<td>保留，必须填0。</td>
+</tr>
+<tr class="odd">
+<td>CWR</td>
+<td>1比特</td>
+<td>拥塞窗口减少标识</td>
+</tr>
+<tr class="even">
+<td>ECE</td>
+<td>1比特</td>
+<td>ECN回声标识</td>
+</tr>
+<tr class="odd">
+<td>URG</td>
+<td>1比特</td>
+<td>紧急指针有效标识。它告诉系统此报文段中有紧急数据，应尽快传送（相当于高优先级的数据）。</td>
+</tr>
+<tr class="even">
+<td>ACK</td>
+<td>1比特</td>
+<td>确认序号有效标识。只有当ACK=1时确认号字段才有效。当ACK=0时，确认号无效。</td>
+</tr>
+<tr class="odd">
+<td>PSH</td>
+<td>1比特</td>
+<td>标识接收方应该尽快将这个报文段交给应用层。接收到PSH = 1的TCP报文段，应尽快的交付接收应用进程，而不再等待整个缓存都填满了后再向上交付。</td>
+</tr>
+<tr class="even">
+<td>RST</td>
+<td>1比特</td>
+<td>重建连接标识。当RST=1时，表明TCP连接中出现严重错误（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立连接。</td>
+</tr>
+<tr class="odd">
+<td>SYN</td>
+<td>1比特</td>
+<td>同步序号标识，用来发起一个连接。SYN=1表示这是一个连接请求或连接接受请求。</td>
+</tr>
+<tr class="even">
+<td>FIN</td>
+<td>1比特</td>
+<td>发端完成发送任务标识。用来释放一个连接。FIN=1表明此报文段的发送端的数据已经发送完毕，并要求释放连接。</td>
+</tr>
+<tr class="odd">
+<td>Window</td>
+<td>16比特</td>
+<td>窗口：TCP的流量控制，窗口起始于确认序号字段指明的值，这个值是接收端期望接收的字节数。窗口最大为65535字节。</td>
+</tr>
+<tr class="even">
+<td>Checksum</td>
+<td>16比特</td>
+<td>校验字段，包括TCP首部和TCP数据，是一个强制性的字段，一定是由发端计算和存储，并由收端进行验证。在计算检验和时，要在TCP报文段的前面加上12字节的伪首部。</td>
+</tr>
+<tr class="odd">
+<td>Urgent Pointer</td>
+<td>16比特</td>
+<td>紧急指针，只有当URG标志置1时紧急指针才有效。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。紧急指针指出在本报文段中紧急数据共有多少个字节（紧急数据放在本报文段数据的最前面）。</td>
+</tr>
+<tr class="even">
+<td>Options</td>
+<td>可变</td>
+<td>选项字段。TCP协议最初只规定了一种选项，即最长报文段长度（只包含数据字段，不包括TCP首部），又称为MSS。MSS告诉对方TCP“我的缓存所能接收的报文段的数据字段的最大长度是MSS个字节”。<br><br>新的RFC规定有以下几种选型：选项表结束，空操作，最大报文段长度，窗口扩大因子，时间戳。<br><br>- 选项表结束。<br>- 空操作：没有特殊含义，一般用于将TCP选项的总长度填充为4字节的整数倍。<br>- 最大报文段长度：又称为MSS，只包含数据字段，不包括TCP首部。<br>- 窗口扩大因子：3字节，其中一个字节表示偏移值S。新的窗口值等于TCP首部中的窗口位数增大到（16+S），相当于把窗口值向左移动S位后获得实际的窗口大小。<br>- 时间戳：10字节，其中最主要的字段是时间戳值（4字节）和时间戳回送应答字段（4字节）。</td>
+</tr>
+<tr class="odd">
+<td>data</td>
+<td>可变</td>
+<td>TCP负载。小于等于MSS</td>
+</tr>
+</tbody>
+</table>
+<h1 id="mtumsspmtu和分片">MTU、MSS、PMTU和分片</h1>
+<p>以太网的MTU 1500B、PPPoE 1492B、ATM 9180B。TCP中分割之后的段叫TCP报文段，这时候能够使用的最大报文段称为MSS。</p>
+<p><span class="math display">(<em>P</em>)<em>M</em><em>T</em><em>U</em> = <em>I</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>T</em><em>C</em><em>P</em>_<em>h</em><em>e</em><em>a</em><em>d</em> + <em>M</em><em>S</em><em>S</em></span></p>
+<p>TCP需要获取PMTU大小，用来规划自己的MSS，PMTU是通过IP层的ICMP协议获取的。分片是IP层完成的事情，如果TCP MSS规划不合理，那么送到IP层的报文依旧存在大报文，会走IP分片报文。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2896,104 +3185,6 @@ A-- This is the text! ---B</code></pre>
 Alice-&gt;&gt;John: Hello John, how are you?
 John--&gt;&gt;Alice: Great!
 Alice-)John: See you later!</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/21/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%B8%BB%E6%9C%BA%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%8Cip%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/21/%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/%E4%B8%BB%E6%9C%BA%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%8Cip%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">主机同网段双ip问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-21T00:00:00+00:00">2025-12-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="现象">现象</h1>
-<p>因为两个网卡都在同一个网段，所以如果这个时候直接和我们的主机（IP192.168.0.2）进行ping，因为优先级的原因，会导致有一个网卡会无法ping通主机。</p>
-<p><img src="ips.png" /> <img src="route.png" /> <img src="ping1.png" /></p>
-<h1 id="反向路由检查">反向路由检查</h1>
-<p>您可以把这个机制想象成一个严格的“门卫”。当服务器从一个网络接口（比如<code>eth1</code>）收到一个数据包时，这个“门卫”会去查路由表，问：“<strong>要回复这个数据包，我们应该从哪个接口发出去？</strong>”</p>
-<ul>
-<li><strong>正常情况</strong>：如果查到的最佳出口恰好是数据包进来的接口（<code>eth1</code>），则验证通过，数据包被正常接收处理。</li>
-<li><strong>您遇到的情况</strong>：服务器上两个IP在同一LAN，网关可能只在一个接口上（或系统认为只有一个最佳路径）。当数据包从<code>eth1</code>进入，但路由表显示回复它的最佳路径是<code>eth0</code>，这时“门卫”就会拒绝这个数据包，导致ping不通 。关键在于，系统<strong>检查的是“反向路径”是否最优，而非是否可达</strong>​ 。 ## 问题诊断与解决步骤</li>
-</ul>
-<h4 id="确认-rp_filter-的当前设置">1. 确认 rp_filter 的当前设置</h4>
-<p>首先，您需要查看系统当前的反向路由检查设置。在终端中执行以下命令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/net/ipv4/conf/all/rp_filter</span><br><span class="line">cat /proc/sys/net/ipv4/conf/eth0/rp_filter  # 请将 eth0 替换为您的实际网卡名</span><br><span class="line">cat /proc/sys/net/ipv4/conf/eth1/rp_filter  # 请将 eth1 替换为您的实际网卡名</span><br></pre></td></tr></table></figure> <strong>参数值解读</strong>​ ： - <strong>0</strong>：关闭源地址验证。 - <strong>1</strong>：<strong>严格模式</strong>。只要反向路径不是最佳路径（即使有其他路径可达），数据包也会被丢弃。这通常是问题的根源。 - <strong>2</strong>：<strong>松散模式</strong>。只检查源地址是否可通过任意接口可达，而不要求是最佳路径。这在有多路径的环境中是更安全的选择。</p>
-<p>如果这些值被设置为 <code>1</code>（严格模式），那么它很可能就是导致您一个IP不通的原因。 ### 2. 关闭反向路由检查</p>
-<p><strong>重要提示</strong>：关闭此功能会降低系统对IP地址欺骗（IP Spoofing）的防御能力 。请确保您的服务器处于受信任的内网环境中。</p>
-<p><strong>方法一：临时关闭（重启后失效）</strong></p>
-<p>适用于快速验证问题。执行命令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 0 &gt; /proc/sys/net/ipv4/conf/all/rp_filter</span><br><span class="line">echo 0 &gt; /proc/sys/net/ipv4/conf/eth0/rp_filter</span><br><span class="line">echo 0 &gt; /proc/sys/net/ipv4/conf/eth1/rp_filter</span><br></pre></td></tr></table></figure> <strong>方法二：永久关闭（推荐配置）</strong></p>
-<p>通过修改系统配置文件，使设置永久生效。</p>
-<ol type="1">
-<li>编辑 <code>/etc/sysctl.conf</code>文件： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysctl.conf</span><br></pre></td></tr></table></figure></li>
-<li>在文件末尾添加或修改以下行： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.conf.all.rp_filter = 0</span><br><span class="line">net.ipv4.conf.default.rp_filter = 0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果需要，也可以为每个网卡单独设置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">net.ipv4.conf.eth0.rp_filter = 0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">net.ipv4.conf.eth1.rp_filter = 0</span></span><br></pre></td></tr></table></figure></li>
-<li>使用以下命令使配置立即生效： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="折中方案采用松散模式">3. 折中方案：采用松散模式</h3>
-<p>如果担心完全关闭的安全风险，折中的办法是启用<strong>松散模式（Loose Mode）</strong>，将值设置为 <code>2</code>。这样既允许了非对称路径的存在（您的包从A进，从B出），又保留了基本的源地址验证 。修改方法同上，只需将配置文件中的值改为2： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.conf.all.rp_filter = 2</span><br><span class="line">net.ipv4.conf.default.rp_filter = 2</span><br></pre></td></tr></table></figure></p>
-<h2 id="其他可能性">其他可能性</h2>
-<p>虽然反向路由检查是最常见的原因，但如果调整后问题依旧，还可以关注以下几点：</p>
-<ul>
-<li><strong>防火墙规则</strong>：检查 iptables 或 firewalld 是否有规则阻止了特定IP的ICMP请求。</li>
-<li><strong>路由表本身</strong>：使用 <code>ip route show</code>或 <code>route -n</code>确认两个IP地址的路由表项是否正确。</li>
-<li><strong>ARP问题</strong>：在局域网中，使用 <code>arp -a</code>或 <code>ip neighbour</code>检查ARP表项是否正确 。</li>
-</ul>
 
       
     </div>
