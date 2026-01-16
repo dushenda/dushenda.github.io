@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dushenda.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-tomorrow"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="概念区分 ISA：Instruction Set Architecture，ISA 是硬件和软件之间的抽象接口（或者说是一份“合同”）。它定义了程序员或编译器编写软件时必须了解的所有信息，而不涉及硬件的具体电路设计。涵盖指令集（如 ADD, JUMP）、寄存器结构（如 RAX, R0）、数据类型、寻址模式、内存模型、中断处理等 微架构：Microarchitecture，微架构（又称计算机组织）是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x86 ISA介绍">
+<meta property="og:url" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="dushenda">
+<meta property="og:description" content="概念区分 ISA：Instruction Set Architecture，ISA 是硬件和软件之间的抽象接口（或者说是一份“合同”）。它定义了程序员或编译器编写软件时必须了解的所有信息，而不涉及硬件的具体电路设计。涵盖指令集（如 ADD, JUMP）、寄存器结构（如 RAX, R0）、数据类型、寻址模式、内存模型、中断处理等 微架构：Microarchitecture，微架构（又称计算机组织）是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/%E5%AF%84%E5%AD%98%E5%99%A8%E4%BB%8B%E7%BB%8D.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/EFLASG.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/CR.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/%E7%89%B9%E6%9D%83%E7%AD%89%E7%BA%A7.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/SS.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8.png">
+<meta property="article:published_time" content="2026-01-16T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-16T17:28:57.032Z">
+<meta property="article:author" content="dushenda">
+<meta property="article:tag" content="ISA">
+<meta property="article:tag" content="x86">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/%E5%AF%84%E5%AD%98%E5%99%A8%E4%BB%8B%E7%BB%8D.png">
+
+
+<link rel="canonical" href="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/","path":"2026/01/16/架构相关/x86 ISA介绍/","title":"x86 ISA介绍"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>x86 ISA介绍 | dushenda</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"forest","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","per_page":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">dushenda</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">李德胜大大粉丝</p>
+      <img class="custom-logo-image" src="/uploads/icons8-star-trek-80.svg" alt="dushenda">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">概念区分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#x86-intel-isa"><span class="nav-number">2.</span> <span class="nav-text">x86-Intel ISA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">通用寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%8C%87%E9%92%88%E5%AF%84%E5%AD%98%E5%99%A8instruction-pointer"><span class="nav-number">2.1.2.</span> <span class="nav-text">指令指针寄存器(Instruction Pointer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%BF%97%E5%AF%84%E5%AD%98%E5%99%A8-flags-register"><span class="nav-number">2.1.3.</span> <span class="nav-text">标志寄存器 (Flags Register)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%AA%92%E4%BD%93%E4%B8%8E%E5%90%91%E9%87%8F%E5%AF%84%E5%AD%98%E5%99%A8-simd"><span class="nav-number">2.1.4.</span> <span class="nav-text">多媒体与向量寄存器 (SIMD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.5.</span> <span class="nav-text">控制寄存器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BB%84%E7%BB%87"><span class="nav-number">2.2.</span> <span class="nav-text">内存组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cpu%E5%B7%A5%E4%BD%9C%E7%8A%B6%E6%80%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">CPU工作状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%9D%83%E7%BA%A7%E5%88%AB"><span class="nav-number">2.2.2.</span> <span class="nav-text">特权级别</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="dushenda"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">dushenda</p>
+  <div class="site-description" itemprop="description">雄关漫道真如铁，而今迈步从头越</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dushenda" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dushenda" rel="noopener me" target="_blank"><i class="fab fa-github-alt fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/dushenda" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;dushenda" rel="noopener me" target="_blank"><i class="fab fa-zhihu fa-fw"></i>Zhihu</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="x86 ISA介绍 | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          x86 ISA介绍
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-16 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-16T00:00:00+00:00">2026-01-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="概念区分">概念区分</h1>
+<p>ISA：Instruction Set Architecture，ISA 是硬件和软件之间的<strong>抽象接口</strong>（或者说是一份“合同”）。它定义了程序员或编译器编写软件时必须了解的所有信息，而不涉及硬件的具体电路设计。涵盖指令集（如 ADD, JUMP）、寄存器结构（如 RAX, R0）、数据类型、寻址模式、内存模型、中断处理等</p>
+<p>微架构：Microarchitecture，微架构（又称计算机组织）是 ISA 的<strong>具体逻辑实现</strong>。它决定了处理器内部如何布置流水线、缓存、执行单元等。涵盖流水线级数、分支预测器、高速缓存（L1/L2/L3）的大小、乱序执行逻辑、算术逻辑单元（ALU）的数量等。</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong>特性</strong></th>
+<th><strong>ISA (指令集架构)</strong></th>
+<th><strong>微架构 (Microarchitecture)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>定义层面</strong></td>
+<td>抽象层 / 规范</td>
+<td>物理层 / 实现</td>
+</tr>
+<tr class="even">
+<td><strong>关注点</strong></td>
+<td><strong>What</strong>（处理器能做什么）</td>
+<td><strong>How</strong>（处理器如何高效执行）</td>
+</tr>
+<tr class="odd">
+<td><strong>使用者</strong></td>
+<td>编译器作者、汇编程序员</td>
+<td>芯片设计师、硬件工程师</td>
+</tr>
+<tr class="even">
+<td><strong>兼容性</strong></td>
+<td>跨代兼容（保证程序能跑）</td>
+<td>每一代都在变（追求性能提升）</td>
+</tr>
+<tr class="odd">
+<td><strong>组成部分</strong></td>
+<td>指令、寄存器、数据格式</td>
+<td>缓存、流水线、执行单元</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>一个 ISA 可以有多种微架构实现。</strong> 例如，Intel 和 AMD 的处理器微架构完全不同，但因为它们都遵循 <strong>x86 ISA</strong>，所以你编写的 <code>.exe</code> 程序在两者的 CPU 上都能正常运行。这就是为什么你可以自由更换 CPU 而不需要重装所有软件。</p>
+</blockquote>
+<h1 id="x86-intel-isa">x86-Intel ISA</h1>
+<h2 id="寄存器">寄存器</h2>
+<table>
+<thead>
+<tr class="header">
+<th><strong>寄存器类型</strong></th>
+<th><strong>64位名称</strong></th>
+<th><strong>数量</strong></th>
+<th><strong>主要用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>通用寄存器</strong></td>
+<td><code>RAX</code>-<code>R15</code></td>
+<td>16</td>
+<td>数据运算、暂存、地址计算</td>
+</tr>
+<tr class="even">
+<td><strong>栈指针</strong></td>
+<td><code>RSP</code>, <code>RBP</code></td>
+<td>2</td>
+<td>管理函数调用栈</td>
+</tr>
+<tr class="odd">
+<td><strong>指令指针</strong></td>
+<td><code>RIP</code></td>
+<td>1</td>
+<td>存储下一条指令地址</td>
+</tr>
+<tr class="even">
+<td><strong>状态标志</strong></td>
+<td><code>RFLAGS</code></td>
+<td>1</td>
+<td>存储运算结果的状态（如正负、零）</td>
+</tr>
+<tr class="odd">
+<td><strong>向量寄存器</strong></td>
+<td><code>XMM</code>/<code>YMM</code></td>
+<td>16/32</td>
+<td>高性能并行计算 (SIMD)</td>
+</tr>
+</tbody>
+</table>
+<p>32位的主要寄存器如下： <img src="寄存器介绍.png" /></p>
+<h3 id="通用寄存器">通用寄存器</h3>
+<p>x86 最大的特点是<strong>向下兼容</strong>，即嵌套模式。一个 64 位的寄存器实际上包含了它的 32 位、16 位和 8 位版本。例如A寄存器在32、16、8位上的区分如下：</p>
+<ul>
+<li><strong>RAX</strong>: 64 位全长 (x86-64)</li>
+<li><strong>EAX</strong>: 低 32 位 (x86-32)</li>
+<li><strong>AX</strong>: 低 16 位 (8086)</li>
+<li><strong>AH / AL</strong>: AX 的高 8 位和低 8 位</li>
+</ul>
+<p>8 个传统寄存器及其特殊用途如下：</p>
+<ul>
+<li><strong>RAX (Accumulator)</strong>: 累加器。系统调用的编号以及函数的<strong>返回值</strong>通常放在这里。</li>
+<li><strong>RBX (Base)</strong>: 基址寄存器。常用于内存寻址。</li>
+<li><strong>RCX (Count)</strong>: 计数器。循环指令（如 <code>LOOP</code>）或位移操作会自动使用它。</li>
+<li><strong>RDX (Data)</strong>: 数据寄存器。在乘除法运算中存放溢出数据或余数。</li>
+<li><strong>RSI / RDI (Source/Destination Index)</strong>: 源/目的变址寄存器。在字符串拷贝等操作中分别指向来源和目标地址。</li>
+<li><strong>RBP (Base Pointer)</strong>: 栈基址指针。指向当前函数栈帧的底部。</li>
+<li><strong>RSP (Stack Pointer)</strong>: <strong>栈顶指针</strong>。永远指向当前线程栈的最顶部。</li>
+</ul>
+<p>x86-64 新增寄存器如下：在 64 位模式下，Intel 额外增加了 8 个通用寄存器，命名简单粗暴：</p>
+<ul>
+<li><strong>R8, R9, R10, R11, R12, R13, R14, R15</strong>。</li>
+<li>它们同样可以访问低位，例如 <code>R8D</code> (32位), <code>R8W</code> (16位), <code>R8B</code> (8位)。</li>
+</ul>
+<h3 id="指令指针寄存器instruction-pointer">指令指针寄存器(Instruction Pointer)</h3>
+<p><strong>RIP (64位) / EIP (32位)</strong>: 这是 CPU 的“指针”。它存储了<strong>下一条将要执行的指令</strong>在内存中的地址。程序员不能直接用 <code>MOV</code> 修改它，只能通过 <code>JMP</code>、<code>CALL</code> 或 <code>RET</code> 等指令间接改变它的值。</p>
+<h3 id="标志寄存器-flags-register">标志寄存器 (Flags Register)</h3>
+<p><strong>FLASG</strong>/<strong>RFLAGS (64位) / EFLAGS (32位)</strong>: 它不是存放一个大数字，而是由许多个“位”（Bit）组成的开关，反映了上一次运算的状态，从</p>
+<ul>
+<li><strong>8086 (16位)</strong>：叫 <code>FLAGS</code>。</li>
+<li><strong>80386 (32位)</strong>：叫 <code>EFLAGS</code>（Extended FLAGS）。低 16 位和 8086 的 FLAGS 完全一样，高 16 位增加了如 <strong>VM</strong>（虚拟 8086 模式）、<strong>AC</strong>（对齐检查）等功能。</li>
+<li><strong>x86-64 (64位)</strong>：叫 <code>RFLAGS</code>。它将 EFLAGS 扩展到 64 位，但目前高 32 位全部保留（全为 0），没有定义新的功能。</li>
+</ul>
+<p><img src="EFLASG.png" /></p>
+<p>从Intel架构手册的图来看，S代表状态位共有6位，C代表控制位共有1位，X代表系统位共有10位。具体看Intel® 64 and IA-32 Architectures Software Developer’s Manual Volumn1中的3.4.3 EFLAGS Register一节中有详细介绍。</p>
+<blockquote>
+<p>IOPL：I/O Privilege Level ### 段寄存器 (Segment Registers)</p>
+</blockquote>
+<p>在现代 64 位系统中，段寄存器的作用已经大大削弱（基本进入“平坦模型”），但在底层内核开发中依然存在：</p>
+<ul>
+<li><strong>CS</strong>: 代码段寄存器（Code Segment）</li>
+<li><strong>DS / SS / ES</strong>: 数据段、栈段、附加段</li>
+<li><strong>FS / GS</strong>: 在现代 Windows/Linux 中常用于存储<strong>线程本地存储 (TLS)</strong> 的基地址。</li>
+</ul>
+<h3 id="多媒体与向量寄存器-simd">多媒体与向量寄存器 (SIMD)</h3>
+<p>为了加速图像处理、科学计算和 AI 运算，x86 引入了超大的专用寄存器：</p>
+<ul>
+<li><strong>MMX (64位)</strong>: 已过时。</li>
+<li><strong>XMM (128位)</strong>: 用于 SSE 指令集（共 16 个，XMM0-XMM15）。</li>
+<li><strong>YMM (256位)</strong>: 用于 AVX 指令集。</li>
+<li><strong>ZMM (512位)</strong>: 用于 AVX-512 指令集。</li>
+</ul>
+<h3 id="控制寄存器">控制寄存器</h3>
+<p>在Intel SDM第 3 卷（Volume 3A）：System Programming Guide, Part 1有介绍（Section 2.5 CONTROL REGISTERS）。</p>
+<p><img src="CR.png" /></p>
+<h2 id="内存组织">内存组织</h2>
+<h3 id="cpu工作状态">CPU工作状态</h3>
+<table>
+<thead>
+<tr class="header">
+<th><strong>特性</strong></th>
+<th><strong>实模式 (Real Mode)</strong></th>
+<th><strong>保护模式 (Protected Mode)</strong></th>
+<th><strong>SMM 模式</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>可见性</strong></td>
+<td>用户/系统可见</td>
+<td>用户/系统可见</td>
+<td><strong>对操作系统透明 (隐藏)</strong></td>
+</tr>
+<tr class="even">
+<td><strong>地址空间</strong></td>
+<td>仅 1 MB</td>
+<td>4 GB (32位) / 理论 16 EB</td>
+<td>独立的 SMRAM 空间</td>
+</tr>
+<tr class="odd">
+<td><strong>进入方式</strong></td>
+<td>上电自检、复位</td>
+<td>修改 CR0.PE 位</td>
+<td><strong>硬件中断 (SMI)</strong></td>
+</tr>
+<tr class="even">
+<td><strong>主要用途</strong></td>
+<td>引导系统、DOS</td>
+<td>运行现代操作系统</td>
+<td>电源管理、硬件安全、BIOS 修复</td>
+</tr>
+<tr class="odd">
+<td><strong>权限级别</strong></td>
+<td>无 (全公开)</td>
+<td>严格的分级 (Ring 0-3)</td>
+<td>最高级别 (超越 Ring 0)</td>
+</tr>
+</tbody>
+</table>
+<p>实模式 (Real-Address Mode)，这是 CPU 上电后的“初始状态”，为了兼容 1978 年的 8086 处理器。</p>
+<ul>
+<li><strong>寻址方式</strong>：使用简单的 <span class="math inline"><em>段</em><em>地</em><em>址</em> × 16 + <em>偏</em><em>移</em><em>地</em><em>址</em></span>。只能访问 <strong>1MB</strong> 的内存。</li>
+<li><strong>特权级</strong>：没有特权级概念，任何程序都可以改写任何内存或直接操作硬件。</li>
+<li><strong>用途</strong>：系统引导（BIOS/UEFI 初期）、简单的操作系统（如 MS-DOS）。</li>
+<li><strong>缺点</strong>：非常不安全，没有内存保护，一个程序崩溃会导致全机死机。</li>
+</ul>
+<p>保护模式 (Protected Mode)，这是现代操作系统的运行基石（32位系统的核心，64位系统的基础）。</p>
+<ul>
+<li><strong>寻址方式</strong>：通过 <strong>段描述符表 (GDT/LDT)</strong> 和 <strong>分页机制 (Paging)</strong>。支持 <strong>4GB</strong> 甚至更大的虚拟内存。</li>
+<li><strong>特权级</strong>：引入了 <strong>Ring 0 - Ring 3</strong> 的保护机制。</li>
+<li><strong>用途</strong>：运行 Windows、Linux 等现代操作系统。</li>
+<li><strong>核心逻辑</strong>：硬件强制执行访问控制。如果用户程序（Ring 3）试图访问内核内存（Ring 0），CPU 会抛出异常。</li>
+</ul>
+<p>SMM 模式 (System Management Mode)，SMM 被称为 <strong>“Ring -2”</strong>，因为它比操作系统内核（Ring 0）拥有更高的优先级，且对操作系统<strong>完全透明</strong>。</p>
+<ul>
+<li><strong>进入方式</strong>：只能通过硬件产生的 <strong>SMI (System Management Interrupt)</strong> 进入。当你按下电源键、笔记本合盖、或系统温度过高时，硬件会发出 SMI。</li>
+<li><strong>可见性</strong>：一旦进入 SMM，CPU 会暂停当前运行的操作系统（不论是 Windows 还是内核），转而执行一段存储在 BIOS 中的特殊代码。操作系统根本不知道自己被暂停过。</li>
+<li><strong>内存空间</strong>：它拥有独立的内存区域，称为 <strong>SMRAM</strong>。正常模式下的程序（包括内核）无法访问这块内存。</li>
+<li><strong>退出方式</strong>：执行 <code>RSM</code> (Resume) 指令，CPU 恢复到被中断前的状态（无论是实模式还是保护模式）。</li>
+</ul>
+<p><img src="模式切换.png" /></p>
+<h3 id="特权级别">特权级别</h3>
+<p>x86把CPU分为四个特权等级，权限从ring0~ring3依次下降。 <img src="特权等级.png" /></p>
+<p>厘清几个概念，段选择子（SS）是一个一个内容抽象，存在在段寄存器中（Visible Part），x86的段寄存器有CS、DS、…等。其中段选择子的RPL（Requested Privilege Level）就代表了当前的指令在访问该段时“声明”的权限级别。</p>
+<p><img src="SS.png" /> <img src="段寄存器结构.png" /> <img src="段寄存器.png" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/x86/" rel="tag"># x86</a>
+              <a href="/tags/ISA/" rel="tag"># ISA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/30/TCP%E5%AD%A6%E4%B9%A0/TCP%E6%B5%81%E7%A8%8B%E5%9B%BE/" rel="prev" title="TCP流程图">
+                  <i class="fa fa-angle-left"></i> TCP流程图
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa-thin fa-abacus"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dushenda</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/dushenda" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

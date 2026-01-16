@@ -181,12 +181,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">59</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -218,6 +218,285 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/16/%E6%9E%B6%E6%9E%84%E7%9B%B8%E5%85%B3/x86%20ISA%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">x86 ISA介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-16 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-16T00:00:00+00:00">2026-01-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="概念区分">概念区分</h1>
+<p>ISA：Instruction Set Architecture，ISA 是硬件和软件之间的<strong>抽象接口</strong>（或者说是一份“合同”）。它定义了程序员或编译器编写软件时必须了解的所有信息，而不涉及硬件的具体电路设计。涵盖指令集（如 ADD, JUMP）、寄存器结构（如 RAX, R0）、数据类型、寻址模式、内存模型、中断处理等</p>
+<p>微架构：Microarchitecture，微架构（又称计算机组织）是 ISA 的<strong>具体逻辑实现</strong>。它决定了处理器内部如何布置流水线、缓存、执行单元等。涵盖流水线级数、分支预测器、高速缓存（L1/L2/L3）的大小、乱序执行逻辑、算术逻辑单元（ALU）的数量等。</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong>特性</strong></th>
+<th><strong>ISA (指令集架构)</strong></th>
+<th><strong>微架构 (Microarchitecture)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>定义层面</strong></td>
+<td>抽象层 / 规范</td>
+<td>物理层 / 实现</td>
+</tr>
+<tr class="even">
+<td><strong>关注点</strong></td>
+<td><strong>What</strong>（处理器能做什么）</td>
+<td><strong>How</strong>（处理器如何高效执行）</td>
+</tr>
+<tr class="odd">
+<td><strong>使用者</strong></td>
+<td>编译器作者、汇编程序员</td>
+<td>芯片设计师、硬件工程师</td>
+</tr>
+<tr class="even">
+<td><strong>兼容性</strong></td>
+<td>跨代兼容（保证程序能跑）</td>
+<td>每一代都在变（追求性能提升）</td>
+</tr>
+<tr class="odd">
+<td><strong>组成部分</strong></td>
+<td>指令、寄存器、数据格式</td>
+<td>缓存、流水线、执行单元</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>一个 ISA 可以有多种微架构实现。</strong> 例如，Intel 和 AMD 的处理器微架构完全不同，但因为它们都遵循 <strong>x86 ISA</strong>，所以你编写的 <code>.exe</code> 程序在两者的 CPU 上都能正常运行。这就是为什么你可以自由更换 CPU 而不需要重装所有软件。</p>
+</blockquote>
+<h1 id="x86-intel-isa">x86-Intel ISA</h1>
+<h2 id="寄存器">寄存器</h2>
+<table>
+<thead>
+<tr class="header">
+<th><strong>寄存器类型</strong></th>
+<th><strong>64位名称</strong></th>
+<th><strong>数量</strong></th>
+<th><strong>主要用途</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>通用寄存器</strong></td>
+<td><code>RAX</code>-<code>R15</code></td>
+<td>16</td>
+<td>数据运算、暂存、地址计算</td>
+</tr>
+<tr class="even">
+<td><strong>栈指针</strong></td>
+<td><code>RSP</code>, <code>RBP</code></td>
+<td>2</td>
+<td>管理函数调用栈</td>
+</tr>
+<tr class="odd">
+<td><strong>指令指针</strong></td>
+<td><code>RIP</code></td>
+<td>1</td>
+<td>存储下一条指令地址</td>
+</tr>
+<tr class="even">
+<td><strong>状态标志</strong></td>
+<td><code>RFLAGS</code></td>
+<td>1</td>
+<td>存储运算结果的状态（如正负、零）</td>
+</tr>
+<tr class="odd">
+<td><strong>向量寄存器</strong></td>
+<td><code>XMM</code>/<code>YMM</code></td>
+<td>16/32</td>
+<td>高性能并行计算 (SIMD)</td>
+</tr>
+</tbody>
+</table>
+<p>32位的主要寄存器如下： <img src="寄存器介绍.png" /></p>
+<h3 id="通用寄存器">通用寄存器</h3>
+<p>x86 最大的特点是<strong>向下兼容</strong>，即嵌套模式。一个 64 位的寄存器实际上包含了它的 32 位、16 位和 8 位版本。例如A寄存器在32、16、8位上的区分如下：</p>
+<ul>
+<li><strong>RAX</strong>: 64 位全长 (x86-64)</li>
+<li><strong>EAX</strong>: 低 32 位 (x86-32)</li>
+<li><strong>AX</strong>: 低 16 位 (8086)</li>
+<li><strong>AH / AL</strong>: AX 的高 8 位和低 8 位</li>
+</ul>
+<p>8 个传统寄存器及其特殊用途如下：</p>
+<ul>
+<li><strong>RAX (Accumulator)</strong>: 累加器。系统调用的编号以及函数的<strong>返回值</strong>通常放在这里。</li>
+<li><strong>RBX (Base)</strong>: 基址寄存器。常用于内存寻址。</li>
+<li><strong>RCX (Count)</strong>: 计数器。循环指令（如 <code>LOOP</code>）或位移操作会自动使用它。</li>
+<li><strong>RDX (Data)</strong>: 数据寄存器。在乘除法运算中存放溢出数据或余数。</li>
+<li><strong>RSI / RDI (Source/Destination Index)</strong>: 源/目的变址寄存器。在字符串拷贝等操作中分别指向来源和目标地址。</li>
+<li><strong>RBP (Base Pointer)</strong>: 栈基址指针。指向当前函数栈帧的底部。</li>
+<li><strong>RSP (Stack Pointer)</strong>: <strong>栈顶指针</strong>。永远指向当前线程栈的最顶部。</li>
+</ul>
+<p>x86-64 新增寄存器如下：在 64 位模式下，Intel 额外增加了 8 个通用寄存器，命名简单粗暴：</p>
+<ul>
+<li><strong>R8, R9, R10, R11, R12, R13, R14, R15</strong>。</li>
+<li>它们同样可以访问低位，例如 <code>R8D</code> (32位), <code>R8W</code> (16位), <code>R8B</code> (8位)。</li>
+</ul>
+<h3 id="指令指针寄存器instruction-pointer">指令指针寄存器(Instruction Pointer)</h3>
+<p><strong>RIP (64位) / EIP (32位)</strong>: 这是 CPU 的“指针”。它存储了<strong>下一条将要执行的指令</strong>在内存中的地址。程序员不能直接用 <code>MOV</code> 修改它，只能通过 <code>JMP</code>、<code>CALL</code> 或 <code>RET</code> 等指令间接改变它的值。</p>
+<h3 id="标志寄存器-flags-register">标志寄存器 (Flags Register)</h3>
+<p><strong>FLASG</strong>/<strong>RFLAGS (64位) / EFLAGS (32位)</strong>: 它不是存放一个大数字，而是由许多个“位”（Bit）组成的开关，反映了上一次运算的状态，从</p>
+<ul>
+<li><strong>8086 (16位)</strong>：叫 <code>FLAGS</code>。</li>
+<li><strong>80386 (32位)</strong>：叫 <code>EFLAGS</code>（Extended FLAGS）。低 16 位和 8086 的 FLAGS 完全一样，高 16 位增加了如 <strong>VM</strong>（虚拟 8086 模式）、<strong>AC</strong>（对齐检查）等功能。</li>
+<li><strong>x86-64 (64位)</strong>：叫 <code>RFLAGS</code>。它将 EFLAGS 扩展到 64 位，但目前高 32 位全部保留（全为 0），没有定义新的功能。</li>
+</ul>
+<p><img src="EFLASG.png" /></p>
+<p>从Intel架构手册的图来看，S代表状态位共有6位，C代表控制位共有1位，X代表系统位共有10位。具体看Intel® 64 and IA-32 Architectures Software Developer’s Manual Volumn1中的3.4.3 EFLAGS Register一节中有详细介绍。</p>
+<blockquote>
+<p>IOPL：I/O Privilege Level ### 段寄存器 (Segment Registers)</p>
+</blockquote>
+<p>在现代 64 位系统中，段寄存器的作用已经大大削弱（基本进入“平坦模型”），但在底层内核开发中依然存在：</p>
+<ul>
+<li><strong>CS</strong>: 代码段寄存器（Code Segment）</li>
+<li><strong>DS / SS / ES</strong>: 数据段、栈段、附加段</li>
+<li><strong>FS / GS</strong>: 在现代 Windows/Linux 中常用于存储<strong>线程本地存储 (TLS)</strong> 的基地址。</li>
+</ul>
+<h3 id="多媒体与向量寄存器-simd">多媒体与向量寄存器 (SIMD)</h3>
+<p>为了加速图像处理、科学计算和 AI 运算，x86 引入了超大的专用寄存器：</p>
+<ul>
+<li><strong>MMX (64位)</strong>: 已过时。</li>
+<li><strong>XMM (128位)</strong>: 用于 SSE 指令集（共 16 个，XMM0-XMM15）。</li>
+<li><strong>YMM (256位)</strong>: 用于 AVX 指令集。</li>
+<li><strong>ZMM (512位)</strong>: 用于 AVX-512 指令集。</li>
+</ul>
+<h3 id="控制寄存器">控制寄存器</h3>
+<p>在Intel SDM第 3 卷（Volume 3A）：System Programming Guide, Part 1有介绍（Section 2.5 CONTROL REGISTERS）。</p>
+<p><img src="CR.png" /></p>
+<h2 id="内存组织">内存组织</h2>
+<h3 id="cpu工作状态">CPU工作状态</h3>
+<table>
+<thead>
+<tr class="header">
+<th><strong>特性</strong></th>
+<th><strong>实模式 (Real Mode)</strong></th>
+<th><strong>保护模式 (Protected Mode)</strong></th>
+<th><strong>SMM 模式</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>可见性</strong></td>
+<td>用户/系统可见</td>
+<td>用户/系统可见</td>
+<td><strong>对操作系统透明 (隐藏)</strong></td>
+</tr>
+<tr class="even">
+<td><strong>地址空间</strong></td>
+<td>仅 1 MB</td>
+<td>4 GB (32位) / 理论 16 EB</td>
+<td>独立的 SMRAM 空间</td>
+</tr>
+<tr class="odd">
+<td><strong>进入方式</strong></td>
+<td>上电自检、复位</td>
+<td>修改 CR0.PE 位</td>
+<td><strong>硬件中断 (SMI)</strong></td>
+</tr>
+<tr class="even">
+<td><strong>主要用途</strong></td>
+<td>引导系统、DOS</td>
+<td>运行现代操作系统</td>
+<td>电源管理、硬件安全、BIOS 修复</td>
+</tr>
+<tr class="odd">
+<td><strong>权限级别</strong></td>
+<td>无 (全公开)</td>
+<td>严格的分级 (Ring 0-3)</td>
+<td>最高级别 (超越 Ring 0)</td>
+</tr>
+</tbody>
+</table>
+<p>实模式 (Real-Address Mode)，这是 CPU 上电后的“初始状态”，为了兼容 1978 年的 8086 处理器。</p>
+<ul>
+<li><strong>寻址方式</strong>：使用简单的 <span class="math inline"><em>段</em><em>地</em><em>址</em> × 16 + <em>偏</em><em>移</em><em>地</em><em>址</em></span>。只能访问 <strong>1MB</strong> 的内存。</li>
+<li><strong>特权级</strong>：没有特权级概念，任何程序都可以改写任何内存或直接操作硬件。</li>
+<li><strong>用途</strong>：系统引导（BIOS/UEFI 初期）、简单的操作系统（如 MS-DOS）。</li>
+<li><strong>缺点</strong>：非常不安全，没有内存保护，一个程序崩溃会导致全机死机。</li>
+</ul>
+<p>保护模式 (Protected Mode)，这是现代操作系统的运行基石（32位系统的核心，64位系统的基础）。</p>
+<ul>
+<li><strong>寻址方式</strong>：通过 <strong>段描述符表 (GDT/LDT)</strong> 和 <strong>分页机制 (Paging)</strong>。支持 <strong>4GB</strong> 甚至更大的虚拟内存。</li>
+<li><strong>特权级</strong>：引入了 <strong>Ring 0 - Ring 3</strong> 的保护机制。</li>
+<li><strong>用途</strong>：运行 Windows、Linux 等现代操作系统。</li>
+<li><strong>核心逻辑</strong>：硬件强制执行访问控制。如果用户程序（Ring 3）试图访问内核内存（Ring 0），CPU 会抛出异常。</li>
+</ul>
+<p>SMM 模式 (System Management Mode)，SMM 被称为 <strong>“Ring -2”</strong>，因为它比操作系统内核（Ring 0）拥有更高的优先级，且对操作系统<strong>完全透明</strong>。</p>
+<ul>
+<li><strong>进入方式</strong>：只能通过硬件产生的 <strong>SMI (System Management Interrupt)</strong> 进入。当你按下电源键、笔记本合盖、或系统温度过高时，硬件会发出 SMI。</li>
+<li><strong>可见性</strong>：一旦进入 SMM，CPU 会暂停当前运行的操作系统（不论是 Windows 还是内核），转而执行一段存储在 BIOS 中的特殊代码。操作系统根本不知道自己被暂停过。</li>
+<li><strong>内存空间</strong>：它拥有独立的内存区域，称为 <strong>SMRAM</strong>。正常模式下的程序（包括内核）无法访问这块内存。</li>
+<li><strong>退出方式</strong>：执行 <code>RSM</code> (Resume) 指令，CPU 恢复到被中断前的状态（无论是实模式还是保护模式）。</li>
+</ul>
+<p><img src="模式切换.png" /></p>
+<h3 id="特权级别">特权级别</h3>
+<p>x86把CPU分为四个特权等级，权限从ring0~ring3依次下降。 <img src="特权等级.png" /></p>
+<p>厘清几个概念，段选择子（SS）是一个一个内容抽象，存在在段寄存器中（Visible Part），x86的段寄存器有CS、DS、…等。其中段选择子的RPL（Requested Privilege Level）就代表了当前的指令在访问该段时“声明”的权限级别。</p>
+<p><img src="SS.png" /> <img src="段寄存器结构.png" /> <img src="段寄存器.png" /></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -811,6 +1090,133 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/vagrant%20cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="dushenda">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dushenda">
+      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | dushenda">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" class="post-title-link" itemprop="url">vagrant cheatsheet</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="vagrant-cheatsheet.png" /></p>
+<p>Typing <code>vagrant</code> from the command line will display a list of all available commands.</p>
+<p>Be sure that you are in the same directory as the Vagrantfile when running these commands!</p>
+<h1 id="creating-a-vm">Creating a VM</h1>
+<ul>
+<li><code>vagrant init</code> – Initialize Vagrant with a Vagrantfile and ./.vagrant directory, using no specified base image. Before you can do vagrant up, you’ll need to specify a base image in the Vagrantfile.</li>
+<li><code>vagrant init &lt;boxpath&gt;</code> – Initialize Vagrant with a specific box. To find a box, go to the <a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">public Vagrant box catalog</a>. When you find one you like, just replace it’s name with boxpath. For example, <code>vagrant init ubuntu/trusty64</code>.</li>
+</ul>
+<h1 id="starting-a-vm">Starting a VM</h1>
+<ul>
+<li><code>vagrant up</code> – starts vagrant environment (also provisions only on the FIRST vagrant up)</li>
+<li><code>vagrant resume</code> – resume a suspended machine (vagrant up works just fine for this as well)</li>
+<li><code>vagrant provision</code> – forces reprovisioning of the vagrant machine</li>
+<li><code>vagrant reload</code> – restarts vagrant machine, loads new Vagrantfile configuration</li>
+<li><code>vagrant reload --provision</code> – restart the virtual machine and force provisioning</li>
+</ul>
+<h1 id="getting-into-a-vm">Getting into a VM</h1>
+<ul>
+<li><code>vagrant ssh</code> – connects to machine via SSH</li>
+<li><code>vagrant ssh &lt;boxname&gt;</code> – If you give your box a name in your Vagrantfile, you can ssh into it with boxname. Works from any directory.</li>
+</ul>
+<h1 id="stopping-a-vm">Stopping a VM</h1>
+<ul>
+<li><code>vagrant halt</code> – stops the vagrant machine</li>
+<li><code>vagrant suspend</code> – suspends a virtual machine (remembers state)</li>
+</ul>
+<h1 id="cleaning-up-a-vm">Cleaning Up a VM</h1>
+<ul>
+<li><code>vagrant destroy</code> – stops and deletes all traces of the vagrant machine</li>
+<li><code>vagrant destroy -f</code> – same as above, without confirmation</li>
+</ul>
+<h1 id="boxes">Boxes</h1>
+<ul>
+<li><code>vagrant box list</code> – see a list of all installed boxes on your computer</li>
+<li><code>vagrant box add &lt;name&gt; &lt;url&gt;</code> – download a box image to your computer</li>
+<li><code>vagrant box outdated</code> – check for updates vagrant box update</li>
+<li><code>vagrant box remove &lt;name&gt;</code> – deletes a box from the machine</li>
+<li><code>vagrant package</code> – packages a running virtualbox env in a reusable box</li>
+</ul>
+<h1 id="saving-progress">Saving Progress</h1>
+<p>-<code>vagrant snapshot save [options] [vm-name] &lt;name&gt;</code> – vm-name is often <code>default</code>. Allows us to save so that we can rollback at a later time</p>
+<h1 id="tips">Tips</h1>
+<ul>
+<li><code>vagrant -v</code> – get the vagrant version</li>
+<li><code>vagrant status</code> – outputs status of the vagrant machine</li>
+<li><code>vagrant global-status</code> – outputs status of all vagrant machines</li>
+<li><code>vagrant global-status --prune</code> – same as above, but prunes invalid entries</li>
+<li><code>vagrant provision --debug</code> – use the debug flag to increase the verbosity of the output</li>
+<li><code>vagrant push</code> – yes, vagrant can be configured to <a target="_blank" rel="noopener" href="http://docs.vagrantup.com/v2/push/index.html">deploy code</a>!</li>
+<li><code>vagrant up --provision | tee provision.log</code> – Runs <code>vagrant up</code>, forces provisioning and logs all output to a file</li>
+</ul>
+<h1 id="plugins">Plugins</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a> : <code>$ vagrant plugin install vagrant-hostsupdater</code> to update your <code>/etc/hosts</code> file automatically each time you start/stop your vagrant box.</li>
+</ul>
+<h1 id="notes">Notes</h1>
+<ul>
+<li>If you are using <a target="_blank" rel="noopener" href="https://github.com/varying-vagrant-vagrants/vvv/">VVV</a>, you can enable xdebug by running <code>vagrant ssh</code> and then <code>xdebug_on</code> from the virtual machine’s CLI.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/virsh%20cheatsheet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -942,133 +1348,6 @@
 <p><strong>取消定义（删除配置）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 此命令只删除配置文件，不会删除虚拟磁盘文件！ <strong>彻底删除（配置+磁盘）</strong>： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh undefine --remove-all-storage &lt;虚拟机名&gt;</span><br></pre></td></tr></table></figure> &gt; 高危操作： 请务必确认磁盘数据已不再需要，执行后不可恢复！</p>
 <p><strong>重命名虚拟机</strong>：<br />
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh domrename &lt;旧名称&gt; &lt;新名称&gt;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/29/ceatsheet/vagrant%20cheatsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/29/ceatsheet/vagrant%20cheatsheet/" class="post-title-link" itemprop="url">vagrant cheatsheet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-29T00:00:00+00:00">2025-12-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="vagrant-cheatsheet.png" /></p>
-<p>Typing <code>vagrant</code> from the command line will display a list of all available commands.</p>
-<p>Be sure that you are in the same directory as the Vagrantfile when running these commands!</p>
-<h1 id="creating-a-vm">Creating a VM</h1>
-<ul>
-<li><code>vagrant init</code> – Initialize Vagrant with a Vagrantfile and ./.vagrant directory, using no specified base image. Before you can do vagrant up, you’ll need to specify a base image in the Vagrantfile.</li>
-<li><code>vagrant init &lt;boxpath&gt;</code> – Initialize Vagrant with a specific box. To find a box, go to the <a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">public Vagrant box catalog</a>. When you find one you like, just replace it’s name with boxpath. For example, <code>vagrant init ubuntu/trusty64</code>.</li>
-</ul>
-<h1 id="starting-a-vm">Starting a VM</h1>
-<ul>
-<li><code>vagrant up</code> – starts vagrant environment (also provisions only on the FIRST vagrant up)</li>
-<li><code>vagrant resume</code> – resume a suspended machine (vagrant up works just fine for this as well)</li>
-<li><code>vagrant provision</code> – forces reprovisioning of the vagrant machine</li>
-<li><code>vagrant reload</code> – restarts vagrant machine, loads new Vagrantfile configuration</li>
-<li><code>vagrant reload --provision</code> – restart the virtual machine and force provisioning</li>
-</ul>
-<h1 id="getting-into-a-vm">Getting into a VM</h1>
-<ul>
-<li><code>vagrant ssh</code> – connects to machine via SSH</li>
-<li><code>vagrant ssh &lt;boxname&gt;</code> – If you give your box a name in your Vagrantfile, you can ssh into it with boxname. Works from any directory.</li>
-</ul>
-<h1 id="stopping-a-vm">Stopping a VM</h1>
-<ul>
-<li><code>vagrant halt</code> – stops the vagrant machine</li>
-<li><code>vagrant suspend</code> – suspends a virtual machine (remembers state)</li>
-</ul>
-<h1 id="cleaning-up-a-vm">Cleaning Up a VM</h1>
-<ul>
-<li><code>vagrant destroy</code> – stops and deletes all traces of the vagrant machine</li>
-<li><code>vagrant destroy -f</code> – same as above, without confirmation</li>
-</ul>
-<h1 id="boxes">Boxes</h1>
-<ul>
-<li><code>vagrant box list</code> – see a list of all installed boxes on your computer</li>
-<li><code>vagrant box add &lt;name&gt; &lt;url&gt;</code> – download a box image to your computer</li>
-<li><code>vagrant box outdated</code> – check for updates vagrant box update</li>
-<li><code>vagrant box remove &lt;name&gt;</code> – deletes a box from the machine</li>
-<li><code>vagrant package</code> – packages a running virtualbox env in a reusable box</li>
-</ul>
-<h1 id="saving-progress">Saving Progress</h1>
-<p>-<code>vagrant snapshot save [options] [vm-name] &lt;name&gt;</code> – vm-name is often <code>default</code>. Allows us to save so that we can rollback at a later time</p>
-<h1 id="tips">Tips</h1>
-<ul>
-<li><code>vagrant -v</code> – get the vagrant version</li>
-<li><code>vagrant status</code> – outputs status of the vagrant machine</li>
-<li><code>vagrant global-status</code> – outputs status of all vagrant machines</li>
-<li><code>vagrant global-status --prune</code> – same as above, but prunes invalid entries</li>
-<li><code>vagrant provision --debug</code> – use the debug flag to increase the verbosity of the output</li>
-<li><code>vagrant push</code> – yes, vagrant can be configured to <a target="_blank" rel="noopener" href="http://docs.vagrantup.com/v2/push/index.html">deploy code</a>!</li>
-<li><code>vagrant up --provision | tee provision.log</code> – Runs <code>vagrant up</code>, forces provisioning and logs all output to a file</li>
-</ul>
-<h1 id="plugins">Plugins</h1>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a> : <code>$ vagrant plugin install vagrant-hostsupdater</code> to update your <code>/etc/hosts</code> file automatically each time you start/stop your vagrant box.</li>
-</ul>
-<h1 id="notes">Notes</h1>
-<ul>
-<li>If you are using <a target="_blank" rel="noopener" href="https://github.com/varying-vagrant-vagrants/vvv/">VVV</a>, you can enable xdebug by running <code>vagrant ssh</code> and then <code>xdebug_on</code> from the virtual machine’s CLI.</li>
-</ul>
 
       
     </div>
@@ -1321,156 +1600,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dushenda.github.io/2025/12/23/Linux%20Debug/ftrace%E6%8A%80%E6%9C%AF-%E9%9D%99%E6%80%81%E8%B7%9F%E8%B8%AA%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="dushenda">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dushenda">
-      <meta itemprop="description" content="雄关漫道真如铁，而今迈步从头越">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | dushenda">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/12/23/Linux%20Debug/ftrace%E6%8A%80%E6%9C%AF-%E9%9D%99%E6%80%81%E8%B7%9F%E8%B8%AA%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">ftrace技术-静态跟踪（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T00:00:00+00:00">2025-12-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="介绍">介绍</h1>
-<p>Ftrace 是一款内部跟踪器，旨在帮助系统开发人员和设计人员了解内核内部的运行情况。它可用于调试或分析用户空间之外发生的延迟和性能问题。</p>
-<h2 id="debugfs-文件结构">Debugfs 文件结构</h2>
-<p>Ftrace 使用 debugfs 文件系统来保存控制文件以及用于显示输出的文件。</p>
-<p>当 debugfs 配置到内核中时（选择任何 ftrace 选项都会执行此操作），将创建目录 /sys/kernel/debug。要挂载此目录，可以将其添加到 /etc/fstab 文件中： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/fstab</span></span><br><span class="line">debugfs /sys/kernel/debug debugfs default 0 0</span><br></pre></td></tr></table></figure> 或者，也可以在运行时使用以下命令挂载它： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t debugfs nodev /sys/kernel/debug</span><br></pre></td></tr></table></figure> 为了更快地访问该目录，可以创建一个指向它的软链接： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /sys/kernel/debug /debug</span><br></pre></td></tr></table></figure> ## function跟踪</p>
-<p>下表汇总了 <code>ftrace</code>最常用的操作命令，适用于直接操作 <code>/sys/kernel/debug/tracing</code>目录下的文件。</p>
-<table>
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 42%" />
-<col style="width: 46%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>操作目的</th>
-<th>命令示例</th>
-<th>简要说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>查看可用跟踪器</strong>​</td>
-<td><code>cat available_tracers</code></td>
-<td>显示系统支持的所有跟踪器 。</td>
-</tr>
-<tr class="even">
-<td><strong>设置当前跟踪器</strong>​</td>
-<td><code>echo function &gt; current_tracer</code></td>
-<td>设置跟踪器，如 <code>function</code>，<code>function_graph</code>，<code>sched_switch</code>等 。</td>
-</tr>
-<tr class="odd">
-<td><strong>开始/停止跟踪</strong>​</td>
-<td><code>echo 1 &gt; tracing_on</code> <br><code>echo 0 &gt; tracing_on</code></td>
-<td>控制跟踪的启动和停止 。</td>
-</tr>
-<tr class="even">
-<td><strong>查看跟踪结果</strong>​</td>
-<td><code>cat trace</code></td>
-<td>显示跟踪缓冲区的内容 。</td>
-</tr>
-<tr class="odd">
-<td><strong>过滤跟踪函数</strong>​</td>
-<td><code>echo sys_* &gt; set_ftrace_filter</code></td>
-<td>只跟踪函数名匹配 <code>sys_*</code>的函数 。</td>
-</tr>
-<tr class="even">
-<td><strong>过滤跟踪进程</strong>​</td>
-<td><code>echo 1234 &gt; set_ftrace_pid</code></td>
-<td>只跟踪 PID 为 1234 的进程 。</td>
-</tr>
-<tr class="odd">
-<td><strong>跟踪特定模块</strong>​</td>
-<td><code>echo ':mod:ext4' &gt; set_ftrace_filter</code></td>
-<td>只跟踪 <code>ext4</code>模块内的函数 。</td>
-</tr>
-<tr class="even">
-<td><strong>启用特定事件</strong>​</td>
-<td><code>echo 1 &gt; events/sched/sched_switch/enable</code></td>
-<td>启用 <code>sched_switch</code>调度事件 。</td>
-</tr>
-<tr class="odd">
-<td><strong>清空跟踪缓冲区</strong>​</td>
-<td><code>echo &gt; trace</code></td>
-<td>清空当前跟踪缓冲区以便重新记录 。</td>
-</tr>
-</tbody>
-</table>
-<p>可通过调试文件系统启用函数跟踪器。确保已设置 ftrace_enabled；否则，此跟踪器将不执行任何操作。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">sysctl kernel.ftrace_enabled=1</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> <span class="keyword">function</span> &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">usleep 1</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: <span class="keyword">function</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#           TASK-PID   CPU#    TIMESTAMP  FUNCTION</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | |      |          |         |</span></span><br><span class="line">            bash-4003  [00]   123.638713: finish_task_switch &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638714: _spin_unlock_irq &lt;-finish_task_switch</span><br><span class="line">            bash-4003  [00]   123.638714: sub_preempt_count &lt;-_spin_unlock_irq</span><br><span class="line">            bash-4003  [00]   123.638715: hrtick_set &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638715: _spin_lock_irqsave &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638716: add_preempt_count &lt;-_spin_lock_irqsave</span><br><span class="line">            bash-4003  [00]   123.638716: _spin_unlock_irqrestore &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638717: sub_preempt_count &lt;-_spin_unlock_irqrestore</span><br><span class="line">            bash-4003  [00]   123.638717: hrtick_clear &lt;-hrtick_set</span><br><span class="line">            bash-4003  [00]   123.638718: sub_preempt_count &lt;-schedule</span><br><span class="line">            bash-4003  [00]   123.638718: sub_preempt_count &lt;-preempt_schedule</span><br><span class="line">            bash-4003  [00]   123.638719: wait_for_completion &lt;-__stop_machine_run</span><br><span class="line">            bash-4003  [00]   123.638719: wait_for_common &lt;-wait_for_completion</span><br><span class="line">            bash-4003  [00]   123.638720: _spin_lock_irq &lt;-wait_for_common</span><br><span class="line">            bash-4003  [00]   123.638720: add_preempt_count &lt;-_spin_lock_irq</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure></p>
-<h2 id="irqoff跟踪">irqoff跟踪</h2>
-<p>当中断被关闭时，CPU 无法响应外部事件（如硬件中断），这会导致系统响应延迟。<code>irqsoff</code>跟踪器的工作原理是 ： - <strong>挂钩关键函数</strong>：它在 <code>local_irq_disable()</code>和 <code>local_irq_enable()</code>等关键函数中插入钩子。 - <strong>记录时间戳</strong>：当中断被关闭时开始计时，并在中断重新开启时停止计时。 - <strong>记录最大延迟</strong>：它会记录下中断关闭的最大时间，并将导致该延迟的调用路径信息保存下来，帮助开发者定位问题根源。</p>
-<p>当中断被禁用时，CPU 将无法响应任何其他外部事件（NMI 和 SMI 除外）。这会阻止定时器中断触发，或鼠标中断无法将新的鼠标事件告知内核。其结果是响应时间出现延迟。</p>
-<p><code>irqsoff</code> 跟踪器会跟踪中断被禁用的时间。当达到新的最大延迟时，跟踪器会保存达到该延迟点之前的跟踪记录，以便每次达到新的最大值时，都会丢弃旧的跟踪记录并保存新的跟踪记录。</p>
-<p>要重置最大值，请将 0 回显到 tracing_max_latency 中。以下是一个示例： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> irqsoff &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_max_latency</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">ls</span> -ltr</span></span><br><span class="line"> [...]</span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> latency_trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: irqsoff</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">	<span class="comment"># irqsoff latency trace v1.1.5 on 4.0.0</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--------------------------------------------------------------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">latency: 259 us, <span class="comment">#4/4, CPU#0 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:4)</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   -----------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   | task: ps-6143 (uid:0 <span class="built_in">nice</span>:0 policy:0 rt_prio:0)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   -----------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> =&gt; started at: __lock_task_sighand</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> =&gt; ended at:   _raw_spin_unlock_irqrestore</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                 _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               |||| /     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid   ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /      |||||  \    |   /</span></span><br><span class="line">    ps-6143    0d.h1    0us+: _raw_spin_lock_irqsave &lt;-__lock_task_sighand</span><br><span class="line">    ps-6143    0d.h.  259us : _raw_spin_unlock_irqrestore &lt;-__lock_task_sighand</span><br></pre></td></tr></table></figure> - <strong><code>latency: 259 us</code></strong>：这是最重要的信息，表示本次跟踪中发现的最大中断关闭延迟为 259 微秒 。 - <strong><code>task: ps-6143</code></strong>：发生该延迟时正在执行的进程是 <code>ps</code>（PID 为 6143）。 - <strong><code>started at</code>和 <code>ended at</code></strong>：指出了中断关闭开始和结束的函数位置 。 - <strong><code>irqs-off</code></strong>：<code>d</code>表示中断被关闭 。 - <strong><code>delay</code>符号</strong>：输出中可能使用特殊符号（如 <code>!</code>表示大于100ms）来直观表示延迟大小。 - <strong>函数调用栈</strong>：在跟踪条目下方，通常会显示导致此次延迟的完整函数调用栈，这对于定位问题代码至关重要 。</p>
-<p>请注意，上面的示例中未设置 ftrace_enabled。如果我们设置了 ftrace_enabled，则会得到更大的输出： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: irqsoff</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">irqsoff latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #101/101, CPU#0 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: ls-4339 (uid:0 nice:0 policy:0 rt_prio:0)</span><br><span class="line">    -----------------</span><br><span class="line"> =&gt; started at: __alloc_pages_internal</span><br><span class="line"> =&gt; ended at:   __alloc_pages_internal</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">      ls-4339  0...1    0us+: get_page_from_freelist (__alloc_pages_internal)</span><br><span class="line">      ls-4339  0d..1    3us : rmqueue_bulk (get_page_from_freelist)</span><br><span class="line">      ls-4339  0d..1    3us : _spin_lock (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..1    4us : add_preempt_count (_spin_lock)</span><br><span class="line">      ls-4339  0d..2    4us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    5us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2    5us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2    6us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    6us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2    7us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2    7us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2    8us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">[...]</span><br><span class="line">      ls-4339  0d..2   46us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2   47us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2   47us : __rmqueue (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2   48us : __rmqueue_smallest (__rmqueue)</span><br><span class="line">      ls-4339  0d..2   48us : __mod_zone_page_state (__rmqueue_smallest)</span><br><span class="line">      ls-4339  0d..2   49us : _spin_unlock (rmqueue_bulk)</span><br><span class="line">      ls-4339  0d..2   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">      ls-4339  0d..1   50us : get_page_from_freelist (__alloc_pages_internal)</span><br><span class="line">      ls-4339  0d..2   51us : trace_hardirqs_on (__alloc_pages_internal)</span><br></pre></td></tr></table></figure> 这里我们追踪到了 50 微秒的延迟。但我们也看到了这段时间内调用的所有函数。请注意，启用函数追踪会增加额外的开销。这种开销可能会延长延迟时间。尽管如此，这次追踪仍然提供了一些非常有用的调试信息。</p>
-<h2 id="scdule-wakeup跟踪">scdule wakeup跟踪</h2>
-<p>在实时环境中，了解最高优先级任务从被唤醒到执行所需的唤醒时间至关重要。这也被称为“调度延迟”。</p>
-<p>实时环境关注的是最大延迟，也就是事件发生所需的最长延迟，而不是平均延迟。我们可以拥有一个速度非常快的调度器，它可能只是偶尔出现较大的延迟，但这并不适用于实时任务。唤醒跟踪器旨在记录实时任务的最大唤醒延迟。非实时任务不会被记录，因为跟踪器只记录一个最大延迟，而跟踪不可预测的非实时任务会覆盖实时任务的最大延迟。</p>
-<p>由于此追踪器仅处理实时任务，因此我们将采用与之前追踪器略有不同的运行方式。我们不会执行“ls”命令，而是在“chrt”命令下运行“sleep 1”命令，这将改变任务的优先级。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> wakeup &gt; current_tracer</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_max_latency</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">echo</span> 1 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">chrt -f 5 <span class="built_in">sleep</span> 1</span></span><br><span class="line"><span class="meta prompt_">	 # </span><span class="language-bash"><span class="built_in">echo</span> 0 &gt; tracing_enabled</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"><span class="built_in">cat</span> latency_trace</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: wakeup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">wakeup latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 4 us, #2/2, CPU#1 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: sleep-4901 (uid:0 nice:0 policy:1 rt_prio:5)</span><br><span class="line">    -----------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">  &lt;idle&gt;-0     1d.h4    0us+: try_to_wake_up (wake_up_process)</span><br><span class="line">  &lt;idle&gt;-0     1d..4    4us : schedule (cpu_idle)</span><br></pre></td></tr></table></figure>
-<p>在空闲系统上运行此程序，我们发现任务切换仅耗时 4 微秒。请注意，由于调度中的跟踪标记位于实际“切换”之前，因此当记录的任务即将调度时，我们会停止跟踪。如果我们在调度程序末尾添加新的标记，则此情况可能会发生变化。</p>
-<p>请注意，记录的任务是“sleep”，进程 ID 为 4901，其 rt_prio 为 5。此优先级为用户空间优先级，而非内核内部优先级。策略为：SCHED_FIFO 为 1，SCHED_RR 为 2。</p>
-<p>使用 chrt -r 5 和 ftrace_enabled set 执行相同的操作。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tracer: wakeup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">wakeup latency trace v1.1.5 on 2.6.26-rc8</span></span><br><span class="line">--------------------------------------------------------------------</span><br><span class="line"> latency: 50 us, #60/60, CPU#1 | (M:preempt VP:0, KP:0, SP:0 HP:0 #P:2)</span><br><span class="line">    -----------------</span><br><span class="line">    | task: sleep-4068 (uid:0 nice:0 policy:2 rt_prio:5)</span><br><span class="line">    -----------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">               _------=&gt; CPU#</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              / _-----=&gt; irqs-off</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             | / _----=&gt; need-resched</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             || / _---=&gt; hardirq/softirq</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             ||| / _--=&gt; preempt-depth</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||| /</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">             |||||     delay</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> cmd     pid ||||| <span class="keyword">time</span>  |   <span class="built_in">caller</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    \   /    |||||   \   |   /</span></span><br><span class="line">ksoftirq-7     1d.H3    0us : try_to_wake_up (wake_up_process)</span><br><span class="line">ksoftirq-7     1d.H4    1us : sub_preempt_count (marker_probe_cb)</span><br><span class="line">ksoftirq-7     1d.H3    2us : check_preempt_wakeup (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    3us : update_curr (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    4us : calc_delta_mine (update_curr)</span><br><span class="line">ksoftirq-7     1d.H3    5us : __resched_task (check_preempt_wakeup)</span><br><span class="line">ksoftirq-7     1d.H3    6us : task_wake_up_rt (try_to_wake_up)</span><br><span class="line">ksoftirq-7     1d.H3    7us : _spin_unlock_irqrestore (try_to_wake_up)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d.H2   17us : irq_exit (smp_apic_timer_interrupt)</span><br><span class="line">ksoftirq-7     1d.H2   18us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1d.s3   19us : sub_preempt_count (irq_exit)</span><br><span class="line">ksoftirq-7     1..s2   20us : rcu_process_callbacks (__do_softirq)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1..s2   26us : __rcu_process_callbacks (rcu_process_callbacks)</span><br><span class="line">ksoftirq-7     1d.s2   27us : _local_bh_enable (__do_softirq)</span><br><span class="line">ksoftirq-7     1d.s2   28us : sub_preempt_count (_local_bh_enable)</span><br><span class="line">ksoftirq-7     1.N.3   29us : sub_preempt_count (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   30us : _cond_resched (ksoftirqd)</span><br><span class="line">ksoftirq-7     1.N.2   31us : __cond_resched (_cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   32us : add_preempt_count (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : schedule (__cond_resched)</span><br><span class="line">ksoftirq-7     1.N.2   33us : add_preempt_count (schedule)</span><br><span class="line">ksoftirq-7     1.N.3   34us : hrtick_clear (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   35us : _spin_lock (schedule)</span><br><span class="line">ksoftirq-7     1dN.3   36us : add_preempt_count (_spin_lock)</span><br><span class="line">ksoftirq-7     1d..4   37us : put_prev_task_fair (schedule)</span><br><span class="line">ksoftirq-7     1d..4   38us : update_curr (put_prev_task_fair)</span><br><span class="line">[...]</span><br><span class="line">ksoftirq-7     1d..5   47us : _spin_trylock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..5   48us : add_preempt_count (_spin_trylock)</span><br><span class="line">ksoftirq-7     1d..6   49us : _spin_unlock (tracing_record_cmdline)</span><br><span class="line">ksoftirq-7     1d..6   49us : sub_preempt_count (_spin_unlock)</span><br><span class="line">ksoftirq-7     1d..4   50us : schedule (__cond_resched)</span><br></pre></td></tr></table></figure> 中断发生在 ksoftirqd 运行期间。该任务运行在 SCHED_OTHER 调度级别。为什么我们没有提前看到“N”被置位？这可能是 x86_32 架构和 4K 堆栈的一个无害 bug。在配置了 4K 堆栈的 x86_32 架构上，中断和软中断使用它们自己的堆栈运行。一些信息保存在任务堆栈的顶部（need_resched 和 preempt_count 都存储在那里）。NEED_RESCHED 位的设置直接作用于任务堆栈，但读取 NEED_RESCHED 位是通过查看当前堆栈完成的，在本例中，当前堆栈是硬中断的堆栈。这隐藏了 NEED_RESCHED 已被设置的事实。直到我们切换回任务分配的堆栈，才能看到“N”。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1483,7 +1612,7 @@
 
   <div class="copyright">
     &copy; 2021 – 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa-thin fa-abacus"></i>
     </span>
