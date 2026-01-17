@@ -76,6 +76,7 @@ x86-64 新增寄存器如下：在 64 位模式下，Intel 额外增加了 8 个
 从Intel架构手册的图来看，S代表状态位共有6位，C代表控制位共有1位，X代表系统位共有10位。具体看Intel® 64 and IA-32 Architectures Software Developer’s Manual Volumn1中的3.4.3 EFLAGS Register一节中有详细介绍。
 
 > IOPL：I/O Privilege Level
+
 ### 段寄存器 (Segment Registers)
 
 在现代 64 位系统中，段寄存器的作用已经大大削弱（基本进入“平坦模型”），但在底层内核开发中依然存在：
